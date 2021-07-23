@@ -258,30 +258,12 @@ void loop()
 #endif
 
 #if TINY_GSM_TEST_GPS
-    Serial.println("\n---Starting GPS TEST---\n");
-    // Set SIM7000G GPIO4 HIGH ,turn on GPS power
-    // CMD:AT+SGPIO=0,4,1,1
-    // Only in version 20200415 is there a function to control GPS power
-    modem.sendAT("+SGPIO=0,4,1,1");
-
-    modem.enableGPS();
-    float lat,  lon;
-    while (1) {
-        if (modem.getGPS(&lat, &lon)) {
-            Serial.printf("lat:%f lon:%f\n", lat, lon);
-            break;
-        } else {
-            Serial.print("getGPS ");
-            Serial.println(millis());
+    Serial.println("\n---Starting LBS TEST---\n");
+    modem.sendAT("+CLBS=1");
+ if (modem.waitResponse(5000L) != 1) {
+            return ;
         }
-        delay(2000);
-    }
-    modem.disableGPS();
-
-    // Set SIM7000G GPIO4 LOW ,turn off GPS power
-    // CMD:AT+SGPIO=0,4,1,0
-    // Only in version 20200415 is there a function to control GPS power
-    modem.sendAT("+SGPIO=0,4,1,0");
+    delay(3000);
     Serial.println("\n---End of GPRS TEST---\n");
 #endif
 
@@ -291,6 +273,7 @@ void loop()
     // To turn off modem completely, please use Reset/Enable pins
     modem.poweroff();
     Serial.println("Poweroff.");
+    Serial.println("------------TEST OK------------.");
 #endif
 
     esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
