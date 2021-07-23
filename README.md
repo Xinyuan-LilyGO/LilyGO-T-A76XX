@@ -1,9 +1,12 @@
-<h1 align = "center">LilyGo T-A7670X</h1>
+<h1 align = "center">🌟LilyGo T-A7670X🌟</h1>
 
+## **English | [中文](docs/docs_cn.md)**
 
 <h2 align = "left">Product 📷:</h2>
 
-
+|   Product    | Product  Link |
+| :----------: | :-----------: |
+| [T-A7670X]() |   updateing   |
 
 
 
@@ -21,3 +24,6 @@
 
 6. When an SD card in you can not upload software in Arduino IDE since the SD card uses IO2 as CS, the SD card must be removed when uploading a new sketch. 
 
+![](image/A7670_EN_1.jpg)
+![](image/A7670_EN_2.jpg)
+![](image/A7670_EN_3.jpg)
