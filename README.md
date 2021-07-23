@@ -4,9 +4,9 @@
 
 <h2 align = "left">Product 📷:</h2>
 
-|   Product    | Product  Link |
-| :----------: | :-----------: |
-| [T-A7670X]() |   updateing   |
+| Product  | Product  Link |
+| :------: | :-----------: |
+| T-A7670X |   updateing   |
 
 
 
