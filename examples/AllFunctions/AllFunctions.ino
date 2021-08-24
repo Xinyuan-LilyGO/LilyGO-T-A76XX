@@ -104,10 +104,6 @@ void setup()
     delay(500);
     Serial.println("Modem Info: " + modemInfo);
 
-    // Set SIM7000G GPIO4 LOW ,turn off GPS power
-    // CMD:AT+SGPIO=0,4,1,0
-    // Only in version 20200415 is there a function to control GPS power
-    modem.sendAT("+SGPIO=0,4,1,0");
 
 #if TINY_GSM_TEST_GPRS
     // Unlock your SIM card with a PIN if needed
@@ -259,7 +255,7 @@ void loop()
 
 #if TINY_GSM_TEST_GPS
     Serial.println("\n---Starting LBS TEST---\n");
-    modem.sendAT("+CLBS=1");
+    modem.sendAT("+CLBS=4");
  if (modem.waitResponse(5000L) != 1) {
             return ;
         }
