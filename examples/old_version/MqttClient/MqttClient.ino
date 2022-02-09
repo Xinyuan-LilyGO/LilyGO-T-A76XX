@@ -1,27 +1,28 @@
 /**************************************************************
  *
- * This sketch connects to a website and downloads a page.
- * It can be used to perform HTTP/RESTful API calls.
- *
- * For this example, you need to install ArduinoHttpClient library:
- *   https://github.com/arduino-libraries/ArduinoHttpClient
- *   or from http://librarymanager/all#ArduinoHttpClient
+ * For this example, you need to install PubSubClient library:
+ *   https://github.com/knolleary/pubsubclient
+ *   or from http://librarymanager/all#PubSubClient
  *
  * TinyGSM Getting Started guide:
  *   https://tiny.cc/tinygsm-readme
  *
- * SSL/TLS is not yet supported on the Quectel modems
- * The A6/A7/A20 and M590 are not capable of SSL/TLS
+ * For more MQTT examples, see PubSubClient library
  *
- * For more HTTP API examples, see ArduinoHttpClient library
+ **************************************************************
+ * This example connects to HiveMQ's showcase broker.
  *
- * NOTE: This example may NOT work with the XBee because the
- * HttpClient library does not empty to serial buffer fast enough
- * and the buffer overflow causes the HttpClient library to stall.
- * Boards with faster processors may work, 8MHz boards will not.
+ * You can quickly test sending and receiving messages from the HiveMQ webclient
+ * available at http://www.hivemq.com/demos/websocket-client/.
+ *
+ * Subscribe to the topic GsmClientTest/ledStatus
+ * Publish "toggle" to the topic GsmClientTest/led and the LED on your board
+ * should toggle and you should see a new message published to
+ * GsmClientTest/ledStatus with the newest LED status.
+ *
  **************************************************************/
 
-#define TINY_GSM_MODEM_SIM7600
+#define TINY_GSM_MODEM_SIM7600  //A7670's AT instruction is compatible with SIM7600
 
 // Set serial for debug console (to the Serial Monitor, default speed 115200)
 #define SerialMon Serial
@@ -58,13 +59,15 @@ const char gprsPass[] = "";
 const char wifiSSID[] = "YourSSID";
 const char wifiPass[] = "YourWiFiPass";
 
-// Server details
-const char server[]   = "vsh.pp.ua";
-const char resource[] = "/TinyGSM/logo.txt";
-const int  port       = 443;
+// MQTT details
+const char* broker = "broker.hivemq.com";
+
+const char* topicLed       = "GsmClientTest/led";
+const char* topicInit      = "GsmClientTest/init";
+const char* topicLedStatus = "GsmClientTest/ledStatus";
 
 #include <TinyGsmClient.h>
-#include <ArduinoHttpClient.h>
+#include <PubSubClient.h>
 #include <Ticker.h>
 
 // Just in case someone defined the wrong thing..
@@ -88,16 +91,16 @@ TinyGsm        modem(debugger);
 #else
 TinyGsm        modem(SerialAT);
 #endif
-
-
 TinyGsmClient client(modem);
-HttpClient    http(client, server, port);
+PubSubClient  mqtt(client);
+
+
 
 Ticker tick;
 
 
-#define uS_TO_S_FACTOR          1000000ULL  /* Conversion factor for micro seconds to seconds */
-#define TIME_TO_SLEEP           60          /*  Time ESP32 will go to sleep (in seconds) */
+#define uS_TO_S_FACTOR          1000000ULL  /*  Conversion factor for micro seconds to seconds */
+#define TIME_TO_SLEEP           60          /*Time ESP32 will go to sleep (in seconds) */
 
 #define PIN_TX                  27
 #define PIN_RX                  26
@@ -111,9 +114,53 @@ Ticker tick;
 #define SD_SCLK     14
 #define SD_CS       13
 
+int ledStatus = LOW;
+
+uint32_t lastReconnectAttempt = 0;
+
+void mqttCallback(char* topic, byte* payload, unsigned int len) {
+  
+  SerialMon.print("Message arrived [");
+  SerialMon.print(topic);
+  SerialMon.print("]: ");
+  SerialMon.write(payload, len);
+  SerialMon.println();
+
+  // Only proceed if incoming message's topic matches
+  if (String(topic) == topicLed) {
+    ledStatus = !ledStatus;
+    digitalWrite(LED_PIN, ledStatus);
+    SerialMon.print("ledStatus:");
+    SerialMon.println(ledStatus);
+    mqtt.publish(topicLedStatus, ledStatus ? "1" : "0");
+
+  }
+}
+
+boolean mqttConnect() {
+  SerialMon.print("Connecting to ");
+  SerialMon.print(broker);
+
+  // Connect to MQTT Broker
+  boolean status = mqtt.connect("GsmClientTest");
+
+  // Or, if you want to authenticate MQTT:
+  // boolean status = mqtt.connect("GsmClientName", "mqtt_user", "mqtt_pass");
+
+  if (status == false) {
+    SerialMon.println(" fail");
+    return false;
+  }
+  SerialMon.println(" success");
+  mqtt.publish(topicInit, "GsmClientTest started");
+  mqtt.subscribe(topicLed);
+  return mqtt.connected();
+}
+
+
 void setup()
 {
-       // Set console baud rate
+    // Set console baud rate
     Serial.begin(115200);
     delay(10);
 
@@ -127,11 +174,13 @@ void setup()
     digitalWrite(PWR_PIN, LOW);
 
 
+
     Serial.println("\nWait...");
 
     delay(10000);
 
     SerialAT.begin(UART_BAUD, SERIAL_8N1, PIN_RX, PIN_TX);
+
 
     // Restart takes quite some time
     // To skip it, call init() instead of restart()
@@ -140,14 +189,6 @@ void setup()
         DBG("Failed to restart modem, delaying 10s and retrying");
         return;
     }
-
-    //    DBG("AT+CGMR");
-    //        modem.sendAT("+CGMR");
-    //    DBG("END");
-}
-
-void loop()
-{
     // Restart takes quite some time
     // To skip it, call init() instead of restart()
     DBG("Initializing modem...");
@@ -207,62 +248,56 @@ void loop()
   if (modem.isGprsConnected()) { SerialMon.println("GPRS connected"); }
 #endif
 
-  SerialMon.print(F("Performing HTTPS GET request... "));
-  http.connectionKeepAlive();  // Currently, this is needed for HTTPS
-  int err = http.get(resource);
-  if (err != 0) {
-    SerialMon.println(F("failed to connect"));
-    delay(10000);
-    return;
-  }
+  // MQTT Broker setup
+  mqtt.setServer(broker, 1883);
+  mqtt.setCallback(mqttCallback);
 
-  int status = http.responseStatusCode();
-  SerialMon.print(F("Response status code: "));
-  SerialMon.println(status);
-  if (!status) {
-    delay(10000);
-    return;
-  }
-
-  SerialMon.println(F("Response Headers:"));
-  while (http.headerAvailable()) {
-    String headerName  = http.readHeaderName();
-    String headerValue = http.readHeaderValue();
-    SerialMon.println("    " + headerName + " : " + headerValue);
-  }
-
-  int length = http.contentLength();
-  if (length >= 0) {
-    SerialMon.print(F("Content length is: "));
-    SerialMon.println(length);
-  }
-  if (http.isResponseChunked()) {
-    SerialMon.println(F("The response is chunked"));
-  }
-
-  String body = http.responseBody();
-  SerialMon.println(F("Response:"));
-  SerialMon.println(body);
-
-  SerialMon.print(F("Body length is: "));
-  SerialMon.println(body.length());
-
-  // Shutdown
-
-  http.stop();
-  SerialMon.println(F("Server disconnected"));
-
-#if TINY_GSM_USE_WIFI
-  modem.networkDisconnect();
-  SerialMon.println(F("WiFi disconnected"));
-#endif
-#if TINY_GSM_USE_GPRS
-  modem.gprsDisconnect();
-  SerialMon.println(F("GPRS disconnected"));
-#endif
-
-  // Do nothing forevermore
-  while (true) { delay(1000); }
 }
+
+void loop()
+{
   
 
+   // Make sure we're still registered on the network
+  if (!modem.isNetworkConnected()) {
+    SerialMon.println("Network disconnected");
+    if (!modem.waitForNetwork(180000L, true)) {
+      SerialMon.println(" fail");
+      delay(10000);
+      return;
+    }
+    if (modem.isNetworkConnected()) {
+      SerialMon.println("Network re-connected");
+    }
+
+#if TINY_GSM_USE_GPRS
+    // and make sure GPRS/EPS is still connected
+    if (!modem.isGprsConnected()) {
+      SerialMon.println("GPRS disconnected!");
+      SerialMon.print(F("Connecting to "));
+      SerialMon.print(apn);
+      if (!modem.gprsConnect(apn, gprsUser, gprsPass)) {
+        SerialMon.println(" fail");
+        delay(10000);
+        return;
+      }
+      if (modem.isGprsConnected()) { SerialMon.println("GPRS reconnected"); }
+    }
+#endif
+  }
+
+  if (!mqtt.connected()) {
+    SerialMon.println("=== MQTT NOT CONNECTED ===");
+    // Reconnect every 10 seconds
+    uint32_t t = millis();
+    if (t - lastReconnectAttempt > 10000L) {
+      lastReconnectAttempt = t;
+      if (mqttConnect()) { lastReconnectAttempt = 0; }
+    }
+    delay(100);
+    return;
+  }
+
+  mqtt.loop();
+
+}

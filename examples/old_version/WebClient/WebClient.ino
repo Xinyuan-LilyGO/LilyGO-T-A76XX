@@ -8,7 +8,7 @@
  *
  **************************************************************/
 
-#define TINY_GSM_MODEM_SIM7600
+#define TINY_GSM_MODEM_SIM7600  //A7670's AT instruction is compatible with SIM7600
 
 // Set serial for debug console (to the Serial Monitor, default speed 115200)
 #define SerialMon Serial

@@ -10,15 +10,17 @@
  * TinyGSM Getting Started guide:
  *   https://tiny.cc/tinygsm-readme
  *
+ * SSL/TLS is not yet supported on the Quectel modems
+ * The A6/A7/A20 and M590 are not capable of SSL/TLS
+ *
  * For more HTTP API examples, see ArduinoHttpClient library
  *
  * NOTE: This example may NOT work with the XBee because the
  * HttpClient library does not empty to serial buffer fast enough
  * and the buffer overflow causes the HttpClient library to stall.
- * Boards with faster processors may work, 8MHz boards will not.
  **************************************************************/
 
-#define TINY_GSM_MODEM_SIM7600
+#define TINY_GSM_MODEM_SIM7600 //A7670's AT instruction is compatible with SIM7600
 
 // Set serial for debug console (to the Serial Monitor, default speed 115200)
 #define SerialMon Serial
@@ -26,7 +28,6 @@
 // Set serial for AT commands (to the module) 
 // Use Hardware Serial on Mega, Leonardo, Micro 
 #define SerialAT Serial1
-
 
 // See all AT commands, if wanted 
 //#define DUMP_AT_COMMANDS
@@ -59,7 +60,7 @@ const char wifiPass[] = "YourWiFiPass";
 // Server details
 const char server[]   = "vsh.pp.ua";
 const char resource[] = "/TinyGSM/logo.txt";
-const int  port       = 80;
+const int  port       = 443;
 
 #include <TinyGsmClient.h>
 #include <ArduinoHttpClient.h>
@@ -91,13 +92,11 @@ TinyGsm        modem(SerialAT);
 TinyGsmClient client(modem);
 HttpClient    http(client, server, port);
 
-
-
 Ticker tick;
 
 
 #define uS_TO_S_FACTOR          1000000ULL  /* Conversion factor for micro seconds to seconds */
-#define TIME_TO_SLEEP           60          /* Time ESP32 will go to sleep (in seconds) */
+#define TIME_TO_SLEEP           60          /*  Time ESP32 will go to sleep (in seconds) */
 
 #define PIN_TX                  27
 #define PIN_RX                  26
@@ -113,7 +112,7 @@ Ticker tick;
 
 void setup()
 {
-    // Set console baud rate
+       // Set console baud rate
     Serial.begin(115200);
     delay(10);
 
@@ -127,13 +126,11 @@ void setup()
     digitalWrite(PWR_PIN, LOW);
 
 
-
     Serial.println("\nWait...");
 
     delay(10000);
 
     SerialAT.begin(UART_BAUD, SERIAL_8N1, PIN_RX, PIN_TX);
-
 
     // Restart takes quite some time
     // To skip it, call init() instead of restart()
@@ -168,7 +165,6 @@ void loop()
   // Unlock your SIM card with a PIN if needed
   if (GSM_PIN && modem.getSimStatus() != 3) { modem.simUnlock(GSM_PIN); }
 #endif
-
 
 #if TINY_GSM_USE_WIFI
   // Wifi connection parameters must be set before waiting for the network
@@ -210,7 +206,8 @@ void loop()
   if (modem.isGprsConnected()) { SerialMon.println("GPRS connected"); }
 #endif
 
-  SerialMon.print(F("Performing HTTP GET request... "));
+  SerialMon.print(F("Performing HTTPS GET request... "));
+  http.connectionKeepAlive();  // Currently, this is needed for HTTPS
   int err = http.get(resource);
   if (err != 0) {
     SerialMon.println(F("failed to connect"));
@@ -264,6 +261,7 @@ void loop()
 #endif
 
   // Do nothing forevermore
-  while (true) { delay(1000);}
-
+  while (true) { delay(1000); }
 }
+  
+

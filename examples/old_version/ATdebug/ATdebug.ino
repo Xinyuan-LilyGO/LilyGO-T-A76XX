@@ -1,10 +1,9 @@
 /*
-  FILE: AllFunctions.ino
-  AUTHOR: Koby Hale
+  FILE: ATdebug.ino
   PURPOSE: Test functionality
 */
 
-#define TINY_GSM_MODEM_SIM7600
+#define TINY_GSM_MODEM_SIM7600  //A7670's AT instruction is compatible with SIM7600
 #define TINY_GSM_RX_BUFFER 1024 // Set RX buffer to 1Kb
 #define SerialAT Serial1
 

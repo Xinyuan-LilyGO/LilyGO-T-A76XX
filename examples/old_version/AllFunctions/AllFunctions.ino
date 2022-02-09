@@ -1,6 +1,5 @@
 /*
   FILE: AllFunctions.ino
-  AUTHOR: Koby Hale
   PURPOSE: Test functionality
 */
 
@@ -74,6 +73,9 @@ void setup()
     delay(300);
     digitalWrite(PWR_PIN, LOW);
 
+
+
+
     SPI.begin(SD_SCLK, SD_MISO, SD_MOSI, SD_CS);
     if (!SD.begin(SD_CS)) {
         Serial.println("SDCard MOUNT FAIL");
@@ -111,28 +113,21 @@ void setup()
         modem.simUnlock(GSM_PIN);
     }
 #endif
-//
-//  /*
+
 //    2 Automatic
 //    13 GSM only
 //    38 LTE only
 //    51 GSM and LTE only
-//  * * * */
 //  String res;
 //  do {
 //    res = modem.setNetworkMode(38);
 //    delay(500);
 //  } while (res != "OK");
 //
-//  /*
-//    1 CAT-M
-//    2 NB-Iot
-//    3 CAT-M and NB-IoT
-//  * * */
-//  do {
-//    res = modem.setPreferredMode(1);
-//    delay(500);
-//  } while (res != "OK");
+     modem.setNetworkMode(38);
+    if (modem.waitResponse(1000L) != 1) {
+     return ;
+    }
 
 }
 
