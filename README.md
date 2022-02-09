@@ -30,6 +30,6 @@
 
 6. When an SD card in you can not upload software in Arduino IDE since the SD card uses IO2 as CS, the SD card must be removed when uploading a new sketch. 
 
-## Pinout
+## Pinout(2021-12-18 V1.0)
 
 ![](image/new_version.jpg)
