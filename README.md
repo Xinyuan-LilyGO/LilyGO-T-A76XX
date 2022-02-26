@@ -8,9 +8,9 @@
 
 <h2 align = "left">Product 📷:</h2>
 
-| Product  | Product  Link  |
-| :------: | :------------: |
-| T-A7670X | [AliExpress]() |
+| Product  |                           Product  Link                            |
+| :------: | :----------------------------------------------------------------: |
+| T-A7670X | [AliExpress](https://pt.aliexpress.com/item/1005003036514769.html) |
 
 
 
@@ -33,3 +33,15 @@
 ## Pinout(2021-12-18 V1.0)
 
 ![](image/new_version.jpg)
+
+## Battery life
+Current consumption from 3.7 Volt battery:
+
+|  Mode  | Average current |
+| :----: | :-------------: |
+| Active |     170 mA      |
+| Sleep  |     0.18 mA     |
+	
+
+
+Operating time from a full charge depends on your actual battery capacity.
