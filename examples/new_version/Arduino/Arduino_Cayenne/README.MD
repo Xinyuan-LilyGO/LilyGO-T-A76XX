@@ -1,8 +1,8 @@
-<h1 align = "center">T-PCIE-SIM7600 Cayenne</h1>
+<h1 align = "center">T-A7670 Cayenne</h1>
 
-💦 ☀💨🌹 The sample code is based on the **[T-PCIE-SIM7670]()** board, which takes the data of the external BMP180 sensor and uploads it to **[Cayenne](https://cayenne.mydevices.com/)**.
+💦 ☀💨🌹 The sample code is based on the **[T-A7670](https://pt.aliexpress.com/item/1005003036514769.html)** board, which takes the data of the external BMP180 sensor and uploads it to **[Cayenne](https://cayenne.mydevices.com/)**.
 
-![](../../../image/Cayenne/A7670.png)
+![](../../../../image/Cayenne/A7670.png)
 
 
 # Steps:
@@ -19,8 +19,8 @@
 7. By default, GSM is used to upload sensor data. You can also change it to ESP32 to upload. You only need to host the **USE_GSM** macro in the sketch.
 
 # Hardware
-Connections for T-SIM7600 and BMP180
-| T-PCIE pin  | BMP180 pin |
+Connections for T-A7670 and BMP180
+| T-A7670 pin | BMP180 pin |
 | ----------- | ---------- |
 | 3.3         | VIN        |
 | GND         | GND        |
