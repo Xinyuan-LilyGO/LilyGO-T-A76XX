@@ -212,18 +212,21 @@ CAYENNE_OUT(ALTITUDE_VIRTUAL_CHANNEL)
     }
 }
 
+float readBattery(uint8_t pin)
+{
+    int vref = 1100;
+    uint16_t volt = analogRead(pin);
+    float battery_voltage = ((float)volt / 4095.0) * 2.0 * 3.3 * (vref);
+    return battery_voltage;
+}
+
 
 CAYENNE_OUT(BATTERY_VIRTUAL_CHANNEL)
 {
-
-    uint8_t  chargeState = -99;
-    int8_t   percent     = -99;
-    uint16_t milliVolts  = -9999;
-    modem.getBattStats(chargeState, percent, milliVolts);
-    DBG("Battery charge state:", chargeState);
-    DBG("Battery charge 'percent':", percent);
-    DBG("Battery voltage:", milliVolts / 1000.0F);
-    Cayenne.virtualWrite(BATTERY_VIRTUAL_CHANNEL, milliVolts, TYPE_VOLTAGE, UNIT_MILLIVOLTS);
+    float mv = readBattery(BAT_ADC);
+    Serial.printf("batter : %f\n", mv);
+    Cayenne.virtualWrite(BATTERY_VIRTUAL_CHANNEL, mv, TYPE_VOLTAGE, UNIT_MILLIVOLTS);
 
 }
+
 

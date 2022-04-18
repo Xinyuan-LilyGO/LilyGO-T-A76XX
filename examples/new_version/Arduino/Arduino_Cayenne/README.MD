@@ -8,7 +8,7 @@
 # Steps:
 1. Need to install the following dependencies
      - [Adafruit BMP085 Library](https://github.com/adafruit/Adafruit-BMP085-Library)
-     - [CayenneMQTT](https://github.com/myDevicesIoT/Cayenne-MQTT-Arduino)
+     - [CayenneMQTT](https://github.com/myDevicesIoT/Cayenne-MQTT-Arduino/tree/v.1.3.1)
      - [ArduinoJson](https://github.com/bblanchon/ArduinoJson) Use version 6.13.0
      - [TinyGSM](https://github.com/vshymanskyy/TinyGSM)
 2. Set the Cayenne authentication info to match the authentication info from the Dashboard.If you don't have an account, then [create an account](https://accounts.mydevices.com/auth/realms/cayenne/login-actions/registration?client_id=cayenne-web-app&tab_id=01AaoLwmlng)
