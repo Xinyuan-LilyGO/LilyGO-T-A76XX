@@ -6,6 +6,7 @@
 #include "esp_adc_cal.h"
 
 #define BAT_ADC    35
+#define BAT_EN       12
 
 float Voltage = 0.0;
 uint32_t readADC_Cal(int ADC_Raw);
@@ -13,7 +14,8 @@ uint32_t readADC_Cal(int ADC_Raw);
 void setup()
 {
     Serial.begin(115200);
-
+    pinMode(BAT_EN, OUTPUT);
+    digitalWrite(BAT_EN, HIGH);
 }
 
 void loop()
