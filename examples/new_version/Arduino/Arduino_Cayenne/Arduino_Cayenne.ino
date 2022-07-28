@@ -106,10 +106,10 @@ void setup()
 
     //A7670 Reset
     pinMode(RESET, OUTPUT);
-    digitalWrite(PWR_PIN, LOW);
+    digitalWrite(RESET, LOW);
     delay(100);
     digitalWrite(RESET, HIGH);
-    delay(1000);
+    delay(3000);
     digitalWrite(RESET, LOW);
 
     pinMode(PWR_PIN, OUTPUT);
