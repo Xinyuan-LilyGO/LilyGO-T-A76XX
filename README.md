@@ -35,8 +35,6 @@
 
 
 
-
-
 ## Notes for new Users
 
 1. pin VIN is a USB input, if a battery is being used to power the device there will be no voltage output from VIN meaning 3.3v is the only power output.
