@@ -15,8 +15,7 @@
 2. Start Arduino and open Preferences window. In additional board manager add url: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json .separating them with commas.
 3. Select Tools -> Board Management -> Search for ESP32 and install
 4. Select Tools -> Board -> ESP32 Wrover Modelu Module
-5. Copy the folder in the 'lib' directory to '~Arduino/libraries'
-6. Need to install the following dependencies
+5. Need to install the following dependencies (Unzip and copy to the '~Arduino/libraries' directory)
 
    - [TinyGSM](https://github.com/vshymanskyy/TinyGSM)
 
