@@ -18,6 +18,8 @@
 6. 需要的库
 
    - [TinyGSM](https://github.com/vshymanskyy/TinyGSM)
+   - [StreamDebugger](https://github.com/vshymanskyy/StreamDebugger)
+   - [ArduinoHttpClient](https://github.com/ricemices/ArduinoHttpClient)
 
 ## 使用 PlatformIO
 
