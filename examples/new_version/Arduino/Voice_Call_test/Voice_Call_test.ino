@@ -45,7 +45,6 @@ TinyGsm modem(SerialAT);
 #define BAT_ADC      35
 #define BAT_EN       12
 #define PIN_RI       33
-#define PIN_DTR      25
 #define RESET        5
 
 #define SD_MISO     2
