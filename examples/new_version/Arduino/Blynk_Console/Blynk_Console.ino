@@ -42,6 +42,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <Adafruit_BMP085.h>
+#include "esp_adc_cal.h"
 
 Adafruit_BMP085 bmp;
 BlynkTimer timer;
@@ -78,6 +79,7 @@ char pass[] = "";
 #define SD_SCLK     14
 #define SD_CS       13
 
+uint32_t readADC_Cal(int ADC_Raw);
 bool reply = false;
 
 TinyGsm modem(SerialAT);
@@ -85,7 +87,6 @@ TinyGsm modem(SerialAT);
 BLYNK_WRITE(V3)
 {
     if (param.asInt() == 1) {
-
         Serial.println("OFF");//digitalWrite(LED_PIN, LOW);
         Blynk.logEvent("LED STATE", "OFF");//Sending Events
     } else {
@@ -108,12 +109,11 @@ void sendSensor()
     float h = bmp.readPressure() / 1000;
     float t = bmp.readTemperature(); // or dht.readTemperature(true) for Fahrenheit
 
-
-
     uint8_t  chargeState = -99;
     int8_t   percent     = -99;
     uint16_t milliVolts  = -9999;
-    modem.getBattStats(chargeState, percent, milliVolts);
+    // modem.getBattStats(chargeState, percent, milliVolts);
+    percent = (readADC_Cal(analogRead(BAT_ADC))) * 2;
     /*DBG("Battery charge state:", chargeState);
     DBG("Battery charge 'percent':", percent);
     DBG("Battery voltage:", milliVolts / 1000.0F);*/
@@ -198,4 +198,11 @@ void loop()
     Blynk.run();
     timer.run();
 
+}
+uint32_t readADC_Cal(int ADC_Raw)
+{
+    esp_adc_cal_characteristics_t adc_chars;
+
+    esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_chars);
+    return (esp_adc_cal_raw_to_voltage(ADC_Raw, &adc_chars));
 }
