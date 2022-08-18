@@ -19,7 +19,7 @@
 
    - [TinyGSM](https://github.com/vshymanskyy/TinyGSM)
    - [StreamDebugger](https://github.com/vshymanskyy/StreamDebugger)
-   - [StreamDebugger](https://github.com/ricemices/ArduinoHttpClient)
+   - [ArduinoHttpClient](https://github.com/ricemices/ArduinoHttpClient)
 
 
 ## USE PlatformIO
