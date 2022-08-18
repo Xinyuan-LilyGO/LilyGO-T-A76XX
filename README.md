@@ -18,6 +18,9 @@
 5. Need to install the following dependencies (Unzip and copy to the '~Arduino/libraries' directory)
 
    - [TinyGSM](https://github.com/vshymanskyy/TinyGSM)
+   - [StreamDebugger](https://github.com/vshymanskyy/StreamDebugger)
+   - [StreamDebugger](https://github.com/ricemices/ArduinoHttpClient)
+
 
 ## USE PlatformIO
 
