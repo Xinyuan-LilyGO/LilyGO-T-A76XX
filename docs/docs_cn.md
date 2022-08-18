@@ -14,8 +14,7 @@
 2. 启动Arduino并打开文件->首选项。 在附加板管理器网址，添加url: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json .，用逗号分隔。  
 3. 工具—>开发板—>开发板管理器 ，搜索ESP32并安装  
 4. 安装完成后，工具—> 开发板 -> ESP32 Wrover Modelu Module
-5. 将“lib”目录中的文件夹复制到“~Arduino/libraries”  
-6. 需要的库
+6. 需要的库（下载后解压到“~Arduino/libraries”  ）
 
    - [TinyGSM](https://github.com/vshymanskyy/TinyGSM)
    - [StreamDebugger](https://github.com/vshymanskyy/StreamDebugger)
