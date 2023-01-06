@@ -14,10 +14,10 @@
 /*
    Tests enabled
 */
-#define TINY_GSM_TEST_GPRS    true
+#define TINY_GSM_TEST_GPRS    false
 #define TINY_GSM_TEST_GPS     true
 #define TINY_GSM_POWERDOWN    true
-#define TINY_GSM_TEST_TCP    true
+#define TINY_GSM_TEST_TCP    false
 
 
 
@@ -180,6 +180,8 @@ void loop()
     modem.gprsConnect(apn, gprsUser, gprsPass);
 #endif
 
+
+#if TINY_GSM_TEST_GPRS
     DBG("Waiting for network...");
     if (!modem.waitForNetwork()) {
         delay(10000);
@@ -189,6 +191,7 @@ void loop()
     if (modem.isNetworkConnected()) {
         DBG("Network connected");
     }
+#endif
 
 
 #if TINY_GSM_TEST_GPRS
@@ -269,18 +272,29 @@ void loop()
 #endif
 
 #if TINY_GSM_TEST_GPS
-    modem.enableGPS();
 
+    //Disable gnss
+    modem.sendAT("+CGNSSPWR=0");
+    modem.waitResponse(10000L);
+
+    //Enable gnss
     modem.sendAT("+CGNSSPWR=1");
-    if (modem.waitResponse(10000L) != 1) {
-        while (1) {
-            delay(1000);
-            DBG("EnableGPS  false");
-        }
+    modem.waitResponse(10000L);
 
+    //Wait gnss start.
+    SerialMon.print("\tWait GPS reday.");
+    while (modem.waitResponse(1000UL, "+CGNSSPWR: READY!") != 1) {
+        SerialMon.print(".");
     }
+    SerialMon.println();
+
+    //Set gnss mode use GPS.
+    modem.sendAT("+CGNSSMODE=1");
+    modem.waitResponse(10000L);
+
 
     float parameter1,  parameter2;
+    char buf[16];
     while (1) {
         if (modem.getGPS(&parameter1, &parameter2)) {
             modem.sendAT(GF("+CGNSSINFO"));
@@ -299,7 +313,14 @@ void loop()
                 Serial.println("****************GNSS********************");
                 Serial.printf("lat:%s %s\n", lat, n_s);
                 Serial.printf("lon:%s %s\n", lon, e_w);
-
+                float flat = atof(lat.c_str());
+                float flon = atof(lon.c_str());
+                flat = (floor(flat / 100) + fmod(flat, 100.) / 60) *
+                       (n_s == "N" ? 1 : -1);
+                flon = (floor(flon / 100) + fmod(flon, 100.) / 60) *
+                       (e_w == "E" ? 1 : -1);
+                Serial.print("Latitude:"); Serial.println(flat);
+                Serial.print("Longitude:"); Serial.println(flon);
             }
             break;
         } else {
@@ -308,7 +329,11 @@ void loop()
         }
         delay(2000);
     }
-    modem.disableGPS();
+
+    //Disable gnss
+    modem.sendAT("+CGNSSPWR=0");
+    modem.waitResponse(10000L);
+
 #endif
 
 
