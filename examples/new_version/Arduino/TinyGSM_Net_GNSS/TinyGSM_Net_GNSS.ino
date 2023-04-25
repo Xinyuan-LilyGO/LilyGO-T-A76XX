@@ -6,6 +6,7 @@
 
 #define TINY_GSM_MODEM_SIM7600
 #define TINY_GSM_RX_BUFFER 1024 // Set RX buffer to 1Kb
+#define SerialMon Serial
 #define SerialAT Serial1
 
 // See all AT commands, if wanted
