@@ -2,9 +2,9 @@
 
 ## **English | [中文](docs/docs_cn.md)**
 
-**old version [example](examples/old_version/)**
+**old version [example]([examples/old_version/](https://github.com/Xinyuan-LilyGO/T-A7670X/releases/tag/v1.0.0))**
 
-**new version(2021-12-18 V1.0) [example](examples/new_version/)**
+**version on sale [example](./examples)**
 
 
 <h3 align = "left">Quick start:</h3>
@@ -27,7 +27,7 @@
 1. Install[VSCODE](https://code.visualstudio.com/)and[Python](https://www.python.org/)
 2. Search for the PlatformIO plug-in in the VSCODE extension and install it.
 3. After the installation is complete and the reload is completed, there will be a small house icon in the lower left corner. Click to display the Platformio IDE home page
-4. Go to file - > Open folder - > Select the LilyGO-T-A7670X\examples\new_version\platformio  folder and click the (√) symbol in the lower left corner to compile (→) for upload.
+4. Go to file - > Open folder - > Select the LilyGO-T-A7670X  folder and click the (√) symbol in the lower left corner to compile (→) for upload.
 
 
 <h2 align = "left">Product 📷:</h2>
