@@ -9,10 +9,10 @@
 
 
 
-!!! ** Before upgrading, please send `AT+SIMCOMATI` to check the hardware version, If you use `A7670SA` or other incompatible hardware versions to upgrade, the modem will be bricked
+!!! ** Before upgrading, please send `AT+SIMCOMATI` to check the hardware version, Modem will brick if wrong version firmware is written
 
 
-**Please contact LilyGo for firmware**
+**Please provide the information in the QR code on the modem to LilyGo to confirm the firmware version.**
 
 
 ### Firmware Update Procedure
