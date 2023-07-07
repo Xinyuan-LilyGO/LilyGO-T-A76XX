@@ -69,6 +69,8 @@ void setup()
 
     Serial.println("Works only with externally mounted GPS modules. If the purchased board includes a GPS extension module it will work, otherwise this sketch will have no effect");
 
+    Serial.println("If the purchased modem supports GPS functionality, please use examples/TinyGSM_Net_GNSS");
+
     delay(2000);
 
 }
