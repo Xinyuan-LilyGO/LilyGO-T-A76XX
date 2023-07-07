@@ -4,7 +4,10 @@
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-05-22
- *
+ * @note      This sketch is only suitable for boards without GPS function inside the modem, such as A7670G
+ *            Works only with externally mounted GPS modules.
+ *            If the purchased board includes a GPS extension module it will work,
+ *            otherwise this sketch will have no effect
  */
 
 #ifndef SerialAT
@@ -61,6 +64,13 @@ void setup()
     SerialAT.begin(115200, SERIAL_8N1, BOARD_MODEM_RX_PIN, BOARD_MODEM_TX_PIN);
     //GPS Serial port
     SerialGPS.begin(9600, SERIAL_8N1, BOARD_GPS_RX_PIN, BOARD_GPS_TX_PIN);
+
+    Serial.println("This sketch is only suitable for boards without GPS function inside the modem, such as A7670G");
+
+    Serial.println("Works only with externally mounted GPS modules. If the purchased board includes a GPS extension module it will work, otherwise this sketch will have no effect");
+
+    delay(2000);
+
 }
 
 void loop()
