@@ -1,0 +1,326 @@
+{
+  "module":      "Blynk.NCP",
+  "@version":    "0.6.2",
+  "@author":     "Volodymyr Shymanskyy",
+  "@license":    "Apache-2.0",
+  "@output_dir": "./src/idl",
+  "interfaces" : {
+    "ncp": {
+      "@id": 1,
+      "ping": {
+        "@attrs": [ "no_impl", "c:ret_status" ],
+        "@timeout": 100
+      },
+      "reboot": { "returns": "Bool" },
+      "hasUID": {
+        "@doc" : "Checks if UID is implemented",
+        "args": [ { "uid": "UInt16" } ],
+        "returns": "Bool"
+      }
+    },
+    "mcu": {
+      "@id": 1,
+      "ping": {
+        "@attrs": [ "no_impl", "c:ret_status" ],
+        "@timeout": 100
+      },
+      "reboot": { "returns": "Bool" },
+      "hasUID": {
+        "@doc" : "Checks if UID is implemented",
+        "args": [ { "uid": "UInt16" } ],
+        "returns": "Bool"
+      }
+    },
+    "hw": {
+      "@id": 2,
+      "setUartBaudRate": {
+        "args": [ { "baud": "UInt32" } ],
+        "returns": "Bool",
+        "@c:error_val": false
+      },
+      "initUserButton": {
+        "args": [
+          { "gpio": "UInt16" },
+          { "active_low": "Bool" }
+        ],
+        "returns": "Bool"
+      },
+      "initLED": {
+        "@doc" : "Initialize a monochrome LED state indicator",
+        "args": [
+          { "gpio": "UInt16" },
+          { "active_low": "Bool" }
+        ],
+        "returns": "Bool"
+      },
+      "initRGB": {
+        "@doc" : "Initialize an RGB state indicator",
+        "args": [
+          { "gpio_r": "UInt16" },
+          { "gpio_g": "UInt16" },
+          { "gpio_b": "UInt16" },
+          { "common_anode": "Bool" }
+        ],
+        "returns": "Bool"
+      },
+      "initARGB": {
+        "@doc" : "Initialize an addressable RGB state indicator",
+        "args": [
+          { "gpio":  "UInt16" },
+          { "mode":  "UInt8"  },
+          { "count": "UInt8"  }
+        ],
+        "returns": "Bool"
+      },
+      "setLedBrightness": {
+        "args": [ { "value": "UInt8" } ],
+        "returns": "Bool"
+      },
+
+      "getWiFiMAC": {
+        "args": [ { "mac": "String", "@dir": "out" } ],
+        "returns": "Bool"
+      },
+      "getEthernetMAC": {
+        "args": [ { "mac": "String", "@dir": "out" } ],
+        "returns": "Bool"
+      }
+    },
+    "blynk": {
+      "@id": 3,
+      "getNcpVersion": {
+        "args": [ { "ver": "String", "@dir": "out" } ],
+        "returns": "Bool"
+      },
+      "setVendorPrefix": {
+        "args": [ { "vendor": "String" } ],
+        "returns": "Bool"
+      },
+      "setVendorServer": {
+        "args": [ { "host": "String" } ],
+        "returns": "Bool"
+      },
+      "setFirmwareInfo": {
+        "args": [
+          { "type":     "String" },
+          { "version":  "String" },
+          { "build":    "String" },
+          { "blynk":    "String" }
+        ],
+        "returns": "Bool"
+      },
+      "initialize": {
+        "@timeout": 5000,
+        "args": [
+          { "templateID":    "String" },
+          { "templateName":  "String" }
+        ],
+        "returns": "Bool"
+      },
+
+      "getHotspotName": {
+        "@doc": "Device name that is broadcasted during the configuration process",
+        "args": [ { "hotspot": "String", "@dir": "out" } ],
+        "returns": "Bool"
+      },
+      "isConfigured": {
+        "@doc": "Check if NCP has all the required configuration to try connecting to the Cloud",
+        "returns": "Bool"
+      },
+      "configStart": {
+        "@doc": "Enter configuration mode",
+        "returns": "Bool"
+      },
+      "configStop":  {
+        "@doc": "Exit configuration mode",
+        "returns": "Bool"
+      },
+      "configReset": {
+        "@doc": "Erase Blynk Cloud configuration",
+        "returns": "Bool"
+      },
+      "setConfigTimeout": {
+        "@doc": "Configuration mode timeout. Default: 180 seconds",
+        "args": [ { "timeout": "UInt16" } ],
+        "returns": "Bool"
+      },
+      "setConfigSkipLimit": {
+        "@doc": "If configuration is skipped N times, device won't automatically enter configuration mode. Configuration reset is required to enter the configuration mode again. Default: 10 times",
+        "args": [ { "count": "UInt8" } ],
+        "returns": "Bool"
+      },
+
+      "setTime": {
+        "@doc": "Initialize NCP time from an external time source",
+        "args": [
+          { "time": "Int64", "@doc": "Current time in milliseconds elapsed since the UNIX epoch" }
+        ],
+        "returns": "Bool"
+      },
+      "getTime": {
+        "args": [
+          { "iso8601":    "String", "@dir": "out" },
+          { "time":       "Int64",  "@dir": "out", "@doc": "Current time in milliseconds elapsed since the UNIX epoch" },
+          { "offset":     "Int16",  "@dir": "out", "@doc": "Local time offset in minutes, including DST" },
+          { "tz_abbr":    "String", "@dir": "out", "@doc": "Timezone abbreviation" },
+          { "dst_status": "UInt8",  "@dir": "out", "@doc": "0 - No information, 1 - Not Applicable, 2 - Active, 3 - Inactive" }
+        ],
+        "returns": "Bool"
+      },
+      "getLocationInfo": {
+        "args": [
+          { "lat":        "String", "@dir": "out", "@doc": "Approximate GPS latitude" },
+          { "lon":        "String", "@dir": "out", "@doc": "Approximate GPS longitude" },
+          { "olson_id":   "String", "@dir": "out", "@doc": "OLSON timezone id" },
+          { "posix_tz":   "String", "@dir": "out", "@doc": "POSIX timezone rule" }
+        ],
+        "returns": "Bool"
+      },
+
+      "otaUpdateStart": {
+        "args": [ { "chunk": "UInt16" } ],
+        "returns": "Bool"
+      },
+      "otaUpdateGetCRC32": {
+        "args": [ { "crc": "UInt32", "@dir": "out" } ],
+        "returns": "Bool"
+      },
+      "otaUpdateGetMD5": {
+        "args": [ { "digest": "Binary", "@dir": "out" } ],
+        "returns": "Bool"
+      },
+      "otaUpdateGetSHA256": {
+        "args": [ { "digest": "Binary", "@dir": "out" } ],
+        "returns": "Bool"
+      },
+      "otaUpdatePrefetch": {
+        "returns": "UInt8",
+        "@timeout": 30000
+      },
+
+      "factoryReset": {
+        "@doc": "Erase all configuration and reboot",
+        "returns": "Bool"
+      },
+      "factoryTestWiFiAP": {
+        "@doc": "Start a SoftAP on the specified channel for the frequency test",
+        "@timeout": 5000,
+        "args": [
+          { "channel":  "UInt16" }
+        ],
+        "returns": "UInt8"
+      },
+      "factoryTestWiFi": {
+        "@timeout": 15000,
+        "args": [
+          { "ssid":     "String" },
+          { "pass":     "String" },
+          { "rssi":     "Int16", "@dir": "out" }
+        ],
+        "returns": "UInt8"
+      },
+      "factoryTestConnect": {
+        "@doc": "Test connection to the default server",
+        "@timeout": 10000,
+        "returns": "UInt8"
+      },
+
+      "getState": {
+        "returns": "UInt8"
+      },
+      "virtualWrite": {
+        "@oneway": true,
+        "args": [
+          { "vpin":  "UInt16" },
+          { "value": "Binary" }
+        ]
+      },
+      "setProperty": {
+        "@oneway": true,
+        "args": [
+          { "vpin":     "UInt16" },
+          { "property": "String" },
+          { "value":    "Binary" }
+        ]
+      },
+      "syncAll": {
+        "@oneway": true
+      },
+      "syncVirtual": {
+        "@oneway": true,
+        "args": [ { "vpins": "Binary" } ]
+      },
+      "logEvent": {
+        "@oneway": true,
+        "args": [
+          { "event_code":  "String" },
+          { "description": "String" }
+        ]
+      },
+      "resolveEvent": {
+        "@oneway": true,
+        "args": [ { "event_code": "String" } ]
+      },
+      "resolveAllEvents": {
+        "@oneway": true,
+        "args": [ { "event_code": "String" } ]
+      },
+      "beginGroup": {
+        "@oneway": true,
+        "args": [ { "timestamp": "Int64" } ]
+      },
+      "endGroup": {
+        "@oneway": true
+      },
+      "setMetadata": {
+        "@oneway": true,
+        "args": [
+          { "field": "String" },
+          { "value": "String" }
+        ]
+      }
+    },
+    "client": {
+      "@id": 4,
+      "blynkVPinChange": {
+        "@oneway": true,
+        "args": [
+          { "vpin":  "UInt16" },
+          { "param": "Binary" }
+        ]
+      },
+      "blynkStateChange": {
+        "@oneway": true,
+        "args": [ { "state": "UInt8" } ]
+      },
+      "processEvent": {
+        "@oneway": true,
+        "args": [ { "event": "UInt8" } ]
+      },
+      "otaUpdateAvailable": {
+        "args": [
+          { "filename": "String" },
+          { "filesize": "UInt32" },
+          { "fw_type":  "String" },
+          { "fw_ver":   "String" },
+          { "fw_build": "String" }
+        ],
+        "returns": "Bool"
+      },
+      "otaUpdateWrite": {
+        "@timeout": 5000,
+        "args": [
+          { "offset": "UInt32" },
+          { "chunk":  "Binary" },
+          { "crc32":  "UInt32" }
+        ],
+        "returns": "Bool"
+      },
+      "otaUpdateFinish": {
+        "@timeout": 5000,
+        "returns": "Bool"
+      },
+      "otaUpdateCancel": {}
+    }
+  }
+}

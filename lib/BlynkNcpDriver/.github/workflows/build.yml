@@ -1,0 +1,33 @@
+name: Build
+
+on:
+  push:
+    paths-ignore: ['**.md', '**.svg', '**.png', '**.fzz']
+  pull_request:
+    paths-ignore: ['**.md', '**.svg', '**.png', '**.fzz']
+
+jobs:
+  test-c99:
+    runs-on: ubuntu-latest
+    name: Build using ${{ matrix.config.target }}
+    timeout-minutes: 10
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - { target: Clang,       cc: clang,      }
+        - { target: GCC,         cc: gcc,        }
+
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        env:
+          CC: ${{ matrix.config.cc }}
+          CFLAGS: ${{ matrix.config.cflags }}
+        run: |
+          ${CC} -O3 -std=c99 -Wall -Wextra -Werror -pedantic \
+            -Wno-unused-parameter ${CFLAGS} \
+            -I src src/*.c test/c99.c \
+            -o /dev/null
