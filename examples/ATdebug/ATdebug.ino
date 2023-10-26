@@ -1,38 +1,20 @@
-/*
-  FILE: ATdebug.ino
-  AUTHOR: Kaibin
-  PURPOSE: ATdebug functionality
-*/
-
-#define TINY_GSM_MODEM_SIM7600  //The AT instruction of A7670 is compatible with SIM7600 
-#define TINY_GSM_RX_BUFFER 1024 // Set RX buffer to 1Kb
-#define SerialAT Serial1
+/**
+ * @file      ATdebug.ino
+ * @author    Lewis He (lewishe@outlook.com)
+ * @license   MIT
+ * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
+ * @date      2023-10-26
+ *
+ */
+#define TINY_GSM_MODEM_SIM7600      //The AT instruction of A7670 is compatible with SIM7600 
+#define TINY_GSM_RX_BUFFER          1024 // Set RX buffer to 1Kb
 
 // See all AT commands, if wanted
 #define DUMP_AT_COMMANDS
 
-#define uS_TO_S_FACTOR 1000000ULL  // Conversion factor for micro seconds to seconds
-#define TIME_TO_SLEEP  600          // Time ESP32 will go to sleep (in seconds)
-
-#define UART_BAUD    115200
-#define PIN_DTR      25
-#define PIN_TX       26
-#define PIN_RX       27
-#define PWR_PIN      4
-#define BAT_ADC      35
-#define BAT_EN       12
-#define PIN_RI       33
-#define RESET        5
-
-#define SD_MISO     2
-#define SD_MOSI     15
-#define SD_SCLK     14
-#define SD_CS       13
-
-
-
 #include <TinyGsmClient.h>
 #include "Arduino.h"
+#include "utilities.h"
 
 #ifdef DUMP_AT_COMMANDS  // if enabled it requires the streamDebugger lib
 #include <StreamDebugger.h>
@@ -42,59 +24,54 @@ TinyGsm modem(debugger);
 TinyGsm modem(SerialAT);
 #endif
 
-
-bool reply = false;
-
-void modem_on()
+uint32_t AutoBaud()
 {
-
-    pinMode(BAT_EN, OUTPUT);
-    digitalWrite(BAT_EN, HIGH);
-
-    //A7670 Reset
-    pinMode(RESET, OUTPUT);
-    digitalWrite(RESET, LOW);
-    delay(100);
-    digitalWrite(RESET, HIGH);
-    delay(3000);
-    digitalWrite(RESET, LOW);
-
-    pinMode(PWR_PIN, OUTPUT);
-    digitalWrite(PWR_PIN, LOW);
-    delay(100);
-    digitalWrite(PWR_PIN, HIGH);
-    delay(1000);
-    digitalWrite(PWR_PIN, LOW);
-
-
-    int i = 10;
-    Serial.println("\nTesting Modem Response...\n");
-    Serial.println("****");
-    while (i) {
-        SerialAT.println("AT");
-        delay(500);
-        if (SerialAT.available()) {
-            String r = SerialAT.readString();
-            Serial.println(r);
-            if ( r.indexOf("OK") >= 0 ) {
-                reply = true;
-                break;;
+    static uint32_t rates[] = {115200, 9600, 57600,  38400, 19200,  74400, 74880,
+                               230400, 460800, 2400,  4800,  14400, 28800
+                              };
+    for (uint8_t i = 0; i < sizeof(rates) / sizeof(rates[0]); i++) {
+        uint32_t rate = rates[i];
+        DBG("Trying baud rate", rate, "...");
+        SerialAT.updateBaudRate(rate);
+        delay(10);
+        for (int j = 0; j < 10; j++) {
+            SerialAT.print("AT\r\n");
+            String input = SerialAT.readString();
+            if (input.indexOf("OK") >= 0) {
+                DBG("Modem responded at rate", rate);
+                return rate;
             }
         }
-        delay(500);
-        i--;
     }
-    Serial.println("****\n");
+    SerialAT.updateBaudRate(115200);
+    return 0;
 }
 
 void setup()
 {
     Serial.begin(115200); // Set console baud rate
-    SerialAT.begin(115200, SERIAL_8N1, PIN_RX, PIN_TX);
-    delay(100);
 
-    modem_on();
-    if (reply) {
+    Serial.println("Start Sketch");
+
+    SerialAT.begin(115200, SERIAL_8N1, MODEM_RX_PIN, MODEM_TX_PIN);
+
+    pinMode(BOARD_POWERON_PIN, OUTPUT);
+    digitalWrite(BOARD_POWERON_PIN, HIGH);
+
+    // Set modem reset pin ,reset modem
+    pinMode(MODEM_RESET_PIN, OUTPUT);
+    digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);
+    digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL); delay(2600);
+    digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+
+    pinMode(BOARD_PWRKEY_PIN, OUTPUT);
+    digitalWrite(BOARD_PWRKEY_PIN, LOW);
+    delay(100);
+    digitalWrite(BOARD_PWRKEY_PIN, HIGH);
+    delay(100);
+    digitalWrite(BOARD_PWRKEY_PIN, LOW);
+
+    if (AutoBaud()) {
         Serial.println(F("***********************************************************"));
         Serial.println(F(" You can now send AT commands"));
         Serial.println(F(" Enter \"AT\" (without quotes), and you should see \"OK\""));
@@ -111,14 +88,11 @@ void setup()
 
 void loop()
 {
-    while (true) {
-        if (SerialAT.available()) {
-            Serial.write(SerialAT.read());
-        }
-        if (Serial.available()) {
-            SerialAT.write(Serial.read());
-        }
-        delay(1);
+    if (SerialAT.available()) {
+        Serial.write(SerialAT.read());
     }
-
+    if (Serial.available()) {
+        SerialAT.write(Serial.read());
+    }
+    delay(1);
 }

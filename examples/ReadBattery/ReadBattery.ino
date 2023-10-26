@@ -1,5 +1,5 @@
 /**
- * @file      readBattery.ino
+ * @file      ReadBattery.ino
  * @author    Lewis He (lewishe@outlook.com)
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
@@ -9,6 +9,7 @@
  *            If V1.1 needs to be read, then you need to add a 100K 1% voltage divider resistor between the battery and GND
  *            When connected to the USB, the battery voltage data read is not the real battery voltage, so the battery
  *            voltage is sent to the UDP Server through UDP. When using it, please disconnect the USBC
+ * @note      Onlu support T-A7670 board , not support T-Call A7670
  */
 #include <esp_adc_cal.h>
 #include <Arduino.h>

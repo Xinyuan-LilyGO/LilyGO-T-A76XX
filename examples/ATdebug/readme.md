@@ -1,5 +1,3 @@
-<h1 align = "center">🌟LilyGo T-A7670X🌟</h1>
-
 
 ## Some simple AT instructions
 
@@ -12,4 +10,4 @@
 | AT+CSQ       | Network signal quality query         |              |
 | AT+COPS?     | Querying current Carrier Information |              |
 
-Refer to the T-A7670X instruction manual for more [AT instructions](../../../../Manual) 
+Refer to the T-A7670X instruction manual for more [AT instructions](../../datasheet/) 

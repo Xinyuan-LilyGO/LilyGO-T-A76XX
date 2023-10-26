@@ -21,6 +21,7 @@
  * GsmClientTest/ledStatus with the newest LED status.
  *
  **************************************************************/
+#include "utilities.h"
 
 #define TINY_GSM_MODEM_SIM7600  //A7670's AT instruction is compatible with SIM7600
 
@@ -94,36 +95,11 @@ TinyGsm        modem(SerialAT);
 TinyGsmClient client(modem);
 PubSubClient  mqtt(client);
 
-
-
-Ticker tick;
-
-
-#define uS_TO_S_FACTOR          1000000ULL  /*  Conversion factor for micro seconds to seconds */
-#define TIME_TO_SLEEP           60          /*Time ESP32 will go to sleep (in seconds) */
-
-#define UART_BAUD    115200
-#define PIN_DTR      25
-#define PIN_TX       26
-#define PIN_RX       27
-#define PWR_PIN      4
-#define BAT_ADC      35
-#define BAT_EN       12
-#define PIN_RI       33
-#define RESET        5
-
-#define SD_MISO     2
-#define SD_MOSI     15
-#define SD_SCLK     14
-#define SD_CS       13
-
 int ledStatus = LOW;
-
 uint32_t lastReconnectAttempt = 0;
 
 void mqttCallback(char *topic, byte *payload, unsigned int len)
 {
-
     SerialMon.print("Message arrived [");
     SerialMon.print(topic);
     SerialMon.print("]: ");
@@ -165,38 +141,30 @@ boolean mqttConnect()
 
 void setup()
 {
-    // Set console baud rate
     Serial.begin(115200);
-    delay(10);
+    // Turn on DC boost to power on the modem
+    pinMode(BOARD_POWERON_PIN, OUTPUT);
+    digitalWrite(BOARD_POWERON_PIN, LOW);
 
-    pinMode(BAT_EN, OUTPUT);
-    digitalWrite(BAT_EN, HIGH);
+    // Set modem reset pin ,reset modem
+    pinMode(MODEM_RESET_PIN, OUTPUT);
+    digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);
+    digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL); delay(2600);
+    digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
 
-    //A7670 Reset
-    pinMode(RESET, OUTPUT);
-    digitalWrite(RESET, LOW);
+    // Turn on modem
+    pinMode(BOARD_PWRKEY_PIN, OUTPUT);
+    digitalWrite(BOARD_PWRKEY_PIN, LOW);
     delay(100);
-    digitalWrite(RESET, HIGH);
-    delay(3000);
-    digitalWrite(RESET, LOW);
-
-    pinMode(PWR_PIN, OUTPUT);
-    digitalWrite(PWR_PIN, LOW);
-    delay(100);
-    digitalWrite(PWR_PIN, HIGH);
+    digitalWrite(BOARD_PWRKEY_PIN, HIGH);
     delay(1000);
-    digitalWrite(PWR_PIN, LOW);
+    digitalWrite(BOARD_PWRKEY_PIN, LOW);
 
+    // Set modem baud
+    SerialAT.begin(115200, SERIAL_8N1, MODEM_RX_PIN, MODEM_TX_PIN);
 
-
-
-    Serial.println("\nWait...");
-
-    delay(10000);
-
-    SerialAT.begin(UART_BAUD, SERIAL_8N1, PIN_RX, PIN_TX);
-
-
+    Serial.println("Start modem...");
+    delay(3000);
     // Restart takes quite some time
     // To skip it, call init() instead of restart()
     DBG("Initializing modem...");
@@ -206,11 +174,11 @@ void setup()
     }
     // Restart takes quite some time
     // To skip it, call init() instead of restart()
-    DBG("Initializing modem...");
-    if (!modem.restart()) {
-        DBG("Failed to restart modem, delaying 10s and retrying");
-        return;
-    }
+    // DBG("Initializing modem...");
+    // if (!modem.restart()) {
+    //     DBG("Failed to restart modem, delaying 10s and retrying");
+    //     return;
+    // }
 
     String name = modem.getModemName();
     DBG("Modem Name:", name);
@@ -277,8 +245,6 @@ void setup()
 
 void loop()
 {
-
-
     // Make sure we're still registered on the network
     if (!modem.isNetworkConnected()) {
         SerialMon.println("Network disconnected");

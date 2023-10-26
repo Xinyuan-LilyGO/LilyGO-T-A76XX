@@ -9,10 +9,6 @@
 // Set serial for debug console (to the Serial Monitor, default speed 115200)
 #define SerialMon Serial
 
-// Set serial for AT commands (to the module)
-// Use Hardware Serial on Mega, Leonardo, Micro
-#define SerialAT Serial1
-
 // See all AT commands, if wanted
 //#define DUMP_AT_COMMANDS
 
@@ -41,6 +37,7 @@ const int  port       = 80;
 
 #include <TinyGsmClient.h>
 #include <ArduinoHttpClient.h>
+#include "utilities.h"
 
 // Just in case someone defined the wrong thing..
 #if TINY_GSM_USE_GPRS && not defined TINY_GSM_MODEM_HAS_GPRS
@@ -72,53 +69,29 @@ HttpClient    http(client, server, port);
 #define uS_TO_S_FACTOR 1000000ULL  // Conversion factor for micro seconds to seconds
 #define TIME_TO_SLEEP  600          // Time ESP32 will go to sleep (in seconds)
 
-#define UART_BAUD    115200
-#define PIN_DTR      25
-#define PIN_TX       26
-#define PIN_RX       27
-#define PWR_PIN      4
-#define BAT_ADC      35
-#define BAT_EN       12
-#define PIN_RI       33
-#define PIN_DTR      25
-#define RESET        5
-
-#define SD_MISO     2
-#define SD_MOSI     15
-#define SD_SCLK     14
-#define SD_CS       13
-
-
-
 
 void setup()
 {
-    // Set console baud rate
-    SerialMon.begin(115200);
-    delay(10);
-    pinMode(BAT_EN, OUTPUT);
-    digitalWrite(BAT_EN, HIGH);
-
-    //A7670 Reset
-    pinMode(RESET, OUTPUT);
-    digitalWrite(RESET, LOW);
+    Serial.begin(115200);
+    // Turn on DC boost to power on the modem
+    pinMode(BOARD_POWERON_PIN, OUTPUT);
+    digitalWrite(BOARD_POWERON_PIN, HIGH);
+    // Set modem reset
+    pinMode(MODEM_RESET_PIN, OUTPUT);
+    digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+    // Turn on modem
+    pinMode(BOARD_PWRKEY_PIN, OUTPUT);
+    digitalWrite(BOARD_PWRKEY_PIN, LOW);
     delay(100);
-    digitalWrite(RESET, HIGH);
-    delay(3000);
-    digitalWrite(RESET, LOW);
-
-    pinMode(PWR_PIN, OUTPUT);
-    digitalWrite(PWR_PIN, LOW);
-    delay(100);
-    digitalWrite(PWR_PIN, HIGH);
+    digitalWrite(BOARD_PWRKEY_PIN, HIGH);
     delay(1000);
-    digitalWrite(PWR_PIN, LOW);
+    digitalWrite(BOARD_PWRKEY_PIN, LOW);
 
-    DBG("Wait...");
+    // Set modem baud
+    SerialAT.begin(115200, SERIAL_8N1, MODEM_RX_PIN, MODEM_TX_PIN);
 
+    Serial.println("Start modem...");
     delay(3000);
-
-    SerialAT.begin(UART_BAUD, SERIAL_8N1, PIN_RX, PIN_TX);
 
     // Restart takes quite some time
     // To skip it, call init() instead of restart()
