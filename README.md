@@ -1,69 +1,99 @@
 <h1 align = "center">🌟LilyGo T-A7670X🌟</h1>
 
-## **English | [中文](docs/docs_cn.md)**
+# 1️⃣Product
 
-**old version [example]([examples/old_version/](https://github.com/Xinyuan-LilyGO/T-A7670X/releases/tag/v1.0.0))**
+| Product(PinMap)    | SOC            | Flash | PSRAM     | Schematic                                      |
+| ------------------ | -------------- | ----- | --------- | ---------------------------------------------- |
+| [T-A7670X][1]      | ESP32-WROVER-E | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-A7670X_V1.1.pdf)     |
+| [T-Call-A7670X][2] | ESP32-WROVER-E | 4MB   | 2MB(QSPI) | [schematic](./schematic/T-Call-A7670_V1.0.pdf) |
 
-**version on sale [example](./examples)**
+[1]: https://www.lilygo.cc/products/t-sim-a7670e
+[2]: https://www.lilygo.cc
 
+## 2️⃣Examples
 
-<h3 align = "left">Quick start:</h3>
+| Example        | [T-A7670X][1]     | [T-Call-A7670X][1] |
+| -------------- | ----------------- | ------------------ |
+| ATdebug        | ✅                 | ✅                  |
+| Blynk_Console  | ✅                 | ✅                  |
+| GPSShield      | ✅ (Just T-A7670G) | ❌   (Can't run)    |
+| GPS_BuiltIn    | ✅                 | ✅                  |
+| GPS_NMEA_Parse | ✅                 | ✅                  |
+| HttpClient     | ✅                 | ✅                  |
+| HttpsClient    | ✅                 | ✅                  |
+| MqttClient     | ✅                 | ✅                  |
+| ReadBattery    | ✅                 | ❌   (Can't run)    |
+| Sleep          | ✅                 | ✅                  |
+| Voice_Call     | ✅                 | ✅                  |
 
-## USE Arduino IDE
+# Quick start ⚡
 
-1. Install the current upstream Arduino IDE at the 1.8 level or later. The current version is at the [Arduino website](http://www.arduino.cc/en/main/software).
-2. Start Arduino and open Preferences window. In additional board manager add url: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json .separating them with commas.
-3. Select Tools -> Board Management -> Search for ESP32 and install
-4. Select Tools -> Board -> ESP32 Wrover Modelu Module
-5. Need to install the following dependencies (Unzip and copy to the '~Arduino/libraries' directory)
+## 3️⃣ PlatformIO Quick Start (Recommended)
 
-   - [TinyGSM](https://github.com/vshymanskyy/TinyGSM)
-   - [StreamDebugger](https://github.com/vshymanskyy/StreamDebugger)
-   - [ArduinoHttpClient](https://github.com/ricemices/ArduinoHttpClient)
+1. Install [Visual Studio Code](https://code.visualstudio.com/) and [Python](https://www.python.org/)
+2. Search for the `PlatformIO` plugin in the `VisualStudioCode` extension and install it.
+3. After the installation is complete, you need to restart `VisualStudioCode`
+4. After restarting `VisualStudioCode`, select `File` in the upper left corner of `VisualStudioCode` -> `Open Folder` -> select the `LilyGO-T-A7670X` directory
+5. Wait for the installation of third-party dependent libraries to complete
+6. Click on the `platformio.ini` file, and in the `platformio` column
+7. Select the board name you want to use in `default_envs` and uncomment it.
+8. Uncomment one of the lines `src_dir = xxxx` to make sure only one line works
+9. Click the (✔) symbol in the lower left corner to compile
+10. Connect the board to the computer USB
+11. Click (→) to upload firmware
+12. Click (plug symbol) to monitor serial output
+13. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
 
+## 4️⃣ Arduino IDE Quick Start
 
-## USE PlatformIO
+* It is recommended to use platformio without cumbersome steps
 
-1. Install[VSCODE](https://code.visualstudio.com/)and[Python](https://www.python.org/)
-2. Search for the PlatformIO plug-in in the VSCODE extension and install it.
-3. After the installation is complete and the reload is completed, there will be a small house icon in the lower left corner. Click to display the Platformio IDE home page
-4. Go to file - > Open folder - > Select the LilyGO-T-A7670X  folder and click the (√) symbol in the lower left corner to compile (→) for upload.
+1. Install [Arduino IDE](https://www.arduino.cc/en/software)
+2. Install [Arduino ESP32 2.0.5 or above](https://docs.espressif.com/projects/arduino-esp32/en/latest/) 
+3. Copy all folders in [lib folder](./lib/)  to Arduino library folder (e.g. C:\Users\YourName\Documents\Arduino\libraries)
+4. Open ArduinoIDE  ,`Tools` , Look at the picture to choose
+   <!-- ![setting](./images/ArduinoIDE.jpg) -->
+   | Setting                              | Value                                                          |
+   | :----------------------------------- | :------------------------------------------------------------- |
+   | Board                                | ESP32 Dev Module                                               |
+   | CPU Frequency                        | 240MHz                                                         |
+   | Core Debug Level                     | None                                                           |
+   | Erase All Flash Before Sketch Upload | Disabled                                                       |
+   | Events Run On                        | Core 1                                                         |
+   | Flash Frequency                      | 80MHz                                                          |
+   | Flash Mode                           | QIO                                                            |
+   | Flash Size                           | 4MB (32Mb)  (Unchangeable)                                     |
+   | JTAG Adapter                         | Disabled                                                       |
+   | Arduino Runs On                      | Core 1                                                         |
+   | Partition Scheme                     | Default 4MB  with spiffs(1.2MB APP/1.5MB SPIFFS)(Unchangeable) |
+   | PSRAM                                | Enabled                                                        |
+   | Upload Speed                         | 921600                                                         |
+5. `LilyGO-T-A7670X` folder -> `examples`
+6. For runnable examples, please refer to the example list above.
+7. Open the corresponding board macro definition above <utilities.h>
+8. Select `Port`
+9. Click `upload` , Wait for compilation and writing to complete
+10. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
 
+## 5️⃣ Notes for new Users <T-A7670E/T-A7670G/T-A7670SA>
 
-<h2 align = "left">Product 📷:</h2>
+* **The following does not apply to T-Call-A7670**
 
-| Product  |                           Product  Link                            |
-| :------: | :----------------------------------------------------------------: |
-| T-A7670X | [AliExpress](https://pt.aliexpress.com/item/1005003036514769.html) |
-
-
-
-## Notes for new Users
-
-1. pin VIN is a USB input, if a battery is being used to power the device there will be no voltage output from VIN meaning 3.3v is the only power output.
-
+1. Pin VIN is a USB input, if a battery is being used to power the device there will be no voltage output from VIN meaning 3.3v is the only power output.
 2. When using the built-in battery pack the on/off switch will function as normal, supplying/cutting off power to the board, However, if an external battery pack is used and attached to the VBAT pin the on/off switch will be bypassed meaning the only way to shut off will be to disconnect the batteries.
-
 3. On/off switch is for battery use only, it will not function when plugged into USB.
+4. Recommended solar panels are 4.4v to 6v **DO NOT EXCEED OR BOARD MAY BE DAMAGED** 
+5. When an SD card in you can not upload software in Arduino IDE since the SD card uses IO2 as CS, the SD card must be removed when uploading a new sketch.
+6. The `T-A7670G` modem does not contain a GPS positioning component and requires an additional external GPS positioning module to use the positioning function. [LilyGo T-A7670G with GPS](https://www.lilygo.cc/products/t-sim-a7670e?variant=43043706077365) uses [Quectel L76K](https://www.quectel.com/cn/product/gnss-l76k) as the T-A7670G auxiliary positioning function, which requires a part of the IO, please refer to the [usage example](./examples/GPSShield/)
 
-4. Battery voltage can not be read when plugged into USB using the onboard BAT ADC(35) 
+# 6️⃣ FAQ
 
-5. Recommended solar panels are 4.4v to 6v **DO NOT EXCEED OR BOARD MAY BE DAMAGED** 
+* Can't upload any sketch，Please enter the upload mode manually.
+   1. Connect the board via the USB cable
+   2. Press and hold the BOOT button , While still pressing the BOOT button, press RST
+   3. Release the RST
+   4. Release the BOOT button
+   5. Upload sketch
+* Upgrade modem firmware
+   1. [T-A7670x Upgrade docs](./docs/update_fw.md)
 
-6. When an SD card in you can not upload software in Arduino IDE since the SD card uses IO2 as CS, the SD card must be removed when uploading a new sketch. 
-
-## Pinout(2021-12-18 V1.0)
-
-![](image/new_version.jpg)
-
-## Battery life
-Current consumption from 3.7 Volt battery:
-
-|  Mode  | Average current |
-| :----: | :-------------: |
-| Active |     170 mA      |
-| Sleep  |     0.18 mA     |
-	
-
-
-Operating time from a full charge depends on your actual battery capacity.
