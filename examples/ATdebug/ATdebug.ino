@@ -31,14 +31,14 @@ uint32_t AutoBaud()
                               };
     for (uint8_t i = 0; i < sizeof(rates) / sizeof(rates[0]); i++) {
         uint32_t rate = rates[i];
-        DBG("Trying baud rate", rate, "...");
+        Serial.printf("Trying baud rate %u\n", rate);
         SerialAT.updateBaudRate(rate);
         delay(10);
         for (int j = 0; j < 10; j++) {
             SerialAT.print("AT\r\n");
             String input = SerialAT.readString();
             if (input.indexOf("OK") >= 0) {
-                DBG("Modem responded at rate", rate);
+                Serial.printf("Modem responded at rate:%u\n", rate);
                 return rate;
             }
         }
