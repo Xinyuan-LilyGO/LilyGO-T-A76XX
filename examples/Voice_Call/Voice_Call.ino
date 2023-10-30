@@ -19,8 +19,7 @@
 // See all AT commands, if wanted
 #define DUMP_AT_COMMANDS
 
-// char number[] = "+380xxxxxxxxx";//Change the number you want to dial
-char number[] = "18503002532";//Change the number you want to dial
+char number[] = "+380xxxxxxxxx";//Change the number you want to dial
 
 #include <TinyGsmClient.h>
 
