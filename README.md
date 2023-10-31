@@ -12,19 +12,20 @@
 
 ## 2️⃣Examples
 
-| Example        | [T-A7670X][1]     | [T-Call-A7670X][1] |
-| -------------- | ----------------- | ------------------ |
-| ATdebug        | ✅                 | ✅                  |
-| Blynk_Console  | ✅                 | ✅                  |
-| GPSShield      | ✅ (Just T-A7670G) | ❌   (Can't run)    |
-| GPS_BuiltIn    | ✅                 | ✅                  |
-| GPS_NMEA_Parse | ✅                 | ✅                  |
-| HttpClient     | ✅                 | ✅                  |
-| HttpsClient    | ✅                 | ✅                  |
-| MqttClient     | ✅                 | ✅                  |
-| ReadBattery    | ✅                 | ❌   (Can't run)    |
-| Sleep          | ✅                 | ✅                  |
-| Voice_Call     | ✅                 | ✅                  |
+| Example        | [T-A7670X][1]     | [T-Call-A7670X][1] | [T-SIM7672G][1] |
+| -------------- | ----------------- | ------------------ | --------------- |
+| ATdebug        | ✅                 | ✅                  | ✅               |
+| Blynk_Console  | ✅                 | ✅                  |                 |
+| GPSShield      | ✅ (Just T-A7670G) | ❌   (Can't run)    | ❌   (Can't run) |
+| GPS_BuiltIn    | ✅                 | ✅                  |                 |
+| GPS_NMEA_Parse | ✅                 | ✅                  |                 |
+| HttpClient     | ✅                 | ✅                  |                 |
+| HttpsClient    | ✅                 | ✅                  |                 |
+| MqttClient     | ✅                 | ✅                  |                 |
+| ReadBattery    | ✅                 | ❌   (Can't run)    |                 |
+| Sleep          | ✅                 | ✅                  | ✅               |
+| Voice_Call     | ✅                 | ✅                  |                 |
+| SDCard         | ✅                 | ❌   (Can't run)    | ✅               |
 
 # Quick start ⚡
 
@@ -96,4 +97,28 @@
    5. Upload sketch
 * Upgrade modem firmware
    1. [T-A7670x Upgrade docs](./docs/update_fw.md)
+
+# 7️⃣Resource
+
+1. A7670-Series-Datasheet
+   * [A7670 AT Command](./datasheet/A76XX/A76XX_Series_AT_Command_Manual_V1.09.pdf)
+   * [A7670 MQTT(S) Application](./datasheet/A76XX/A76XX%20Series_MQTT(S)_Application%20Note_V1.02.pdf)
+   * [A7670 HTTP(S) Application](./datasheet/A76XX/A76XX%20Series_HTTP(S)_Application%20Note_V1.02.pdf)
+   * [A7670 GNSS Application](./datasheet/A76XX/A76XX%20Series_GNSS_Application%20Note_V1.02.pdf)
+   * [A7670 FTP Application](./datasheet/A76XX/A76XX%20Series_FTP(S)_Application%20Note_V1.02.pdf)
+   * [A7670 LBS Application](./datasheet/A76XX/A76XX%20Series_LBS_Application%20Note_V1.02.pdf)
+   * [A7670 SSL Application](./datasheet/A76XX/A76XX%20Series_SSL_Application%20Note_V1.02.pdf)
+   * [A7670 Sleep Application](./datasheet/A76XX/A76XX%20Series_Sleep%20Mode_Application%20Note_V1.02.pdf)
+   * [A7670 Hardware Design manual](./datasheet/A76XX/A7670C_R2_硬件设计手册_V1.06.pdf)
+
+
+
+
+
+
+
+
+
+
+
 
