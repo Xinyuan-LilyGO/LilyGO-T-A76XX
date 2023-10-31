@@ -17,20 +17,20 @@
 
 ## 2️⃣Examples
 
-| Example        | [T-A7670X][1]     | [T-Call-A7670X][1] | [T-SIM7672G][1] |
-| -------------- | ----------------- | ------------------ | --------------- |
-| ATdebug        | ✅                 | ✅                  | ✅               |
-| Blynk_Console  | ✅                 | ✅                  |                 |
-| GPSShield      | ✅ (Just T-A7670G) | ❌   (Can't run)    | ❌   (Can't run) |
+| Example        | [T-A7670X][1]     | [T-Call-A7670X][1] | [T-SIM7672G][1]  |
+| -------------- | ----------------- | ------------------ | ---------------- |
+| ATdebug        | ✅                 | ✅                  | ✅                |
+| Blynk_Console  | ✅                 | ✅                  | ✅                |
+| GPSShield      | ✅ (Just T-A7670G) | ❌   (Can't run)    | ❌   (Can't run)  |
 | GPS_BuiltIn    | ✅                 | ✅                  | ✅                |
 | GPS_NMEA_Parse | ✅                 | ✅                  | ✅                |
 | HttpClient     | ✅                 | ✅                  | ✅                |
 | HttpsClient    | ✅                 | ✅                  | ✅                |
 | MqttClient     | ✅                 | ✅                  | ✅                |
 | ReadBattery    | ✅                 | ❌   (Can't run)    | ✅                |
-| Sleep          | ✅                 | ✅                  | ✅               |
-| Voice_Call     | ✅                 | ✅                  | ✅                |
-| SDCard         | ✅                 | ❌   (Can't run)    | ✅               |
+| Sleep          | ✅                 | ✅                  | ✅                |
+| Voice_Call     | ✅                 | ✅                  | ❌   (No support) |
+| SDCard         | ✅                 | ❌   (Can't run)    | ✅                |
 
 # Quick start ⚡
 

@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-10-26
- *
+ * @note      Not support T-SIM7672
  */
 
 #include "utilities.h"
