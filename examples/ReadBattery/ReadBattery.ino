@@ -9,17 +9,13 @@
  *            If V1.1 needs to be read, then you need to add a 100K 1% voltage divider resistor between the battery and GND
  *            When connected to the USB, the battery voltage data read is not the real battery voltage, so the battery
  *            voltage is sent to the UDP Server through UDP. When using it, please disconnect the USBC
- * @note      Onlu support T-A7670 board , not support T-Call A7670
+ * @note      Onlu support T-A7670 , T-SIM7672G board , not support T-Call A7670
  */
 #include <esp_adc_cal.h>
 #include <Arduino.h>
 #include <WiFi.h>
 #include <WiFiUdp.h>
-
-
-#define ADC_PIN             35
-#define POWER_ENABLE_PIN    12
-
+#include "utilities.h"
 
 // WiFi network name and password:
 const char *networkName = "your-ssid";
@@ -28,8 +24,8 @@ const char *networkPswd = "your-password";
 //IP address to send UDP data to:
 // either use the ip address of the server or
 // a network broadcast address
-const char *udpAddress = "192.168.36.14";
-const int udpPort = 3333;
+const char *udpAddress = "192.168.36.132";
+const int udpPort = 3336;
 
 //Are we currently connected?
 boolean connected = false;
@@ -37,9 +33,8 @@ boolean connected = false;
 //The udp library class
 WiFiUDP udp;
 
-int vref = 1100;
 uint32_t timeStamp = 0;
-
+char buf[256];
 
 void connectToWiFi(const char *ssid, const char *pwd)
 {
@@ -82,20 +77,8 @@ void setup()
 {
     Serial.begin(115200); // Set console baud rate
 
-    pinMode(POWER_ENABLE_PIN, OUTPUT);
-    digitalWrite(POWER_ENABLE_PIN, HIGH);
-
-
-    esp_adc_cal_characteristics_t adc_chars;
-    esp_adc_cal_value_t val_type = esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_chars);    //Check type of calibration value used to characterize ADC
-    if (val_type == ESP_ADC_CAL_VAL_EFUSE_VREF) {
-        Serial.printf("eFuse Vref:%u mV", adc_chars.vref);
-        vref = adc_chars.vref;
-    } else if (val_type == ESP_ADC_CAL_VAL_EFUSE_TP) {
-        Serial.printf("Two Point --> coeff_a:%umV coeff_b:%umV\n", adc_chars.coeff_a, adc_chars.coeff_b);
-    } else {
-        Serial.println("Default Vref: 1100mV");
-    }
+    pinMode(BOARD_POWERON_PIN, OUTPUT);
+    digitalWrite(BOARD_POWERON_PIN, HIGH);
 
     //Connect to the WiFi network
     connectToWiFi(networkName, networkPswd);
@@ -108,19 +91,21 @@ void loop()
     if (connected) {
         if (millis() - timeStamp > 1000) {
             timeStamp = millis();
-            uint16_t v = analogRead(ADC_PIN);
-            float battery_voltage = ((float)v / 4095.0) * 2.0 * 3.3 * (vref / 1000.0);
-            String voltage = "Voltage :" + String(battery_voltage) + "V\n";
+            esp_adc_cal_characteristics_t adc_chars;
+            esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_chars);
+            uint16_t battery_voltage = esp_adc_cal_raw_to_voltage(analogRead(BOARD_BAT_ADC_PIN), &adc_chars) * 2;
+            uint16_t solar_voltage = esp_adc_cal_raw_to_voltage(analogRead(BOARD_SOLAR_ADC_PIN), &adc_chars) * 2;
 
-            //    When connected to the USB, the battery voltage data read is not the real battery voltage,
+            snprintf(buf, 256, "Battery:%umV \tSolar:%umV", battery_voltage, solar_voltage);
+
+            // When connected to the USB, the battery voltage data read is not the real battery voltage,
             // so the battery voltage is sent to the UDP Server through UDP. When using it, please disconnect the USBC
-            Serial.println(voltage);
+            Serial.println(buf);
 
             //Send a packet
             udp.beginPacket(udpAddress, udpPort);
-            udp.printf(voltage.c_str());
+            udp.println(buf);
             udp.endPacket();
         }
-
     }
 }

@@ -6,7 +6,6 @@
  * @date      2023-10-26
  *
  */
-#define TINY_GSM_MODEM_SIM7600      //The AT instruction of A7670 is compatible with SIM7600 
 #define TINY_GSM_RX_BUFFER          1024 // Set RX buffer to 1Kb
 
 // See all AT commands, if wanted

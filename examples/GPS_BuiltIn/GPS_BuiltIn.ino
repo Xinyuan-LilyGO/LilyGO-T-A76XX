@@ -6,11 +6,8 @@
  * @date      2023-06-28
  *
  */
-
 #include "utilities.h"
 
-
-#define TINY_GSM_MODEM_SIM7600  //A7670 Compatible with SIM7600 AT instructions
 #define TINY_GSM_RX_BUFFER 1024 // Set RX buffer to 1Kb
 
 // Set serial for debug console (to the Serial Monitor, default speed 115200)
@@ -21,7 +18,7 @@
 #define TINY_GSM_DEBUG SerialMon
 
 // See all AT commands, if wanted
-#define DUMP_AT_COMMANDS
+// #define DUMP_AT_COMMANDS
 
 
 #include <TinyGsmClient.h>
@@ -33,189 +30,6 @@ TinyGsm modem(debugger);
 #else
 TinyGsm modem(SerialAT);
 #endif
-
-
-bool streamGetLength(char *buf, int8_t numChars,
-                     const uint32_t timeout_ms = 1000L)
-{
-    if (!buf) {
-        return false;
-    }
-
-    int8_t   numCharsReady = -1;
-    uint32_t startMillis   = millis();
-    while (millis() - startMillis < timeout_ms &&
-            (numCharsReady = modem.stream.available()) < numChars) {
-        TINY_GSM_YIELD();
-    }
-
-    if (numCharsReady >= numChars) {
-        modem.stream.readBytes(buf, numChars);
-        return true;
-    }
-
-    return false;
-}
-
-int16_t streamGetIntLength(int8_t         numChars,
-                           const uint32_t timeout_ms = 1000L)
-{
-    char buf[numChars + 1];
-    if (streamGetLength(buf, numChars, timeout_ms)) {
-        buf[numChars] = '\0';
-        return atoi(buf);
-    }
-
-    return -9999;
-}
-
-uint64_t streamGetLongLongBefore(char lastChar)
-{
-    char   buf[12];
-    size_t bytesRead = modem.stream.readBytesUntil(
-                           lastChar, buf, static_cast<size_t>(12));
-    // if we read 12 or more bytes, it's an overflow
-    if (bytesRead && bytesRead < 12) {
-        buf[bytesRead] = '\0';
-        uint64_t  res  = atoll(buf);
-        return res;
-    }
-    return 0;
-}
-
-int streamGetIntBefore(char lastChar)
-{
-    char   buf[7];
-    size_t bytesRead = modem.stream.readBytesUntil(
-                           lastChar, buf, static_cast<size_t>(7));
-    // if we read 7 or more bytes, it's an overflow
-    if (bytesRead && bytesRead < 7) {
-        buf[bytesRead] = '\0';
-        int res    = atoi(buf);
-        return res;
-    }
-
-    return -9999;
-}
-
-float streamGetFloatLength(int8_t         numChars,
-                           const uint32_t timeout_ms = 1000L)
-{
-    char buf[numChars + 1];
-    if (streamGetLength(buf, numChars, timeout_ms)) {
-        buf[numChars] = '\0';
-        return atof(buf);
-    }
-
-    return -9999.0F;
-}
-
-float streamGetFloatBefore(char lastChar)
-{
-    char   buf[16];
-    size_t bytesRead = modem.stream.readBytesUntil(
-                           lastChar, buf, static_cast<size_t>(16));
-    // if we read 16 or more bytes, it's an overflow
-    if (bytesRead && bytesRead < 16) {
-        buf[bytesRead] = '\0';
-        float res      = atof(buf);
-        return res;
-    }
-
-    return -9999.0F;
-}
-
-bool streamSkipUntil(const char c, const uint32_t timeout_ms = 1000L)
-{
-    uint32_t startMillis = millis();
-    while (millis() - startMillis < timeout_ms) {
-        while (millis() - startMillis < timeout_ms &&
-                !modem.stream.available()) {
-            TINY_GSM_YIELD();
-        }
-        if (modem.stream.read() == c) {
-            return true;
-        }
-    }
-    return false;
-}
-
-void getGNSS()
-{
-    modem.sendAT(GF("+CGNSSINFO"));
-    if (modem.waitResponse(GF(GSM_NL "+CGNSSINFO: ")) != 1) {
-        return ;
-    }
-
-    uint8_t fixMode = streamGetIntBefore(',');  // mode 2=2D Fix or 3=3DFix
-    // TODO(?) Can 1 be returned
-    if (fixMode == 1 || fixMode == 2 || fixMode == 3) {
-        // init variables
-        float ilat = 0;
-        char  north;
-        float ilon = 0;
-        char  east;
-        float ispeed       = 0;
-        float ialt         = 0;
-        int   ivsat        = 0;
-        int   iusat        = 0;
-        float iaccuracy    = 0;
-        int   iyear        = 0;
-        int   imonth       = 0;
-        int   iday         = 0;
-        int   ihour        = 0;
-        int   imin         = 0;
-        float secondWithSS = 0;
-
-        streamSkipUntil(',');               // GPS satellite valid numbers
-        streamSkipUntil(',');               // GLONASS satellite valid numbers
-        streamSkipUntil(',');               // BEIDOU satellite valid numbers
-        streamSkipUntil(',');
-        ilat  = streamGetFloatBefore(',');  // Latitude in ddmm.mmmmmm
-        north = modem.stream.read();        // N/S Indicator, N=north or S=south
-        streamSkipUntil(',');
-        ilon = streamGetFloatBefore(',');  // Longitude in ddmm.mmmmmm
-        east = modem.stream.read();              // E/W Indicator, E=east or W=west
-        streamSkipUntil(',');
-
-        // Date. Output format is ddmmyy
-        iday   = streamGetIntLength(2);    // Two digit day
-        imonth = streamGetIntLength(2);    // Two digit month
-        iyear  = streamGetIntBefore(',') + 2000;  // Two digit year
-
-        // UTC Time. Output format is hhmmss.s
-        ihour = streamGetIntLength(2);  // Two digit hour
-        imin  = streamGetIntLength(2);  // Two digit minute
-        secondWithSS = streamGetFloatBefore(',');  // 4 digit second with subseconds
-
-        ialt   = streamGetFloatBefore(',');  // MSL Altitude. Unit is meters
-        ispeed = streamGetFloatBefore(',');  // Speed Over Ground. Unit is knots.
-        streamSkipUntil(',');                // Course Over Ground. Degrees.
-        streamSkipUntil(',');  // After set, will report GPS every x seconds
-        iaccuracy = streamGetFloatBefore(',');  // Position Dilution Of Precision
-        streamSkipUntil(',');   // Horizontal Dilution Of Precision
-        streamSkipUntil(',');   // Vertical Dilution Of Precision
-        streamSkipUntil('\n');  // TODO(?) is one more field reported??
-
-
-        DBG("Latitude:", ilat, "\tLongitude:", ilon);
-        DBG("Speed:", ispeed, "\tAltitude:", ialt);
-        DBG("Visible Satellites:", ivsat, "\tUsed Satellites:", iusat);
-        DBG("Accuracy:", iaccuracy);
-        DBG("Year:", iyear, "\tMonth:", imonth, "\tDay:", iday);
-        DBG("Hour:", ihour, "\tMinute:", imin, "\tSecond:", static_cast<int>(secondWithSS));
-
-        modem.waitResponse();
-        // Sometimes, although fix is displayed,
-        // the value of longitude and latitude 0 will be set as invalid
-        if (ilat == 0 || ilon == 0) {
-            return ;
-        }
-        return ;
-    }
-    modem.waitResponse();
-}
-
 
 void setup()
 {
@@ -244,7 +58,6 @@ void setup()
     Serial.println("Start modem...");
     delay(3000);
 
-
     int retry = 0;
     while (!modem.testAT(1000)) {
         Serial.println(".");
@@ -260,24 +73,64 @@ void setup()
     Serial.println();
     delay(200);
 
-    Serial.print("GPS starting...");
-
-    // Turn on GNSS
-    modem.sendAT("+CGNSSPWR=1");
-    while (modem.waitResponse(10000UL, "+CGNSSPWR: READY!") != 1) {
-        while (SerialAT.available()) {
-            Serial.write(SerialAT.read());
-        }
-        while (Serial.available()) {
-            SerialAT.write(Serial.read());
-        }
+    Serial.println("Enabling GPS/GNSS/GLONASS");
+    while (!modem.enableGPS(MODEM_GPS_ENABLE_GPIO)) {
+        Serial.print(".");
     }
-    Serial.println("GPS Ready!");
+    Serial.println();
+    Serial.println("GPS Enabled");
 }
 
 void loop()
 {
-    getGNSS();
-    delay(1000);
+    float lat2      = 0;
+    float lon2      = 0;
+    float speed2    = 0;
+    float alt2      = 0;
+    int   vsat2     = 0;
+    int   usat2     = 0;
+    float accuracy2 = 0;
+    int   year2     = 0;
+    int   month2    = 0;
+    int   day2      = 0;
+    int   hour2     = 0;
+    int   min2      = 0;
+    int   sec2      = 0;
+    uint8_t    fixMode   = 0;
+    for (int8_t i = 15; i; i--) {
+        Serial.println("Requesting current GPS/GNSS/GLONASS location");
+        if (modem.getGPS(&fixMode, &lat2, &lon2, &speed2, &alt2, &vsat2, &usat2, &accuracy2,
+                         &year2, &month2, &day2, &hour2, &min2, &sec2)) {
+
+            Serial.print("FixMode:"); Serial.println(fixMode);
+            Serial.print("Latitude:"); Serial.print(lat2); Serial.print("\tLongitude:"); Serial.println(lon2);
+            Serial.print("Speed:"); Serial.print(speed2); Serial.print("\tAltitude:"); Serial.println(alt2);
+            Serial.print("Visible Satellites:"); Serial.print(vsat2); Serial.print("\tUsed Satellites:"); Serial.println(usat2);
+            Serial.print("Accuracy:"); Serial.println(accuracy2);
+
+            Serial.print("Year:"); Serial.print(year2);
+            Serial.print("\tMonth:"); Serial.print(month2);
+            Serial.print("\tDay:"); Serial.println(day2);
+
+            Serial.print("Hour:"); Serial.print(hour2);
+            Serial.print("\tMinute:"); Serial.print(min2);
+            Serial.print("\tSecond:"); Serial.println(sec2);
+            break;
+        } else {
+            Serial.println("Couldn't get GPS/GNSS/GLONASS location, retrying in 15s.");
+            delay(15000L);
+        }
+    }
+    Serial.println("Retrieving GPS/GNSS/GLONASS location again as a string");
+    String gps_raw = modem.getGPSraw();
+    Serial.print("GPS/GNSS Based Location String:");
+    Serial.println(gps_raw);
+    Serial.println("Disabling GPS");
+
+    modem.disableGPS();
+
+    while (1) {
+        delay(10);
+    }
 }
 

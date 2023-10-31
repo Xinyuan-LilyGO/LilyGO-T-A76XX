@@ -8,7 +8,6 @@
  */
 #include "utilities.h"
 
-#define TINY_GSM_MODEM_SIM7600  //A7608's AT instruction is compatible with SIM7600
 #define TINY_GSM_RX_BUFFER 1024 // Set RX buffer to 1Kb
 #define SerialAT Serial1
 
@@ -27,7 +26,6 @@ TinyGsm modem(SerialAT);
 
 // The TinyGPSPlus object
 TinyGPSPlus gps;
-
 
 void displayInfo();
 
@@ -58,64 +56,45 @@ void setup()
     Serial.println("Start modem...");
     delay(3000);
 
-    do {
-
-        /*
-        *   During testing, it was found that there may be a power outage.
-            Add a loop detection here. When the GPS timeout does not start,
-            resend the AT to check if the modem is online
-        * */
-        Serial.print("Modem starting...");
-        int retry = 0;
-        while (!modem.testAT(1000)) {
-            Serial.println(".");
-            if (retry++ > 10) {
-                digitalWrite(BOARD_PWRKEY_PIN, LOW);
-                delay(100);
-                digitalWrite(BOARD_PWRKEY_PIN, HIGH);
-                delay(1000);    //Ton = 1000ms ,Min = 500ms, Max 2000ms
-                digitalWrite(BOARD_PWRKEY_PIN, LOW);
-                retry = 0;
-            }
+    /*
+    *   During testing, it was found that there may be a power outage.
+        Add a loop detection here. When the GPS timeout does not start,
+        resend the AT to check if the modem is online
+    * */
+    Serial.print("Modem starting...");
+    int retry = 0;
+    while (!modem.testAT(1000)) {
+        Serial.println(".");
+        if (retry++ > 10) {
+            digitalWrite(BOARD_PWRKEY_PIN, LOW);
+            delay(100);
+            digitalWrite(BOARD_PWRKEY_PIN, HIGH);
+            delay(1000);    //Ton = 1000ms ,Min = 500ms, Max 2000ms
+            digitalWrite(BOARD_PWRKEY_PIN, LOW);
+            retry = 0;
         }
-        Serial.println();
+    }
+    Serial.println();
 
-        delay(200);
-
-        Serial.print("GPS starting...");
-        modem.sendAT("+CGNSSPWR=1");
-
-    } while (modem.waitResponse(10000UL, "+CGNSSPWR: READY!") != 1);
+    delay(200);
 
     Serial.println("GPS Ready!");
 
-    //Configure the baud rate of UART3 and GPS module
-    modem.sendAT("+CGNSSIPR=115200");
-    modem.waitResponse(1000L);
+    modem.enableGPS(MODEM_GPS_ENABLE_GPIO);
 
-    //Configure GNSS support mode : BD + GPS
-    modem.sendAT("+CGNSSMODE=3");
-    modem.waitResponse(1000L);
-    // Configure NMEA sentence type
-    modem.sendAT("+CGNSSNMEA=1,1,1,1,1,1,0,0");
-    modem.waitResponse(1000L);
+    modem.setGPSBaud(115200);
 
-    // Set NMEA output rate : 1HZ
-    modem.sendAT("+CGPSNMEARATE=1");
-    modem.waitResponse(1000L);
+    modem.setGPSMode(3);    //GPS + BD
 
-    // Send data received from UART3 to NMEA port
-    modem.sendAT("+CGNSSTST=1");
-    modem.waitResponse(1000L);
+    modem.configNMEASentence(1, 1, 1, 1, 1, 1);
 
-    // Select the output port for NMEA sentence
-    modem.sendAT("+CGNSSPORTSWITCH=0,1");
-    modem.waitResponse(1000L);
+    modem.setGPSOutputRate(1);
+
+    modem.enableNMEA();
 
     Serial.println(F("Sats HDOP  Latitude   Longitude   Fix  Date       Time     Date Alt    Course Speed Card  Distance Course Card  Chars Sentences Checksum"));
     Serial.println(F("           (deg)      (deg)       Age                      Age  (m)    --- from GPS ----  ---- to London  ----  RX    RX        Fail"));
     Serial.println(F("----------------------------------------------------------------------------------------------------------------------------------------"));
-
 }
 
 void loop()
@@ -218,6 +197,7 @@ static void smartDelay(unsigned long ms)
     do {
         while (SerialAT.available()) {
             ch = SerialAT.read();
+            // Serial.write(ch);
             gps.encode(ch);
         }
     } while (millis() - start < ms);

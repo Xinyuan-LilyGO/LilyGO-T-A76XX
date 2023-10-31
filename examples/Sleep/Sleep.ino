@@ -7,8 +7,8 @@
  *
  */
 #include "utilities.h"
+#include <driver/gpio.h>
 
-#define TINY_GSM_MODEM_SIM7600
 #define TINY_GSM_RX_BUFFER          1024 // Set RX buffer to 1Kb
 
 // See all AT commands, if wanted

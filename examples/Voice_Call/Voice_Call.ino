@@ -9,7 +9,7 @@
 
 #include "utilities.h"
 
-#define TINY_GSM_MODEM_SIM7600  //A7670 Compatible with SIM7600 AT instructions
+
 // Define the serial console for debug prints, if needed
 #define TINY_GSM_DEBUG SerialMon
 

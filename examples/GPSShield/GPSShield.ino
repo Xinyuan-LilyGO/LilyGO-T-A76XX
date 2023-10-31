@@ -8,7 +8,7 @@
  *            Works only with externally mounted GPS modules.
  *            If the purchased board includes a GPS extension module it will work,
  *            otherwise this sketch will have no effect
- * @note      Onlu support T-A7670 board , not support T-Call A7670
+ * @note      Onlu support T-A7670 board , not support T-Call A7670 , T-SIM7672
  */
 
 #ifndef SerialAT

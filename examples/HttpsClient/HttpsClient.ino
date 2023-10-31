@@ -1,10 +1,8 @@
-#define TINY_GSM_MODEM_SIM7600   //SIMA7670 Compatible with SIM7600 AT instructions
-
 // Set serial for debug console (to the Serial Monitor, default speed 115200)
 #define SerialMon Serial
 
 // See all AT commands, if wanted
-//#define DUMP_AT_COMMANDS
+#define DUMP_AT_COMMANDS
 
 // Define the serial console for debug prints, if needed
 #define TINY_GSM_DEBUG SerialMon
@@ -27,7 +25,7 @@ const char wifiPass[] = "YourWiFiPass";
 // Server details
 const char server[]   = "vsh.pp.ua";
 const char resource[] = "/TinyGSM/logo.txt";
-const int  port       = 443;
+const int  port       = 80;
 
 #include <TinyGsmClient.h>
 #include <ArduinoHttpClient.h>
@@ -89,6 +87,7 @@ void setup()
         return;
     }
 
+#ifndef TINY_GSM_MODEM_SIM7672
     /*
     2 Automatic
     13 GSM Only
@@ -101,6 +100,7 @@ void setup()
         DBG(" setNetworkMode faill");
         return ;
     }
+#endif
 }
 
 void loop()
@@ -209,8 +209,6 @@ void loop()
 
     SerialMon.print(F("Body length is: "));
     SerialMon.println(body.length());
-
-    // Shutdown
 
     http.stop();
     SerialMon.println(F("Server disconnected"));

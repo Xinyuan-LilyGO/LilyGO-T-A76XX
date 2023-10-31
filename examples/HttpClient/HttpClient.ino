@@ -2,10 +2,6 @@
   FILE: httpclient.ino
   PURPOSE: Test functionality
 */
-
-
-#define TINY_GSM_MODEM_SIM7600   //SIMA7670 Compatible with SIM7600 AT instructions
-
 // Set serial for debug console (to the Serial Monitor, default speed 115200)
 #define SerialMon Serial
 
@@ -101,6 +97,7 @@ void setup()
         return;
     }
 
+#ifndef TINY_GSM_MODEM_SIM7672
     /*
     2 Automatic
     13 GSM Only
@@ -113,6 +110,7 @@ void setup()
         DBG(" setNetworkMode faill");
         return ;
     }
+#endif
 }
 
 void loop()

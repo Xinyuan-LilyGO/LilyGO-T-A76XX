@@ -26,13 +26,10 @@
  *************************************************************/
 
 /* Fill in information from Blynk Device Info here */
-//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
-//#define BLYNK_TEMPLATE_NAME         "Device"
-//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
+#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+#define BLYNK_TEMPLATE_NAME         "Device"
+#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
-
-// Select your modem:
-#define TINY_GSM_MODEM_SIM7600   //A7670 Compatible with SIM7600 AT instructions
 
 // Default heartbeat interval for GSM is 60
 // If you want override this value, uncomment and set this option:
