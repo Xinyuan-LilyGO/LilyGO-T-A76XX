@@ -5,7 +5,7 @@
 | Product(PinMap)    | SOC            | Flash | PSRAM     | Schematic                                      |
 | ------------------ | -------------- | ----- | --------- | ---------------------------------------------- |
 | [T-A7670X][1]      | ESP32-WROVER-E | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-A7670X_V1.1.pdf)     |
-| [T-Call-A7670X][2] | ESP32-WROVER-E | 4MB   | 2MB(QSPI) | [schematic](./schematic/T-Call-A7670_V1.0.pdf) |
+| [T-Call-A7670X][2] | ESP32-WROVER-E | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-Call-A7670_V1.0.pdf) |
 
 [1]: https://www.lilygo.cc/products/t-sim-a7670e
 [2]: https://www.lilygo.cc
@@ -17,14 +17,14 @@
 | ATdebug        | ✅                 | ✅                  | ✅               |
 | Blynk_Console  | ✅                 | ✅                  |                 |
 | GPSShield      | ✅ (Just T-A7670G) | ❌   (Can't run)    | ❌   (Can't run) |
-| GPS_BuiltIn    | ✅                 | ✅                  |                 |
-| GPS_NMEA_Parse | ✅                 | ✅                  |                 |
-| HttpClient     | ✅                 | ✅                  |                 |
-| HttpsClient    | ✅                 | ✅                  |                 |
-| MqttClient     | ✅                 | ✅                  |                 |
-| ReadBattery    | ✅                 | ❌   (Can't run)    |                 |
+| GPS_BuiltIn    | ✅                 | ✅                  | ✅                |
+| GPS_NMEA_Parse | ✅                 | ✅                  | ✅                |
+| HttpClient     | ✅                 | ✅                  | ✅                |
+| HttpsClient    | ✅                 | ✅                  | ✅                |
+| MqttClient     | ✅                 | ✅                  | ✅                |
+| ReadBattery    | ✅                 | ❌   (Can't run)    | ✅                |
 | Sleep          | ✅                 | ✅                  | ✅               |
-| Voice_Call     | ✅                 | ✅                  |                 |
+| Voice_Call     | ✅                 | ✅                  | ✅                |
 | SDCard         | ✅                 | ❌   (Can't run)    | ✅               |
 
 # Quick start ⚡
