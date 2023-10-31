@@ -1,5 +1,10 @@
 <h1 align = "center">🌟LilyGo T-A7670X🌟</h1>
 
+# News
+
+- The TinyGSM used in the example is a [fork](https://github.com/lewisxhe/TinyGSM) to support A7670 and SIM7672,If you use the master branch, the compilation will not go smoothly
+
+
 # 1️⃣Product
 
 | Product(PinMap)    | SOC            | Flash | PSRAM     | Schematic                                      |
