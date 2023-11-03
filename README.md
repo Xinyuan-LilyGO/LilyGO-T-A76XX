@@ -31,6 +31,7 @@
 | Sleep          | ✅                 | ✅                  | ✅                |
 | Voice_Call     | ✅                 | ✅                  | ❌   (No support) |
 | SDCard         | ✅                 | ❌   (Can't run)    | ✅                |
+| SerialRS485    | ✅                 | ✅                  | ✅                |
 
 # Quick start ⚡
 
