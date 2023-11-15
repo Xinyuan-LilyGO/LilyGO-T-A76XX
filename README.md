@@ -36,7 +36,7 @@
 | MqttClient     | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | ReadBattery    | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ❌   (Can't run)    | ✅               |
 | Sleep          | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| Voice_Call     | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
+| VoiceCalls     | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
 | SDCard         | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ✅                  | ✅               |
 | SerialRS485    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 
@@ -67,8 +67,8 @@
 3. Copy all folders in [lib folder](./lib/)  to Arduino library folder (e.g. C:\Users\YourName\Documents\Arduino\libraries)
 4. Open ArduinoIDE  ,`Tools` , Look at the picture to choose
     | [T-A7670X][1]/[T-Call-A7670X][2]/[T-A7608][3] | [T-A7608-DC-S3][4]/[T-A7608-DC-S3][4]/[T-A7608-S3][5]/[T-SIM7672G-S3][6] |
-    | ---------------------------------------------- | ---------------------------------------------------------------------- |
-    | ![esp32dev](images/esp32dev.jpg)                       | ![esp32s3dev](images/esp32s3dev.jpg)                                             |
+    | --------------------------------------------- | ------------------------------------------------------------------------ |
+    | ![esp32dev](images/esp32dev.jpg)              | ![esp32s3dev](images/esp32s3dev.jpg)                                     |
 5. `LilyGO-T-A76XX` folder -> `examples` -> `Choose the appropriate example from the list above`
 6. Open the corresponding board macro definition above [utilities.h](./examples/ATdebug/utilities.h)
 7. Select `Port`
