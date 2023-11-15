@@ -11,7 +11,7 @@
 #include <SPI.h>
 #include "utilities.h"
 
-#if defined(LILYGO_T_CALL_A7670)
+#if defined(LILYGO_T_CALL_A7670) || defined(LILYGO_T_A7608X_DC_S3)
 #error "This board not SD slot"
 #endif
 

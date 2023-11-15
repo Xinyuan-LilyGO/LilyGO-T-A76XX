@@ -35,10 +35,10 @@
 // If you want override this value, uncomment and set this option:
 //#define BLYNK_HEARTBEAT 30
 
+#include "utilities.h"
 #include <Arduino.h>
 #include <TinyGsmClient.h>
 #include <BlynkSimpleTinyGSM.h>
-#include "utilities.h"
 
 BlynkTimer timer;
 TinyGsm modem(SerialAT);
@@ -74,8 +74,11 @@ void setup()
 {
     Serial.begin(115200);
     // Turn on DC boost to power on the modem
+#ifdef BOARD_POWERON_PIN
     pinMode(BOARD_POWERON_PIN, OUTPUT);
     digitalWrite(BOARD_POWERON_PIN, HIGH);
+#endif
+
     // Set modem reset pin ,reset modem
     pinMode(MODEM_RESET_PIN, OUTPUT);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);

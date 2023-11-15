@@ -77,8 +77,11 @@ void setup()
 {
     Serial.begin(115200); // Set console baud rate
 
+#ifdef BOARD_POWERON_PIN
     pinMode(BOARD_POWERON_PIN, OUTPUT);
     digitalWrite(BOARD_POWERON_PIN, HIGH);
+#endif
+
 
     //Connect to the WiFi network
     connectToWiFi(networkName, networkPswd);
@@ -94,7 +97,12 @@ void loop()
             esp_adc_cal_characteristics_t adc_chars;
             esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_chars);
             uint16_t battery_voltage = esp_adc_cal_raw_to_voltage(analogRead(BOARD_BAT_ADC_PIN), &adc_chars) * 2;
+
+#ifdef BOARD_SOLAR_ADC_PIN
             uint16_t solar_voltage = esp_adc_cal_raw_to_voltage(analogRead(BOARD_SOLAR_ADC_PIN), &adc_chars) * 2;
+#else
+            uint16_t solar_voltage = 0;
+#endif
 
             snprintf(buf, 256, "Battery:%umV \tSolar:%umV", battery_voltage, solar_voltage);
 

@@ -35,8 +35,10 @@ void setup()
     SerialAT.begin(115200, SERIAL_8N1, MODEM_RX_PIN, MODEM_TX_PIN);
 
     // Turn on DC boost to power on the modem
+#ifdef BOARD_POWERON_PIN
     pinMode(BOARD_POWERON_PIN, OUTPUT);
-    digitalWrite(BOARD_POWERON_PIN, LOW);
+    digitalWrite(BOARD_POWERON_PIN, HIGH);
+#endif
 
     if (esp_sleep_get_wakeup_cause() != ESP_SLEEP_WAKEUP_TIMER) {
         /*

@@ -36,8 +36,10 @@ void setup()
 {
     Serial.begin(115200);
     // Turn on DC boost to power on the modem
+#ifdef BOARD_POWERON_PIN
     pinMode(BOARD_POWERON_PIN, OUTPUT);
-    digitalWrite(BOARD_POWERON_PIN, LOW);
+    digitalWrite(BOARD_POWERON_PIN, HIGH);
+#endif
 
     // Set modem reset pin ,reset modem
     pinMode(MODEM_RESET_PIN, OUTPUT);

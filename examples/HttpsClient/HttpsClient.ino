@@ -1,3 +1,5 @@
+#include "utilities.h"
+
 // Set serial for debug console (to the Serial Monitor, default speed 115200)
 #define SerialMon Serial
 
@@ -29,7 +31,6 @@ const int  port       = 80;
 
 #include <TinyGsmClient.h>
 #include <ArduinoHttpClient.h>
-#include "utilities.h"
 
 // Just in case someone defined the wrong thing..
 #if TINY_GSM_USE_GPRS && not defined TINY_GSM_MODEM_HAS_GPRS
@@ -60,8 +61,11 @@ void setup()
 {
     Serial.begin(115200);
     // Turn on DC boost to power on the modem
+#ifdef BOARD_POWERON_PIN
     pinMode(BOARD_POWERON_PIN, OUTPUT);
     digitalWrite(BOARD_POWERON_PIN, HIGH);
+#endif
+
     // Set modem reset
     pinMode(MODEM_RESET_PIN, OUTPUT);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);

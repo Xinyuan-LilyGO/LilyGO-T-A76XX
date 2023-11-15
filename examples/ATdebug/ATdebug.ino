@@ -11,9 +11,9 @@
 // See all AT commands, if wanted
 #define DUMP_AT_COMMANDS
 
+#include "utilities.h"
 #include <TinyGsmClient.h>
 #include "Arduino.h"
-#include "utilities.h"
 
 #ifdef DUMP_AT_COMMANDS  // if enabled it requires the streamDebugger lib
 #include <StreamDebugger.h>
@@ -54,8 +54,10 @@ void setup()
 
     SerialAT.begin(115200, SERIAL_8N1, MODEM_RX_PIN, MODEM_TX_PIN);
 
+#ifdef BOARD_POWERON_PIN
     pinMode(BOARD_POWERON_PIN, OUTPUT);
     digitalWrite(BOARD_POWERON_PIN, HIGH);
+#endif
 
     // Set modem reset pin ,reset modem
     pinMode(MODEM_RESET_PIN, OUTPUT);
