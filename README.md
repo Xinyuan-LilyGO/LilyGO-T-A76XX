@@ -1,37 +1,44 @@
-<h1 align = "center">🌟LilyGo T-A7670X🌟</h1>
+<h1 align = "center">🌟LilyGO T-A76XX🌟</h1>
 
 # News
 
 - The TinyGSM used in the example is a [fork](https://github.com/lewisxhe/TinyGSM) to support A7670 and SIM7672,If you use the master branch, the compilation will not go smoothly
 
-
 # 1️⃣Product
 
-| Product(PinMap)    | SOC            | Flash | PSRAM     | Schematic                                      |
-| ------------------ | -------------- | ----- | --------- | ---------------------------------------------- |
-| [T-A7670X][1]      | ESP32-WROVER-E | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-A7670X_V1.1.pdf)     |
-| [T-Call-A7670X][2] | ESP32-WROVER-E | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-Call-A7670_V1.0.pdf) |
+| Product(PinMap)    | SOC              | Flash | PSRAM     | Schematic                                        |
+| ------------------ | ---------------- | ----- | --------- | ------------------------------------------------ |
+| [T-A7670X][1]      | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-A7670X-V1.1.pdf)       |
+| [T-Call-A7670X][2] | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-Call-A7670-V1.0.pdf)   |
+| [T-A7608][3]       | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-A7608X-V1.0.pdf)       |
+| [T-A7608-DC-S3][4] | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-A7608X-DC-S3-V1.0.pdf) |
+| [T-A7608-S3][5]    | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-A7608-S3-V1.0.pdf)     |
+| [T-SIM7672G-S3][6] | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-SIM7672G-S3-V1.0.pdf)  |
 
 [1]: https://www.lilygo.cc/products/t-sim-a7670e
 [2]: https://www.lilygo.cc
+[3]: https://www.lilygo.cc
+[4]: https://www.lilygo.cc
+[5]: https://www.lilygo.cc
+[6]: https://www.lilygo.cc
 
 ## 2️⃣Examples
 
-| Example        | [T-A7670X][1]     | [T-Call-A7670X][1] | [T-SIM7672G][1]  |
-| -------------- | ----------------- | ------------------ | ---------------- |
-| ATdebug        | ✅                 | ✅                  | ✅                |
-| Blynk_Console  | ✅                 | ✅                  | ✅                |
-| GPSShield      | ✅ (Just T-A7670G) | ❌   (Can't run)    | ❌   (Can't run)  |
-| GPS_BuiltIn    | ✅                 | ✅                  | ✅                |
-| GPS_NMEA_Parse | ✅                 | ✅                  | ✅                |
-| HttpClient     | ✅                 | ✅                  | ✅                |
-| HttpsClient    | ✅                 | ✅                  | ✅                |
-| MqttClient     | ✅                 | ✅                  | ✅                |
-| ReadBattery    | ✅                 | ❌   (Can't run)    | ✅                |
-| Sleep          | ✅                 | ✅                  | ✅                |
-| Voice_Call     | ✅                 | ✅                  | ❌   (No support) |
-| SDCard         | ✅                 | ❌   (Can't run)    | ✅                |
-| SerialRS485    | ✅                 | ✅                  | ✅                |
+| Example        | [T-A7670X][1]     | [T-Call-A7670X][2] | [T-SIM7672G-S3][6] | [T-A7608][3]    | [T-A7608-DC-S3][4] | [T-A7608-S3][5] |
+| -------------- | ----------------- | ------------------ | ------------------ | --------------- | ------------------ | --------------- |
+| ATdebug        | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| Blynk_Console  | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| GPSShield      | ✅ (Only T-A7670G) | ❌   (Can't run)    | ❌   (Can't run)    | ❌   (Can't run) | ❌   (Can't run)    | ❌   (Can't run) |
+| GPS_BuiltIn    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| GPS_NMEA_Parse | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| HttpClient     | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| HttpsClient    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| MqttClient     | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| ReadBattery    | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ❌   (Can't run)    | ✅               |
+| Sleep          | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| Voice_Call     | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
+| SDCard         | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ✅                  | ✅               |
+| SerialRS485    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 
 # Quick start ⚡
 
@@ -40,7 +47,7 @@
 1. Install [Visual Studio Code](https://code.visualstudio.com/) and [Python](https://www.python.org/)
 2. Search for the `PlatformIO` plugin in the `VisualStudioCode` extension and install it.
 3. After the installation is complete, you need to restart `VisualStudioCode`
-4. After restarting `VisualStudioCode`, select `File` in the upper left corner of `VisualStudioCode` -> `Open Folder` -> select the `LilyGO-T-A7670X` directory
+4. After restarting `VisualStudioCode`, select `File` in the upper left corner of `VisualStudioCode` -> `Open Folder` -> select the `LilyGO-T-A76XX` directory
 5. Wait for the installation of third-party dependent libraries to complete
 6. Click on the `platformio.ini` file, and in the `platformio` column
 7. Select the board name you want to use in `default_envs` and uncomment it.
@@ -53,74 +60,85 @@
 
 ## 4️⃣ Arduino IDE Quick Start
 
-* It is recommended to use platformio without cumbersome steps
+- It is recommended to use platformio without cumbersome steps
 
 1. Install [Arduino IDE](https://www.arduino.cc/en/software)
 2. Install [Arduino ESP32 2.0.5 or above](https://docs.espressif.com/projects/arduino-esp32/en/latest/) 
 3. Copy all folders in [lib folder](./lib/)  to Arduino library folder (e.g. C:\Users\YourName\Documents\Arduino\libraries)
 4. Open ArduinoIDE  ,`Tools` , Look at the picture to choose
-   <!-- ![setting](./images/ArduinoIDE.jpg) -->
-   | Setting                              | Value                                                          |
-   | :----------------------------------- | :------------------------------------------------------------- |
-   | Board                                | ESP32 Dev Module                                               |
-   | CPU Frequency                        | 240MHz                                                         |
-   | Core Debug Level                     | None                                                           |
-   | Erase All Flash Before Sketch Upload | Disabled                                                       |
-   | Events Run On                        | Core 1                                                         |
-   | Flash Frequency                      | 80MHz                                                          |
-   | Flash Mode                           | QIO                                                            |
-   | Flash Size                           | 4MB (32Mb)  (Unchangeable)                                     |
-   | JTAG Adapter                         | Disabled                                                       |
-   | Arduino Runs On                      | Core 1                                                         |
-   | Partition Scheme                     | Default 4MB  with spiffs(1.2MB APP/1.5MB SPIFFS)(Unchangeable) |
-   | PSRAM                                | Enabled                                                        |
-   | Upload Speed                         | 921600                                                         |
-5. `LilyGO-T-A7670X` folder -> `examples`
-6. For runnable examples, please refer to the example list above.
-7. Open the corresponding board macro definition above <utilities.h>
-8. Select `Port`
-9. Click `upload` , Wait for compilation and writing to complete
-10. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
+    | [T-A7670X][1]/[T-Call-A7670X][2]/[T-A7608][3] | [T-A7608-DC-S3][4]/[T-A7608-DC-S3][4]/[T-A7608-S3][5]/[T-SIM7672G-S3][6] |
+    | ---------------------------------------------- | ---------------------------------------------------------------------- |
+    | ![esp32dev](images/esp32dev.jpg)                       | ![esp32s3dev](images/esp32s3dev.jpg)                                             |
+5. `LilyGO-T-A76XX` folder -> `examples` -> `Choose the appropriate example from the list above`
+6. Open the corresponding board macro definition above [utilities.h](./examples/ATdebug/utilities.h)
+7. Select `Port`
+8. Click `upload` , Wait for compilation and writing to complete
+9. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
 
-## 5️⃣ Notes for new Users <T-A7670E/T-A7670G/T-A7670SA>
+## 5️⃣ Notes for new Users <T-A7670X/T-A7608X>
 
-* **The following does not apply to T-Call-A7670**
+- **The following does not apply to T-Call-A7670**
 
 1. Pin VIN is a USB input, if a battery is being used to power the device there will be no voltage output from VIN meaning 3.3v is the only power output.
 2. When using the built-in battery pack the on/off switch will function as normal, supplying/cutting off power to the board, However, if an external battery pack is used and attached to the VBAT pin the on/off switch will be bypassed meaning the only way to shut off will be to disconnect the batteries.
 3. On/off switch is for battery use only, it will not function when plugged into USB.
 4. Recommended solar panels are 4.4v to 6v **DO NOT EXCEED OR BOARD MAY BE DAMAGED** 
 5. When an SD card in you can not upload software in Arduino IDE since the SD card uses IO2 as CS, the SD card must be removed when uploading a new sketch.
-6. The `T-A7670G` modem does not contain a GPS positioning component and requires an additional external GPS positioning module to use the positioning function. [LilyGo T-A7670G with GPS](https://www.lilygo.cc/products/t-sim-a7670e?variant=43043706077365) uses [Quectel L76K](https://www.quectel.com/cn/product/gnss-l76k) as the T-A7670G auxiliary positioning function, which requires a part of the IO, please refer to the [usage example](./examples/GPSShield/)
+6. The `T-A7670G` modem does not contain a GPS positioning component and requires an additional external GPS positioning module to use the positioning function. [LilyGo T-A7670G with GPS](https://www.lilygo.cc/products/t-sim-a7670e?variant=43043706077365) uses [Quectel L76K](https://www.quectel.com/cn/product/gnss-l76k) as the **T-A7670G** auxiliary positioning function, which requires a part of the IO, please refer to the [usage example](./examples/GPSShield/)
 
 # 6️⃣ FAQ
 
-* Can't upload any sketch，Please enter the upload mode manually.
+- Can't upload any sketch，Please enter the upload mode manually.
    1. Connect the board via the USB cable
-   2. Press and hold the BOOT button , While still pressing the BOOT button, press RST
-   3. Release the RST
-   4. Release the BOOT button
-   5. Upload sketch
-* Upgrade modem firmware
-   1. [T-A7670x Upgrade docs](./docs/update_fw.md)
+   2. Press and hold the BOOT button , While still pressing the BOOT button (If there is no BOOT button, you need to use wires to connect GND and IO0 together.)
+   3. Press RST button
+   4. Release the RST button
+   5. Release the BOOT button
+   6. Upload sketch
+- Upgrade modem firmware
+   1. [T-A76XX Upgrade docs](./docs/update_fw.md)
+- How do I connect the antenna correctly?
+   1. Check the silk screen on the board. **GPS** stands for GPS antenna. Only active GPS antenna can be connected here.
+   2. **SIM** or **MAIN**, this is the main antenna interface of LTE
+   3. **AUX** This is the diversity antenna for LTE, used to enhance the signal
+- Solar input voltage range?
+   1. **4.4 ~ 6V** , As long as the voltage matches, the solar panel power is not limited
+
 
 # 7️⃣Resource
 
-1. A7670-Series-Datasheet
-   * [A7670 AT Command](./datasheet/A76XX/A76XX_Series_AT_Command_Manual_V1.09.pdf)
-   * [A7670 MQTT(S) Application](./datasheet/A76XX/A76XX%20Series_MQTT(S)_Application%20Note_V1.02.pdf)
-   * [A7670 HTTP(S) Application](./datasheet/A76XX/A76XX%20Series_HTTP(S)_Application%20Note_V1.02.pdf)
-   * [A7670 GNSS Application](./datasheet/A76XX/A76XX%20Series_GNSS_Application%20Note_V1.02.pdf)
-   * [A7670 FTP Application](./datasheet/A76XX/A76XX%20Series_FTP(S)_Application%20Note_V1.02.pdf)
-   * [A7670 LBS Application](./datasheet/A76XX/A76XX%20Series_LBS_Application%20Note_V1.02.pdf)
-   * [A7670 SSL Application](./datasheet/A76XX/A76XX%20Series_SSL_Application%20Note_V1.02.pdf)
-   * [A7670 Sleep Application](./datasheet/A76XX/A76XX%20Series_Sleep%20Mode_Application%20Note_V1.02.pdf)
-   * [A7670 Hardware Design manual](./datasheet/A76XX/A7670C_R2_硬件设计手册_V1.06.pdf)
-
-
-
-
-
+1. SIMCOM official website document center
+   - [SIMCOM official A7670X All Datasheet](https://cn.simcom.com/product/A7670X.html)
+   - [SIMCOM official A7608X All Datasheet](https://cn.simcom.com/product/A7608X-H-E_SA.html)
+   - [SIMCOM official SIM7672 All Datasheet](https://en.simcom.com/product/SIM7672.html)
+2. A7670/A7608-Datasheet
+   - [A76xx AT Command](./datasheet/A76XX/A76XX_Series_AT_Command_Manual_V1.09.pdf)
+   - [A76xx MQTT(S) Application](./datasheet/A76XX/A76XX%20Series_MQTT(S)_Application%20Note_V1.02.pdf)
+   - [A76xx HTTP(S) Application](./datasheet/A76XX/A76XX%20Series_HTTP(S)_Application%20Note_V1.02.pdf)
+   - [A76xx GNSS Application](./datasheet/A76XX/A76XX%20Series_GNSS_Application%20Note_V1.02.pdf)
+   - [A76xx FTP Application](./datasheet/A76XX/A76XX%20Series_FTP(S)_Application%20Note_V1.02.pdf)
+   - [A76xx LBS Application](./datasheet/A76XX/A76XX%20Series_LBS_Application%20Note_V1.02.pdf)
+   - [A76xx SSL Application](./datasheet/A76XX/A76XX%20Series_SSL_Application%20Note_V1.02.pdf)
+   - [A76xx Sleep Application](./datasheet/A76XX/A76XX%20Series_Sleep%20Mode_Application%20Note_V1.02.pdf)
+   - [A76xx Hardware Design manual](./datasheet/A76XX/A7670C_R2_硬件设计手册_V1.06.pdf)
+   - [A76xx TCPIP Application](./datasheet/A76XX/A76XX%20Series_TCPIP_Application%20Note_V1.02.pdf)
+3. SIM7672-Datasheet
+   - [SIM7672 Hardware Design manual](./datasheet/SIM7672G/SIM7672X_Series_Hardware_Design_V1.02.pdf)
+   - [SIM7672 AT Command](./datasheet/SIM7672G/SIM767XX%20Series_AT_Command_Manual_V1.01.pdf)
+4. Schematic
+   - [T-A7608-S3 Schematic](./schematic/T-A7608-S3-V1.0.pdf)
+   - [T-A7608X-DC-S3 Schematic](./schematic/T-A7608X-DC-S3-V1.0.pdf)
+   - [T-A7608X Schematic](./schematic/T-A7608X-V1.0.pdf)
+   - [T-A7670X Schematic](./schematic/T-A7670X-V1.1.pdf)
+   - [T-Call-A7670 Schematic](./schematic/T-Call-A7670-V1.0.pdf)
+   - [T-SIM7672-S3 Schematic](./schematic/T-SIM7672-S3-V1.0.pdf)
+5. Dimensions
+   - [T-A7608-S3 DWG](./dimensions/T-A7608-S3-V1.0.dwg)
+   - [T-A7608X-DC-S3 DWG](./dimensions/T-A7608X-DC-S3-V1.0.dwg)
+   - [T-A7608X DWG](./dimensions/T-A7608X-V1.0.dwg)
+   - [T-A7670X DWG](./dimensions/T-A7670X-V1.1.dwg)
+   - [T-Call-A7670 DWG](./dimensions/T-Call-A7670-V1.0.dwg)
+   - [T-SIM7672-S3 DWG](./dimensions/T-SIM7672-S3-V1.0.dwg)
 
 
 
