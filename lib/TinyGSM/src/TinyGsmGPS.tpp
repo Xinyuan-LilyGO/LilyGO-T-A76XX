@@ -68,8 +68,8 @@ class TinyGsmGPS {
     return thisModem().disableNMEAImpl();
   }
 
-  bool configNMEASentence(bool CGA,bool GLL,bool GSA,bool GSV,bool RMC,bool VTG = 0,bool ZDA = 0,bool ANT = 0,bool DHV = 0,bool LPS = 0,bool UTC = 0,bool GST = 0){
-    return thisModem().configNMEASentenceImpl( CGA, GLL, GSA, GSV, RMC, VTG, ZDA, ANT, DHV, LPS, UTC, GST);
+  bool configNMEASentence(bool CGA,bool GLL,bool GSA,bool GSV,bool RMC,bool VTG = 0,bool ZDA = 0,bool ANT = 0){
+    return thisModem().configNMEASentenceImpl( CGA, GLL, GSA, GSV, RMC, VTG, ZDA, ANT);
   }
   /*
    * CRTP Helper

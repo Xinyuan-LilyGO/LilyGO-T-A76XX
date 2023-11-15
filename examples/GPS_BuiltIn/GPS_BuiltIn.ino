@@ -105,7 +105,7 @@ void loop()
                          &year2, &month2, &day2, &hour2, &min2, &sec2)) {
 
             Serial.print("FixMode:"); Serial.println(fixMode);
-            Serial.print("Latitude:"); Serial.print(lat2); Serial.print("\tLongitude:"); Serial.println(lon2);
+            Serial.print("Latitude:"); Serial.print(lat2, 6); Serial.print("\tLongitude:"); Serial.println(lon2, 6);
             Serial.print("Speed:"); Serial.print(speed2); Serial.print("\tAltitude:"); Serial.println(alt2);
             Serial.print("Visible Satellites:"); Serial.print(vsat2); Serial.print("\tUsed Satellites:"); Serial.println(usat2);
             Serial.print("Accuracy:"); Serial.println(accuracy2);

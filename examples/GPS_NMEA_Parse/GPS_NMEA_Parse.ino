@@ -80,9 +80,12 @@ void setup()
 
     delay(200);
 
-    Serial.println("GPS Ready!");
-
-    modem.enableGPS(MODEM_GPS_ENABLE_GPIO);
+    Serial.println("Enabling GPS/GNSS/GLONASS");
+    while (!modem.enableGPS(MODEM_GPS_ENABLE_GPIO)) {
+        Serial.print(".");
+    }
+    Serial.println();
+    Serial.println("GPS Enabled");
 
     modem.setGPSBaud(115200);
 

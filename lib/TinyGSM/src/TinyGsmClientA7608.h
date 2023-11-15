@@ -591,10 +591,21 @@ class TinyGsmA7608 : public TinyGsmModem<TinyGsmA7608>,
 
   bool enableNMEAImpl(){
       sendAT("+CGNSSTST=1");
-      waitResponse(1000L);
+      if(waitResponse(1000L) != 1){
+          return false;
+      }
     // Select the output port for NMEA sentence
       sendAT("+CGNSSPORTSWITCH=0,1");
-      return waitResponse(1000L) == 1;
+      if(waitResponse(1000L) != 1){
+          return false;
+      }
+      if(!disableGPSImpl(-1,0)){
+        return false;
+      }
+      if(!enableGPSImpl(-1,0)){
+        return false;
+      }
+      return true;
   }
 
   bool disableNMEAImpl(){
@@ -605,10 +616,10 @@ class TinyGsmA7608 : public TinyGsmModem<TinyGsmA7608>,
       return waitResponse(1000L) == 1;
   }
 
-  bool configNMEASentenceImpl(bool CGA,bool GLL,bool GSA,bool GSV,bool RMC,bool VTG,bool ZDA,bool ANT,bool DHV,bool LPS,bool UTC,bool GST){
-      // sendAT("+CGNSSNMEA=");
-      char buffer[128];
-      snprintf(buffer,128,"%u,%u,%u,%u,%u,%u,%u,0,0,0,0,%u", CGA, GLL, GSA, GSV, RMC, VTG, ZDA, GST);
+  bool configNMEASentenceImpl(bool CGA,bool GLL,bool GSA,bool GSV,bool RMC,bool VTG,bool ZDA,bool ANT){
+      char buffer[32];
+      snprintf(buffer,32,"%u,%u,%u,%u,%u,%u,%u,%u", CGA, GLL, GSA, GSV, RMC, VTG, ZDA);
+      sendAT("+CGNSSNMEA=",buffer);
       return waitResponse(1000L) == 1;
   }
   /*
