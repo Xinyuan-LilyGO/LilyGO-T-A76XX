@@ -42,6 +42,7 @@
 | SerialRS485    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | SendSMS        | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
 | LBSExample     | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
+| Network        | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 
 # Quick start ⚡
 
