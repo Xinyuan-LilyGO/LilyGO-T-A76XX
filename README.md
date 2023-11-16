@@ -17,7 +17,7 @@
 
 [1]: https://www.lilygo.cc/products/t-sim-a7670e
 [2]: https://www.lilygo.cc
-[3]: https://www.lilygo.cc
+[3]: https://www.lilygo.cc/products/t-a7608e-h
 [4]: https://www.lilygo.cc
 [5]: https://www.lilygo.cc
 [6]: https://www.lilygo.cc
@@ -39,6 +39,7 @@
 | VoiceCalls     | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
 | SDCard         | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ✅                  | ✅               |
 | SerialRS485    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+
 
 # Quick start ⚡
 
@@ -75,6 +76,13 @@
 8. Click `upload` , Wait for compilation and writing to complete
 9. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
 
+
+##### Writing as a beginner: 
+
+- When opening the Arduino IDE, you will be prompted that there are new libraries that can be updated. Please do not click update. There is no guarantee that it can be compiled, run, etc. after the update. Make sure that the board is running normally before deciding whether to update. You have to Know that problems may occur after updating due to library differences, or the default configuration (such as TinyGSM) will be overwritten.
+- If it runs abnormally after the update, please follow Article 4 of the Arduino Quick Start to delete the directory in libraries, and drag the folder in lib into the libraries directory again.
+
+
 ## 5️⃣ Notes for new Users <T-A7670X/T-A7608X>
 
 - **The following does not apply to T-Call-A7670**
@@ -93,7 +101,7 @@
    2. Press and hold the BOOT button , While still pressing the BOOT button (If there is no BOOT button, you need to use wires to connect GND and IO0 together.)
    3. Press RST button
    4. Release the RST button
-   5. Release the BOOT button
+   5. Release the BOOT button (If there is no BOOT button, disconnect IO0 from GND.)
    6. Upload sketch
 - Upgrade modem firmware
    1. [T-A76XX Upgrade docs](./docs/update_fw.md)
@@ -103,7 +111,8 @@
    3. **AUX** This is the diversity antenna for LTE, used to enhance the signal
 - Solar input voltage range?
    1. **4.4 ~ 6V** , As long as the voltage matches, the solar panel power is not limited
-
+- Can't get location?
+   1. Please write the compiled firmware for testing. Please see [here](./firmware/README.MD) for details.
 
 # 7️⃣Resource
 
