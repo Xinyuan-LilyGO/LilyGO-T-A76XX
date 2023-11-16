@@ -40,6 +40,7 @@
 | VoiceCalls     | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
 | SDCard         | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ✅                  | ✅               |
 | SerialRS485    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| SendSMS        | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
 
 
 # Quick start ⚡
