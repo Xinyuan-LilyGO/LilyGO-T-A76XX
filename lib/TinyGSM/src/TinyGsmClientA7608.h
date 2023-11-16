@@ -446,24 +446,30 @@ class TinyGsmA7608 : public TinyGsmModem<TinyGsmA7608>,
  protected:
   // enable GPS
   bool enableGPSImpl(int8_t power_en_pin ,uint8_t enable_level) {
-    if(power_en_pin!= -1){
+    if(power_en_pin == GSM_MODEM_AUX_POWER){
+      sendAT("+CVAUXS=1");
+      waitResponse();
+    }else if(power_en_pin != -1){
       sendAT("+CGDRT=",power_en_pin,",1");
       waitResponse();
       sendAT("+CGSETV=",power_en_pin,",",enable_level);
       waitResponse();
-    }
+    } 
     sendAT(GF("+CGNSSPWR=1"));  
     if (waitResponse(10000UL,"+CGNSSPWR: READY!") != 1) { return false; }
     return true;
   }
 
   bool disableGPSImpl(int8_t power_en_pin ,uint8_t disbale_level) {
-      if(power_en_pin!= -1){
+    if(power_en_pin == GSM_MODEM_AUX_POWER){
+      sendAT("+CVAUXS=0");
+      waitResponse();
+    }else if(power_en_pin != -1){
       sendAT("+CGSETV=",power_en_pin,",",disbale_level);
       waitResponse();
       sendAT("+CGDRT=",power_en_pin,",0");
       waitResponse();
-    }
+    } 
     sendAT(GF("+CGNSSPWR=0"));  
     if (waitResponse() != 1) { return false; }
     return true;

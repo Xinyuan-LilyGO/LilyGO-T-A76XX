@@ -438,8 +438,8 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
 
   bool isEnableGPSImpl(){
     sendAT(GF("+CGNSSPWR?"));
-    if (waitResponse("+CGNSSPWR:") != 1) { return false; }
-    return 1 == streamGetIntBefore(','); 
+    if (waitResponse("+CGNSSPWR: 1") != 1) { return false; }
+    return true;
   }
 
   // get the RAW GPS output
@@ -574,11 +574,10 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
       return waitResponse(1000L) == 1;
   }
 
-  // [nGGA,[nGLL,[nGSA,[nGSV,[nRMC,[nVTG,[nZDA,[nANT,[nDHV,[nLPS,[res1,[res2,[nUTC,[nGST]]]]]]]]]]]]]]
-  bool configNMEASentenceImpl(bool CGA,bool GLL,bool GSA,bool GSV,bool RMC,bool VTG,bool ZDA,bool ANT,bool DHV,bool LPS,bool UTC,bool GST){
-      // sendAT("+CGNSSNMEA=");
-      char buffer[128];
-      snprintf(buffer,128,"%u,%u,%u,%u,%u,%u,%u,0,0,0,0,%u", CGA, GLL, GSA, GSV, RMC, VTG, ZDA, GST);
+  bool configNMEASentenceImpl(bool CGA,bool GLL,bool GSA,bool GSV,bool RMC,bool VTG,bool ZDA,bool ANT){
+      char buffer[32];
+      snprintf(buffer,32,"%u,%u,%u,%u,%u,%u,%u,%u", CGA, GLL, GSA, GSV, RMC, VTG, ZDA);
+      sendAT("+CGNSSNMEA=",buffer);
       return waitResponse(1000L) == 1;
   }
   /*

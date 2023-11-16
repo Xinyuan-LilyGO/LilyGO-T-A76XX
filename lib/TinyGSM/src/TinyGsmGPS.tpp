@@ -13,6 +13,7 @@
 
 #define TINY_GSM_MODEM_HAS_GPS
 
+#define GSM_MODEM_AUX_POWER     (127)
 template <class modemType>
 class TinyGsmGPS {
  public:
