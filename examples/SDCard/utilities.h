@@ -137,7 +137,8 @@
 #define TINY_GSM_MODEM_A7608
 #endif
 
-#define MODEM_GPS_ENABLE_GPIO               (-1)
+// 127 is defined in GSM as the AUXVDD index
+#define MODEM_GPS_ENABLE_GPIO               (127)
 
 #elif defined(LILYGO_T_A7608X_S3)
 
@@ -164,7 +165,8 @@
 #define TINY_GSM_MODEM_A7608
 #endif
 
-#define MODEM_GPS_ENABLE_GPIO               (-1)
+// 127 is defined in GSM as the AUXVDD index
+#define MODEM_GPS_ENABLE_GPIO               (127)
 
 #elif defined(LILYGO_T_A7608X_DC_S3)
 
@@ -185,7 +187,8 @@
 #define TINY_GSM_MODEM_A7608
 #endif
 
-#define MODEM_GPS_ENABLE_GPIO               (-1)
+// 127 is defined in GSM as the AUXVDD index
+#define MODEM_GPS_ENABLE_GPIO               (127)
 
 #else
 #error "Use ArduinoIDE, please open the macro definition corresponding to the board above <utilities.h>"

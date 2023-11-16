@@ -1,10 +1,11 @@
 /**
- * @file      Sleep.ino
+ * @file      DeepSleep.ino
  * @author    Lewis He (lewishe@outlook.com)
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
- * @date      2023-05-24
- *
+ * @date      2023-11-16
+ * @record    https://youtu.be/5G4COjtKsFU
+ * T-A7608-S3 Deepsleep ~ 368uA
  */
 #include "utilities.h"
 #include <driver/gpio.h>
@@ -40,33 +41,24 @@ void setup()
     digitalWrite(BOARD_POWERON_PIN, HIGH);
 #endif
 
-    if (esp_sleep_get_wakeup_cause() != ESP_SLEEP_WAKEUP_TIMER) {
-        /*
-        BOARD_PWRKEY_PIN IO:4 The power-on signal of the modulator must be given to it,
-        otherwise the modulator will not reply when the command is sent
-        */
-        pinMode(BOARD_PWRKEY_PIN, OUTPUT);
-        digitalWrite(BOARD_PWRKEY_PIN, LOW);
-        delay(100);
-        digitalWrite(BOARD_PWRKEY_PIN, HIGH);
-        //Ton >= 100 <= 500
-        delay(100);
-        digitalWrite(BOARD_PWRKEY_PIN, LOW);
 
+    pinMode(MODEM_DTR_PIN, OUTPUT);
+    digitalWrite(MODEM_DTR_PIN, LOW);
 
-    } else {
-        Serial.println("Wakeup modem !");
+    pinMode(BOARD_PWRKEY_PIN, OUTPUT);
+    digitalWrite(BOARD_PWRKEY_PIN, LOW);
+    delay(100);
+    digitalWrite(BOARD_PWRKEY_PIN, HIGH);
+    //Ton >= 100 <= 500
+    delay(100);
+    digitalWrite(BOARD_PWRKEY_PIN, LOW);
 
-        // Need to cancel GPIO hold if wake from sleep
-        gpio_hold_dis((gpio_num_t )MODEM_DTR_PIN);
+    // Pull up DTR to put the modem into sleep
+    pinMode(MODEM_DTR_PIN, OUTPUT);
+    digitalWrite(MODEM_DTR_PIN, HIGH);
 
-        // Pull down DTR to wake up MODEM
-        pinMode(MODEM_DTR_PIN, OUTPUT);
-        digitalWrite(MODEM_DTR_PIN, LOW);
-        delay(2000);
-        modem.sleepEnable(false);
-    }
-
+    // Delay sometime ...
+    delay(10000);
 
     Serial.println("Check modem online .");
     while (!modem.testAT()) {
@@ -77,20 +69,12 @@ void setup()
     delay(5000);
 
 
-    Serial.println("Enter modem sleep mode!");
+    Serial.println("Enter modem power off!");
 
-    // Pull up DTR to put the modem into sleep
-    pinMode(MODEM_DTR_PIN, OUTPUT);
-    digitalWrite(MODEM_DTR_PIN, HIGH);
-    // Set DTR to keep at high level, if not set, DTR will be invalid after ESP32 goes to sleep.
-    gpio_hold_en((gpio_num_t )MODEM_DTR_PIN);
-    gpio_deep_sleep_hold_en();
-
-
-    if (modem.sleepEnable(true) != true) {
-        Serial.println("modem sleep failed!");
+    if (modem.poweroff()) {
+        Serial.println("Modem enter power off modem!");
     } else {
-        Serial.println("Modem enter sleep modem!");
+        Serial.println("modem power off failed!");
     }
 
     delay(5000);
@@ -99,9 +83,14 @@ void setup()
     while (modem.testAT()) {
         Serial.print("."); delay(500);
     }
-    Serial.println("Modem is not respone ,modem has sleep !");
+    Serial.println("Modem is not respone ,modem has power off !");
 
     delay(5000);
+
+#ifdef BOARD_POWERON_PIN
+    // Turn on DC boost to power off the modem
+    digitalWrite(BOARD_POWERON_PIN, LOW);
+#endif
 
     Serial.println("Enter esp32 goto deepsleep!");
     esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);

@@ -27,6 +27,8 @@ TinyGsm modem(SerialAT);
 // The TinyGPSPlus object
 TinyGPSPlus gps;
 
+uint32_t check_interval = 0;
+
 void displayInfo();
 
 void setup()
@@ -106,6 +108,14 @@ void loop()
 {
     // Simple show loaction
     // displayInfo()
+    if (millis() > check_interval) {
+        if (modem.isEnableGPS() == false) {
+            Serial.println("Restart GPS!");
+            modem.enableGPS();
+            delay(3000);
+        }
+        check_interval = millis() + 15000;
+    }
 
     // Show full information
     static const double LONDON_LAT = 51.508131, LONDON_LON = -0.128002;
@@ -148,6 +158,10 @@ void loop()
     Serial.println();
 
     smartDelay(1000);
+
+    if (millis() > 30000 && gps.charsProcessed() < 10) {
+        Serial.println(F("No GPS data received: check wiring"));
+    }
 }
 
 void displayInfo()
