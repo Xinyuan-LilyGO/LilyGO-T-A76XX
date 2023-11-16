@@ -35,7 +35,8 @@
 | HttpsClient    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | MqttClient     | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | ReadBattery    | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ❌   (Can't run)    | ✅               |
-| Sleep          | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| DeepSleep      | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| ModemSleep     | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | VoiceCalls     | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
 | SDCard         | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ✅                  | ✅               |
 | SerialRS485    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
