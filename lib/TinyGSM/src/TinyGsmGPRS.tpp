@@ -65,6 +65,11 @@ class TinyGsmGPRS {
     return thisModem().getOperatorImpl();
   }
 
+  // Inquiring UE system information
+  bool getSystemInformation(String &info){
+    return thisModem().getSystemInformationImpl(info);
+  }
+
   /*
    * CRTP Helper
    */
@@ -80,6 +85,18 @@ class TinyGsmGPRS {
    * SIM card functions
    */
  protected:
+
+  bool getSystemInformationImpl(String &info){
+      thisModem().sendAT(GF("+CPSI?"));
+      if (thisModem().waitResponse("+CPSI:") == 1){
+        info = thisModem().stream.readStringUntil('\n');
+        thisModem().waitResponse();
+        info.trim();
+        return true;
+      }
+      return false;
+  }
+
   // Unlocks a sim via the 3GPP TS command AT+CPIN
   bool simUnlockImpl(const char* pin) {
     if (pin && strlen(pin) > 0) {

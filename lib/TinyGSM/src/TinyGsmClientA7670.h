@@ -46,6 +46,13 @@ enum RegStatus {
   REG_UNKNOWN      = 4,
 };
 
+enum NetworkMode {
+  MODEM_NETWORK_AUTO = 2,
+  MODEM_NETWORK_GSM = 13,
+  MODEM_NETWORK_WCDMA = 14,
+  MODEM_NETWORK_LTE = 38,
+};
+
 class TinyGsmA7670 : public TinyGsmModem<TinyGsmA7670>,
                        public TinyGsmGPRS<TinyGsmA7670>,
                        public TinyGsmTCP<TinyGsmA7670, TINY_GSM_MUX_COUNT>,
@@ -273,22 +280,42 @@ class TinyGsmA7670 : public TinyGsmModem<TinyGsmA7670>,
 
  public:
   String getNetworkModes() {
-    sendAT(GF("+CNMP=?"));
-    if (waitResponse(GF(GSM_NL "+CNMP:")) != 1) { return ""; }
-    String res = stream.readStringUntil('\n');
-    waitResponse();
-    return res;
+    int16_t mode = getNetworkMode();
+   switch (mode)
+    {
+    case MODEM_NETWORK_AUTO:
+      return "AUTO";
+    case MODEM_NETWORK_GSM:
+      return "GSM";
+    case MODEM_NETWORK_WCDMA:
+      return "WCDMA";
+    case MODEM_NETWORK_LTE:
+      return "LTE";
+    default:
+      break;
+    }
+    return "UNKNOWN";
   }
 
   int16_t getNetworkMode() {
     sendAT(GF("+CNMP?"));
-    if (waitResponse(GF(GSM_NL "+CNMP:")) != 1) { return false; }
+    if (waitResponse(GF(GSM_NL "+CNMP:")) != 1) { return -1; }
     int16_t mode = streamGetIntBefore('\n');
     waitResponse();
     return mode;
   }
 
-  bool setNetworkMode(uint8_t mode) {
+  bool setNetworkMode(NetworkMode mode) {
+    switch (mode)
+    {
+    case MODEM_NETWORK_AUTO:
+    case MODEM_NETWORK_GSM:
+    case MODEM_NETWORK_WCDMA:
+    case MODEM_NETWORK_LTE:
+      break;
+    default:
+      return false;
+    }
     sendAT(GF("+CNMP="), mode);
     return waitResponse() == 1;
   }
@@ -302,6 +329,28 @@ class TinyGsmA7670 : public TinyGsmModem<TinyGsmA7670>,
     res.replace(GSM_NL, "");
     res.trim();
     return res;
+  }
+
+
+  bool enableNetwork(){
+    sendAT(GF("+NETOPEN"));  
+    int res = waitResponse(GF("+NETOPEN: 0"),GF("+IP ERROR: Network is already opened")); 
+    if (res != 1 && res != 2){
+      return false;
+    }
+    return true;
+  }
+
+  bool disableNetwork(){
+    sendAT(GF("+NETCLOSE"));  
+    if (waitResponse() != 1){
+      return false;
+    }
+    int res = waitResponse(GF("+NETCLOSE: 0"),GF("+NETCLOSE: 2")); 
+    if (res != 1 || res != 2){
+      return false;
+    }
+    return true;
   }
 
   /*
