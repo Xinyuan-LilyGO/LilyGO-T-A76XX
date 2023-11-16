@@ -41,7 +41,7 @@
 | SDCard         | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ✅                  | ✅               |
 | SerialRS485    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | SendSMS        | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
-
+| LBSExample     | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
 
 # Quick start ⚡
 
