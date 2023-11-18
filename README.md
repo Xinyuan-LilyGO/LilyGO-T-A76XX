@@ -116,6 +116,10 @@
    1. **4.4 ~ 6V** , As long as the voltage matches, the solar panel power is not limited
 - Can't get location?
    1. Please write the compiled firmware for testing. Please see [here](./firmware/README.MD) for details.
+- How to connect external microphone and speakers to the board?
+   1. There is a silk screen mark on the board marked MIC+/MIC-, which is the microphone welding position. The board only supports ordinary condenser microphones and does not support digital microphones.
+   2. There is a silk screen mark on the board as SPK+/SPK-, which is the welding position of the speaker. The default output power is determined by the module. You can add an external audio power amplifier to amplify the output sound.
+      
 
 # 7️⃣Resource
 
