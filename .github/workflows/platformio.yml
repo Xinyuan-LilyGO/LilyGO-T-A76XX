@@ -1,0 +1,62 @@
+name: PlatformIO CI
+
+on:
+  pull_request:
+  push:
+    paths:
+      - "examples/**"
+      - "lib/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        envs:
+          [
+            T-A7670X,
+            T-Call-A7670X,
+            T-SIM7672G,
+            T-A7608X,
+            T-A7608X-S3,
+            T-A7608X-DC-S3,
+          ]
+        examples:
+          [
+            examples/ATdebug,
+            examples/Blynk_Console,
+            examples/DeepSleep,
+            examples/GPSShield,
+            examples/GPS_BuiltIn,
+            examples/GPS_NMEA_Parse,
+            examples/HttpClient,
+            examples/HttpsClient,
+            examples/LBSExample,
+            examples/ModemSleep,
+            examples/MqttClient,
+            examples/Network,
+            examples/ReadBattery,
+            examples/SDCard,
+            examples/SendSMS,
+            examples/SerialRS485,
+            examples/VoiceCalls,
+          ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio/.cache
+          key: ${{ runner.os }}-pio
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - name: Install PlatformIO Core
+        run: pip install --upgrade platformio
+
+      - name: Run PlatformIO
+        run: |
+          export PLATFORMIO_SRC_DIR=${{ matrix.examples }}
+          pio run -e  ${{ matrix.envs }}
