@@ -123,6 +123,13 @@
    1. **4.4 ~ 6V** , As long as the voltage matches, the solar panel power is not limited
 - Can't get location?
    1. Please write the compiled firmware for testing. Please see [here](./firmware/README.MD) for details.
+- Where can I access solar energy to charge the panel?
+   1. If the board has an external VBAT pin, you can connect the solar rechargeable battery input to VBAT. Please be careful not to exceed the battery supply voltage, which is usually 4.2V.
+   2. If there is no VBAT, you can also connect it to the VBUS Pin, which is the input pin for USB power supply. Connecting it to VBUS will share the 5V of the USBC. Please note that when connecting an external charger, disconnect the USBC or disconnect the solar energy. enter
+- How to use voice call example?
+   1. Voice calls require external welding of the condenser microphone and speaker. Generally, the board silk screen is marked SPK. The speaker needs to be welded, and the MIC silk screen position needs to weld the condenser microphone.
+
+
 
 # 7️⃣Resource
 
