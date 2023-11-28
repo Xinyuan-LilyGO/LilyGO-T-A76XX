@@ -92,14 +92,8 @@ void setup()
     }
 
 #ifndef TINY_GSM_MODEM_SIM7672
-    /*
-    2 Automatic
-    13 GSM Only
-    14 WCDMA Only
-    38 LTE Only
-    */
-    String result;
-    result = modem.setNetworkMode(38);
+    bool ret;
+    ret = modem.setNetworkMode(MODEM_NETWORK_AUTO);
     if (modem.waitResponse(10000L) != 1) {
         DBG(" setNetworkMode faill");
         return ;
