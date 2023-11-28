@@ -1,5 +1,7 @@
 <h1 align = "center">🌟LilyGO T-A76XX🌟</h1>
 
+[![PlatformIO CI](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/actions/workflows/platformio.yml/badge.svg)](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/actions/workflows/platformio.yml)
+
 # News
 
 - The TinyGSM used in the example is a [fork](https://github.com/lewisxhe/TinyGSM) to support A7670,A7608,SIM7672,If you use the master branch, the compilation will not go smoothly
