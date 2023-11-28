@@ -34,7 +34,7 @@
 
 ![esp.huhn.me](https://esp.huhn.me/)
 
-![web_flasher](images/web_flasher.gif)
+![web_flasher](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/blob/main/firmware/images/web_flasher.gif)
 
 # 2️⃣FAQ
 
