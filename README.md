@@ -5,7 +5,7 @@
 # News
 
 - The TinyGSM used in the example is a [fork](https://github.com/lewisxhe/TinyGSM) to support A7670,A7608,SIM7672,If you use the master branch, the compilation will not go smoothly
-- A7670G/A7670E/A7670SA, A7670E are collectively referred to as A7670X
+- A7670G/A7670E/A7670SA are collectively referred to as A7670X
 - A7608SA-H/A7608E-H,A7608E,A7608SA are collectively referred to as A7608X
 
 # 1️⃣Product
