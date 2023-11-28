@@ -40,6 +40,7 @@ jobs:
             examples/SendSMS,
             examples/SerialRS485,
             examples/VoiceCalls,
+            examples/MqttsBuiltlnAuth,
           ]
 
     steps:
