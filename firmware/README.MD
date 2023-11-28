@@ -23,10 +23,18 @@
 [5]: https://www.lilygo.cc
 [6]: https://www.lilygo.cc
 
+## Use ESP Download Tool
+
 | Steps  | [T-A7670X][1]/[T-Call-A7670X][2]/[T-A7608][3] | [T-A7608-DC-S3][4]/[T-A7608-DC-S3][4]/[T-A7608-S3][5]/[T-SIM7672G-S3][6] |
 | ------ | --------------------------------------------- | ------------------------------------------------------------------------ |
 | Step 1 | ![esp32dev](images/esp32-1.png)               | ![esp32s3dev](images/esp32s3-1.png)                                      |
 | Step 2 | ![esp32dev](images/esp32-2.png)               | ![esp32s3dev](images/esp32s3-2.png)                                      |
+
+## Use Web Flasher
+
+![esp.huhn.me](https://esp.huhn.me/)
+
+![web_flasher](images/web_flasher.gif)
 
 # 2️⃣FAQ
 
