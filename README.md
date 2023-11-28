@@ -2,7 +2,9 @@
 
 # News
 
-- The TinyGSM used in the example is a [fork](https://github.com/lewisxhe/TinyGSM) to support A7670 and SIM7672,If you use the master branch, the compilation will not go smoothly
+- The TinyGSM used in the example is a [fork](https://github.com/lewisxhe/TinyGSM) to support A7670,A7608,SIM7672,If you use the master branch, the compilation will not go smoothly
+- A7670G/A7670E/A7670SA, A7670E are collectively referred to as A7670X
+- A7608SA-H/A7608E-H,A7608E,A7608SA are collectively referred to as A7608X
 
 # 1️⃣Product
 
@@ -79,14 +81,14 @@
 8. Click `upload` , Wait for compilation and writing to complete
 9. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
 
-
-##### Writing as a beginner: 
+### Writing as a beginner
 
 - When opening the Arduino IDE, you will be prompted that there are new libraries that can be updated. Please do not click update. There is no guarantee that it can be compiled, run, etc. after the update. Make sure that the board is running normally before deciding whether to update. You have to Know that problems may occur after updating due to library differences, or the default configuration (such as TinyGSM) will be overwritten.
 - If it runs abnormally after the update, please follow Article 4 of the Arduino Quick Start to delete the directory in libraries, and drag the folder in lib into the libraries directory again.
 
-
 ## 5️⃣ Notes for new Users <T-A7670X/T-A7608X>
+
+1. The A7670G does not have a built-in GPS modem, regardless of whether the motherboard contains a GPS connector.
 
 - **The following does not apply to T-Call-A7670**
 
@@ -95,7 +97,7 @@
 3. On/off switch is for battery use only, it will not function when plugged into USB.
 4. Recommended solar panels are 4.4v to 6v **DO NOT EXCEED OR BOARD MAY BE DAMAGED** 
 5. When an SD card in you can not upload software in Arduino IDE since the SD card uses IO2 as CS, the SD card must be removed when uploading a new sketch.
-6. The `T-A7670G` modem does not contain a GPS positioning component and requires an additional external GPS positioning module to use the positioning function. [LilyGo T-A7670G with GPS](https://www.lilygo.cc/products/t-sim-a7670e?variant=43043706077365) uses [Quectel L76K](https://www.quectel.com/cn/product/gnss-l76k) as the **T-A7670G** auxiliary positioning function, which requires a part of the IO, please refer to the [usage example](./examples/GPSShield/)
+6. The `T-A7670G` modem does not contain a GPS positioning component and requires an additional external GPS positioning module to use the positioning function. [LilyGo T-A7670G with GPS](https://www.lilygo.cc/products/t-sim-a7670e?variant=43043706077365) uses [Quectel L76K](https://www.quectel.com/cn/product/gnss-l76k) as the **T-A7670G** auxiliary positioning function, which requires a part of the IO, please refer to the [GPSShield example](./examples/GPSShield/) , How to identify whether you have an external GPS module please see [#issues56](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/56#issuecomment-1672628977)
 
 # 6️⃣ FAQ
 
@@ -116,10 +118,6 @@
    1. **4.4 ~ 6V** , As long as the voltage matches, the solar panel power is not limited
 - Can't get location?
    1. Please write the compiled firmware for testing. Please see [here](./firmware/README.MD) for details.
-- How to connect external microphone and speakers to the board?
-   1. There is a silk screen mark on the board marked MIC+/MIC-, which is the microphone welding position. The board only supports ordinary condenser microphones and does not support digital microphones.
-   2. There is a silk screen mark on the board as SPK+/SPK-, which is the welding position of the speaker. The default output power is determined by the module. You can add an external audio power amplifier to amplify the output sound.
-      
 
 # 7️⃣Resource
 
