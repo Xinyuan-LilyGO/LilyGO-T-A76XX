@@ -46,6 +46,8 @@
 | LBSExample       | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
 | Network          | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | MqttsBuiltlnAuth | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
+| MqttsBuiltlnSSL  | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
+
 
 # Quick start ⚡
 
