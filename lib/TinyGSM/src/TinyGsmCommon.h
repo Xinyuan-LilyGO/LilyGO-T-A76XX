@@ -32,6 +32,14 @@
 #define TINY_GSM_YIELD_MS 0
 #endif
 
+#ifdef BOARD_HAS_PSRAM
+#define TINY_GSM_MALLOC       ps_malloc
+#define TINY_GSM_REALLOC      ps_realloc
+#else
+#define TINY_GSM_MALLOC       malloc
+#define TINY_GSM_REALLOC      realloc
+#endif
+
 #ifndef TINY_GSM_YIELD
 #define TINY_GSM_YIELD() \
   { delay(TINY_GSM_YIELD_MS); }
