@@ -41,8 +41,8 @@ jobs:
             examples/SerialRS485,
             examples/VoiceCalls,
             examples/MqttsBuiltlnAuth,
-            examples/MqttsBuiltlnSSL
-            examples/MqttsBuiltlnAWS
+            examples/MqttsBuiltlnSSL,
+            examples/MqttsBuiltlnAWS,
             examples/MqttsBuiltlnHivemq
           ]
 
