@@ -19,6 +19,7 @@ public:
     typedef void (*callback_t)(const char *, const uint8_t *, uint32_t);
 protected:
     bool __ssl = false;
+    bool __sni = false;
     uint8_t *buffer = NULL;
     uint32_t bufferSize = 256;
     callback_t callback;
@@ -30,8 +31,9 @@ public:
     /*
      * Basic functions
      */
-    bool mqtt_begin(bool ssl)
+    bool mqtt_begin(bool ssl, bool sni = false)
     {
+        __sni = sni;
         __ssl = ssl;
         if (!this->buffer) {
             this->buffer = (uint8_t *)TINY_GSM_MALLOC(bufferSize);
@@ -81,7 +83,7 @@ public:
     {
         uint8_t authMethod = 0;
 
-        if(clientIndex > muxCount){
+        if (clientIndex > muxCount) {
             return false;
         }
 
@@ -147,6 +149,12 @@ public:
             __ssl = true;
         }
 
+        // Some MQTT brokers need to enable sni
+        if (__sni) {
+            sendAT("+CSSLCFG=\"enableSNI\",0,1");
+            waitResponse();
+        }
+
         thisModem().sendAT("+CSSLCFG=\"authmode\",0,", authMethod);
         thisModem().waitResponse();
 
@@ -175,7 +183,7 @@ public:
 
     int mqtt_disconnect(uint8_t clientIndex = 0, uint32_t timeout = 120)
     {
-        if(clientIndex > muxCount){
+        if (clientIndex > muxCount) {
             return false;
         }
         thisModem().sendAT("+CMQTTDISC=", clientIndex, ',', timeout);
@@ -198,7 +206,7 @@ public:
     bool mqtt_publish(uint8_t clientIndex, const char *topic, const char *playload,
                       uint8_t qos = 0, uint32_t timeout = 60)
     {
-        if(clientIndex > muxCount){
+        if (clientIndex > muxCount) {
             return false;
         }
         // +CMQTTTOPIC: (0-1),(1-1024)
@@ -239,7 +247,7 @@ public:
 
     bool mqtt_subscribe(uint8_t clientIndex, const char *topic, uint8_t qos = 0)
     {
-        if(clientIndex > muxCount){
+        if (clientIndex > muxCount) {
             return false;
         }
         thisModem().sendAT("+CMQTTSUBTOPIC=", clientIndex, ',', strlen(topic), ',', qos);
@@ -268,7 +276,7 @@ public:
 
     bool mqtt_unsubscribe(uint8_t clientIndex, const char *topic)
     {
-        if(clientIndex > muxCount){
+        if (clientIndex > muxCount) {
             return false;
         }
         thisModem().sendAT("+CMQTTUNSUBTOPIC=", clientIndex, ',', strlen(topic));
@@ -298,7 +306,7 @@ public:
 
     bool mqtt_connected(uint8_t clientIndex = 0)
     {
-        if(clientIndex > muxCount){
+        if (clientIndex > muxCount) {
             return false;
         }
         static uint32_t lastCheck = 0;
