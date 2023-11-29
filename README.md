@@ -47,10 +47,10 @@
 | SendSMS            | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
 | LBSExample         | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
 | Network            | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| MqttsBuiltlnAuth   | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
-| MqttsBuiltlnSSL    | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
-| MqttsBuiltlnAWS    | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
-| MqttsBuiltlnHivemq | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
+| MqttsBuiltlnAuth   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| MqttsBuiltlnSSL    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| MqttsBuiltlnAWS    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| MqttsBuiltlnHivemq | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 
 
 
