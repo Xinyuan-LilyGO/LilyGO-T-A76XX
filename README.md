@@ -28,28 +28,31 @@
 
 ## 2️⃣Examples
 
-| Example          | [T-A7670X][1]     | [T-Call-A7670X][2] | [T-SIM7672G-S3][6] | [T-A7608][3]    | [T-A7608-DC-S3][4] | [T-A7608-S3][5] |
-| ---------------- | ----------------- | ------------------ | ------------------ | --------------- | ------------------ | --------------- |
-| ATdebug          | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| Blynk_Console    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| GPSShield        | ✅ (Only T-A7670G) | ❌   (Can't run)    | ❌   (Can't run)    | ❌   (Can't run) | ❌   (Can't run)    | ❌   (Can't run) |
-| GPS_BuiltIn      | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| GPS_NMEA_Parse   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| HttpClient       | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| HttpsClient      | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| MqttClient       | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| ReadBattery      | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ❌   (Can't run)    | ✅               |
-| DeepSleep        | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| ModemSleep       | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| VoiceCalls       | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
-| SDCard           | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ✅                  | ✅               |
-| SerialRS485      | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| SendSMS          | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
-| LBSExample       | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
-| Network          | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| MqttsBuiltlnAuth | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
-| MqttsBuiltlnSSL  | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
-| MqttsBuiltlnAWS  | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
+| Example            | [T-A7670X][1]     | [T-Call-A7670X][2] | [T-SIM7672G-S3][6] | [T-A7608][3]    | [T-A7608-DC-S3][4] | [T-A7608-S3][5] |
+| ------------------ | ----------------- | ------------------ | ------------------ | --------------- | ------------------ | --------------- |
+| ATdebug            | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| Blynk_Console      | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| GPSShield          | ✅ (Only T-A7670G) | ❌   (Can't run)    | ❌   (Can't run)    | ❌   (Can't run) | ❌   (Can't run)    | ❌   (Can't run) |
+| GPS_BuiltIn        | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| GPS_NMEA_Parse     | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| HttpClient         | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| HttpsClient        | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| MqttClient         | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| ReadBattery        | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ❌   (Can't run)    | ✅               |
+| DeepSleep          | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| ModemSleep         | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| VoiceCalls         | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
+| SDCard             | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ✅                  | ✅               |
+| SerialRS485        | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| SendSMS            | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
+| LBSExample         | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
+| Network            | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| MqttsBuiltlnAuth   | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
+| MqttsBuiltlnSSL    | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
+| MqttsBuiltlnAWS    | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
+| MqttsBuiltlnHivemq | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
+
+
 
 # Quick start ⚡
 
