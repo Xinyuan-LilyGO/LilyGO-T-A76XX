@@ -5,6 +5,8 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-16
  * @note      Not support T-SIM7672
+ * *  Although the manual of SIM7672G states that it has the functions of making voice calls and sending text messages, 
+ * *  the current firmware does not support it.
  */
 
 #include "utilities.h"

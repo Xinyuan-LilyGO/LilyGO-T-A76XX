@@ -8,6 +8,8 @@
  * * Voice calls require external welding of the condenser microphone and speaker.
  * * Generally, the board silk screen is marked SPK. The speaker needs to be welded,
  * * and the MIC silk screen position needs to weld the condenser microphone.
+ * *  Although the manual of SIM7672G states that it has the functions of making voice calls and sending text messages, 
+ * * the current firmware does not support it.
  */
 
 #include "utilities.h"
