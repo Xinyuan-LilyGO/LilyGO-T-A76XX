@@ -151,8 +151,8 @@ public:
 
         // Some MQTT brokers need to enable sni
         if (__sni) {
-            sendAT("+CSSLCFG=\"enableSNI\",0,1");
-            waitResponse();
+            thisModem().sendAT("+CSSLCFG=\"enableSNI\",0,1");
+            thisModem().waitResponse();
         }
 
         thisModem().sendAT("+CSSLCFG=\"authmode\",0,", authMethod);
