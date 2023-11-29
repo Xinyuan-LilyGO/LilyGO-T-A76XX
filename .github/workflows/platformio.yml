@@ -42,6 +42,8 @@ jobs:
             examples/VoiceCalls,
             examples/MqttsBuiltlnAuth,
             examples/MqttsBuiltlnSSL
+            examples/MqttsBuiltlnAWS
+            examples/MqttsBuiltlnHivemq
           ]
 
     steps:
