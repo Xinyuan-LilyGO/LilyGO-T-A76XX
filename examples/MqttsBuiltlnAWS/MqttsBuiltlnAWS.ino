@@ -12,7 +12,8 @@
  * *!!!! When using ESP to connect to AWS, the AWS IOT HUB policy must be set to all devices, otherwise the connection cannot be made.
  * *!!!! When using ESP to connect to AWS, the AWS IOT HUB policy must be set to all devices, otherwise the connection cannot be made.
  * *!!!! When using ESP to connect to AWS, the AWS IOT HUB policy must be set to all devices, otherwise the connection cannot be made.
- */
+ * *Youtube : https://youtu.be/am-rTDzm4lQ
+ * */
 #define TINY_GSM_RX_BUFFER          1024 // Set RX buffer to 1Kb
 
 // See all AT commands, if wanted

@@ -49,7 +49,7 @@
 | Network          | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | MqttsBuiltlnAuth | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
 | MqttsBuiltlnSSL  | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
-
+| MqttsBuiltlnAWS  | ✅                 | ✅                  | ❌   (Not adapted)  | ✅               | ✅                  | ✅               |
 
 # Quick start ⚡
 
