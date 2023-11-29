@@ -224,6 +224,15 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
     return false;
   }
 
+  // AT+GSN command
+  String getIMEIImpl() {
+    sendAT(GF("+CGSN"));
+    streamSkipUntil('\n');  // skip first newline
+    String res = stream.readStringUntil('\n');
+    waitResponse();
+    res.trim();
+    return res;
+  }
   /*
    * Power functions
    */
