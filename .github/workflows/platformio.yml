@@ -6,6 +6,7 @@ on:
     paths:
       - "examples/**"
       - "lib/**"
+      - ".github/workflows/platformio.yml"
 
 jobs:
   build:
