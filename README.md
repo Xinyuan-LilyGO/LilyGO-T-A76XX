@@ -54,7 +54,10 @@
 | HttpsBuiltlnGet    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HttpsBuiltlnPost   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HttpsOTAUpgrade    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| HP303BSensor       | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| HP303BSensor*      | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| SPIExample*        | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+
+- HP303BSensor,SPIExample it only demonstrates how to define and use SPI and I2C. Please confirm the pin connection and IO definition before use.
 
 
 # Quick start ⚡

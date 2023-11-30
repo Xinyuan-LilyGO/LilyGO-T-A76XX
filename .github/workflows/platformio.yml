@@ -48,7 +48,8 @@ jobs:
             examples/HttpsBuiltlnGet,
             examples/HttpsBuiltlnPost,
             examples/HttpsOTAUpgrade,
-            examples/HP303BSensor
+            examples/HP303BSensor,
+            examples/SPIExample
           ]
 
     steps:
