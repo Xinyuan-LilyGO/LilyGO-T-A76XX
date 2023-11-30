@@ -44,9 +44,9 @@ jobs:
             examples/MqttsBuiltlnAuth,
             examples/MqttsBuiltlnSSL,
             examples/MqttsBuiltlnAWS,
-            examples/MqttsBuiltlnHivemq
-            examples/HttpsBuiltlnGet
-            examples/HttpsBuiltlnPost
+            examples/MqttsBuiltlnHivemq,
+            examples/HttpsBuiltlnGet,
+            examples/HttpsBuiltlnPost,
             examples/HttpsOTAUpgrade
           ]
 
