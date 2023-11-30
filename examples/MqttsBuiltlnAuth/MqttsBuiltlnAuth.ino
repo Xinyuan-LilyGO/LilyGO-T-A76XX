@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-28
  * @note      
- * * * Example is suitable for A7670X/A7608X series, SIM7672 is not adapted. 
+ * * * Example is suitable for A7670X/A7608X/SIM7672 series
  * * Connect MQTT Broker as https://test.mosquitto.org/
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  */
