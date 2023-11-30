@@ -51,6 +51,8 @@
 | MqttsBuiltlnSSL    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | MqttsBuiltlnAWS    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | MqttsBuiltlnHivemq | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| HttpsBuiltlnGet    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| HttpsBuiltlnPost   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 
 
 
