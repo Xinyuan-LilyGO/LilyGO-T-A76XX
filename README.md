@@ -53,8 +53,7 @@
 | MqttsBuiltlnHivemq | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HttpsBuiltlnGet    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HttpsBuiltlnPost   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-
-
+| HttpsOTAUpgrade    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 
 # Quick start ⚡
 
