@@ -27,6 +27,7 @@
 #include "TinyGsmTime.tpp"
 #include "TinyGsmNTP.tpp"
 #include "TinyGsmMqttA76xx.h"
+#include "TinyGsmHttpsA76xx.h"
 
 #define GSM_NL "\r\n"
 static const char GSM_OK[] TINY_GSM_PROGMEM    = "OK" GSM_NL;
@@ -57,7 +58,8 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
                        public TinyGsmBattery<TinyGsmSim7672>,
                        public TinyGsmTemperature<TinyGsmSim7672>,
                        public TinyGsmCalling<TinyGsmSim7672>,
-                       public TinyGsmMqttA76xx<TinyGsmSim7672, TINY_GSM_MQTT_CLI_COUNT>
+                       public TinyGsmMqttA76xx<TinyGsmSim7672, TINY_GSM_MQTT_CLI_COUNT>,
+                       public TinyGsmHttpsA76xx<TinyGsmSim7672>
 {
   friend class TinyGsmModem<TinyGsmSim7672>;
   friend class TinyGsmGPRS<TinyGsmSim7672>;
@@ -71,6 +73,9 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
   friend class TinyGsmTemperature<TinyGsmSim7672>;
   friend class TinyGsmCalling<TinyGsmSim7672>;
   friend class TinyGsmMqttA76xx<TinyGsmSim7672, TINY_GSM_MQTT_CLI_COUNT>;
+  friend class TinyGsmHttpsA76xx<TinyGsmSim7672>;
+
+
   /*
    * Inner Client
    */

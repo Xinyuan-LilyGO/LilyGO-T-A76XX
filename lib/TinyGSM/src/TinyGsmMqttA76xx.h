@@ -1,9 +1,8 @@
 /**
  * @file      TinyGsmMqttA76xx.h
  * @author    Lewis He (lewishe@outlook.com)
- * @license   MIT
- * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
- * @date      2023-11-28
+ * @license   LGPL-3.0
+ * @date      2023-11-29
  *
  */
 #pragma once

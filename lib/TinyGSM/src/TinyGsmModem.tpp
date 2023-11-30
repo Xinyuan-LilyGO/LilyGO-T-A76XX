@@ -299,6 +299,20 @@ class TinyGsmModem {
     return -9999;
   }
 
+  inline uint64_t streamGetLongLongBefore(char lastChar)
+  {
+      char   buf[12];
+      size_t bytesRead = thisModem().stream.readBytesUntil(
+                              lastChar, buf, static_cast<size_t>(12));
+      // if we read 12 or more bytes, it's an overflow
+      if (bytesRead && bytesRead < 12) {
+          buf[bytesRead] = '\0';
+          uint64_t  res  = atoll(buf);
+          return res;
+      }
+      return 0;
+  }
+
   inline int16_t streamGetIntBefore(char lastChar) {
     char   buf[7];
     size_t bytesRead = thisModem().stream.readBytesUntil(
