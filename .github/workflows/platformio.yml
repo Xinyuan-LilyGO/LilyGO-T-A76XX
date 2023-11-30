@@ -47,7 +47,8 @@ jobs:
             examples/MqttsBuiltlnHivemq,
             examples/HttpsBuiltlnGet,
             examples/HttpsBuiltlnPost,
-            examples/HttpsOTAUpgrade
+            examples/HttpsOTAUpgrade,
+            examples/HP303BSensor
           ]
 
     steps:

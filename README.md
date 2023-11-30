@@ -54,6 +54,8 @@
 | HttpsBuiltlnGet    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HttpsBuiltlnPost   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HttpsOTAUpgrade    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| HP303BSensor       | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+
 
 # Quick start ⚡
 
