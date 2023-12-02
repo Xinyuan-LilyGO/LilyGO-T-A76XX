@@ -140,7 +140,8 @@
    1. Voice calls require external welding of the condenser microphone and speaker. Generally, the board silk screen is marked SPK. The speaker needs to be welded, and the MIC silk screen position needs to weld the condenser microphone.
 - SIM7672G sendSMS and VoiceCall?
    1. Although the manual of SIM7672G states that it has the functions of making voice calls and sending text messages, the current firmware does not support it.
-
+- Unable to detect SIMCard?
+   1. All SIM series need to insert the SIMCard into the board first and then power on to detect the SIM card. If the order is reversed, it will report that the SIMCard cannot be detected.
 
 # 7️⃣Resource
 
