@@ -64,36 +64,42 @@
 
 ## 3️⃣ PlatformIO Quick Start (Recommended)
 
-1. Install [Visual Studio Code](https://code.visualstudio.com/) and [Python](https://www.python.org/)
-2. Search for the `PlatformIO` plugin in the `VisualStudioCode` extension and install it.
-3. After the installation is complete, you need to restart `VisualStudioCode`
-4. After restarting `VisualStudioCode`, select `File` in the upper left corner of `VisualStudioCode` -> `Open Folder` -> select the `LilyGO-T-A76XX` directory
-5. Wait for the installation of third-party dependent libraries to complete
-6. Click on the `platformio.ini` file, and in the `platformio` column
-7. Select the board name you want to use in `default_envs` and uncomment it.
-8. Uncomment one of the lines `src_dir = xxxx` to make sure only one line works
-9. Click the (✔) symbol in the lower left corner to compile
-10. Connect the board to the computer USB
-11. Click (→) to upload firmware
-12. Click (plug symbol) to monitor serial output
-13. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
+1. For users using the ESP32 version (non ESP32S3 version), please install the **CH9102 USB bridge** driver for the first time.
+   - [Windonws](https://www.wch-ic.com/downloads/CH343SER_ZIP.html)
+   - [Mac OS](https://www.wch-ic.com/downloads/CH34XSER_MAC_ZIP.html)
+2. Install [Visual Studio Code](https://code.visualstudio.com/) and [Python](https://www.python.org/)
+3. Search for the `PlatformIO` plugin in the `VisualStudioCode` extension and install it.
+4. After the installation is complete, you need to restart `VisualStudioCode`
+5. After restarting `VisualStudioCode`, select `File` in the upper left corner of `VisualStudioCode` -> `Open Folder` -> select the `LilyGO-T-A76XX` directory
+6. Wait for the installation of third-party dependent libraries to complete
+7. Click on the `platformio.ini` file, and in the `platformio` column
+8. Select the board name you want to use in `default_envs` and uncomment it.
+9. Uncomment one of the lines `src_dir = xxxx` to make sure only one line works
+10. Click the (✔) symbol in the lower left corner to compile
+11. Connect the board to the computer USB
+12. Click (→) to upload firmware
+13. Click (plug symbol) to monitor serial output
+14. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
 
 ## 4️⃣ Arduino IDE Quick Start
 
 - It is recommended to use platformio without cumbersome steps
-
-1. Install [Arduino IDE](https://www.arduino.cc/en/software)
-2. Install [Arduino ESP32 2.0.5 or above](https://docs.espressif.com/projects/arduino-esp32/en/latest/) 
-3. Copy all folders in [lib folder](./lib/)  to Arduino library folder (e.g. C:\Users\YourName\Documents\Arduino\libraries)
-4. Open ArduinoIDE  ,`Tools` , Look at the picture to choose
+  
+1. For users using the ESP32 version (non ESP32S3 version), please install the **CH9102 USB bridge** driver for the first time.
+   - [Windonws](https://www.wch-ic.com/downloads/CH343SER_ZIP.html)
+   - [Mac OS](https://www.wch-ic.com/downloads/CH34XSER_MAC_ZIP.html)
+2. Install [Arduino IDE](https://www.arduino.cc/en/software)
+3. Install [Arduino ESP32 2.0.5 or above](https://docs.espressif.com/projects/arduino-esp32/en/latest/) 
+4. Copy all folders in [lib folder](./lib/)  to Arduino library folder (e.g. C:\Users\YourName\Documents\Arduino\libraries)
+5. Open ArduinoIDE  ,`Tools` , Look at the picture to choose
     | [T-A7670X][1]/[T-Call-A7670X][2]/[T-A7608][3] | [T-A7608-DC-S3][4]/[T-A7608-DC-S3][4]/[T-A7608-S3][5]/[T-SIM7672G-S3][6] |
     | --------------------------------------------- | ------------------------------------------------------------------------ |
     | ![esp32dev](images/esp32dev.jpg)              | ![esp32s3dev](images/esp32s3dev.jpg)                                     |
-5. `LilyGO-T-A76XX` folder -> `examples` -> `Choose the appropriate example from the list above`
-6. Open the corresponding board macro definition above [utilities.h](./examples/ATdebug/utilities.h)
-7. Select `Port`
-8. Click `upload` , Wait for compilation and writing to complete
-9. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
+6. `LilyGO-T-A76XX` folder -> `examples` -> `Choose the appropriate example from the list above`
+7. Open the corresponding board macro definition above [utilities.h](./examples/ATdebug/utilities.h)
+8. Select `Port`
+9. Click `upload` , Wait for compilation and writing to complete
+10. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
 
 ### Writing as a beginner
 
