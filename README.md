@@ -4,9 +4,10 @@
 
 # News
 
-- The TinyGSM used in the example is a [fork](https://github.com/lewisxhe/TinyGSM) to support A7670,A7608,SIM7672,If you use the master branch, the compilation will not go smoothly
+- The TinyGSM used in the example is a [fork](https://github.com/lewisxhe/TinyGSM) to support A7670,A7608,SIM7672G,SIM7670G, If you use the master branch, the compilation will not go smoothly
 - A7670G/A7670E/A7670SA are collectively referred to as A7670X
 - A7608SA-H/A7608E-H,A7608E,A7608SA are collectively referred to as A7608X
+- **SIM7672G** and **SIM7670G** are exactly the same, except for the name change , The readme file indicates these two models with **SIM767X**
 
 # 1️⃣Product
 
@@ -17,7 +18,7 @@
 | [T-A7608][3]       | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-A7608X-V1.0.pdf)       |
 | [T-A7608-DC-S3][4] | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-A7608X-DC-S3-V1.0.pdf) |
 | [T-A7608-S3][5]    | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-A7608-S3-V1.0.pdf)     |
-| [T-SIM7672G-S3][6] | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-SIM7672G-S3-V1.0.pdf)  |
+| [T-SIM767XG-S3][6] | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-SIM767XG-S3-V1.0.pdf)  |
 
 [1]: https://www.lilygo.cc/products/t-sim-a7670e
 [2]: https://www.lilygo.cc
@@ -28,7 +29,7 @@
 
 ## 2️⃣Examples
 
-| Example            | [T-A7670X][1]     | [T-Call-A7670X][2] | [T-SIM7672G-S3][6] | [T-A7608][3]    | [T-A7608-DC-S3][4] | [T-A7608-S3][5] |
+| Example            | [T-A7670X][1]     | [T-Call-A7670X][2] | [T-SIM767XG-S3][6] | [T-A7608][3]    | [T-A7608-DC-S3][4] | [T-A7608-S3][5] |
 | ------------------ | ----------------- | ------------------ | ------------------ | --------------- | ------------------ | --------------- |
 | ATdebug            | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | Blynk_Console      | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
@@ -92,7 +93,7 @@
 3. Install [Arduino ESP32 2.0.5 or above](https://docs.espressif.com/projects/arduino-esp32/en/latest/) 
 4. Copy all folders in [lib folder](./lib/)  to Arduino library folder (e.g. C:\Users\YourName\Documents\Arduino\libraries)
 5. Open ArduinoIDE  ,`Tools` , Look at the picture to choose
-    | [T-A7670X][1]/[T-Call-A7670X][2]/[T-A7608][3] | [T-A7608-DC-S3][4]/[T-A7608-DC-S3][4]/[T-A7608-S3][5]/[T-SIM7672G-S3][6] |
+    | [T-A7670X][1]/[T-Call-A7670X][2]/[T-A7608][3] | [T-A7608-DC-S3][4]/[T-A7608-DC-S3][4]/[T-A7608-S3][5]/[T-SIM767XG-S3][6] |
     | --------------------------------------------- | ------------------------------------------------------------------------ |
     | ![esp32dev](images/esp32dev.jpg)              | ![esp32s3dev](images/esp32s3dev.jpg)                                     |
 6. `LilyGO-T-A76XX` folder -> `examples` -> `Choose the appropriate example from the list above`
@@ -144,8 +145,8 @@
    3. If there is no VBAT, you can also connect it to the VBUS Pin, which is the input pin for USB power supply. Connecting it to VBUS will share the 5V of the USBC. Please note that when connecting an external charger, disconnect the USBC or disconnect the solar energy. enter
 - How to use voice call example?
    1. Voice calls require external welding of the condenser microphone and speaker. Generally, the board silk screen is marked SPK. The speaker needs to be welded, and the MIC silk screen position needs to weld the condenser microphone.
-- SIM7672G sendSMS and VoiceCall?
-   1. Although the manual of SIM7672G states that it has the functions of making voice calls and sending text messages, the current firmware does not support it.
+- SIM767XG sendSMS and VoiceCall?
+   1. Although the manual of SIM767XG states that it has the functions of making voice calls and sending text messages, the current firmware does not support it.
 - Unable to detect SIMCard?
    1. All SIM series need to insert the SIMCard into the board first and then power on to detect the SIM card. If the order is reversed, it will report that the SIMCard cannot be detected.
 
@@ -166,7 +167,7 @@
    - [A76xx Sleep Application](./datasheet/A76XX/A76XX%20Series_Sleep%20Mode_Application%20Note_V1.02.pdf)
    - [A76xx Hardware Design manual](./datasheet/A76XX/A7670C_R2_硬件设计手册_V1.06.pdf)
    - [A76xx TCPIP Application](./datasheet/A76XX/A76XX%20Series_TCPIP_Application%20Note_V1.02.pdf)
-3. SIM7672-Datasheet
+3. SIM767XG-Datasheet
    - [SIM7672 Hardware Design manual](./datasheet/SIM7672G/SIM7672X_Series_Hardware_Design_V1.02.pdf)
    - [SIM7672 AT Command](./datasheet/SIM7672G/SIM767XX%20Series_AT_Command_Manual_V1.01.pdf)
 4. Schematic

@@ -19,7 +19,8 @@
 
 // #define LILYGO_T_CALL_A7670
 
-// #define LILYGO_T_SIM7672G_S3
+//! SIM7672G and SIM7670G are exactly the same, except for the name change
+// #define LILYGO_T_SIM767XG_S3
 
 // #define LILYGO_T_A7608X
 
@@ -82,7 +83,7 @@
 #define TINY_GSM_MODEM_A7670
 #endif
 
-#elif defined(LILYGO_T_SIM7672G_S3)
+#elif defined(LILYGO_T_SIM767XG_S3)
 #define MODEM_BAUDRATE                      (115200)
 #define MODEM_DTR_PIN                       (9)
 #define MODEM_TX_PIN                        (11)

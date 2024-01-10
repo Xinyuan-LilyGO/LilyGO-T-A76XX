@@ -23,7 +23,7 @@
 const char *server_url =  "https://lewishe.pro/ota/firmware-a7670.bin";
 #elif defined(LILYGO_T_CALL_A7670)
 const char *server_url =  "https://lewishe.pro/ota/firmware-tcall-a7670.bin";
-#elif defined(LILYGO_T_SIM7672G_S3)
+#elif defined(LILYGO_T_SIM767XG_S3)
 const char *server_url =  "https://lewishe.pro/ota/firmware-sim7672g.bin";
 #elif defined(LILYGO_T_A7608X)
 const char *server_url =  "https://lewishe.pro/ota/firmware-a7608.bin";
