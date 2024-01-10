@@ -1,12 +1,14 @@
 name: PlatformIO CI
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
     paths:
       - "examples/**"
       - "lib/**"
       - ".github/workflows/platformio.yml"
+      - "platformio.ini"
 
 jobs:
   build:
