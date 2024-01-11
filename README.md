@@ -52,6 +52,7 @@
 | MqttsBuiltlnSSL    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | MqttsBuiltlnAWS    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | MqttsBuiltlnHivemq | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| MqttsBuiltlnEMQX   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HttpsBuiltlnGet    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HttpsBuiltlnPost   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HttpsOTAUpgrade    | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
