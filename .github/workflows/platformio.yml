@@ -49,6 +49,7 @@ jobs:
             examples/MqttsBuiltlnHivemq,
             examples/HttpsBuiltlnGet,
             examples/HttpsBuiltlnPost,
+            examples/MqttsBuiltlnEMQX,
             examples/HttpsOTAUpgrade,
             examples/HP303BSensor,
             examples/SPIExample
