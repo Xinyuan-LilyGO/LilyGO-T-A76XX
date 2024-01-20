@@ -150,6 +150,23 @@
    1. Although the manual of SIM767XG states that it has the functions of making voice calls and sending text messages, the current firmware does not support it.
 - Unable to detect SIMCard?
    1. All SIM series need to insert the SIMCard into the board first and then power on to detect the SIM card. If the order is reversed, it will report that the SIMCard cannot be detected.
+- For ESP32S3 users , If you use external power supply instead of USBC, please turn off the CDC option. This is because the board will wait for USB access when it starts.
+   1. For Arduino IDE users, it can be turned off in the options , Please note that turning off USB CDC will turn off Serial redirection to USBC. At this time, you will not see any Serial message output when opening the port from USBC, but output from GPIO43 and GPIO44.
+
+    ```c
+    Tools -> USB CDC On Boot -> Disable
+    ```
+
+   2. For Platformio users, you can add the following compilation flags in the ini file
+
+    ```c
+    build_flags =
+        ; Enable UARDUINO_USB_CDC_ON_BOOT will start printing and wait for terminal access during startup
+        ; -DARDUINO_USB_CDC_ON_BOOT=1
+
+        ; Enable UARDUINO_USB_CDC_ON_BOOT will turn off printing and will not block when using the battery
+        -UARDUINO_USB_CDC_ON_BOOT
+    ```
 
 # 7️⃣Resource
 
