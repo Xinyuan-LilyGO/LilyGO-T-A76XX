@@ -8,24 +8,27 @@
 - A7670G/A7670E/A7670SA are collectively referred to as A7670X
 - A7608SA-H/A7608E-H,A7608E,A7608SA are collectively referred to as A7608X
 - **SIM7672G** and **SIM7670G** are exactly the same, except for the name change , The readme file indicates these two models with **SIM767X**
+- When using T-Call-A767X, you need to distinguish between versions. Pinmaps for **V1.0** and **V1.1** are different and cannot be used universally.
 
 # 1️⃣Product
 
-| Product(PinMap)    | SOC              | Flash | PSRAM     | Schematic                                        |
-| ------------------ | ---------------- | ----- | --------- | ------------------------------------------------ |
-| [T-A7670X][1]      | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-A7670X-V1.1.pdf)       |
-| [T-Call-A7670X][2] | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-Call-A7670-V1.0.pdf)   |
-| [T-A7608][3]       | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-A7608X-V1.0.pdf)       |
-| [T-A7608-DC-S3][4] | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-A7608X-DC-S3-V1.0.pdf) |
-| [T-A7608-S3][5]    | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-A7608-S3-V1.0.pdf)     |
-| [T-SIM767XG-S3][6] | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-SIM767XG-S3-V1.0.pdf)  |
+| Product(PinMap)         | SOC              | Flash | PSRAM     | Schematic                                        |
+| ----------------------- | ---------------- | ----- | --------- | ------------------------------------------------ |
+| [T-A7670X][1]           | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-A7670X-V1.1.pdf)       |
+| [T-Call-A7670X-V1.0][2] | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-Call-A7670-V1.0.pdf)   |
+| [T-Call-A7670X-V1.1][3] | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-Call-A7670-V1.1.pdf)   |
+| [T-A7608][4]            | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-A7608X-V1.0.pdf)       |
+| [T-A7608-DC-S3][5]      | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-A7608X-DC-S3-V1.0.pdf) |
+| [T-A7608-S3][6]         | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-A7608-S3-V1.0.pdf)     |
+| [T-SIM767XG-S3][7]      | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-SIM767XG-S3-V1.0.pdf)  |
 
 [1]: https://www.lilygo.cc/products/t-sim-a7670e
 [2]: https://www.lilygo.cc
-[3]: https://www.lilygo.cc/products/t-a7608e-h
-[4]: https://www.lilygo.cc
+[3]: https://www.lilygo.cc
+[4]: https://www.lilygo.cc/products/t-a7608e-h
 [5]: https://www.lilygo.cc
 [6]: https://www.lilygo.cc
+[7]: https://www.lilygo.cc
 
 ## 2️⃣Examples
 

@@ -18,7 +18,8 @@ jobs:
         envs:
           [
             T-A7670X,
-            T-Call-A7670X,
+            T-Call-A7670X-V1-0,
+            T-Call-A7670X-V1-1,
             T-SIM7672G,
             T-A7608X,
             T-A7608X-S3,

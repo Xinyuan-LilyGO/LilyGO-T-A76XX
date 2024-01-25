@@ -17,7 +17,12 @@
 // Products Link:https://www.lilygo.cc/products/t-sim-a7670e
 // #define LILYGO_T_A7670
 
+
+// T-Call-A767X V1.0 and V1.1 have different Pinmaps and cannot be used universally.
 // #define LILYGO_T_CALL_A7670_V1_0
+
+// T-Call-A767X V1.0 and V1.1 have different Pinmaps and cannot be used universally.
+// #define LILYGO_T_CALL_A7670_V1_1
 
 //! SIM7672G and SIM7670G are exactly the same, except for the name change
 // #define LILYGO_T_SIM767XG_S3
@@ -78,6 +83,28 @@
 
 #define MODEM_GPS_ENABLE_GPIO               (-1)
 
+
+#ifndef TINY_GSM_MODEM_A7670
+#define TINY_GSM_MODEM_A7670
+#endif
+
+#elif defined(LILYGO_T_CALL_A7670_V1_1)
+
+#define MODEM_BAUDRATE                      (115200)
+#define MODEM_DTR_PIN                       (32)
+#define MODEM_TX_PIN                        (27)
+#define MODEM_RX_PIN                        (26)
+// The modem boot pin needs to follow the startup sequence.
+#define BOARD_PWRKEY_PIN                    (4)
+#define BOARD_LED_PIN                       (13)
+// There is no modem power control, the LED Pin is used as a power indicator here.
+#define BOARD_POWERON_PIN                   (BOARD_LED_PIN)
+#define MODEM_RING_PIN                      (33)
+#define MODEM_RESET_PIN                     (5)
+#define MODEM_RESET_LEVEL                   LOW
+#define SerialAT                            Serial1
+
+#define MODEM_GPS_ENABLE_GPIO               (-1)
 
 #ifndef TINY_GSM_MODEM_A7670
 #define TINY_GSM_MODEM_A7670
