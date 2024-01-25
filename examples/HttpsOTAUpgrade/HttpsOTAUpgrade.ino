@@ -21,7 +21,7 @@
 // The following download link is for testing only and can be replaced with  firmware download link for another server.
 #if  defined(LILYGO_T_A7670)
 const char *server_url =  "https://lewishe.pro/ota/firmware-a7670.bin";
-#elif defined(LILYGO_T_CALL_A7670)
+#elif defined(LILYGO_T_CALL_A7670_V1_0)
 const char *server_url =  "https://lewishe.pro/ota/firmware-tcall-a7670.bin";
 #elif defined(LILYGO_T_SIM767XG_S3)
 const char *server_url =  "https://lewishe.pro/ota/firmware-sim7672g.bin";
