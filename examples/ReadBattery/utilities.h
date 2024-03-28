@@ -65,7 +65,7 @@
 #define TINY_GSM_MODEM_A7670
 #endif
 
-// It is only available in V1.3 version. In other versions, IO38 is not connected.
+// It is only available in V1.4 version. In other versions, IO38 is not connected.
 #define BOARD_SOLAR_ADC_PIN                 (38)
 
 
