@@ -65,6 +65,10 @@
 #define TINY_GSM_MODEM_A7670
 #endif
 
+// It is only available in V1.3 version. In other versions, IO38 is not connected.
+#define BOARD_SOLAR_ADC_PIN                 (38)
+
+
 #elif defined(LILYGO_T_CALL_A7670_V1_0)
 #define MODEM_BAUDRATE                      (115200)
 #define MODEM_DTR_PIN                       (14)

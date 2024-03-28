@@ -5,10 +5,11 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-08-07
  * @note      Reading the battery voltage information is only applicable to the V1.2 version.
- *            The V1.1 version does not have a battery voltage divider.
- *            If V1.1 needs to be read, then you need to add a 100K 1% voltage divider resistor between the battery and GND
- *            When connected to the USB, the battery voltage data read is not the real battery voltage, so the battery
- *            voltage is sent to the UDP Server through UDP. When using it, please disconnect the USBC
+ *            T-A7670x :  The V1.1 version does not have a battery voltage divider.
+ *                         If V1.1 needs to be read, then you need to add a 100K 1% voltage divider resistor between the battery and GND
+ *                         When connected to the USB, the battery voltage data read is not the real battery voltage, so the battery
+ *                         voltage is sent to the UDP Server through UDP. When using it, please disconnect the USB-C
+ *            T-A7670x :  Only version V1.3 has the resistor divider connected to the solar input, other versions IO38 is not connected
  * @note      Onlu support T-A7670 ,T-A7608X, T-SIM7672G board , not support T-Call A7670
  */
 #include <esp_adc_cal.h>
