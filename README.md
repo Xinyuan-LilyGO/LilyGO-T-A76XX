@@ -9,6 +9,7 @@
 - A7608SA-H/A7608E-H,A7608E,A7608SA are collectively referred to as A7608X
 - **SIM7672G** and **SIM7670G** are exactly the same, except for the name change , The readme file indicates these two models with **SIM767X**
 - When using T-Call-A767X, you need to distinguish between versions. Pinmaps for **V1.0** and **V1.1** are different and cannot be used universally.
+- The usage methods of A7670/A7670 R2 are exactly the same, but the internal chip manufacturing process of the module is different.
 
 # 1️⃣Product
 
@@ -23,8 +24,8 @@
 | [T-SIM767XG-S3][7]      | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-SIM767XG-S3-V1.0.pdf)  |
 
 [1]: https://www.lilygo.cc/products/t-sim-a7670e
-[2]: https://www.lilygo.cc
-[3]: https://www.lilygo.cc
+[2]: https://www.lilygo.cc/products/t-call-v1-4
+[3]: https://www.lilygo.cc/products/t-call-v1-4
 [4]: https://www.lilygo.cc/products/t-a7608e-h
 [5]: https://www.lilygo.cc
 [6]: https://www.lilygo.cc
@@ -45,6 +46,7 @@
 | ReadBattery        | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ❌   (Can't run)    | ✅               |
 | DeepSleep          | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | ModemSleep         | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| ModemPowerOff      | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | VoiceCalls         | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
 | SDCard             | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ✅                  | ✅               |
 | SerialRS485        | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
