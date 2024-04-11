@@ -37,6 +37,7 @@ jobs:
             examples/HttpsClient,
             examples/LBSExample,
             examples/ModemSleep,
+            examples/ModemPowerOff,
             examples/MqttClient,
             examples/Network,
             examples/ReadBattery,
