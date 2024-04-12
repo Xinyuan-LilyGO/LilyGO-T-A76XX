@@ -125,6 +125,7 @@
 4. Recommended solar panels are 4.4v to 6v **DO NOT EXCEED OR BOARD MAY BE DAMAGED** 
 5. When an SD card in you can not upload software in Arduino IDE since the SD card uses IO2 as CS, the SD card must be removed when uploading a new sketch.
 6. The `T-A7670G` modem does not contain a GPS positioning component and requires an additional external GPS positioning module to use the positioning function. [LilyGo T-A7670G with GPS](https://www.lilygo.cc/products/t-sim-a7670e?variant=43043706077365) uses [Quectel L76K](https://www.quectel.com/cn/product/gnss-l76k) as the **T-A7670G** auxiliary positioning function, which requires a part of the IO, please refer to the [GPSShield example](./examples/GPSShield/) , How to identify whether you have an external GPS module please see [#issues56](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/56#issuecomment-1672628977)
+7. Known issues, ESP32 (V1.2) version of [T-A7670][1], [T-A7608][4], when using battery power supply mode, BOARD_POWERON_PIN (IO12) must be set to high level after esp32 starts, otherwise a reset will occur.
 
 # 6️⃣ FAQ
 
