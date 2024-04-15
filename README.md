@@ -72,7 +72,7 @@
 ## 3️⃣ PlatformIO Quick Start (Recommended)
 
 1. For users using the ESP32 version (non ESP32S3 version), please install the **CH9102 USB bridge** driver for the first time.
-   - [Windonws](https://www.wch-ic.com/downloads/CH343SER_ZIP.html)
+   - [Windows](https://www.wch-ic.com/downloads/CH343SER_ZIP.html)
    - [Mac OS](https://www.wch-ic.com/downloads/CH34XSER_MAC_ZIP.html)
 2. Install [Visual Studio Code](https://code.visualstudio.com/) and [Python](https://www.python.org/)
 3. Search for the `PlatformIO` plugin in the `VisualStudioCode` extension and install it.
