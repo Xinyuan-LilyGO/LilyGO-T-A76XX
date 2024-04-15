@@ -129,6 +129,8 @@
 
 # 6️⃣ FAQ
 
+- Can't turn on the phone after connecting the battery for the first time?
+   1. This is due to the characteristics of the onboard battery over-discharge and over-charge chip. It cannot be turned on when the battery is connected for the first time. This can be solved by inserting a USB charger or reconnecting the battery. For details, please see the remarks on [page 4](https://www.lcsc.com/datasheet/lcsc_datasheet_2010160933_Shenzhen-Fuman-Elec-DW06D_C82123.pdf) of the datasheet.
 - Can't upload any sketch，Please enter the upload mode manually.
    1. Connect the board via the USB cable
    2. Press and hold the BOOT button , While still pressing the BOOT button (If there is no BOOT button, you need to use wires to connect GND and IO0 together.)
@@ -173,6 +175,7 @@
         ; Enable UARDUINO_USB_CDC_ON_BOOT will turn off printing and will not block when using the battery
         -UARDUINO_USB_CDC_ON_BOOT
     ```
+
 
 # 7️⃣Resource
 
