@@ -43,6 +43,20 @@ void setup()
 #endif
 
     if (esp_sleep_get_wakeup_cause() != ESP_SLEEP_WAKEUP_TIMER) {
+
+#ifdef MODEM_RESET_PIN
+        // Release reset GPIO hold
+        gpio_hold_dis((gpio_num_t)MODEM_RESET_PIN);
+
+        // Set modem reset pin ,reset modem
+        // The module will also be started during reset.
+        Serial.println("Set Reset Pin.");
+        pinMode(MODEM_RESET_PIN, OUTPUT);
+        digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);
+        digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL); delay(2600);
+        digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+#endif
+
         /*
         BOARD_PWRKEY_PIN IO:4 The power-on signal of the modulator must be given to it,
         otherwise the modulator will not reply when the command is sent
@@ -116,6 +130,16 @@ void setup()
     gpio_hold_en((gpio_num_t )BOARD_POWERON_PIN);
     gpio_deep_sleep_hold_en();
 #endif
+
+#ifdef MODEM_RESET_PIN
+    // Keep it low during the sleep period. If the module uses GPIO5 as reset, 
+    // there will be a pulse when waking up from sleep that will cause the module to start directly.
+    // https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/85
+    digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+    gpio_hold_en((gpio_num_t)MODEM_RESET_PIN);
+    gpio_deep_sleep_hold_en();
+#endif
+
 
     Serial.println("Enter esp32 goto deepsleep!");
     esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);

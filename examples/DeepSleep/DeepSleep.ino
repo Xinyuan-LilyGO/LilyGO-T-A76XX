@@ -4,8 +4,11 @@
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-16
- * @record    https://youtu.be/5G4COjtKsFU
- * T-A7608-S3 Deepsleep ~ 368uA
+ * @record    T-A7608-S3 : https://youtu.be/5G4COjtKsFU
+ * T-A7608-S3 DeepSleep ~ 368 uA
+ * T-A7608-ESP32  DeepSleep ~ 240 uA
+ * T-A7670-ESP32  DeepSleep ~ 157 uA
+ * 
  */
 #include "utilities.h"
 #include <driver/gpio.h>
