@@ -180,9 +180,9 @@
 #define MODEM_RX_PIN                        (18)
 // The modem boot pin needs to follow the startup sequence.
 #define BOARD_PWRKEY_PIN                    (15)
-#define BOARD_BAT_ADC_PIN                   (35)
+#define BOARD_BAT_ADC_PIN                   (4)
 // The modem power switch must be set to HIGH for the modem to supply power.
-#define BOARD_POWERON_PIN                   (12)
+// #define BOARD_POWERON_PIN                   (12)
 #define MODEM_RING_PIN                      (6)
 #define MODEM_RESET_PIN                     (16)
 #define BOARD_MISO_PIN                      (47)
