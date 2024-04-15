@@ -83,7 +83,7 @@
 8. Select the board name you want to use in `default_envs` and uncomment it.
 9. Uncomment one of the lines `src_dir = xxxx` to make sure only one line works
 10. Click the (✔) symbol in the lower left corner to compile
-11. Connect the board to the computer USB
+11. Connect the board to the computer USB-C , Micro-USB is used for module firmware upgrade
 12. Click (→) to upload firmware
 13. Click (plug symbol) to monitor serial output
 14. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
@@ -93,7 +93,7 @@
 - It is recommended to use platformio without cumbersome steps
   
 1. For users using the ESP32 version (non ESP32S3 version), please install the **CH9102 USB bridge** driver for the first time.
-   - [Windonws](https://www.wch-ic.com/downloads/CH343SER_ZIP.html)
+   - [Windows](https://www.wch-ic.com/downloads/CH343SER_ZIP.html)
    - [Mac OS](https://www.wch-ic.com/downloads/CH34XSER_MAC_ZIP.html)
 2. Install [Arduino IDE](https://www.arduino.cc/en/software)
 3. Install [Arduino ESP32 2.0.5 or above](https://docs.espressif.com/projects/arduino-esp32/en/latest/) 
@@ -104,9 +104,10 @@
     | ![esp32dev](images/esp32dev.jpg)              | ![esp32s3dev](images/esp32s3dev.jpg)                                     |
 6. `LilyGO-T-A76XX` folder -> `examples` -> `Choose the appropriate example from the list above`
 7. Open the corresponding board macro definition above [utilities.h](./examples/ATdebug/utilities.h)
-8. Select `Port`
-9. Click `upload` , Wait for compilation and writing to complete
-10. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
+8. Connect the board to the computer USB-C , Micro-USB is used for module firmware upgrade
+9. Select `Port`
+10. Click `upload` , Wait for compilation and writing to complete
+11. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
 
 ### Writing as a beginner
 
