@@ -10,6 +10,10 @@
 - **SIM7672G** and **SIM7670G** are exactly the same, except for the name change , The readme file indicates these two models with **SIM767X**
 - When using T-Call-A767X, you need to distinguish between versions. Pinmaps for **V1.0** and **V1.1** are different and cannot be used universally.
 - The usage methods of A7670/A7670 R2 are exactly the same, but the internal chip manufacturing process of the module is different.
+- The difference between A7608X-S3 V1.0 and V1.1 is that V1.1 adds a solar input voltage dividing resistor (occupies IO3), the others are the same
+
+
+
 
 # 1️⃣Product
 
