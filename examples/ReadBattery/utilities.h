@@ -197,6 +197,9 @@
 #define TINY_GSM_MODEM_A7608
 #endif
 
+// only version v1.1 has solar adc pin
+#define BOARD_SOLAR_ADC_PIN                 (3)
+
 // 127 is defined in GSM as the AUXVDD index
 #define MODEM_GPS_ENABLE_GPIO               (127)
 
