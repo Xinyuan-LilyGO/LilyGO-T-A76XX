@@ -18,7 +18,7 @@
 #define TINY_GSM_DEBUG SerialMon
 
 // See all AT commands, if wanted
-// #define DUMP_AT_COMMANDS
+#define DUMP_AT_COMMANDS
 
 
 #include <TinyGsmClient.h>
@@ -81,6 +81,10 @@ void setup()
     }
     Serial.println();
     Serial.println("GPS Enabled");
+
+    // Set GPS Baud to 115200
+    modem.setGPSBaud(115200);
+
 }
 
 void loop()
@@ -99,7 +103,7 @@ void loop()
     int   min2      = 0;
     int   sec2      = 0;
     uint8_t    fixMode   = 0;
-    for (int8_t i = 15; i; i--) {
+    for (;;) {
         Serial.println("Requesting current GPS/GNSS/GLONASS location");
         if (modem.getGPS(&fixMode, &lat2, &lon2, &speed2, &alt2, &vsat2, &usat2, &accuracy2,
                          &year2, &month2, &day2, &hour2, &min2, &sec2)) {
@@ -132,7 +136,13 @@ void loop()
     modem.disableGPS();
 
     while (1) {
-        delay(10);
+        if (SerialAT.available()) {
+            Serial.write(SerialAT.read());
+        }
+        if (Serial.available()) {
+            SerialAT.write(Serial.read());
+        }
+        delay(1);
     }
 }
 
