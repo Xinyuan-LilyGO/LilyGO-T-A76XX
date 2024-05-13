@@ -39,6 +39,42 @@ class TinyGsmSim808 : public TinyGsmSim800, public TinyGsmGPS<TinyGsmSim808>, pu
     return true;
   }
 
+  bool isEnableGPSImpl(){
+    sendAT(GF("+CGNSPWR?"));
+    if (waitResponse(GF(GSM_NL "+CGNSPWR:")) != 1) { return false; }
+    return 1 == streamGetIntBefore('\r'); 
+  }
+
+  bool setGPSBaudImpl(uint32_t baud){
+    DBG("Modem does not support set GPS baudrate.");
+    return  false;
+  }
+
+  bool setGPSModeImpl(uint8_t mode){
+      sendAT("+CGNSMOD=1,1,1,1");
+      return waitResponse(1000L) == 1;
+  }
+
+  bool setGPSOutputRateImpl(uint8_t rate_hz){
+    DBG("Modem does not support set GPS output rate.");
+    return  false;
+  }
+
+  bool enableNMEAImpl(){
+    DBG("Modem does not support set GPS NMEA output.");
+    return true;
+  }
+
+  bool disableNMEAImpl(){
+    DBG("Modem does not support set GPS NMEA output.");
+    return true;
+  }
+
+  bool configNMEASentenceImpl(bool CGA,bool GLL,bool GSA,bool GSV,bool RMC,bool VTG,bool ZDA,bool ANT){
+    DBG("Modem does not support set GPS NMEA.");
+    return false;
+  }
+  
   // get the RAW GPS output
   // works only with ans SIM808 V2
   String getGPSrawImpl() {

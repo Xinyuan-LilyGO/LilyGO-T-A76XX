@@ -1,62 +1,60 @@
 name: Build Examples with PlatformIO
 
 # Triggers the workflow on push or pull request events
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'ci skip')"
-
     strategy:
       matrix:
-        example:
-          [
-            examples/BlynkClient,
-            examples/FileDownload,
-            examples/MqttClient,
-            examples/WebClient,
-            tools/test_build,
-            tools/Diagnostics,
-          ]
-        modem:
-          [
+        modem: [
+            # LILYGO Boards
+            TINY_GSM_MODEM_A7608,
+            TINY_GSM_MODEM_A7670,
+            TINY_GSM_MODEM_SIM7000,
+            TINY_GSM_MODEM_SIM7000SSL,
+            TINY_GSM_MODEM_SIM7020,
+            TINY_GSM_MODEM_SIM7070,
+            TINY_GSM_MODEM_SIM7600,
+            TINY_GSM_MODEM_SIM7672,
+            # Other boards from original forks
             TINY_GSM_MODEM_A6,
             TINY_GSM_MODEM_BG96,
-            TINY_GSM_MODEM_ESP8266,
             TINY_GSM_MODEM_M95,
             TINY_GSM_MODEM_M590,
             TINY_GSM_MODEM_MC60,
             TINY_GSM_MODEM_SIM800,
             TINY_GSM_MODEM_SIM808,
             TINY_GSM_MODEM_SIM5360,
-            TINY_GSM_MODEM_SIM7600,
-            TINY_GSM_MODEM_SIM7000,
-            TINY_GSM_MODEM_SIM7000SSL,
-            TINY_GSM_MODEM_SIM7070,
             TINY_GSM_MODEM_UBLOX,
             TINY_GSM_MODEM_SARAR4,
             TINY_GSM_MODEM_XBEE,
             TINY_GSM_MODEM_SEQUANS_MONARCH,
+            # Disabled boards - not supported by Lilygo
+            # Tests are not passive with these
+            # TINY_GSM_MODEM_ESP8266,
           ]
-
+        example:
+          [
+            examples/BlynkClient/BlynkClient.ino,
+            examples/FileDownload/FileDownload.ino,
+            examples/MqttClient/MqttClient.ino,
+            examples/WebClient/WebClient.ino,
+            tools/test_build/test_build.ino,
+            tools/Diagnostics/Diagnostics.ino,
+          ]
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Set variables
-        run: |
-          if [[ -z "${GITHUB_HEAD_REF}" ]]; then
-            echo "::debug::Push to commit ${GITHUB_SHA}"
-            echo "LIBRARY_INSTALL_SOURCE=https://github.com/${GITHUB_REPOSITORY}.git#${GITHUB_SHA}" >> $GITHUB_ENV
-          else
-            echo "::debug::Pull Request from the ${GITHUB_HEAD_REF} branch"
-            echo "LIBRARY_INSTALL_SOURCE=https://github.com/${GITHUB_REPOSITORY}.git#${GITHUB_HEAD_REF}" >> $GITHUB_ENV
-          fi
+      - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       # This should be pulled from cache, if there's not a new version
       - name: Install PlatformIO
@@ -65,7 +63,7 @@ jobs:
           pip install --upgrade platformio
 
       - name: Restore or Cache Platforms and Libraries
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v4
         id: cache_pio
         with:
           path: ~/.platformio
@@ -76,16 +74,9 @@ jobs:
 
       # Install cores and library dependencies for the Arduino CLI, iff no cache
       - name: Install the Arduino libraries
-        if: steps.cache_pio.outputs.cache-hit != 'true'
         run: pio lib --global install 89 415 1202 1286
 
       - name: Run PlatformIO
-        env:
-          PLATFORMIO_CI_SRC: ${{ matrix.example }}
-          TINYGSM_MODEM_TO_USE: ${{ matrix.modem }}
         run: |
-          echo "${{ env.LIBRARY_INSTALL_SOURCE }}"
-          pio lib --global install ${{ env.LIBRARY_INSTALL_SOURCE }}
-          sed -i 's/\/\/ #define TINY_GSM_MODEM_SIM800/#define TINY_GSM_MODEM_SIM800/g' ${{ matrix.example }}/*
-          platformio ci --project-option='build_flags=-D ${{ env.TINYGSM_MODEM_TO_USE }}' --project-option='framework=arduino' --board=uno --board=leonardo --board=yun --board=megaatmega2560 --board=genuino101 --board=mkr1000USB --board=zero --board=teensy31 --board=bluepill_f103c8 --board=uno_pic32 --board=esp01 --board=nodemcuv2 --board=esp32dev
-          pio lib --global uninstall TinyGSM
+          sed -i 's/#define TINY_GSM_MODEM_SIM800/\/\/ #define TINY_GSM_MODEM_SIM800/g' "${{ matrix.example }}"
+          platformio ci "${{ matrix.example }}" -l '.' --project-option='build_flags=-D ${{ matrix.modem }}' --project-option='lib_deps=89, 415, 1202, 1286' --project-option='framework=arduino' --board=esp32dev --board=esp32s3box

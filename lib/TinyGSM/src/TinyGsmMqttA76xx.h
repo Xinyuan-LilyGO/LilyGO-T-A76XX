@@ -93,7 +93,7 @@ public:
                     thisModem().stream.write(this->cert_pem);
                 }
                 if (thisModem().waitResponse() != 1) {
-                    Serial.println("Write ca_cert pem failed!");
+                    ESP_LOGE("A76XX", "Write ca_cert pem failed!");
                     return false;
                 }
                 thisModem().sendAT("+CSSLCFG=\"cacert\",0,\"ca_cert.pem\"");
@@ -106,7 +106,8 @@ public:
                     thisModem().stream.write(this->client_cert_pem);
                 }
                 if (thisModem().waitResponse() != 1) {
-                    Serial.println("Write cert pem failed!"); return false;
+                    ESP_LOGE("A76XX", "Write cert pem failed!");
+                    return false;
                 }
                 thisModem().sendAT("+CSSLCFG=\"clientcert\",0,\"cert.pem\"");
                 thisModem().waitResponse();
@@ -118,7 +119,8 @@ public:
                     thisModem().stream.write(this->client_key_pem);
                 }
                 if (thisModem().waitResponse() != 1) {
-                    Serial.println("Write key_cert failed!"); return false;
+                    ESP_LOGE("A76XX", "Write key_cert failed!");
+                    return false;
                 }
                 thisModem().sendAT("+CSSLCFG=\"clientkey\",0,\"key_cert.pem\"");
                 thisModem().waitResponse();

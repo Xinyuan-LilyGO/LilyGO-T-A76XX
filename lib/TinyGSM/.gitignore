@@ -19,7 +19,6 @@
 .pio/*
 .clang_complete
 .gcc-flags.json
-platformio.ini
 extra_envs.ini
 lib/readme.txt
 include/readme.txt

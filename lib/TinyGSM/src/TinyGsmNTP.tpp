@@ -21,7 +21,7 @@ class TinyGsmNTP {
    */
 
  public:
-  bool TinyGsmIsValidNumber(String str) {
+  bool TinyGsmIsValidNumber(const String& str) {
     if (!(str.charAt(0) == '+' || str.charAt(0) == '-' ||
           isDigit(str.charAt(0))))
       return false;
@@ -32,7 +32,7 @@ class TinyGsmNTP {
     return true;
   }
 
-  byte NTPServerSync(String server = "pool.ntp.org", byte TimeZone = 3) {
+  byte NTPServerSync(const String& server = "pool.ntp.org", byte TimeZone = 3) {
     return thisModem().NTPServerSyncImpl(server, TimeZone);
   }
   String ShowNTPError(byte error) {
@@ -54,7 +54,7 @@ class TinyGsmNTP {
    * NTP server functions
    */
  protected:
-  byte NTPServerSyncImpl(String server = "pool.ntp.org", byte TimeZone = 3) {
+  byte NTPServerSyncImpl(const String& server = "pool.ntp.org", byte TimeZone = 3) {
     // Set GPRS bearer profile to associate with NTP sync
     // this may fail, it's not supported by all modules
     thisModem().sendAT(GF("+CNTPCID=1"));

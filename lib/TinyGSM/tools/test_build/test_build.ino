@@ -181,8 +181,9 @@ void loop() {
   int   hour      = 0;
   int   minute    = 0;
   int   second    = 0;
-  modem.getGPS(&latitude, &longitude);
-  modem.getGPS(&latitude, &longitude, &speed, &alt, &vsat, &usat, &acc, &year,
+  uint8_t status = 0;
+  modem.getGPS(&status, &latitude, &longitude);
+  modem.getGPS(&status, &latitude, &longitude, &speed, &alt, &vsat, &usat, &acc, &year,
                &month, &day, &hour, &minute, &second);
   modem.disableGPS();
 #endif

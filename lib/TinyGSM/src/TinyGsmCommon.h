@@ -40,6 +40,7 @@
 #define TINY_GSM_REALLOC      realloc
 #endif
 
+
 #ifndef TINY_GSM_YIELD
 #define TINY_GSM_YIELD() \
   { delay(TINY_GSM_YIELD_MS); }

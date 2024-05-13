@@ -353,7 +353,7 @@ class TinyGsmA7670 : public TinyGsmModem<TinyGsmA7670>,
       return false;
     }
     int res = waitResponse(GF("+NETCLOSE: 0"),GF("+NETCLOSE: 2")); 
-    if (res != 1 || res != 2){
+    if (res != 1 && res != 2){
       return false;
     }
     return true;
@@ -508,7 +508,7 @@ class TinyGsmA7670 : public TinyGsmModem<TinyGsmA7670>,
       waitResponse();
     }
     sendAT(GF("+CGNSSPWR=1"));  
-    if (waitResponse(10000UL,"+CGNSSPWR: READY!") != 1) { return false; }
+    if (waitResponse(10000UL, GF("+CGNSSPWR: READY!")) != 1) { return false; }
     return true;
   }
 
@@ -554,9 +554,9 @@ class TinyGsmA7670 : public TinyGsmModem<TinyGsmA7670>,
     if (fixMode == 1 || fixMode == 2 || fixMode == 3) {
       // init variables
       float ilat = 0;
-      char  north;
+      // char  north;
       float ilon = 0;
-      char  east;
+      // char  east;
       float ispeed       = 0;
       float ialt         = 0;
       int   ivsat        = 0;
@@ -574,10 +574,10 @@ class TinyGsmA7670 : public TinyGsmModem<TinyGsmA7670>,
       streamSkipUntil(',');               // skip dump , A7670
       streamSkipUntil(',');               // BEIDOU satellite valid numbers
       ilat  = streamGetFloatBefore(',');  // Latitude in ddmm.mmmmmm
-      north = stream.read();              // N/S Indicator, N=north or S=south
+      /* north =  */stream.read();              // N/S Indicator, N=north or S=south
       streamSkipUntil(',');
       ilon = streamGetFloatBefore(',');  // Longitude in ddmm.mmmmmm
-      east = stream.read();              // E/W Indicator, E=east or W=west
+      /* east =  */stream.read();              // E/W Indicator, E=east or W=west
       streamSkipUntil(',');
 
       // Date. Output format is ddmmyy
@@ -662,7 +662,7 @@ class TinyGsmA7670 : public TinyGsmModem<TinyGsmA7670>,
 
   bool configNMEASentenceImpl(bool CGA,bool GLL,bool GSA,bool GSV,bool RMC,bool VTG,bool ZDA,bool ANT){
       char buffer[32];
-      snprintf(buffer,32,"%u,%u,%u,%u,%u,%u,%u,%u", CGA, GLL, GSA, GSV, RMC, VTG, ZDA);
+      snprintf(buffer,32,"%u,%u,%u,%u,%u,%u,%u,0", CGA, GLL, GSA, GSV, RMC, VTG, ZDA);
       sendAT("+CGNSSNMEA=",buffer);
       return waitResponse(1000L) == 1;
   }

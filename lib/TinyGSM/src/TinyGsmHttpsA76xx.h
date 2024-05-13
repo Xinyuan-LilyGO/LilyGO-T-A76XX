@@ -269,7 +269,7 @@ public:
         return -1;
     }
 
-    int https_post(String payload)
+    int https_post(const String& payload)
     {
         return https_post((uint8_t *) payload.c_str(), payload.length());
     }
@@ -278,21 +278,19 @@ public:
     /**
      * @brief  POSTFile
      * @note   Send file to server
-     * @param  *filepath:File path and file name, full path required
+     * @param  *filepath:File path and file name, full path required. C:/file for local storage and D:/file for SD card
      * @param  method:  0 = GET 1 = POST 2 = HEAD 3 = DELETE
      * @param  sendFileAsBody: 0 = Send file as HTTP header and body , 1 = Send file as Body
      * @retval httpCode, -1 = failed
      */
     int https_post_file(const char *filepath, uint8_t method = 1, bool sendFileAsBody = 1)
     {
+        // A76XX Series_AT Command Manual_V1.09, Page 363
         // AT+HTTPPOSTFILE=<filename>[,<path>[,<method>[,<send_header>]]]
-        uint8_t path = 1;
-        if (!filepath)return -1;
-        if (&filepath[3] == NULL)return -1;
-        if (filepath[0] == 'd' || filepath[0] == 'D') {
-            path = 2;
-        }
-        thisModem().sendAT("+HTTPPOSTFILE=\"", &filepath[3], "\",", path, ',', method, ',', sendFileAsBody);
+        // filename: full path required. C:/file for local storage and D:/file for SD card
+        if (!filepath || strlen(filepath) < 4) return -1; // no file
+        uint8_t path = filepath[0] == 'd' || filepath[0] == 'D' ? 2 : 1; // storage (2 for SD or 1 for local)
+        thisModem().sendAT("+HTTPPOSTFILE=\"", filepath[3], "\",", path, ',', method, ',', sendFileAsBody);
         if (thisModem().waitResponse(120000UL) != 1) {
             return -1;
         }

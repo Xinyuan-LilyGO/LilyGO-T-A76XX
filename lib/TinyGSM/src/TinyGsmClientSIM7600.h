@@ -46,6 +46,13 @@ enum RegStatus {
   REG_UNKNOWN      = 4,
 };
 
+enum NetworkMode {
+  MODEM_NETWORK_AUTO = 2,
+  MODEM_NETWORK_GSM = 13,
+  MODEM_NETWORK_WCDMA = 14,
+  MODEM_NETWORK_LTE = 38,
+};
+
 class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
                        public TinyGsmGPRS<TinyGsmSim7600>,
                        public TinyGsmTCP<TinyGsmSim7600, TINY_GSM_MUX_COUNT>,
@@ -271,22 +278,42 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
 
  public:
   String getNetworkModes() {
-    sendAT(GF("+CNMP=?"));
-    if (waitResponse(GF(GSM_NL "+CNMP:")) != 1) { return ""; }
-    String res = stream.readStringUntil('\n');
-    waitResponse();
-    return res;
+    int16_t mode = getNetworkMode();
+   switch (mode)
+    {
+    case MODEM_NETWORK_AUTO:
+      return "AUTO";
+    case MODEM_NETWORK_GSM:
+      return "GSM";
+    case MODEM_NETWORK_WCDMA:
+      return "WCDMA";
+    case MODEM_NETWORK_LTE:
+      return "LTE";
+    default:
+      break;
+    }
+    return "UNKNOWN";
   }
 
   int16_t getNetworkMode() {
     sendAT(GF("+CNMP?"));
-    if (waitResponse(GF(GSM_NL "+CNMP:")) != 1) { return false; }
+    if (waitResponse(GF(GSM_NL "+CNMP:")) != 1) { return -1; }
     int16_t mode = streamGetIntBefore('\n');
     waitResponse();
     return mode;
   }
 
-  bool setNetworkMode(uint8_t mode) {
+  bool setNetworkMode(NetworkMode mode) {
+    switch (mode)
+    {
+    case MODEM_NETWORK_AUTO:
+    case MODEM_NETWORK_GSM:
+    case MODEM_NETWORK_WCDMA:
+    case MODEM_NETWORK_LTE:
+      break;
+    default:
+      return false;
+    }
     sendAT(GF("+CNMP="), mode);
     return waitResponse() == 1;
   }
@@ -433,15 +460,35 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
  protected:
   // enable GPS
   bool enableGPSImpl(int8_t power_en_pin ,uint8_t enable_level) {
+    if(power_en_pin == GSM_MODEM_AUX_POWER){
+      sendAT("+CVAUXV=2800");
+      waitResponse();
+      sendAT("+CVAUXS=1");
+      waitResponse();
+    }else if(power_en_pin != -1){
+      sendAT("+CGDRT=",power_en_pin,",1");
+      waitResponse();
+      sendAT("+CGSETV=",power_en_pin,",",enable_level);
+      waitResponse();
+    } 
     sendAT(GF("+CGPS=1"));
     if (waitResponse() != 1) { return false; }
     return true;
   }
 
   bool disableGPSImpl(int8_t power_en_pin ,uint8_t disbale_level) {
+    if(power_en_pin == GSM_MODEM_AUX_POWER){
+      sendAT("+CVAUXS=0");
+      waitResponse();
+    }else if(power_en_pin != -1){
+      sendAT("+CGSETV=",power_en_pin,",",disbale_level);
+      waitResponse();
+      sendAT("+CGDRT=",power_en_pin,",0");
+      waitResponse();
+    } 
     sendAT(GF("+CGPS=0"));
     if (waitResponse() != 1) { return false; }
-    return true;
+    return waitResponse(30000UL,GF("+CGPS: 0")) == 1;
   }
 
   bool isEnableGPSImpl(){
@@ -549,41 +596,56 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
   }
 
   bool setGPSBaudImpl(uint32_t baud){
-    sendAT("+CGNSSIPR=",baud);
-    return waitResponse(1000L) == 1;
+    DBG("Modem does not support set GPS baudrate.");
+    return true;
   }
 
+  // Range – 0 to 15
+  // Bit0 – GLONASS
+  // Bit1 – BEIDOU
+  // Bit2 – GALILEO
+  // Bit3 – QZSS
   bool setGPSModeImpl(uint8_t mode){
-      sendAT("+CGNSSMODE=",mode);
-      return waitResponse(1000L) == 1;
+    sendAT("+CGNSSMODE=",mode,",1");
+    return waitResponse(1000UL) == 1;
   }
 
+  // 1 = 1HZ , other = 10HZ
   bool setGPSOutputRateImpl(uint8_t rate_hz){
-      sendAT("+CGPSNMEARATE=",rate_hz);
-      return waitResponse(1000L) == 1;
+    sendAT("+CGPSNMEARATE=",rate_hz == 1 ? 1 : 10);
+    return waitResponse(1000UL) == 1;
   }
 
   bool enableNMEAImpl(){
-      sendAT("+CGNSSTST=1");
-      waitResponse(1000L);
-    // Select the output port for NMEA sentence
-      sendAT("+CGNSSPORTSWITCH=0,1");
-      return waitResponse(1000L) == 1;
+    // sendAT("+CGPS=0");
+    // waitResponse(1000UL);
+    // waitResponse(30000UL,"+CGPS: 0");
+    // sendAT("+CGNSSMODE=15,1");
+    // waitResponse(1000UL);
+    // sendAT("+CGPSNMEA=200191");
+    // waitResponse(1000UL);
+    // sendAT("+CGPSNMEARATE=1");
+    // waitResponse(1000UL);
+    sendAT("+CGPS=1");
+    waitResponse(1000UL);
+    sendAT("+CGPSINFOCFG=1,31");
+    return waitResponse(1000UL) == 1;
   }
 
   bool disableNMEAImpl(){
-      sendAT("+CGNSSTST=0");
-      waitResponse(1000L);
-    // Select the output port for NMEA sentence
-      sendAT("+CGNSSPORTSWITCH=1,0");
-      return waitResponse(1000L) == 1;
+    sendAT("+CGPSINFOCFG=0,31");
+    return waitResponse(1000UL) == 1;
   }
-  
-  bool configNMEASentenceImpl(bool CGA,bool GLL,bool GSA,bool GSV,bool RMC,bool VTG,bool ZDA,bool ANT,bool DHV,bool LPS,bool UTC,bool GST){
-      // sendAT("+CGNSSNMEA=");
-      char buffer[128];
-      snprintf(buffer,128,"%u,%u,%u,%u,%u,%u,%u,0,0,0,0,%u", CGA, GLL, GSA, GSV, RMC, VTG, ZDA, GST);
-      return waitResponse(1000L) == 1;
+
+  bool configNMEASentenceImpl(bool CGA,bool GLL,bool GSA,bool GSV,bool RMC,bool VTG,bool ZDA,bool ANT){
+    (void)GLL;
+    uint32_t mask = CGA ? _BV(0) : 0;
+    mask |= GSA ? _BV(7) : 0;
+    mask |= GSV ? _BV(6) : 0;
+    mask |= RMC ? _BV(1) : 0;
+    mask |= VTG ? _BV(4) : 0;
+    sendAT("+CGPSNMEA=" , mask);
+    return waitResponse(1000UL) == 1;
   }
   /*
    * Time functions
