@@ -7,6 +7,7 @@
  * @note      Not support T-SIM7672
  * *  Although the manual of SIM7672G states that it has the functions of making voice calls and sending text messages, 
  * *  the current firmware does not support it.
+ * * Remark: the https://www.lilygo.cc/products/t-sim-7670g-s3 can send SMS
  */
 
 #include "utilities.h"
