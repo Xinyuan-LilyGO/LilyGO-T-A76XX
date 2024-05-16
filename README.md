@@ -25,7 +25,7 @@
 | [T-A7608][4]            | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-A7608X-V1.0.pdf)       |
 | [T-A7608-DC-S3][5]      | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-A7608X-DC-S3-V1.0.pdf) |
 | [T-A7608-S3][6]         | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-A7608-S3-V1.0.pdf)     |
-| [T-SIM767XG-S3][7]      | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-SIM767XG-S3-V1.0.pdf)  |
+| [T-SIM767XG-S3][7]      | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-SIM767X-S3-V1.0.pdf)  |
 
 [1]: https://www.lilygo.cc/products/t-sim-a7670e
 [2]: https://www.lilygo.cc/products/t-call-v1-4
