@@ -180,6 +180,11 @@
         ; Enable UARDUINO_USB_CDC_ON_BOOT will turn off printing and will not block when using the battery
         -UARDUINO_USB_CDC_ON_BOOT
     ```
+- How to release the limitations of ESP32-WROVER-E GPIO12 ?
+  1. Since the ESP32-WROVER-E module is used, the internal flash voltage of the module is 3.3V by default. IO12 controls the startup flash startup voltage. If the external device connected to IO12 defaults to the HIGH level, then the startup will fall into an infinite restart. ,
+  Two solutions,
+  1. Replace the IO port and connect the default low-level device to IO12
+  2. Use espefuse to forcefully set the flash voltage to 3.3V. For details, please refer [here](https://docs.espressif.com/projects/esptool/en/latest/esp32/espefuse/set-flash-voltage-cmd.html#set-flash-voltage), this can only be set once, and cannot be set incorrectly. If the setting is incorrect, the module will never start.
 
 
 # 7️⃣Resource
