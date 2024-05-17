@@ -8,6 +8,7 @@
 - A7670G/A7670E/A7670SA are collectively referred to as A7670X
 - A7608SA-H/A7608E-H,A7608E,A7608SA are collectively referred to as A7608X
 - **SIM7672G** and **SIM7670G** are exactly the same, except for the name change , The readme file indicates these two models with **SIM767X**
+- **SIM7670G** uses the **Qualcomm** platform, **A7670x** uses the **Asrmicro** platform.
 - When using T-Call-A767X, you need to distinguish between versions. Pinmaps for **V1.0** and **V1.1** are different and cannot be used universally.
 - The usage methods of A7670/A7670 R2 are exactly the same, but the internal chip manufacturing process of the module is different.
 - The difference between A7608X-S3 V1.0 and V1.1 is that V1.1 adds a solar input voltage dividing resistor (occupies IO3), the others are the same
@@ -33,7 +34,7 @@
 [4]: https://www.lilygo.cc/products/t-a7608e-h
 [5]: https://www.lilygo.cc
 [6]: https://www.lilygo.cc
-[7]: https://www.lilygo.cc
+[7]: https://www.lilygo.cc/products/t-sim-7670g-s3
 
 ## 2️⃣Examples
 
@@ -186,6 +187,8 @@
   1. Replace the IO port and connect the default low-level device to IO12
   2. Use espefuse to forcefully set the flash voltage to 3.3V. For details, please refer [here](https://docs.espressif.com/projects/esptool/en/latest/esp32/espefuse/set-flash-voltage-cmd.html#set-flash-voltage), this can only be set once, and cannot be set incorrectly. If the setting is incorrect, the module will never start.
 
+- Network registration denied ? 
+   1. When the network registration is refused, please check whether the APN is set correctly. For details, please refer to [issues104](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/104)
 
 # 7️⃣Resource
 
