@@ -26,6 +26,11 @@ TinyGsm modem(debugger);
 TinyGsm modem(SerialAT);
 #endif
 
+// It depends on the operator whether to set up an APN. If some operators do not set up an APN, 
+// they will be rejected when registering for the network. You need to ask the local operator for the specific APN.
+// APNs from other operators are welcome to submit PRs for filling.
+// #define NETWORK_APN     "CHN-CT"             //CHN-CT: China Telecom
+
 // Pay attention to the validity period of the certificate. You can use the following command to obtain the latest certificate again.
 // $ openssl s_client -connect brokerurl.s2.eu.hivemq.cloud:8883 -showcerts < /dev/null 2> /dev/null | sed -n '/BEGIN/,/END/p' > server.pem
 
@@ -154,6 +159,14 @@ void setup()
     Serial.println(mode);
 #endif
 
+#ifdef NETWORK_APN
+    Serial.printf("Set network apn : %s\n", NETWORK_APN);
+    modem.sendAT(GF("+CGDCONT=1,\"IP\",\""), NETWORK_APN, "\"");
+    if (modem.waitResponse() != 1) {
+        Serial.println("Set network apn error !");
+    }
+#endif
+
     // Check network registration status and network signal status
     int16_t sq ;
     Serial.print("Wait for the modem to register with the network.");
@@ -164,7 +177,7 @@ void setup()
         case REG_UNREGISTERED:
         case REG_SEARCHING:
             sq = modem.getSignalQuality();
-            Serial.printf("[%lu] Signal Quality:%d", millis() / 1000, sq);
+            Serial.printf("[%lu] Signal Quality:%d\n", millis() / 1000, sq);
             delay(1000);
             break;
         case REG_DENIED:
