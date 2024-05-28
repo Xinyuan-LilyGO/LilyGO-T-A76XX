@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-16
  * @note      Not support T-SIM7672
- * *  Although the manual of SIM7672G states that it has the functions of making voice calls and sending text messages, 
+ * *  Although the manual of SIM7672G states that it has the functions of making voice calls and sending text messages,
  * *  the current firmware does not support it.
  */
 
@@ -33,6 +33,11 @@ TinyGsm modem(debugger);
 TinyGsm modem(SerialAT);
 #endif
 
+
+// It depends on the operator whether to set up an APN. If some operators do not set up an APN, 
+// they will be rejected when registering for the network. You need to ask the local operator for the specific APN.
+// APNs from other operators are welcome to submit PRs for filling.
+// #define NETWORK_APN     "CHN-CT"             //CHN-CT: China Telecom
 
 void setup()
 {
@@ -70,22 +75,68 @@ void setup()
         delay(10);
     }
 
+
     // Wait PB DONE
-    delay(10000);
+    Serial.println("Wait SMS Done.");
+    if (!modem.waitResponse(100000UL, "SMS DONE")) {
+        Serial.println("Can't wait from sms register ....");
+        return;
+    }
+
+#ifdef NETWORK_APN
+    Serial.printf("Set network apn : %s\n", NETWORK_APN);
+    modem.sendAT(GF("+CGDCONT=1,\"IP\",\""), NETWORK_APN, "\"");
+    if (modem.waitResponse() != 1) {
+        Serial.println("Set network apn error !");
+    }
+#endif
+
+    // Check network registration status and network signal status
+    int16_t sq ;
+    Serial.print("Wait for the modem to register with the network.");
+    RegStatus status = REG_NO_RESULT;
+    while (status == REG_NO_RESULT || status == REG_SEARCHING || status == REG_UNREGISTERED) {
+        status = modem.getRegistrationStatus();
+        switch (status) {
+        case REG_UNREGISTERED:
+        case REG_SEARCHING:
+            sq = modem.getSignalQuality();
+            Serial.printf("[%lu] Signal Quality:%d\n", millis() / 1000, sq);
+            delay(1000);
+            break;
+        case REG_DENIED:
+            Serial.println("Network registration was rejected, please check if the APN is correct");
+            return ;
+        case REG_OK_HOME:
+            Serial.println("Online registration successful");
+            break;
+        case REG_OK_ROAMING:
+            Serial.println("Network registration successful, currently in roaming mode");
+            break;
+        default:
+            Serial.printf("Registration Status:%d\n", status);
+            delay(1000);
+            break;
+        }
+    }
+    Serial.println();
+
+
+    Serial.printf("Registration Status:%d\n", status);
+    delay(1000);
 
     Serial.print("Init success, start to send message to  ");
     Serial.println(SMS_TARGET);
 
     String imei = modem.getIMEI();
     bool res = modem.sendSMS(SMS_TARGET, String("Hello from ") + imei);
-
     Serial.print("Send sms message ");
     Serial.println(res ? "OK" : "fail");
 }
 
 void loop()
 {
-    
+
     if (SerialAT.available()) {
         Serial.write(SerialAT.read());
     }
