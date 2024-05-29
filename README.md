@@ -12,9 +12,11 @@
 - When using T-Call-A767X, you need to distinguish between versions. Pinmaps for **V1.0** and **V1.1** are different and cannot be used universally.
 - The usage methods of A7670/A7670 R2 are exactly the same, but the internal chip manufacturing process of the module is different.
 - The difference between A7608X-S3 V1.0 and V1.1 is that V1.1 adds a solar input voltage dividing resistor (occupies IO3), the others are the same
-
-
-
+- Differences between T-A7608 and T-A7608-V2:
+  1. T-A7608-V2 Remove modem reset pin (IO5)
+  2. T-A7608-V2 Remove power on pin (IO12)
+  3. Add onboard LED (IO12)
+  4. Add solar voltage ADC(IO34) detection function
 
 # 1️⃣Product
 
@@ -24,6 +26,7 @@
 | [T-Call-A7670X-V1.0][2] | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-Call-A7670-V1.0.pdf)   |
 | [T-Call-A7670X-V1.1][3] | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-Call-A7670-V1.1.pdf)   |
 | [T-A7608][4]            | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-A7608X-V1.0.pdf)       |
+| [T-A7608-V2][8]         | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/A7608-ESP32-V2.pdf)      |
 | [T-A7608-DC-S3][5]      | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-A7608X-DC-S3-V1.0.pdf) |
 | [T-A7608-S3][6]         | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-A7608-S3-V1.0.pdf)     |
 | [T-SIM767XG-S3][7]      | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-SIM767XG-S3-V1.0.pdf)  |
@@ -35,10 +38,11 @@
 [5]: https://www.lilygo.cc
 [6]: https://www.lilygo.cc
 [7]: https://www.lilygo.cc/products/t-sim-7670g-s3
+[8]: https://www.lilygo.cc
 
 ## 2️⃣Examples
 
-| Example            | [T-A7670X][1]     | [T-Call-A7670X][2] | [T-SIM767XG-S3][6] | [T-A7608][3]    | [T-A7608-DC-S3][4] | [T-A7608-S3][5] |
+| Example            | [T-A7670X][1]     | [T-Call-A7670X][2] | [T-SIM767XG-S3][6] | [T-A7608/V2][3] | [T-A7608-DC-S3][4] | [T-A7608-S3][5] |
 | ------------------ | ----------------- | ------------------ | ------------------ | --------------- | ------------------ | --------------- |
 | ATdebug            | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | Blynk_Console      | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
@@ -214,6 +218,7 @@
    - [T-A7608-S3 Schematic](./schematic/T-A7608-S3-V1.0.pdf)
    - [T-A7608X-DC-S3 Schematic](./schematic/T-A7608X-DC-S3-V1.0.pdf)
    - [T-A7608X Schematic](./schematic/T-A7608X-V1.0.pdf)
+   - [T-A7608X-V2 Schematic](./schematic/A7608-ESP32-V2.pdf)
    - [T-A7670X Schematic](./schematic/T-A7670X-V1.1.pdf)
    - [T-Call-A7670 Schematic](./schematic/T-Call-A7670-V1.0.pdf)
    - [T-SIM7672-S3 Schematic](./schematic/T-SIM7672-S3-V1.0.pdf)
