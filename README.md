@@ -148,6 +148,8 @@
   3. If there is no NMEA sentence output, or if the GPS command fails, please issue an issue to report the model you use and upload the module label image (used to determine the modem hardware version, not the model), and provide the hardware log output message
   4. If the NMEA sentence output is normal, then please place the device outdoors or outside the window for positioning test
    
+- **VOLTE FAQ**
+  1. See [issues/115](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/115)
 
 - **Can't upload any sketch，Please enter the upload mode manually.**
    1. Connect the board via the USB cable
