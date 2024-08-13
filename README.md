@@ -139,36 +139,42 @@
 
 # 6️⃣ FAQ
 
-- Can't turn on the phone after connecting the battery for the first time?
+- **Can't turn on the phone after connecting the battery for the first time?**
    1. This is due to the characteristics of the onboard battery over-discharge and over-charge chip. It cannot be turned on when the battery is connected for the first time. This can be solved by inserting a USB charger or reconnecting the battery. For details, please see the remarks on [page 4](https://www.lcsc.com/datasheet/lcsc_datasheet_2010160933_Shenzhen-Fuman-Elec-DW06D_C82123.pdf) of the datasheet.
-- Can't upload any sketch，Please enter the upload mode manually.
+
+- **GPS not working?**
+  1. First, determine whether the purchased board model supports GPS function, regardless of whether the physical board contains a GPS antenna interface.
+  2. Build and upload [GPS_NMEA_Parse](./examples/GPS_NMEA_Parse/GPS_NMEA_Parse.ino) firmware to see if the serial monitor outputs NMEA sentences (if you don't want to compile, you can write a binary file for testing ,please see [here](./firmware/README.MD) for details.)
+  3. If there is no NMEA sentence output, or if the GPS command fails, please issue an issue to report the model you use and upload the module label image (used to determine the modem hardware version, not the model), and provide the hardware log output message
+  4. If the NMEA sentence output is normal, then please place the device outdoors or outside the window for positioning test
+   
+
+- **Can't upload any sketch，Please enter the upload mode manually.**
    1. Connect the board via the USB cable
    2. Press and hold the BOOT button , While still pressing the BOOT button (If there is no BOOT button, you need to use wires to connect GND and IO0 together.)
    3. Press RST button
    4. Release the RST button
    5. Release the BOOT button (If there is no BOOT button, disconnect IO0 from GND.)
    6. Upload sketch
-- Upgrade modem firmware
+- **Upgrade modem firmware**
    1. [T-A76XX Upgrade docs](./docs/update_fw.md)
-- How do I connect the antenna correctly?
+- **How do I connect the antenna correctly?**
    1. Check the silk screen on the board. **GPS** stands for GPS antenna. Only active GPS antenna can be connected here.
    2. **SIM** or **MAIN**, this is the main antenna interface of LTE
    3. **AUX** This is the diversity antenna for LTE, used to enhance the signal
-- Solar input voltage range?
+- **Solar input voltage range?**
    1. **4.4 ~ 6V** , As long as the voltage matches, the solar panel power is not limited
-- Can't get location?
-   1. Please write the compiled firmware for testing. Please see [here](./firmware/README.MD) for details.
-- Where can I access solar energy to charge the panel?
+- **Where can I access solar energy to charge the panel?**
    1. Some boards(T-A7670,T-A7608,T-A7670-S3,T-A7608-S3) have their own solar battery input interface, you just need to connect the solar panel correctly according to the polarity.
    2. If the board has an external VBAT pin, you can connect the solar rechargeable battery input to VBAT. Please be careful not to exceed the battery supply voltage, which is usually 4.2V.
    3. If there is no VBAT, you can also connect it to the VBUS Pin, which is the input pin for USB power supply. Connecting it to VBUS will share the 5V of the USBC. Please note that when connecting an external charger, disconnect the USBC or disconnect the solar energy. enter
-- How to use voice call example?
+- **How to use voice call example?**
    1. Voice calls require external welding of the condenser microphone and speaker. Generally, the board silk screen is marked SPK. The speaker needs to be welded, and the MIC silk screen position needs to weld the condenser microphone.
-- SIM767XG sendSMS and VoiceCall?
+- **SIM767XG sendSMS and VoiceCall?**
    1. Although the manual of SIM767XG states that it has the functions of making voice calls and sending text messages, the current firmware does not support it.
-- Unable to detect SIMCard?
+- **Unable to detect SIMCard?**
    1. All SIM series need to insert the SIMCard into the board first and then power on to detect the SIM card. If the order is reversed, it will report that the SIMCard cannot be detected.
-- For ESP32S3 users , If you use external power supply instead of USBC, please turn off the CDC option. This is because the board will wait for USB access when it starts.
+- **For ESP32S3 users , If you use external power supply instead of USBC, please turn off the CDC option. This is because the board will wait for USB access when it starts.**
    1. For Arduino IDE users, it can be turned off in the options , Please note that turning off USB CDC will turn off Serial redirection to USBC. At this time, you will not see any Serial message output when opening the port from USBC, but output from GPIO43 and GPIO44.
 
     ```c
@@ -185,14 +191,18 @@
         ; Enable UARDUINO_USB_CDC_ON_BOOT will turn off printing and will not block when using the battery
         -UARDUINO_USB_CDC_ON_BOOT
     ```
-- How to release the limitations of ESP32-WROVER-E GPIO12 ?
+- **How to release the limitations of ESP32-WROVER-E GPIO12?**
   1. Since the ESP32-WROVER-E module is used, the internal flash voltage of the module is 3.3V by default. IO12 controls the startup flash startup voltage. If the external device connected to IO12 defaults to the HIGH level, then the startup will fall into an infinite restart. ,
   Two solutions,
   1. Replace the IO port and connect the default low-level device to IO12
   2. Use espefuse to forcefully set the flash voltage to 3.3V. For details, please refer [here](https://docs.espressif.com/projects/esptool/en/latest/esp32/espefuse/set-flash-voltage-cmd.html#set-flash-voltage), this can only be set once, and cannot be set incorrectly. If the setting is incorrect, the module will never start.
 
-- Network registration denied ? 
-   1. When the network registration is refused, please check whether the APN is set correctly. For details, please refer to [issues104](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/104)
+- **Network registration denied?**
+   2. When the network registration is refused, please check whether the APN is set correctly. For details, please refer to [issues104](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/104)
+
+- **Can't use 2G(GSM)?**
+- LilyGo has launched a separate 4G(LTE) version that can only use 4G(LTE) network. Please check whether it is a separate 4G(LTE) version during ordering.
+
 
 # 7️⃣Resource
 
