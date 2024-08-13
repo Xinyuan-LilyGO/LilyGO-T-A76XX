@@ -144,7 +144,7 @@
 
 - **GPS not working?**
   1. First, determine whether the purchased board model supports GPS function, regardless of whether the physical board contains a GPS antenna interface.
-  2. Build and upload [GPS_NMEA_Parse](./examples/GPS_NMEA_Parse/GPS_NMEA_Parse.ino) firmware to see if the serial monitor outputs NMEA sentences (if you don't want to compile, you can write a binary file for testing ,please see [here](./firmware/README.MD) for details.)
+  2. Build and upload [GPS_NMEA_Output](./examples/GPS_NMEA_Output/GPS_NMEA_Output.ino) firmware to see if the serial monitor outputs NMEA sentences (if you don't want to compile, you can write a binary file for testing ,please see [here](./firmware/README.MD) for details.)
   3. If there is no NMEA sentence output, or if the GPS command fails, please issue an issue to report the model you use and upload the module label image (used to determine the modem hardware version, not the model), and provide the hardware log output message
   4. If the NMEA sentence output is normal, then please place the device outdoors or outside the window for positioning test
    
