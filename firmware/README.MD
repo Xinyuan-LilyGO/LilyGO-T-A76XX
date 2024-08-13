@@ -7,14 +7,14 @@
 
 # 1️⃣ Quickly diagnose hardware
 
-| Product            | GPS Test Firmware                               | Network Test Firmware                    |
-| ------------------ | ----------------------------------------------- | ---------------------------------------- |
-| [T-A7670X][1]      | [firmware](./T-A7670X_GPS_NMEA_Parse.bin)       | [firmware](./T-A7670X_Network.bin)       |
-| [T-Call-A7670X][2] | [firmware](./T-Call-A7670X_GPS_NMEA_Parse.bin)  | [firmware](./T-Call-A7670X_Network.bin)  |
-| [T-A7608][3]       | [firmware](./T-A7608X_GPS_NMEA_Parse.bin)       | [firmware](./T-A7608X_Network.bin)       |
-| [T-A7608-DC-S3][4] | [firmware](./T-A7608X-DC-S3_GPS_NMEA_Parse.bin) | [firmware](./T-A7608X-DC-S3_Network.bin) |
-| [T-A7608-S3][5]    | [firmware](./T-A7608X-S3_GPS_NMEA_Parse.bin)    | [firmware](./T-A7608X-S3_Network.bin)    |
-| [T-SIM7672G-S3][6] | [firmware](./T-SIM7672G_GPS_NMEA_Parse.bin)     | [firmware](./T-SIM7672G_Network.bin)     |
+| Product                 | GPS Test Firmware                               | Network Test Firmware                    | NMEA Output                                                   |
+| ----------------------- | ----------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------- |
+| [T-A7670X][1]           | [firmware](./T-A7670X_GPS_NMEA_Parse.bin)       | [firmware](./T-A7670X_Network.bin)       | [firmware](./GPS_NMEA_Output_T-A7608X-DC-S3_20240813.bin)     |
+| [T-Call-A7670X V1.1][2] | [firmware](./T-Call-A7670X_GPS_NMEA_Parse.bin)  | [firmware](./T-Call-A7670X_Network.bin)  | [firmware](./GPS_NMEA_Output_T-Call-A7670X-V1-1_20240813.bin) |
+| [T-A7608][3]            | [firmware](./T-A7608X_GPS_NMEA_Parse.bin)       | [firmware](./T-A7608X_Network.bin)       | [firmware](./GPS_NMEA_Output_T-A7608X_20240813.bin)           |
+| [T-A7608-DC-S3][4]      | [firmware](./T-A7608X-DC-S3_GPS_NMEA_Parse.bin) | [firmware](./T-A7608X-DC-S3_Network.bin) | [firmware](./GPS_NMEA_Output_T-A7608X-DC-S3_20240813.bin)     |
+| [T-A7608-S3][5]         | [firmware](./T-A7608X-S3_GPS_NMEA_Parse.bin)    | [firmware](./T-A7608X-S3_Network.bin)    | [firmware](./GPS_NMEA_Output_T-A7608X-S3_20240813.bin)        |
+| [T-SIM7672G-S3][6]      | [firmware](./T-SIM7672G_GPS_NMEA_Parse.bin)     | [firmware](./T-SIM7672G_Network.bin)     | [firmware](./GPS_NMEA_Output_T-SIM7672G_20240813.bin)         |
 
 [1]: https://www.lilygo.cc/products/t-sim-a7670e
 [2]: https://www.lilygo.cc
