@@ -84,6 +84,12 @@ void loop()
             displayInfo();
         }
     }
+
+    if (millis() > 30000 && gps.charsProcessed() < 10) {
+        Serial.println(F("No GPS detected: check wiring."));
+        delay(1000);
+    }
+
     if (SerialAT.available()) {
         Serial.write(SerialAT.read());
     }
