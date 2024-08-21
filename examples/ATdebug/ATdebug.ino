@@ -6,22 +6,8 @@
  * @date      2023-10-26
  *
  */
-#define TINY_GSM_RX_BUFFER          1024 // Set RX buffer to 1Kb
-
-// See all AT commands, if wanted
-#define DUMP_AT_COMMANDS
-
 #include "utilities.h"
-#include <TinyGsmClient.h>
 #include "Arduino.h"
-
-#ifdef DUMP_AT_COMMANDS  // if enabled it requires the streamDebugger lib
-#include <StreamDebugger.h>
-StreamDebugger debugger(SerialAT, Serial);
-TinyGsm modem(debugger);
-#else
-TinyGsm modem(SerialAT);
-#endif
 
 uint32_t AutoBaud()
 {
