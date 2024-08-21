@@ -10,12 +10,12 @@
  *                         When connected to the USB, the battery voltage data read is not the real battery voltage, so the battery
  *                         voltage is sent to the UDP Server through UDP. When using it, please disconnect the USB-C
  *            T-A7670x :  Only version V1.4 has the resistor divider connected to the solar input, other versions IO38 is not connected
- * @note      Onlu support T-A7670 ,T-A7608X, T-SIM7672G board , not support T-Call A7670
+ * @note      Only support T-A7670 ,T-A7608X, T-SIM7672G board , not support T-Call A7670
  */
-#include <esp_adc_cal.h>
 #include <Arduino.h>
 #include <WiFi.h>
 #include <WiFiUdp.h>
+#include <esp32-hal-adc.h>
 #include "utilities.h"
 
 // WiFi network name and password:
@@ -87,6 +87,20 @@ void setup()
     //Connect to the WiFi network
     connectToWiFi(networkName, networkPswd);
 
+
+    //adc setting start
+     
+    // You don't need to set it, because the values ​​are all default. The current version is Arduino 3.0.4, and the subsequent versions are uncertain.
+    
+    analogSetAttenuation(ADC_11db);
+
+    analogReadResolution(12);
+
+#if CONFIG_IDF_TARGET_ESP32
+    analogSetWidth(12);
+#endif
+
+    //adc setting end 
 }
 
 void loop()
@@ -95,17 +109,19 @@ void loop()
     if (connected) {
         if (millis() - timeStamp > 1000) {
             timeStamp = millis();
-            esp_adc_cal_characteristics_t adc_chars;
-            esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_chars);
-            uint16_t battery_voltage = esp_adc_cal_raw_to_voltage(analogRead(BOARD_BAT_ADC_PIN), &adc_chars) * 2;
+
+            uint32_t battery_voltage = analogReadMilliVolts(BOARD_BAT_ADC_PIN);
+            battery_voltage *= 2;   //The hardware voltage divider resistor is half of the actual voltage, multiply it by 2 to get the true voltage
 
 #ifdef BOARD_SOLAR_ADC_PIN
-            uint16_t solar_voltage = esp_adc_cal_raw_to_voltage(analogRead(BOARD_SOLAR_ADC_PIN), &adc_chars) * 2;
+            uint32_t solar_voltage = analogReadMilliVolts(BOARD_SOLAR_ADC_PIN);
+            solar_voltage *= 2;     //The hardware voltage divider resistor is half of the actual voltage, multiply it by 2 to get the true voltage
+            snprintf(buf, 256, "Battery:%umV \tSolar:%umV", battery_voltage, solar_voltage);
+
 #else
-            uint16_t solar_voltage = 0;
+            snprintf(buf, 256, "Battery:%umV ", battery_voltage);
 #endif
 
-            snprintf(buf, 256, "Battery:%umV \tSolar:%umV", battery_voltage, solar_voltage);
 
             // When connected to the USB, the battery voltage data read is not the real battery voltage,
             // so the battery voltage is sent to the UDP Server through UDP. When using it, please disconnect the USBC
