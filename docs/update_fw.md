@@ -32,8 +32,8 @@
 
 ### Record Video 
 
-[SIM7670G Upgrade Record](https://www.youtube.com/watch?v=fAtrz_4DfVs)
-[A7670XX Upgrade Record](https://youtu.be/AZkm-Z7mKn8)
+* [SIM7670G Upgrade Record](https://www.youtube.com/watch?v=fAtrz_4DfVs)
+* [A7670XX Upgrade Record](https://youtu.be/AZkm-Z7mKn8)
 
 
 ### Firmware Update Procedure
