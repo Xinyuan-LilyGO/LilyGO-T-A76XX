@@ -159,7 +159,7 @@
    5. Release the BOOT button (If there is no BOOT button, disconnect IO0 from GND.)
    6. Upload sketch
 - **Upgrade modem firmware**
-   1. [T-A76XX Upgrade docs](./docs/update_fw.md)
+   1. [T-A76XX Upgrade docs](./docs/update_fw.md) / [Video](https://youtu.be/AZkm-Z7mKn8)
    2. [SIM7670G Upgrade issue](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/122) / [Video](https://www.youtube.com/watch?v=fAtrz_4DfVs)
 - **How do I connect the antenna correctly?**
    1. Check the silk screen on the board. **GPS** stands for GPS antenna. Only active GPS antenna can be connected here.
