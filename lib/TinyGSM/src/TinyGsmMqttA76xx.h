@@ -163,8 +163,12 @@ public:
         thisModem().waitResponse(3000);
 
         thisModem().sendAT("+CMQTTACCQ=", clientIndex, ",\"", clientID, "\",", __ssl);
-
         if (thisModem().waitResponse(3000) != 1)return false;
+
+        // Set MQTT3.1.1 , Default use MQTT 3.1
+        thisModem().sendAT("+CMQTTCFG=\"version\",", clientIndex, ",4");
+        thisModem().waitResponse(30000UL);
+        
         if (username && password) {
             thisModem().sendAT("+CMQTTCONNECT=", clientIndex, ',', "\"tcp://", server, ':', port, "\",", keepalive_time, ',', 1, ",\"", username, "\",\"", password, "\"");
         } else {
