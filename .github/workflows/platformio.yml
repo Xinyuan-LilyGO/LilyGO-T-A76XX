@@ -26,36 +26,35 @@ jobs:
             T-A7608X-DC-S3,
           ]
         examples:
-          [
-            examples/ATdebug,
-            examples/Blynk_Console,
-            examples/DeepSleep,
-            examples/GPSShield,
-            examples/GPS_BuiltIn,
-            examples/GPS_NMEA_Parse,
-            examples/HttpClient,
-            examples/HttpsClient,
-            examples/LBSExample,
-            examples/ModemSleep,
-            examples/ModemPowerOff,
-            examples/MqttClient,
-            examples/Network,
-            examples/ReadBattery,
-            examples/SDCard,
-            examples/SendSMS,
-            examples/SerialRS485,
-            examples/VoiceCalls,
-            examples/MqttsBuiltlnAuth,
-            examples/MqttsBuiltlnSSL,
-            examples/MqttsBuiltlnAWS,
-            examples/MqttsBuiltlnHivemq,
-            examples/HttpsBuiltlnGet,
-            examples/HttpsBuiltlnPost,
-            examples/MqttsBuiltlnEMQX,
-            examples/HttpsOTAUpgrade,
-            examples/HP303BSensor,
-            examples/SPIExample
-          ]
+          - examples/ATdebug
+          - examples/Blynk_Console
+          - examples/DeepSleep
+          - examples/GPSShield
+          - examples/GPS_BuiltIn
+          - examples/GPS_NMEA_Parse
+          - examples/HttpClient
+          - examples/HttpsClient
+          - examples/LBSExample
+          - examples/ModemSleep
+          - examples/ModemPowerOff
+          - examples/MqttClient
+          - examples/Network
+          - examples/ReadBattery
+          - examples/SDCard
+          - examples/SendSMS
+          - examples/SerialRS485
+          - examples/VoiceCalls
+          - examples/MqttsBuiltlnAuth
+          - examples/MqttsBuiltlnSSL
+          - examples/MqttsBuiltlnAWS
+          - examples/MqttsBuiltlnHivemq
+          - examples/HttpsBuiltlnGet
+          - examples/HttpsBuiltlnPost
+          - examples/MqttsBuiltlnEMQX
+          - examples/HttpsOTAUpgrade
+          - examples/HP303BSensor
+          - examples/SPIExample
+          - examples/SendLocationFromSMS
 
     steps:
       - uses: actions/checkout@v3
