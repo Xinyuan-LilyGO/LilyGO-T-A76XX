@@ -146,6 +146,9 @@ void setup()
     //! Only read data, not decode data. For detailed SMS operation, please refer to A76XX_Series_AT_Command_Manual
     //! Only read data, not decode data. For detailed SMS operation, please refer to A76XX_Series_AT_Command_Manual
     //! Only read data, not decode data. For detailed SMS operation, please refer to A76XX_Series_AT_Command_Manual
+
+    // A76XX_Series_AT_Command_Manual_V1.12.pdf : https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/blob/main/datasheet/A76XX/A76XX_Series_AT_Command_Manual_V1.12.pdf
+    // A76XX Series_SMS_Application Note_V3.00.pdf : https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/blob/main/datasheet/A76XX/A76XX%20Series_SMS_Application%20Note_V3.00.pdf
     
     String data;
     int8_t res;
