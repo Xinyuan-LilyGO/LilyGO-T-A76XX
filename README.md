@@ -61,6 +61,7 @@
 | SDCard              | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ✅                  | ✅               |
 | SerialRS485         | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | SendSMS             | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
+| ReadSMS             | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
 | SendLocationFromSMS | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
 | LBSExample          | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
 | Network             | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
