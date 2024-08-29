@@ -27,7 +27,6 @@ TinyGsm modem(SerialAT);
 
 uint32_t check_interval = 0;
 
-void displayInfo();
 
 void setup()
 {
@@ -81,10 +80,24 @@ void setup()
     delay(200);
 
 
-    Serial.println("Before running, please check whether the version you purchased supports the GPS function. Regardless of whether the PCB contains an antenna connector, the A7670G does not include a built-in GPS function. If the A7670G you purchased claims to support GPS, then please run examples/GPSShield\n\n");
-    Serial.println("Before running, please check whether the version you purchased supports the GPS function. Regardless of whether the PCB contains an antenna connector, the A7670G does not include a built-in GPS function. If the A7670G you purchased claims to support GPS, then please run examples/GPSShield\n\n");
-    Serial.println("Before running, please check whether the version you purchased supports the GPS function. Regardless of whether the PCB contains an antenna connector, the A7670G does not include a built-in GPS function. If the A7670G you purchased claims to support GPS, then please run examples/GPSShield\n\n");
-
+    String modemName = "UNKOWN";
+    while (1) {
+        modemName = modem.getModemName();
+        if (modemName == "UNKOWN") {
+            Serial.println("Unable to obtain module information normally, try again");
+            delay(1000);
+        } else if (modemName.startsWith("A7670G")) {
+            while (1) {
+                Serial.println("A7670G does not support built-in GPS function, please run examples/GPSShield");
+                delay(1000);
+            }
+        } else {
+            Serial.print("Model Name:");
+            Serial.println(modemName);
+            break;
+        }
+        delay(5000);
+    }
 
     retry = 15;
     Serial.println("Enabling GPS/GNSS/GLONASS");

@@ -66,6 +66,7 @@ void setup()
     //GPS Serial port
     SerialGPS.begin(9600, SERIAL_8N1, BOARD_GPS_RX_PIN, BOARD_GPS_TX_PIN);
 
+    // Ref issue : https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/56#issuecomment-1672628977
     Serial.println("This sketch is only suitable for boards without GPS function inside the modem, such as A7670G");
 
     Serial.println("Works only with externally mounted GPS modules. If the purchased board includes a GPS extension module it will work, otherwise this sketch will have no effect");

@@ -80,6 +80,27 @@ void setup()
     }
     Serial.println();
 
+
+    String modemName = "UNKOWN";
+    while (1) {
+        modemName = modem.getModemName();
+        if (modemName == "UNKOWN") {
+            Serial.println("Unable to obtain module information normally, try again");
+            delay(1000);
+        } else if (modemName.startsWith("A7670G")) {
+            while (1) {
+                Serial.println("A7670G does not support built-in GPS function, please run examples/GPSShield");
+                delay(1000);
+            }
+        } else {
+            Serial.print("Model Name:");
+            Serial.println(modemName);
+            break;
+        }
+        delay(5000);
+    }
+
+
     delay(200);
 
     Serial.println("Enabling GPS/GNSS/GLONASS");
