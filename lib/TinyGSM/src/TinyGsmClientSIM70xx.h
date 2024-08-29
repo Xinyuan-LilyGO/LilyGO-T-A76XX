@@ -83,20 +83,29 @@ class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType>>,
   }
 
   String getModemNameImpl() {
-    String name = "SIMCom SIM7000";
+    String name = "UNKOWN";
+    String res;
 
-    thisModem().sendAT(GF("+GMM"));
-    String res2;
-    if (thisModem().waitResponse(5000L, res2) != 1) { return name; }
-    res2.replace(GSM_NL "OK" GSM_NL, "");
-    res2.replace("_", " ");
-    if (res2.startsWith("AT+GMM")) {
-      // https://github.com/Xinyuan-LilyGO/LilyGo-T-SIM7080G/issues/44
-      res2 = res2.substring(6);
+    sendAT(GF("E0"));  // Echo Off
+    waitResponse();
+
+    sendAT("I");
+    if (waitResponse(10000L, res) != 1) {
+        DBG("MODEM STRING NO FOUND!");
+        return name;
     }
-    res2.trim();
-
-    name = res2;
+    int modelIndex = res.indexOf("Model:") + 6;
+    int nextLineIndex = res.indexOf('\n', modelIndex);
+    if (nextLineIndex != -1) {
+        String modelString = res.substring(modelIndex, nextLineIndex);
+        modelString.trim();
+        if(modelString.startsWith("SIM70")){
+          name = modelString;
+          DBG("### Modem:", name);
+        }
+    } else {
+        DBG("Model string not found.");
+    }
     return name;
   }
 
