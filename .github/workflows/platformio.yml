@@ -32,6 +32,7 @@ jobs:
           - examples/GPSShield
           - examples/GPS_BuiltIn
           - examples/GPS_NMEA_Parse
+          - examples/GPS_NMEA_Output
           - examples/HttpClient
           - examples/HttpsClient
           - examples/LBSExample
@@ -42,6 +43,7 @@ jobs:
           - examples/ReadBattery
           - examples/SDCard
           - examples/SendSMS
+          - examples/ReadSMS
           - examples/SerialRS485
           - examples/VoiceCalls
           - examples/MqttsBuiltlnAuth
