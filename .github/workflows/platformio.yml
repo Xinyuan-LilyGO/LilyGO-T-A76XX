@@ -57,6 +57,7 @@ jobs:
           - examples/HP303BSensor
           - examples/SPIExample
           - examples/SendLocationFromSMS
+          - examples/SendLocationFromSMS_Use_TinyGPS
 
     steps:
       - uses: actions/checkout@v3
