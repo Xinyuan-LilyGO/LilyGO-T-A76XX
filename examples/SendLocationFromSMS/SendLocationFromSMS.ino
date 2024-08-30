@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2024  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2024-08-23
- * @note      SIM7670G can send SMS depending on the operator. This is not allowed in China. Please test it yourself.
+ * @note      SIM7670G does not support SMS and voice functions
  */
 
 #include "utilities.h"
