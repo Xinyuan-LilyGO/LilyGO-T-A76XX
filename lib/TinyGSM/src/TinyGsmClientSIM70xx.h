@@ -86,11 +86,11 @@ class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType>>,
     String name = "UNKOWN";
     String res;
 
-    sendAT(GF("E0"));  // Echo Off
-    waitResponse();
+    thisModem().sendAT(GF("E0"));  // Echo Off
+    thisModem().waitResponse();
 
-    sendAT("I");
-    if (waitResponse(10000L, res) != 1) {
+    thisModem().sendAT("I");
+    if (thisModem().waitResponse(10000L, res) != 1) {
         DBG("MODEM STRING NO FOUND!");
         return name;
     }
