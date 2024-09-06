@@ -5,6 +5,13 @@
  * @copyright Copyright (c) 2024  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2024-08-30
  * @note      SIM7670G does not support SMS and voice functions
+ * *!         important  important  important
+ * *!         important  important  important
+ * *!         important  important  important
+ * *!         important  important  important
+ * *          New users please use GPS_BuiltIn https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/tree/main/examples/GPS_BuiltIn
+ * *          This example explanation can be found here. Please do not ask invalid questions.
+ * *          https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/118
  */
 
 #include "utilities.h"
@@ -204,7 +211,10 @@ void setup()
 
 
 void loop()
-{
+{   
+    // New users please use GPS_BuiltIn https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/tree/main/examples/GPS_BuiltIn
+    // This example explanation can be found here. Please do not ask invalid questions.
+    // https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/118
     if (loopGPS() == true) {
 
         Serial.printf("The location was obtained successfully and sent to the %s number.\n", SMS_TARGET);
