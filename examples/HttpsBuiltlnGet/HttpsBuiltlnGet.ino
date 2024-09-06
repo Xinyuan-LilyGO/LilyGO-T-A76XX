@@ -33,7 +33,8 @@ TinyGsm modem(SerialAT);
 const char *request_url[] = {
     "https://httpbin.org/get",
     "https://vsh.pp.ua/TinyGSM/logo.txt",
-    "https://ipapi.co/json"
+    "https://ipapi.co/timezone",         // Access may be blocked by a firewall
+    "http://ip-api.com/json/23.158.104.183"
 };
 
 void setup()
