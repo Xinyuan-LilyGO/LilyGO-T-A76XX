@@ -33,6 +33,9 @@ class TinyGsmGPS {
   String getGPSraw() {
     return thisModem().getGPSrawImpl();
   }
+  bool enableAGPS(){
+    return thisModem().enableAGPSImpl();
+  }
   bool getGPS(uint8_t *status,float* lat, float* lon, float* speed = 0, float* alt = 0,
               int* vsat = 0, int* usat = 0, float* accuracy = 0, int* year = 0,
               int* month = 0, int* day = 0, int* hour = 0, int* minute = 0,
@@ -90,6 +93,7 @@ class TinyGsmGPS {
   bool    enableGPSImpl(int8_t power_en_pin ,uint8_t enable_level) TINY_GSM_ATTR_NOT_IMPLEMENTED;
   bool    disableGPSImpl(int8_t power_en_pin ,uint8_t disbale_level) TINY_GSM_ATTR_NOT_IMPLEMENTED;
   bool    isEnableGPSImpl() TINY_GSM_ATTR_NOT_IMPLEMENTED;
+  bool    enableAGPSImpl() TINY_GSM_ATTR_NOT_IMPLEMENTED;
   String  getGPSrawImpl() TINY_GSM_ATTR_NOT_IMPLEMENTED;
   bool    getGPSImpl(uint8_t *status,float* lat, float* lon, float* speed = 0, float* alt = 0,
                      int* vsat = 0, int* usat = 0, float* accuracy = 0,

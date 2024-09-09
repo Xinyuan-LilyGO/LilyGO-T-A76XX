@@ -545,6 +545,21 @@ class TinyGsmA7670 : public TinyGsmModem<TinyGsmA7670>,
     return 1 == streamGetIntBefore(','); 
   }
 
+  bool enableAGPSImpl(){
+    sendAT(GF("+CGNSSPWR?"));
+    if (waitResponse("+CGNSSPWR:") != 1) { return false; }
+    // +CGNSSPWR:<GNSS_Power_status>,<AP_Flash_status>,<GNSS_dynamic_load>
+    if(1 == streamGetIntBefore(',')){
+      sendAT("+CAGPS");
+      if (waitResponse(30000UL,"+AGPS:") != 1) { return false; }
+      String res = stream.readStringUntil('\n');
+      if(res.startsWith(" success.")){
+        return true;
+      }
+    }
+    return false;
+  }
+
   // get the RAW GPS output
   String getGPSrawImpl() {
     sendAT(GF("+CGNSSINFO"));
