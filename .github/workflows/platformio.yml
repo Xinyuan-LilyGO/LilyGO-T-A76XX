@@ -33,6 +33,7 @@ jobs:
           - examples/GPS_BuiltIn
           - examples/GPS_NMEA_Parse
           - examples/GPS_NMEA_Output
+          - examples/GPS_Acceleration
           - examples/HttpClient
           - examples/HttpsClient
           - examples/LBSExample
