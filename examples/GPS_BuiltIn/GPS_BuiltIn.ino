@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-06-28
- * @note      SIM7670G does not have a built-in GPS module, regardless of whether there is a GPS antenna holder on the board.
+ * @note      GPS only supports A7670X/A7608X (excluding A7670G and other versions that do not support positioning). 
  */
 #include "utilities.h"
 

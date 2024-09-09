@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2024  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2024-08-13
- *
+ * @note      GPS only supports A7670X/A7608X (excluding A7670G and other versions that do not support positioning). 
  */
 #include "utilities.h"
 
