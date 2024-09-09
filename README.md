@@ -50,6 +50,7 @@
 | GPS_BuiltIn                     | ✅ (Except A7670G) | ✅(Except A7670G)   | ✅                  | ✅               | ✅                  | ✅               |
 | GPS_NMEA_Parse                  | ✅ (Except A7670G) | ✅(Except A7670G)   | ✅                  | ✅               | ✅                  | ✅               |
 | GPS_NMEA_Output                 | ✅ (Except A7670G) | ✅(Except A7670G)   | ✅                  | ✅               | ✅                  | ✅               |
+| GPS_Acceleration                | ✅ (Except A7670G) | ✅(Except A7670G)   | ❌   (Can't run)    | ✅               | ✅                  | ✅               |
 | HttpClient                      | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HttpsClient                     | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | MqttClient                      | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
