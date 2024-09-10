@@ -49,6 +49,7 @@ jobs:
           - examples/VoiceCalls
           - examples/MqttsBuiltlnAuth
           - examples/MqttsBuiltlnSSL
+          - examples/MqttsBuiltlnNoSSL
           - examples/MqttsBuiltlnAWS
           - examples/MqttsBuiltlnHivemq
           - examples/HttpsBuiltlnGet
