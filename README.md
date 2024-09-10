@@ -148,10 +148,7 @@
    1. This is due to the characteristics of the onboard battery over-discharge and over-charge chip. It cannot be turned on when the battery is connected for the first time. This can be solved by inserting a USB charger or reconnecting the battery. For details, please see the remarks on [page 4](https://www.lcsc.com/datasheet/lcsc_datasheet_2010160933_Shenzhen-Fuman-Elec-DW06D_C82123.pdf) of the datasheet.
 
 - **GPS not working?**
-  1. First, determine whether the purchased board model supports GPS function, regardless of whether the physical board contains a GPS antenna interface.A7670G does not have a built-in GPS function, if the order contains a GPS function, then it belongs to the external GPS module program, please run examples/GPSShield
-  2. Build and upload [GPS_NMEA_Output](./examples/GPS_NMEA_Output/GPS_NMEA_Output.ino) firmware to see if the serial monitor outputs NMEA sentences (if you don't want to compile, you can write a binary file for testing ,please see [here](./firmware/README.MD) for details.)
-  3. If there is no NMEA sentence output, or if the GPS command fails, please issue an issue to report the model you use and upload the module label image (used to determine the modem hardware version, not the model), and provide the hardware log output message
-  4. If the NMEA sentence output is normal, then please place the device outdoors or outside the window for positioning test
+   1. See [issue#137](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/137)
    
 - **VOLTE FAQ**
   1. See [issues/115](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/115)
