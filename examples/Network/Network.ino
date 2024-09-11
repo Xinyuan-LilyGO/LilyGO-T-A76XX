@@ -90,6 +90,10 @@ void setup()
         delay(1000);
     }
 
+    // Get model info
+    modem.sendAT("+SIMCOMATI");
+    modem.waitResponse();
+
     //SIM7672G Can't set network mode
 #ifndef TINY_GSM_MODEM_SIM7672
     if (!modem.setNetworkMode(MODEM_NETWORK_AUTO)) {
