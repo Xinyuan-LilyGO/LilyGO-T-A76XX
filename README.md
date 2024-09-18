@@ -78,6 +78,7 @@
 | HttpsOTAUpgrade                 | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HP303BSensor*                   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | SPIExample*                     | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| PowerMonitoring                 | ✅                 | ❌   (No support)   | ✅                  | ✅               | ❌   (No support)   | ✅               |
 
 - HP303BSensor,SPIExample it only demonstrates how to define and use SPI and I2C. Please confirm the pin connection and IO definition before use.
 
@@ -113,7 +114,7 @@
 2. Install [Arduino IDE](https://www.arduino.cc/en/software)
 3. Install [Arduino ESP32 2.0.5 or above](https://docs.espressif.com/projects/arduino-esp32/en/latest/) 
 4. Copy all folders in [lib folder](./lib/)  to Arduino library folder (e.g. C:\Users\YourName\Documents\Arduino\libraries)
-5. Open ArduinoIDE  ,`Tools` , Look at the picture to choose
+5. Open ArduinoIDE  ,`Tools` , Look at the picture to choose , **If you use the ESP32-S3 controller and need to use serial, then USB CDC ON Boot needs to be set to Enabled**
     | [T-A7670X][1]/[T-Call-A7670X][2]/[T-A7608][3] | [T-A7608-DC-S3][4]/[T-A7608-DC-S3][4]/[T-A7608-S3][5]/[T-SIM767XG-S3][6] |
     | --------------------------------------------- | ------------------------------------------------------------------------ |
     | ![esp32dev](images/esp32dev.jpg)              | ![esp32s3dev](images/esp32s3dev.jpg)                                     |
@@ -123,6 +124,8 @@
 9. Select `Port`
 10. Click `upload` , Wait for compilation and writing to complete
 11. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
+
+
 
 ### Writing as a beginner
 
