@@ -255,6 +255,6 @@ void loop()
         deep_sleep(60 * 1000); //60 Second
     }
 
-    // Light sleep, reducing the allowed power consumption
+    // Light sleep for one second to reduce running power consumption
     light_sleep(5000);
 }
