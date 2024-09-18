@@ -60,6 +60,7 @@ jobs:
           - examples/SPIExample
           - examples/SendLocationFromSMS
           - examples/SendLocationFromSMS_Use_TinyGPS
+          - examples/PowerMonitoring
 
     steps:
       - uses: actions/checkout@v3
