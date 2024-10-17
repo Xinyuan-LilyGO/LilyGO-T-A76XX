@@ -79,7 +79,11 @@
 | HttpsOTAUpgrade                 | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HP303BSensor*                   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | SPIExample*                     | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| PowerMonitoring                 | ✅                 | ❌   (No support)   | ✅                  | ✅               | ❌   (No support)   | ✅               |
+| PowerMonitoring                 | ✅                 | ❌                  | ❌                  | ✅               | ❌                  | ❌               |
+| SimHatAccelerometer             | ✅                 | ❌                  | ❌                  | ✅               | ❌                  | ❌               |
+| SimHatCurrentSensor             | ✅                 | ❌                  | ❌                  | ✅               | ❌                  | ❌               |
+| SimHatOneWireSensor             | ✅                 | ❌                  | ❌                  | ✅               | ❌                  | ❌               |
+| SimHatRelay                     | ✅                 | ❌                  | ❌                  | ✅               | ❌                  | ❌               |
 
 - HP303BSensor,SPIExample it only demonstrates how to define and use SPI and I2C. Please confirm the pin connection and IO definition before use.
 
