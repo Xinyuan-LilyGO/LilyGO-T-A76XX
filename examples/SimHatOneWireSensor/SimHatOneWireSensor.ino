@@ -17,6 +17,9 @@
 // T-A7670X SIM-Hat Pin
 #define DHTPIN 23     // Digital pin connected to the DHT sensor 
 
+ ///T-A7608-ESP32S3 SIM-Hat Pin
+//  #define DHTPIN 42     // Digital pin connected to the DHT sensor 
+
 // Feather HUZZAH ESP8266 note: use pins 3, 4, 5, 12, 13 or 14 --
 // Pin 15 can work but DHT must be disconnected during program upload.
 

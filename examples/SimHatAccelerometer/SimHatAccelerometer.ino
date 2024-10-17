@@ -12,12 +12,17 @@
 #include <SensorQMI8658.hpp>
 
 // T-A7670X SIM-Hat Pin
-const uint8_t sda = 21;
-const uint8_t scl = 22;
+// #define IMU_SDA     21
+// #define IMU_SCL     22
+// #define IMU_INT1    39
+// #define IMU_INT2    34  ///T-A7608-ESP32 Conflict with Solar ADC
 
-#define IMU_INT1    39
-#define IMU_INT2    34  ///T-A7608-ESP32 Conflict with Solar ADC
 
+ ///T-A7608-ESP32S3 SIM-Hat Pin
+#define IMU_SDA     2
+#define IMU_SCL     1
+#define IMU_INT1    38
+#define IMU_INT2    46 
 
 SensorQMI8658 qmi;
 
@@ -29,7 +34,7 @@ void setup()
     Serial.begin(115200);
     while (!Serial);
 
-    if (!qmi.begin(Wire, QMI8658_L_SLAVE_ADDRESS, sda, scl)) {
+    if (!qmi.begin(Wire, QMI8658_L_SLAVE_ADDRESS, IMU_SDA, IMU_SCL)) {
         Serial.println("Failed to find QMI8658 - check your wiring!");
         while (1) {
             delay(1000);

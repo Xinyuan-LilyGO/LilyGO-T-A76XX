@@ -14,6 +14,12 @@
 #define RELAY2_PIN     19
 #define RELAY3_PIN     32
 
+ ///T-A7608-ESP32S3 SIM-Hat Pin
+// #define RELAY1_PIN     40
+// #define RELAY2_PIN     41
+// #define RELAY3_PIN     5
+  
+
 void setup(void)
 {
     Serial.begin(115200);

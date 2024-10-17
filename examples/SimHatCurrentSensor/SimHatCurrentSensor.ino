@@ -13,8 +13,13 @@ Adafruit_INA219 ina219_1(ina219_salve_address1);
 Adafruit_INA219 ina219_2(ina219_salve_address2);
 
 // T-A7670X SIM-Hat Pin
-const uint8_t sda = 21;
-const uint8_t scl = 22;
+#define SENSOR_SDA     21
+#define SENSOR_SCL     22
+
+///T-A7608-ESP32S3 SIM-Hat Pin
+// #define SENSOR_SDA     2
+// #define SENSOR_SCL     1
+
 
 void setup(void)
 {
@@ -25,7 +30,7 @@ void setup(void)
         delay(1);
     }
 
-    Wire.begin(sda, scl);
+    Wire.begin(SENSOR_SDA, SENSOR_SCL);
 
     Serial.println("Hello!");
 

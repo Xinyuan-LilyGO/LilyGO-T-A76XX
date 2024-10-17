@@ -79,14 +79,15 @@
 | HttpsOTAUpgrade                 | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HP303BSensor*                   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | SPIExample*                     | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| PowerMonitoring                 | ✅                 | ❌                  | ❌                  | ✅               | ❌                  | ❌               |
-| SimHatAccelerometer             | ✅                 | ❌                  | ❌                  | ✅[1]            | ❌                  | ❌               |
-| SimHatCurrentSensor             | ✅                 | ❌                  | ❌                  | ✅               | ❌                  | ❌               |
-| SimHatOneWireSensor             | ✅                 | ❌                  | ❌                  | ✅               | ❌                  | ❌               |
-| SimHatRelay                     | ✅                 | ❌                  | ❌                  | ✅               | ❌                  | ❌               |
+| PowerMonitoring                 | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                  | ✅               |
+| SimHatAccelerometer             | ✅                 | ❌                  | ❌(No support)[2]   | ✅[1]            | ❌                  | ✅               |
+| SimHatCurrentSensor             | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                  | ✅               |
+| SimHatOneWireSensor             | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                  | ✅               |
+| SimHatRelay                     | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                  | ✅               |
 
 - HP303BSensor,SPIExample it only demonstrates how to define and use SPI and I2C. Please confirm the pin connection and IO definition before use.
 - [1] T-A7608-ESP32 Conflict with Solar ADC
+- [2] The relay driver conflicts with the board RST and cannot work
 
 # Quick start ⚡
 
