@@ -14,9 +14,10 @@
 
 ## Firmware
 
-### A7670G
+### A7670G-LLSE No GPS
 
-* [A7670G B18](https://drive.google.com/file/d/10BxF-O2aPQ9vB5N97VT3bxPguURNoMvF/view?usp=sharing)
+<!-- * [A7670G B18](https://drive.google.com/file/d/10BxF-O2aPQ9vB5N97VT3bxPguURNoMvF/view?usp=sharing) Known HTTP 715 Errors Don't use this version- -->
+* [A7670G A124B01](https://drive.google.com/file/d/1-UOq_7TxU8aNAY4KKuXtnoRt0UZwipSQ/view?usp=sharing)
 
 ------------------------
 
