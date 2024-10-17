@@ -1,5 +1,5 @@
 /**
- * @file      QMI8658_InterruptExample.ino
+ * @file      SimHatAccelerometer.ino
  * @author    Lewis He (lewishe@outlook.com)
  * @license   MIT
  * @copyright Copyright (c) 2024  ShenZhen XinYuan Electronic Technology Co., Ltd
@@ -16,7 +16,7 @@ const uint8_t sda = 21;
 const uint8_t scl = 22;
 
 #define IMU_INT1    39
-#define IMU_INT2    34
+#define IMU_INT2    34  ///T-A7608-ESP32 Conflict with Solar ADC
 
 
 SensorQMI8658 qmi;

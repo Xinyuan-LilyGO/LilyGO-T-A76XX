@@ -80,13 +80,13 @@
 | HP303BSensor*                   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | SPIExample*                     | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | PowerMonitoring                 | ✅                 | ❌                  | ❌                  | ✅               | ❌                  | ❌               |
-| SimHatAccelerometer             | ✅                 | ❌                  | ❌                  | ✅               | ❌                  | ❌               |
+| SimHatAccelerometer             | ✅                 | ❌                  | ❌                  | ✅[1]            | ❌                  | ❌               |
 | SimHatCurrentSensor             | ✅                 | ❌                  | ❌                  | ✅               | ❌                  | ❌               |
 | SimHatOneWireSensor             | ✅                 | ❌                  | ❌                  | ✅               | ❌                  | ❌               |
 | SimHatRelay                     | ✅                 | ❌                  | ❌                  | ✅               | ❌                  | ❌               |
 
 - HP303BSensor,SPIExample it only demonstrates how to define and use SPI and I2C. Please confirm the pin connection and IO definition before use.
-
+- [1] T-A7608-ESP32 Conflict with Solar ADC
 
 # Quick start ⚡
 
