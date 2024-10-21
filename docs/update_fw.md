@@ -78,6 +78,13 @@
 * [A7670XX Upgrade Record](https://youtu.be/AZkm-Z7mKn8)
 
 
+### Log capture
+
+* [SIM7670G Capture Log Record](https://youtu.be/4vvNANhz86A)
+* [A7670XX Capture Log Record](https://youtu.be/31MUyhX5UHs)
+
+
+
 ### Firmware Update Procedure
 
 1. Upload [ATDebug_sketch](../examples/ATdebug/ATdebug.ino)

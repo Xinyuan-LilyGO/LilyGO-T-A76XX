@@ -1,5 +1,5 @@
 
-# Steps
+# A7670X Capture log  Steps
 
 
 1. Upgrade to the latest version of the corresponding module. For example, if you use A7670G, use the upgrade package of A7670G. If you use A7670SA, use the upgrade package of A7670SA. The same method applies to other models, because the capture log requires the use of the TxDB.txt file in the firmware package. Please watch the [upgrade video here](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/blob/main/docs/update_fw.md)
