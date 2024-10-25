@@ -25,6 +25,10 @@ public:
         if (thisModem().waitResponse(10000UL) != 1) {
             return false;
         }
+        // set sni
+        thisModem().sendAT("+CSSLCFG=\"enableSNI\",0,1");
+        thisModem().waitResponse();
+
         return true;
     }
 
@@ -269,7 +273,7 @@ public:
         return -1;
     }
 
-    int https_post(const String& payload)
+    int https_post(const String &payload)
     {
         return https_post((uint8_t *) payload.c_str(), payload.length());
     }
