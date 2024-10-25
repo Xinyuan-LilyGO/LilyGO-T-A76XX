@@ -74,6 +74,7 @@
 | MqttsBuiltlnAWS                 | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | MqttsBuiltlnHivemq              | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | MqttsBuiltlnEMQX                | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
+| MqttsBuiltlnWill                | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HttpsBuiltlnGet                 | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HttpsBuiltlnPost                | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | HttpsOTAUpgrade                 | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
