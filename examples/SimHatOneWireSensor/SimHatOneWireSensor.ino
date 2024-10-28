@@ -7,6 +7,12 @@
 // - DHT Sensor Library: https://github.com/adafruit/DHT-sensor-library
 // - Adafruit Unified Sensor Lib: https://github.com/adafruit/Adafruit_Sensor
 
+// * @note      Requires external expansion board support https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v
+// * @note      Requires external expansion board support https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v
+// * @note      Requires external expansion board support https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v
+// * @note      Requires external expansion board support https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v
+// * @note      Requires external expansion board support https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v
+
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BusIO_Register.h>
 #include <DHT.h>

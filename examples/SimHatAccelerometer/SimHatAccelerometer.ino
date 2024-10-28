@@ -4,8 +4,14 @@
  * @license   MIT
  * @copyright Copyright (c) 2024  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2024-10-17
- *
  */
+
+// * @note      Requires external expansion board support https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v
+// * @note      Requires external expansion board support https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v
+// * @note      Requires external expansion board support https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v
+// * @note      Requires external expansion board support https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v
+// * @note      Requires external expansion board support https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v
+
 #include <Arduino.h>
 #include <Wire.h>
 #include <SPI.h>

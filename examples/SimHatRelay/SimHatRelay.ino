@@ -7,6 +7,12 @@
  *
  */
 
+// * @note      Requires external expansion board support https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v
+// * @note      Requires external expansion board support https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v
+// * @note      Requires external expansion board support https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v
+// * @note      Requires external expansion board support https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v
+// * @note      Requires external expansion board support https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v
+
 #include <Arduino.h>
 
 // T-A7670X SIM-Hat Pin
