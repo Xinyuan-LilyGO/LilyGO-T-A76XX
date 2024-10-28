@@ -220,7 +220,7 @@ void setup()
     Serial.print("Network IP:"); Serial.println(ipAddress);
 
     // Initialize MQTT, use SSL, skip authentication server
-    modem.mqtt_begin(false);
+    modem.mqtt_begin(true);
 
     if (!mqtt_connect()) {
         return ;
