@@ -239,8 +239,8 @@
    - [A76xx Hardware Design manual](./datasheet/A76XX/A7670C_R2_硬件设计手册_V1.06.pdf)
    - [A76xx TCPIP Application](./datasheet/A76XX/A76XX%20Series_TCPIP_Application%20Note_V1.02.pdf)
 3. SIM767XG-Datasheet
-   - [SIM7672 Hardware Design manual](./datasheet/SIM7672G/SIM7672X_Series_Hardware_Design_V1.02.pdf)
-   - [SIM7672 AT Command](./datasheet/SIM7672G/SIM767XX%20Series_AT_Command_Manual_V1.01.pdf)
+   - [SIM7672 Hardware Design manual](./datasheet/SIM767X/SIM7672X_Series_Hardware_Design_V1.02.pdf)
+   - [SIM7672 AT Command](./datasheet/SIM767X/SIM767XX%20Series_AT_Command_Manual_V1.01.pdf)
 4. Schematic
    - [T-A7608-S3 Schematic](./schematic/T-A7608-S3-V1.0.pdf)
    - [T-A7608X-DC-S3 Schematic](./schematic/T-A7608X-DC-S3-V1.0.pdf)
