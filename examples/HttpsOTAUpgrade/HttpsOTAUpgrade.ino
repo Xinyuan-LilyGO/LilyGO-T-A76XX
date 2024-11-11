@@ -47,7 +47,7 @@ TinyGsm modem(debugger);
 TinyGsm modem(SerialAT);
 #endif
 
-// It depends on the operator whether to set up an APN. If some operators do not set up an APN, 
+// It depends on the operator whether to set up an APN. If some operators do not set up an APN,
 // they will be rejected when registering for the network. You need to ask the local operator for the specific APN.
 // APNs from other operators are welcome to submit PRs for filling.
 // #define NETWORK_APN     "CHN-CT"             //CHN-CT: China Telecom
@@ -198,6 +198,12 @@ void setup()
     if (httpCode != 200) {
         Serial.print("HTTP get failed ! error code = ");
         Serial.println(httpCode);
+
+        if (httpCode == 706) {
+            // https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/171
+            Serial.println("SIM7670G has 288KB available user storage space. Use AT+FSMEM to query, so files larger than 288KB cannot be updated.");
+        }
+
         return;
     }
 
