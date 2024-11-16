@@ -605,7 +605,7 @@ class TinyGsmA7608 : public TinyGsmModem<TinyGsmA7608>,
       // 20240513 fixed
       // A7600M7_B11V05_231108
       // +CGNSSINFO: 3,13,14,,,xx.xxxx,N,xx.xxxx,E,130524,035736.00,53.6,0.000,,1.7,1.2,1.1,
-      streamSkipUntil(',');               // GPS-SVs      satellite valid numbers
+      ivsat = streamGetIntBefore(',');     // GPS-SVs      satellite valid numbers
       streamSkipUntil(',');               // BEIDOU-SVs   satellite valid numbers
       streamSkipUntil(',');               // GLONASS-SVs  satellite valid numbers
       streamSkipUntil(',');               // GALILEO-SVs  satellite valid numbers

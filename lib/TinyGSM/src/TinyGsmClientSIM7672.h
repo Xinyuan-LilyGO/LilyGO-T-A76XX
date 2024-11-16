@@ -519,7 +519,7 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
       int   imin         = 0;
       float secondWithSS = 0;
 
-      streamSkipUntil(',');               // GPS satellite valid numbers
+      ivsat = streamGetIntBefore(',');    // GPS satellite valid numbers
       streamSkipUntil(',');               // GLONASS satellite valid numbers
       streamSkipUntil(',');               // BEIDOU satellite valid numbers
       streamSkipUntil(',');
