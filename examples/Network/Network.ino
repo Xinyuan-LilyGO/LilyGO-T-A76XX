@@ -23,7 +23,7 @@ TinyGsm modem(debugger);
 TinyGsm modem(SerialAT);
 #endif
 
-// It depends on the operator whether to set up an APN. If some operators do not set up an APN, 
+// It depends on the operator whether to set up an APN. If some operators do not set up an APN,
 // they will be rejected when registering for the network. You need to ask the local operator for the specific APN.
 // APNs from other operators are welcome to submit PRs for filling.
 // #define NETWORK_APN     "CHN-CT"             //CHN-CT: China Telecom
@@ -162,7 +162,18 @@ void setup()
     Serial.print("Network IP:"); Serial.println(ipAddress);
 
 
-
+    String resolved_ip_addr;
+    uint32_t rep_data_packet_size;
+    uint32_t tripTime;
+    uint8_t TTL;
+    for (int i = 0; i < 20; ++i) {
+        int res = modem.ping("www.baidu.com", resolved_ip_addr, rep_data_packet_size, tripTime, TTL);
+        if (res == 1) {
+            Serial.printf("Reply from %s: bytes=%u time=%ums TTL=%u\n", resolved_ip_addr, rep_data_packet_size, tripTime, TTL);
+        } else {
+            Serial.printf("Error code : %d\n", res);
+        }
+    }
 }
 
 void loop()
