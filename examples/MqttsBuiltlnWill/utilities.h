@@ -237,7 +237,9 @@
 
 
 
-
+#if !defined(TINY_GSM_MODEM_A7670) && !defined(TINY_GSM_MODEM_A7608) && !defined(TINY_GSM_MODEM_SIM7672)
+#error "No correct definition detected, Please copy all the [lib directories](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/tree/main/lib) to the arduino libraraies directory , See README"
+#endif
 
 
 
