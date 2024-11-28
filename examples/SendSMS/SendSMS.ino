@@ -4,7 +4,8 @@
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-16
- * @note      SIM7670G does not support SMS and voice functions
+ * @note      SIM7670G - SIM7670G-MNGV 2374B04 version supports SMS function, 
+ *            but it requires the operator base station to support SMS Over SGS service to send, otherwise it will be invalid
  */
 
 #include "utilities.h"

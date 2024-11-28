@@ -59,13 +59,13 @@
 | DeepSleep                       | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | ModemSleep                      | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | ModemPowerOff                   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| VoiceCalls                      | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
+| VoiceCalls                      | ✅                 | ✅                  | ❌[5]               | ✅               | ✅                  | ✅               |
 | SDCard                          | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ✅                  | ✅               |
 | SerialRS485                     | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| SendSMS                         | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
-| ReadSMS                         | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
-| SendLocationFromSMS             | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
-| SendLocationFromSMS_Use_TinyGPS | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
+| SendSMS                         | ✅                 | ✅                  | ❌[4]               | ✅               | ✅                  | ✅               |
+| ReadSMS                         | ✅                 | ✅                  | ❌[4]               | ✅               | ✅                  | ✅               |
+| SendLocationFromSMS             | ✅                 | ✅                  | ❌[4]               | ✅               | ✅                  | ✅               |
+| SendLocationFromSMS_Use_TinyGPS | ✅                 | ✅                  | ❌[4]               | ✅               | ✅                  | ✅               |
 | LBSExample                      | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
 | Network                         | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
 | MqttsBuiltlnAuth                | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
@@ -90,6 +90,8 @@
 - [1] T-A7608-ESP32 Conflict with Solar ADC
 - [2] The relay driver conflicts with the board RST and cannot work
 - [3] Requires external expansion board support [T-SimHat](https://www.lilygo.cc/products/lilygo%C2%AE-t-simhat-can-rs485-relay-5v)
+- [4] SIM7670G - `SIM7670G-MNGV 2374B04` version supports SMS function, but it requires the operator base station to support SMS Over SGS service to send, otherwise it will be invalid
+- [5] All versions of SIM7670G do not support voice
 
 # Quick start ⚡
 
