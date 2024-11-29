@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-06-28
- * @note      GPS only supports A7670X/A7608X (excluding A7670G and other versions that do not support positioning). 
+ * @note      GPS only supports A7670X/A7608X (excluding A7670G and other versions that do not support positioning).
  */
 #include "utilities.h"
 
@@ -99,7 +99,7 @@ void setup()
 
     /*
     *   A7608 B08 firmware has GPS positioning problems. If it is B08 version, you need to upgrade the A7608 firmware.
-    * 
+    *
     *   Manufacturer: INCORPORATED
     *   Model: A7608SA-H
     *   Revision: A50C4B08A7600M7
@@ -109,13 +109,13 @@ void setup()
     *   MEID:
     *   +GCAP: +CGSM,+FCLASS,+DS
     *   DeviceInfo:
-    * 
+    *
     *   +CGNSSINFO: 2,04,00,21.xxxxx,N,114.xxxxxxxx,E,020924,094145.00,-34.0,1.403,,6.9,6.8,1.0,03
     */
 
 
     Serial.println("Enabling GPS/GNSS/GLONASS");
-    while (!modem.enableGPS(MODEM_GPS_ENABLE_GPIO)) {
+    while (!modem.enableGPS(MODEM_GPS_ENABLE_GPIO, MODEM_GPS_ENABLE_LEVEL)) {
         Serial.print(".");
     }
     Serial.println();
@@ -150,7 +150,7 @@ void loop()
             Serial.print("FixMode:"); Serial.println(fixMode);
             Serial.print("Latitude:"); Serial.print(lat2, 6); Serial.print("\tLongitude:"); Serial.println(lon2, 6);
             Serial.print("Speed:"); Serial.print(speed2); Serial.print("\tAltitude:"); Serial.println(alt2);
-            Serial.print("Visible Satellites:"); Serial.print(vsat2); 
+            Serial.print("Visible Satellites:"); Serial.print(vsat2);
 
             // GPS_BuiltIn cannot get the number of satellites in use, so it always returns 0
             Serial.print("\tUsed Satellites:"); Serial.println(usat2);

@@ -101,7 +101,7 @@ void setup()
 
     retry = 15;
     Serial.println("Enabling GPS/GNSS/GLONASS");
-    while (!modem.enableGPS(MODEM_GPS_ENABLE_GPIO)) {
+    while (!modem.enableGPS(MODEM_GPS_ENABLE_GPIO, MODEM_GPS_ENABLE_LEVEL)) {
         Serial.print(".");
         if (retry-- <= 0) {
             Serial.println("GPS startup failed. Please check whether the board you ordered contains GPS function."); delay(1000);

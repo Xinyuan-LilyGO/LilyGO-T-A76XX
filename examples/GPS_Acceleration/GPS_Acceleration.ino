@@ -216,7 +216,7 @@ void setup()
 
 
     Serial.println("Enabling GPS/GNSS/GLONASS");
-    while (!modem.enableGPS(MODEM_GPS_ENABLE_GPIO)) {
+    while (!modem.enableGPS(MODEM_GPS_ENABLE_GPIO, MODEM_GPS_ENABLE_LEVEL)) {
         Serial.print(".");
     }
     Serial.println();
