@@ -21,70 +21,72 @@
 
 # 1️⃣Product
 
-| Product(PinMap)         | SOC              | Flash | PSRAM     | Schematic                                        |
-| ----------------------- | ---------------- | ----- | --------- | ------------------------------------------------ |
-| [T-A7670X][1]           | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-A7670X-V1.1.pdf)       |
-| [T-Call-A7670X-V1.0][2] | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-Call-A7670-V1.0.pdf)   |
-| [T-Call-A7670X-V1.1][3] | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-Call-A7670-V1.1.pdf)   |
-| [T-A7608][4]            | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/T-A7608X-V1.0.pdf)       |
-| [T-A7608-V2][8]         | ESP32-WROVER-E   | 4MB   | 8MB(QSPI) | [schematic](./schematic/A7608-ESP32-V2.pdf)      |
-| [T-A7608-DC-S3][5]      | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-A7608X-DC-S3-V1.0.pdf) |
-| [T-A7608-S3][6]         | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-A7608-S3-V1.0.pdf)     |
-| [T-SIM767XG-S3][7]      | ESP32-S3-WROOM-1 | 16MB  | 8MB(OPI)  | [schematic](./schematic/T-SIM767XG-S3-V1.0.pdf)  |
+| Product(PinMap)         | SOC              | Flash    | PSRAM     | Schematic                                                                                    |
+| ----------------------- | ---------------- | -------- | --------- | -------------------------------------------------------------------------------------------- |
+| [T-A7670X][1]           | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) | [schematic](./schematic/T-A7670X-V1.1.pdf)                                                   |
+| [T-Call-A7670X-V1.0][2] | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) | [schematic](./schematic/T-Call-A7670-V1.0.pdf)                                               |
+| [T-A7608][4]            | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) | [schematic](./schematic/T-A7608X-V1.0.pdf)                                                   |
+| [T-A7608-V2][8]         | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) | [schematic](./schematic/A7608-ESP32-V2.pdf)                                                  |
+| [T-A7608-S3][6]         | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  | [schematic](./schematic/T-A7608-S3-V1.0.pdf)                                                 |
+| [T-SIM767XG-S3][7]      | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  | [schematic](./schematic/T-SIM767XG-S3-V1.0.pdf)                                              |
+| [T-PCIE-A7670][8]       | ESP32-WROVER-E   | 16MB/4MB | 8MB(QSPI) | [schematic](https://github.com/Xinyuan-LilyGO/LilyGo-T-PCIE/blob/master/schematic/A7670.pdf) |
 
-[1]: https://www.lilygo.cc/products/t-sim-a7670e
+<!-- | [T-Call-A7670X-V1.1][3] | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) | [schematic](./schematic/T-Call-A7670-V1.1.pdf)                                               | -->
+<!-- | [T-A7608-DC-S3][5]      | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  | [schematic](./schematic/T-A7608X-DC-S3-V1.0.pdf)                                             | -->
+
+[1]: https://www.lilygo.cc/products/t-sim-a7670eZ
 [2]: https://www.lilygo.cc/products/t-call-v1-4
-[3]: https://www.lilygo.cc/products/t-call-v1-4
+<!-- [3]: https://www.lilygo.cc/products/t-call-v1-4 -->
 [4]: https://www.lilygo.cc/products/t-a7608e-h
-[5]: https://www.lilygo.cc
-[6]: https://www.lilygo.cc
+<!-- [5]: https://www.lilygo.cc -->
+[6]: https://lilygo.cc/products/t-a7608e-h?variant=43932699033781
 [7]: https://www.lilygo.cc/products/t-sim-7670g-s3
-[8]: https://www.lilygo.cc
+[8]: https://lilygo.cc/products/a-t-pcie?variant=42335922094261
 
 ## 2️⃣Examples
 
-| Example                         | [T-A7670X][1]     | [T-Call-A7670X][2] | [T-SIM767XG-S3][6] | [T-A7608/V2][3] | [T-A7608-DC-S3][4] | [T-A7608-S3][5] |
-| ------------------------------- | ----------------- | ------------------ | ------------------ | --------------- | ------------------ | --------------- |
-| ATdebug                         | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| Blynk_Console                   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| GPSShield                       | ✅ (Only T-A7670G) | ❌   (Can't run)    | ❌   (Can't run)    | ❌   (Can't run) | ❌   (Can't run)    | ❌   (Can't run) |
-| GPS_BuiltIn                     | ✅ (Except A7670G) | ✅(Except A7670G)   | ✅                  | ✅               | ✅                  | ✅               |
-| GPS_NMEA_Parse                  | ✅ (Except A7670G) | ✅(Except A7670G)   | ✅                  | ✅               | ✅                  | ✅               |
-| GPS_NMEA_Output                 | ✅ (Except A7670G) | ✅(Except A7670G)   | ✅                  | ✅               | ✅                  | ✅               |
-| GPS_Acceleration                | ✅ (Except A7670G) | ✅(Except A7670G)   | ❌   (Can't run)    | ✅               | ✅                  | ✅               |
-| HttpClient                      | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| HttpsClient                     | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| MqttClient                      | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| ReadBattery                     | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ❌   (Can't run)    | ✅               |
-| DeepSleep                       | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| ModemSleep                      | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| ModemPowerOff                   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| VoiceCalls                      | ✅                 | ✅                  | ❌[5]               | ✅               | ✅                  | ✅               |
-| SDCard                          | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ✅                  | ✅               |
-| SerialRS485                     | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| SendSMS                         | ✅                 | ✅                  | ❌[4]               | ✅               | ✅                  | ✅               |
-| ReadSMS                         | ✅                 | ✅                  | ❌[4]               | ✅               | ✅                  | ✅               |
-| SendLocationFromSMS             | ✅                 | ✅                  | ❌[4]               | ✅               | ✅                  | ✅               |
-| SendLocationFromSMS_Use_TinyGPS | ✅                 | ✅                  | ❌[4]               | ✅               | ✅                  | ✅               |
-| LBSExample                      | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                  | ✅               |
-| Network                         | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| MqttsBuiltlnAuth                | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| MqttsBuiltlnSSL                 | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| MqttsBuiltlnNoSSL               | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| MqttsBuiltlnAWS                 | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| MqttsBuiltlnHivemq              | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| MqttsBuiltlnEMQX                | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| MqttsBuiltlnWill                | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| HttpsBuiltlnGet                 | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| HttpsBuiltlnPost                | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| HttpsOTAUpgrade                 | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| HP303BSensor*                   | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| SPIExample*                     | ✅                 | ✅                  | ✅                  | ✅               | ✅                  | ✅               |
-| PowerMonitoring                 | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                  | ✅               |
-| SimHatAccelerometer[3]          | ✅                 | ❌                  | ❌(No support)[2]   | ✅[1]            | ❌                  | ✅               |
-| SimHatCurrentSensor[3]          | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                  | ✅               |
-| SimHatOneWireSensor[3]          | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                  | ✅               |
-| SimHatRelay[3]                  | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                  | ✅               |
+| Example | [T-A7670X][1] | [T-Call-A7670X][2] | [T-SIM767XG-S3][6] | [T-A7608/V2][3] | [T-PCIE-A767X][8] | [T-A7608-S3][5] |
+| ------- | ------------- | ------------------ | ------------------ | --------------- | ----------------- | --------------- ||
+| ATdebug                         | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| Blynk_Console                   | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| GPSShield                       | ✅ (Only T-A7670G) | ❌   (Can't run)    | ❌   (Can't run)    | ❌   (Can't run) | ❌   (Can't run)   | ❌   (Can't run) |
+| GPS_BuiltIn                     | ✅ (Except A7670G) | ✅(Except A7670G)   | ✅                  | ✅               | ✅                 | ✅               |
+| GPS_NMEA_Parse                  | ✅ (Except A7670G) | ✅(Except A7670G)   | ✅                  | ✅               | ✅                 | ✅               |
+| GPS_NMEA_Output                 | ✅ (Except A7670G) | ✅(Except A7670G)   | ✅                  | ✅               | ✅                 | ✅               |
+| GPS_Acceleration                | ✅ (Except A7670G) | ✅(Except A7670G)   | ❌   (Can't run)    | ✅               | ✅                 | ✅               |
+| HttpClient                      | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| HttpsClient                     | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| MqttClient                      | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| ReadBattery                     | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ❌   (Can't run)   | ✅               |
+| DeepSleep                       | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| ModemSleep                      | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| ModemPowerOff                   | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| VoiceCalls                      | ✅                 | ✅                  | ❌[5]               | ✅               | ✅                 | ✅               |
+| SDCard                          | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ✅                 | ✅               |
+| SerialRS485                     | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| SendSMS                         | ✅                 | ✅                  | ❌[4]               | ✅               | ✅                 | ✅               |
+| ReadSMS                         | ✅                 | ✅                  | ❌[4]               | ✅               | ✅                 | ✅               |
+| SendLocationFromSMS             | ✅                 | ✅                  | ❌[4]               | ✅               | ✅                 | ✅               |
+| SendLocationFromSMS_Use_TinyGPS | ✅                 | ✅                  | ❌[4]               | ✅               | ✅                 | ✅               |
+| LBSExample                      | ✅                 | ✅                  | ❌   (No support)   | ✅               | ✅                 | ✅               |
+| Network                         | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| MqttsBuiltlnAuth                | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| MqttsBuiltlnSSL                 | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| MqttsBuiltlnNoSSL               | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| MqttsBuiltlnAWS                 | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| MqttsBuiltlnHivemq              | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| MqttsBuiltlnEMQX                | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| MqttsBuiltlnWill                | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| HttpsBuiltlnGet                 | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| HttpsBuiltlnPost                | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| HttpsOTAUpgrade                 | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| HP303BSensor*                   | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| SPIExample*                     | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| PowerMonitoring                 | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
+| SimHatAccelerometer[3]          | ✅                 | ❌                  | ❌(No support)[2]   | ✅[1]            | ❌                 | ✅               |
+| SimHatCurrentSensor[3]          | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
+| SimHatOneWireSensor[3]          | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
+| SimHatRelay[3]                  | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
 
 - HP303BSensor,SPIExample it only demonstrates how to define and use SPI and I2C. Please confirm the pin connection and IO definition before use.
 - [1] T-A7608-ESP32 Conflict with Solar ADC
@@ -125,9 +127,9 @@
 3. Install [Arduino ESP32 2.0.5 or above](https://docs.espressif.com/projects/arduino-esp32/en/latest/) 
 4. Copy all folders in [lib folder](./lib/)  to Arduino library folder (e.g. C:\Users\YourName\Documents\Arduino\libraries)
 5. Open ArduinoIDE  ,`Tools` , Look at the picture to choose , **If you use the ESP32-S3 controller and need to use serial, then USB CDC ON Boot needs to be set to Enabled**
-    | [T-A7670X][1]/[T-Call-A7670X][2]/[T-A7608][3] | [T-A7608-DC-S3][4]/[T-A7608-DC-S3][4]/[T-A7608-S3][5]/[T-SIM767XG-S3][6] |
-    | --------------------------------------------- | ------------------------------------------------------------------------ |
-    | ![esp32dev](images/esp32dev.jpg)              | ![esp32s3dev](images/esp32s3dev.jpg)                                     |
+    | [T-A7670X][1]/[T-Call-A7670X][2]/[T-A7608][3]/[T-PCIE-A7670][8] | [T-A7608-S3][5]/[T-SIM767XG-S3][6]   |
+    | --------------------------------------------------------------- | ------------------------------------ |
+    | ![esp32dev](images/esp32dev.jpg)                                | ![esp32s3dev](images/esp32s3dev.jpg) |
 6. `LilyGO-T-A76XX` folder -> `examples` -> `Choose the appropriate example from the list above`
 7. Open the corresponding board macro definition above [utilities.h](./examples/ATdebug/utilities.h)
 8. Connect the board to the computer USB-C , Micro-USB is used for module firmware upgrade
