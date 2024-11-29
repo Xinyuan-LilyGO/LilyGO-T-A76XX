@@ -17,23 +17,22 @@
 // Products Link:https://www.lilygo.cc/products/t-sim-a7670e
 // #define LILYGO_T_A7670
 
-
+// Products Link: https://lilygo.cc/products/t-call-v1-4
 // T-Call-A767X V1.0 and V1.1 have different Pinmaps and cannot be used universally.
 // #define LILYGO_T_CALL_A7670_V1_0
 
-// T-Call-A767X V1.0 and V1.1 have different Pinmaps and cannot be used universally.
-// #define LILYGO_T_CALL_A7670_V1_1
-
 //! SIM7672G and SIM7670G are exactly the same, except for the name change
+// Products Link: https://lilygo.cc/products/t-sim-7670g-s3
 // #define LILYGO_T_SIM767XG_S3
 
+// Products Link: https://lilygo.cc/products/t-a7608e-h?variant=42860532433077
 // #define LILYGO_T_A7608X
 
+// Products Link: https://lilygo.cc/products/t-a7608e-h?variant=43932699033781
 // #define LILYGO_T_A7608X_S3
 
-// #define LILYGO_T_A7608X_DC_S3
-
-
+// Products Link: https://lilygo.cc/products/a-t-pcie?variant=42335922094261
+// #define LILYGO_T_PCIE_A767X
 
 
 
@@ -59,7 +58,7 @@
 #define SerialAT                            Serial1
 
 #define MODEM_GPS_ENABLE_GPIO               (-1)
-
+#define MODEM_GPS_ENABLE_LEVEL              (-1)
 
 #ifndef TINY_GSM_MODEM_A7670
 #define TINY_GSM_MODEM_A7670
@@ -86,6 +85,7 @@
 
 
 #define MODEM_GPS_ENABLE_GPIO               (-1)
+#define MODEM_GPS_ENABLE_LEVEL              (-1)
 
 
 #ifndef TINY_GSM_MODEM_A7670
@@ -109,6 +109,7 @@
 #define SerialAT                            Serial1
 
 #define MODEM_GPS_ENABLE_GPIO               (-1)
+#define MODEM_GPS_ENABLE_LEVEL              (-1)
 
 #ifndef TINY_GSM_MODEM_A7670
 #define TINY_GSM_MODEM_A7670
@@ -141,6 +142,7 @@
 #endif
 
 #define MODEM_GPS_ENABLE_GPIO               (4)
+#define MODEM_GPS_ENABLE_LEVEL              (1)
 
 
 #elif defined(LILYGO_T_A7608X)
@@ -175,6 +177,7 @@
 
 // 127 is defined in GSM as the AUXVDD index
 #define MODEM_GPS_ENABLE_GPIO               (127)
+#define MODEM_GPS_ENABLE_LEVEL              (1)
 
 #elif defined(LILYGO_T_A7608X_S3)
 
@@ -206,6 +209,7 @@
 
 // 127 is defined in GSM as the AUXVDD index
 #define MODEM_GPS_ENABLE_GPIO               (127)
+#define MODEM_GPS_ENABLE_LEVEL              (1)
 
 #elif defined(LILYGO_T_A7608X_DC_S3)
 
@@ -228,6 +232,35 @@
 
 // 127 is defined in GSM as the AUXVDD index
 #define MODEM_GPS_ENABLE_GPIO               (127)
+#define MODEM_GPS_ENABLE_LEVEL              (1)
+
+
+#elif defined(LILYGO_T_PCIE_A767X)
+
+#define MODEM_DTR_PIN                       (32)
+#define MODEM_RX_PIN                        (26)
+#define MODEM_TX_PIN                        (27)
+// The modem power switch must be set to HIGH for the modem to supply power.
+#define BOARD_POWERON_PIN                   (25)
+// The modem boot pin needs to follow the startup sequence.
+#define BOARD_PWRKEY_PIN                    (4)
+#define MODEM_RING_PIN                      (33)
+#define BOARD_LED_PIN                       (12)
+#define PMU_IRQ                             (35)
+
+// No connect to reset pin to modem ,set dummy reset pin
+#define MODEM_RESET_PIN                     (BOARD_LED_PIN)
+#define MODEM_RESET_LEVEL                   (0)
+
+#define SerialAT                            Serial1
+
+#ifndef TINY_GSM_MODEM_A7670
+#define TINY_GSM_MODEM_A7670
+#endif
+
+// 127 is defined in GSM as the AUXVDD index
+#define MODEM_GPS_ENABLE_GPIO               (4)
+#define MODEM_GPS_ENABLE_LEVEL              (0)
 
 #else
 #error "Use ArduinoIDE, please open the macro definition corresponding to the board above <utilities.h>"
@@ -242,4 +275,8 @@
 #endif
 
 
+// T-Call-A767X V1.0 and V1.1 have different Pinmaps and cannot be used universally , Invalid version
+// #define LILYGO_T_CALL_A7670_V1_1
+
+// #define LILYGO_T_A7608X_DC_S3
 
