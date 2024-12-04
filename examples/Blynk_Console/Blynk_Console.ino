@@ -123,3 +123,6 @@ void loop()
     timer.run();
 }
 
+#ifndef TINY_GSM_FORK_LIBRARY
+#error "No correct definition detected, Please copy all the [lib directories](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/tree/main/lib) to the arduino libraries directory , See README"
+#endif

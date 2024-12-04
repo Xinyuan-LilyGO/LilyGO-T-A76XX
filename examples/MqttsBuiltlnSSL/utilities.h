@@ -266,15 +266,6 @@
 #error "Use ArduinoIDE, please open the macro definition corresponding to the board above <utilities.h>"
 #endif
 
-
-
-
-
-#if !defined(TINY_GSM_MODEM_A7670) && !defined(TINY_GSM_MODEM_A7608) && !defined(TINY_GSM_MODEM_SIM7672)
-#error "No correct definition detected, Please copy all the [lib directories](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/tree/main/lib) to the arduino libraraies directory , See README"
-#endif
-
-
 // T-Call-A767X V1.0 and V1.1 have different Pinmaps and cannot be used universally , Invalid version
 // #define LILYGO_T_CALL_A7670_V1_1
 

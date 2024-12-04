@@ -10,13 +10,19 @@
  *                         When connected to the USB, the battery voltage data read is not the real battery voltage, so the battery
  *                         voltage is sent to the UDP Server through UDP. When using it, please disconnect the USB-C
  *            T-A7670x :  Only version V1.4 has the resistor divider connected to the solar input, other versions IO38 is not connected
- * @note      Only support T-A7670 ,T-A7608X, T-SIM7672G board , not support T-Call A7670
+ * @note      Only support T-A7670 ,T-A7608X, T-SIM7672G board , not support T-Call A7670 , T-PCIE-A7670
  */
 #include <Arduino.h>
 #include <WiFi.h>
 #include <WiFiUdp.h>
 #include <esp32-hal-adc.h>
 #include "utilities.h"
+
+
+#ifndef BOARD_BAT_ADC_PIN
+#error "No support this board"
+#endif
+
 
 // WiFi network name and password:
 const char *networkName = "your-ssid";
