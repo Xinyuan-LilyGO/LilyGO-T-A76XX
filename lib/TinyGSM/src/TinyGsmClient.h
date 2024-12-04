@@ -9,6 +9,9 @@
 #ifndef SRC_TINYGSMCLIENT_H_
 #define SRC_TINYGSMCLIENT_H_
 
+// Used to distinguish between main branches
+#define TINY_GSM_FORK_LIBRARY
+
 #if defined(TINY_GSM_MODEM_SIM800)
 #include "TinyGsmClientSIM800.h"
 typedef TinyGsmSim800                        TinyGsm;
