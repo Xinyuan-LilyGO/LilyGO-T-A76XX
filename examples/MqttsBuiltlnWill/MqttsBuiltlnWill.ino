@@ -36,7 +36,7 @@ const char *broker = "Your mqtt server address";
 const uint16_t broker_port = 1883;
 const char *broker_username = "broker_username";
 const char *broker_password = "broker_password";
-const char *clien_id = "clien_id";
+const char *client_id = "client_id";
 
 // Will topic , Change to the channel you want to post to
 const char *will_topic = "esp32-00000-04/status";
@@ -70,7 +70,7 @@ bool mqtt_connect()
     // Set will topic and message
     modem.setWillMessage(will_topic, will_msg, qos);
 
-    bool ret = modem.mqtt_connect(mqtt_client_id, broker, broker_port, clien_id, broker_username, broker_password);
+    bool ret = modem.mqtt_connect(mqtt_client_id, broker, broker_port, client_id, broker_username, broker_password);
     if (!ret) {
         Serial.println("Failed!"); return false;
     }

@@ -34,7 +34,7 @@ TinyGsm modem(SerialAT);
 // MQTT details 
 const char *broker = "broker.emqx.io";
 const uint16_t broker_port = 8883;
-const char *clien_id = "A76XX";
+const char *client_id = "A76XX";
 
 const char *subscribe_topic = "GsmMqttTest/subscribe";
 const char *publish_topic = "GsmMqttTest/publish";
@@ -65,11 +65,11 @@ bool mqtt_connect()
     // Set up Hivemq  ROOT certificate
     modem.mqtt_set_certificate(EmqxRootCa);
 
-    bool ret = modem.mqtt_connect(mqtt_client_id, broker, broker_port, clien_id);
+    bool ret = modem.mqtt_connect(mqtt_client_id, broker, broker_port, client_id);
     if (!ret) {
         Serial.println("Failed!"); return false;
     }
-    Serial.println("successed.");
+    Serial.println("successfully.");
 
     if (modem.mqtt_connected()) {
         Serial.println("MQTT has connected!");

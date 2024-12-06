@@ -42,7 +42,7 @@ TinyGsm modem(SerialAT);
 // The URL of xxxxxxx-ats.iot.ap-southeast-2.amazonaws.com can be found in the settings for endpoint in your AWS IOT Core account
 const char *broker = "xxxxxxx.iot.ap-southeast-2.amazonaws.com";
 const uint16_t broker_port = 8883;
-const char *clien_id = "A76XX";
+const char *client_id = "A76XX";
 
 // Replace the topic you want to subscribe to
 const char *subscribe_topic = "GsmMqttTest/subscribe";
@@ -71,11 +71,11 @@ bool mqtt_connect()
     Serial.print("Connecting to ");
     Serial.print(broker);
 
-    bool ret = modem.mqtt_connect(mqtt_client_id, broker, broker_port, clien_id);
+    bool ret = modem.mqtt_connect(mqtt_client_id, broker, broker_port, client_id);
     if (!ret) {
         Serial.println("Failed!"); return false;
     }
-    Serial.println("successed.");
+    Serial.println("successfully.");
 
     if (modem.mqtt_connected()) {
         Serial.println("MQTT has connected!");
