@@ -61,7 +61,8 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
                        public TinyGsmTemperature<TinyGsmSim7672>,
                        public TinyGsmCalling<TinyGsmSim7672>,
                        public TinyGsmMqttA76xx<TinyGsmSim7672, TINY_GSM_MQTT_CLI_COUNT>,
-                       public TinyGsmGPSEx<TinyGsmSim7672> 
+                       public TinyGsmGPSEx<TinyGsmSim7672>,
+                       public TinyGsmHttpsA76xx<TinyGsmSim7672> 
 {
   friend class TinyGsmModem<TinyGsmSim7672>;
   friend class TinyGsmGPRS<TinyGsmSim7672>;
