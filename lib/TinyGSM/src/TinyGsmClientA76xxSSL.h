@@ -66,6 +66,8 @@ class TinyGsmA76xxSSL : public TinyGsmA76xx<TinyGsmA76xxSSL>,
       }
       at->sockets[this->mux] = this;
 
+      stop();
+
       return true;
     }
 
@@ -569,7 +571,7 @@ class TinyGsmA76xxSSL : public TinyGsmA76xx<TinyGsmA76xxSSL>,
 
     // DBG("### READING:", len_confirmed, "from", ret_mux);
     if (ret_mux != mux) {
-      DBG("### Data from wrong mux! Got", ret_mux, "expected", mux);
+      // DBG("### Data from wrong mux! Got", ret_mux, "expected", mux);
       waitResponse();
       sockets[mux]->sock_available = modemGetAvailable(mux);
       return 0;
@@ -589,7 +591,7 @@ class TinyGsmA76xxSSL : public TinyGsmA76xx<TinyGsmA76xxSSL>,
       /*uint16_t remaining = */ streamGetIntBefore('\n');
     }
 
-    DBG("### READ:", len_confirmed, "from", mux);
+    // DBG("### READ:", len_confirmed, "from", mux);
     // make sure the sock available number is accurate again
     // the module is **EXTREMELY** testy about being asked to read more from
     // the buffer than exits; it will freeze until a hard reset or power cycle!
@@ -689,15 +691,18 @@ class TinyGsmA76xxSSL : public TinyGsmA76xx<TinyGsmA76xxSSL>,
     } else {
       DBG("## Unhandle");
     }
-    DBG("Connect = ", sockets[mux]->sock_connected);
+    // DBG("Connect = ", sockets[mux]->sock_connected);
     return sockets[mux]->sock_connected;
   }
 
   bool sslDisconnect(uint8_t mux) {
     sendAT(GF("+CCHCLOSE="), mux);
     waitResponse(3000);
+    waitResponse(3000UL,GF("+CCHCLOSE:"),GF("ERROR"));
+    streamSkipUntil('\n');
     sendAT(GF("+CCHSTOP"));
-    waitResponse(3000);
+    waitResponse(3000UL,GF("+CCHSTOP:"),GF("ERROR"));
+    streamSkipUntil('\n');
     return true;
   }
 
@@ -726,7 +731,7 @@ class TinyGsmA76xxSSL : public TinyGsmA76xx<TinyGsmA76xxSSL>,
   bool websocketConnect(const char* host, uint16_t port, uint8_t mux, bool ssl,
                         int timeout_s) {
     uint32_t timeout_ms = ((uint32_t)timeout_s) * 1000;
-    DBG("host:", host, " port:", port, " timeout:", timeout_s);
+    // DBG("host:", host, " port:", port, " timeout:", timeout_s);
     if (mux) {
       sendAT(GF("+WSSTART="), mux);
     } else {
@@ -801,7 +806,7 @@ class TinyGsmA76xxSSL : public TinyGsmA76xx<TinyGsmA76xxSSL>,
 
   bool modemConnect(const char* host, uint16_t port, uint8_t mux, bool ssl = false,
                     int timeout_s = 75) {
-    DBG("modemConnect=", host);
+    // DBG("modemConnect=", host);
     if (strncmp(host, "ws://", 5) == 0) {
       connType[mux] = TINYGSM_WEBSOCKET;
       return websocketConnect(host, port, mux, ssl, timeout_s);

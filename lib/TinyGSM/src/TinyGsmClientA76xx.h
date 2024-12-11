@@ -241,7 +241,7 @@ class TinyGsmA76xx : public TinyGsmModem<TinyGsmA76xx<modemType>>,
     int res = thisModem().waitResponse(GF("+NETOPEN: 0"),
                                        GF("+IP ERROR: Network is already opened"));
     if (res == 2) {
-      DBG("> Network has open......");
+      // DBG("> Network has open......");
       thisModem().waitResponse();
     }
     if (res != 1 && res != 2) { return false; }
