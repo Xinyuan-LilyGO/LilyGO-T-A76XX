@@ -53,7 +53,7 @@
 <!-- * ~~[SIM7670G B02](https://drive.google.com/file/d/1-63xiw4TbGwHi3rQDzJpPKwp2SDNPXC1/view?usp=sharing) Known HTTP 715 Errors Don't use this version~~  -->
 * [SIM7670G B03](https://drive.google.com/file/d/1bBrze2eDtrjEuJ_2yiufSo87eIk_mYkE/view?usp=sharing) <!-- 20241008 Update Fixed  HTTP 715 error-->
 * [SIM7670G B04](https://drive.google.com/file/d/1-akwKQJttLbtLD48ApagusfBvS9ixZ4F/view?usp=sharing)
-* [SIM7670G B05](https://drive.google.com/file/d/1-akwKQJttLbtLD48ApagusfBvS9ixZ4F/view?usp=sharing) <!-- 20241206 Fixed MQTTS error https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/183 , HTTPS MQTTS FIXED -->
+* [SIM7670G B05](https://drive.google.com/file/d/10VvMNzgKhAX25lHSIGHnD3ip7kWjFl0g/view?usp=sharing) <!-- 20241206 Fixed MQTTS error https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/183 , HTTPS MQTTS FIXED -->
 
 ------------------------
 
