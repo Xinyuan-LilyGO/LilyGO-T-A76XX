@@ -28,6 +28,7 @@
 #include "TinyGsmNTP.tpp"
 #include "TinyGsmMqttA76xx.h"
 #include "TinyGsmHttpsA76xx.h"
+#include "TinyGsmGPS_EX.tpp"
 
 #define GSM_NL "\r\n"
 static const char GSM_OK[] TINY_GSM_PROGMEM    = "OK" GSM_NL;
@@ -60,7 +61,7 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
                        public TinyGsmTemperature<TinyGsmSim7672>,
                        public TinyGsmCalling<TinyGsmSim7672>,
                        public TinyGsmMqttA76xx<TinyGsmSim7672, TINY_GSM_MQTT_CLI_COUNT>,
-                       public TinyGsmHttpsA76xx<TinyGsmSim7672>
+                       public TinyGsmGPSEx<TinyGsmSim7672> 
 {
   friend class TinyGsmModem<TinyGsmSim7672>;
   friend class TinyGsmGPRS<TinyGsmSim7672>;
@@ -75,6 +76,7 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
   friend class TinyGsmCalling<TinyGsmSim7672>;
   friend class TinyGsmMqttA76xx<TinyGsmSim7672, TINY_GSM_MQTT_CLI_COUNT>;
   friend class TinyGsmHttpsA76xx<TinyGsmSim7672>;
+  friend class TinyGsmGPSEx<TinyGsmSim7672>;
 
 
   /*
@@ -544,6 +546,83 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
     return res;
   }
 
+  bool getGPS_ExImpl(GPSInfo& info) {
+    float lat = 0;
+    float lon = 0;
+    // +CGNSSINFO:[<mode>],
+    // [<GPS-SVs>],[BEIDOU-SVs],[<GLONASS-SVs>],[<GALILEO-SVs>],
+    // [<lat>],[<N/S>],[<log>],[<E/W>],[<date>],[<UTC-time>],[<alt>],[<speed>],[<course>],[<PDOP>],[HDOP],[VDOP]
+    sendAT(GF("+CGNSSINFO"));
+    if (waitResponse(GF(GSM_NL "+CGNSSINFO: ")) != 1) { return false; }
+
+    info.isFix = streamGetIntBefore(',');  // mode 2=2D Fix or 3=3DFix
+    if (info.isFix == 2 || info.isFix == 3) {
+      int16_t ret = -9999;
+      // GPS-SVs      satellite valid numbers
+      ret                    = streamGetIntBefore(',');
+      info.gps_satellite_num = ret != -9999 ? ret : 0;
+      // BEIDOU-SVs   satellite valid numbers
+      ret                       = streamGetIntBefore(',');
+      info.beidou_satellite_num = ret != -9999 ? ret : 0;
+      // GLONASS-SVs  satellite valid numbers
+      ret                        = streamGetIntBefore(',');
+      info.glonass_satellite_num = ret != -9999 ? ret : 0;
+      // GALILEO-SVs  satellite valid numbers
+      ret                        = streamGetIntBefore(',');
+      info.galileo_satellite_num = ret != -9999 ? ret : 0;
+      // Latitude in ddmm.mmmmmm
+      lat = streamGetFloatBefore(',');
+      // N/S Indicator, N=north or S=south
+      info.NS_indicator = stream.read();
+      streamSkipUntil(',');
+      // Longitude in ddmm.mmmmmm
+      lon = streamGetFloatBefore(',');
+      // E/W Indicator, E=east or W=west
+      info.EW_indicator = stream.read();
+      streamSkipUntil(',');
+      // Date. Output format is ddmmyy
+      // Two digit day
+      info.day = streamGetIntLength(2);
+      // Two digit month
+      info.month = streamGetIntLength(2);
+      // Two digit year
+      info.year = streamGetIntBefore(',');
+      // UTC Time. Output format is hhmmss.s
+      // Two digit hour
+      info.hour = streamGetIntLength(2);
+      // Two digit minute
+      info.minute = streamGetIntLength(2);
+      // 4 digit second with subseconds
+      float secondWithSS = streamGetFloatBefore(',');
+      info.second        = static_cast<int>(secondWithSS);
+      // MSL Altitude. Unit is meters
+      info.altitude = streamGetFloatBefore(',');
+      // Speed Over Ground. Unit is knots.
+      info.speed = streamGetFloatBefore(',');
+      // Course Over Ground. Degrees.
+      info.course = streamSkipUntil(',');
+      // After set, will report GPS every x seconds
+      streamSkipUntil(',');
+      // Position Dilution Of Precision
+      float pdop = streamGetFloatBefore(',');
+      info.PDOP  = pdop != -9999.0F ? pdop : 0;
+      // Horizontal Dilution Of Precision
+      float hdop = streamGetFloatBefore(',');
+      info.HDOP  = hdop != -9999.0F ? hdop : 0;
+      // Vertical Dilution Of Precision
+      float vdop = streamGetFloatBefore(',');
+      info.VDOP  = vdop != -9999.0F ? vdop : 0;
+      streamSkipUntil('\n');
+      waitResponse();
+      info.latitude  = (lat) * (info.NS_indicator == 'N' ? 1 : -1);
+      info.longitude = (lon) * (info.EW_indicator == 'E' ? 1 : -1);
+      if (info.year < 2000) { info.year += 2000; }
+      return true;
+    }
+
+    waitResponse();
+    return false;
+  }
  
 
   // get GPS informations
@@ -640,6 +719,15 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
     return waitResponse(1000L) == 1;
   }
 
+  /*
+  * Model: SIM7670G
+  * 1  -  GPS
+  * 3  -  GPS + GLONASS
+  * 5  -  GPS + GALILEO
+  * 9  -  GPS + BDS
+  * 13 -  GPS + GALILEO + BDS
+  * 15 -  GPS + GLONASS + GALILEO + BDS
+  * */
   bool setGPSModeImpl(uint8_t mode){
       sendAT("+CGNSSMODE=",mode);
       return waitResponse(1000L) == 1;
