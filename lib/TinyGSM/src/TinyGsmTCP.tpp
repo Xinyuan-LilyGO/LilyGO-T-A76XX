@@ -16,8 +16,14 @@
 #include "TinyGsmFifo.h"
 
 #if !defined(TINY_GSM_RX_BUFFER)
+#if defined(ARDUINO_ARCH_ESP32) || defined(ESP32)
+#define TINY_GSM_RX_BUFFER 2048
+#else
 #define TINY_GSM_RX_BUFFER 64
 #endif
+#endif
+
+enum GsmClientConnType { TINYGSM_TCP, TINYGSM_SSL, TINYGSM_WEBSOCKET };
 
 // Because of the ordering of resolution of overrides in templates, these need
 // to be written out every time.  This macro is to shorten that.
@@ -32,13 +38,13 @@
     return connect(ip, port, 75);                                     \
   }
 
-// // For modules that do not store incoming data in any sort of buffer
+// For modules that do not store incoming data in any sort of buffer
 // #define TINY_GSM_NO_MODEM_BUFFER
-// // Data is stored in a buffer, but we can only read from the buffer,
-// // not check how much data is stored in it
+// Data is stored in a buffer, but we can only read from the buffer,
+// not check how much data is stored in it
 // #define TINY_GSM_BUFFER_READ_NO_CHECK
-// // Data is stored in a buffer and we can both read and check the size
-// // of the buffer
+// Data is stored in a buffer and we can both read and check the size
+// of the buffer
 // #define TINY_GSM_BUFFER_READ_AND_CHECK_SIZE
 
 template <class modemType, uint8_t muxCount>
@@ -189,8 +195,7 @@ class TinyGsmTCP {
         } /* TODO: Read directly into user buffer? */
         at->maintain();
         if (sock_available > 0) {
-          int n = at->modemRead(TinyGsmMin((uint16_t)rx.free(), sock_available),
-                                mux);
+          int n = at->modemRead(TinyGsmMin((uint16_t)rx.free(), sock_available), mux);
           if (n == 0) break;
         } else {
           break;
@@ -221,8 +226,7 @@ class TinyGsmTCP {
         // TODO(vshymanskyy): Read directly into user buffer?
         at->maintain();
         if (sock_available > 0) {
-          int n = at->modemRead(TinyGsmMin((uint16_t)rx.free(), sock_available),
-                                mux);
+          int n = at->modemRead(TinyGsmMin((uint16_t)rx.free(), sock_available), mux);
           if (n == 0) break;
         } else {
           break;
@@ -241,9 +245,9 @@ class TinyGsmTCP {
       return -1;
     }
 
-	int peek() override {
-		return (uint8_t)rx.peek();
-	}
+    int peek() override {
+      return (uint8_t)rx.peek();
+    }
 
     void flush() override {
       at->stream.flush();
@@ -286,8 +290,7 @@ class TinyGsmTCP {
     // Doing it this way allows the external mcu to find and get all of the
     // data that it wants from the socket even if it was closed externally.
     inline void dumpModemBuffer(uint32_t maxWaitMs) {
-#if defined TINY_GSM_BUFFER_READ_AND_CHECK_SIZE || \
-    defined TINY_GSM_BUFFER_READ_NO_CHECK
+#if defined TINY_GSM_BUFFER_READ_AND_CHECK_SIZE || defined TINY_GSM_BUFFER_READ_NO_CHECK
       TINY_GSM_YIELD();
       uint32_t startMillis = millis();
       while (sock_available > 0 && (millis() - startMillis < maxWaitMs)) {
@@ -330,9 +333,7 @@ class TinyGsmTCP {
         sock->sock_available = thisModem().modemGetAvailable(mux);
       }
     }
-    while (thisModem().stream.available()) {
-      thisModem().waitResponse(15, NULL, NULL);
-    }
+    while (thisModem().stream.available()) { thisModem().waitResponse(15, NULL, NULL); }
 
 #elif defined TINY_GSM_NO_MODEM_BUFFER || defined TINY_GSM_BUFFER_READ_NO_CHECK
     // Just listen for any URC's

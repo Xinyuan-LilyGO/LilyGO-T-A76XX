@@ -120,7 +120,7 @@ public:
         return true;
     }
 
-    int https_get(size_t *bodyLenght = NULL)
+    int https_get(size_t *bodyLength = NULL)
     {
         thisModem().sendAT("+HTTPACTION=0");
         if (thisModem().waitResponse(3000) != 1) {
@@ -129,12 +129,12 @@ public:
         if (thisModem().waitResponse(60000UL, "+HTTPACTION: ") == 1) {
             int action = thisModem().streamGetIntBefore(',');
             int status = thisModem().streamGetIntBefore(',');
-            size_t lenght = thisModem().streamGetLongLongBefore('\r');
+            size_t length = thisModem().streamGetLongLongBefore('\r');
             DBG("action:"); DBG(action);
             DBG("status:"); DBG(status);
-            DBG("lenght:"); DBG(lenght);
-            if (bodyLenght) {
-                *bodyLenght = lenght;
+            DBG("length:"); DBG(length);
+            if (bodyLength) {
+                *bodyLength = length;
             }
             return status;
         }
@@ -147,20 +147,20 @@ public:
         if (thisModem().waitResponse(30000UL, "+HTTPHEAD: ") != 1) {
             return "";
         }
-        int lenght = thisModem().streamGetIntBefore('\n');
-        if (lenght == -9999 || lenght == 0) {
+        int length = thisModem().streamGetIntBefore('\n');
+        if (length == -9999 || length == 0) {
             return "";
         }
         uint8_t *buffer = NULL;
-        buffer = (uint8_t *)TINY_GSM_MALLOC(lenght + 1);
+        buffer = (uint8_t *)TINY_GSM_MALLOC(length + 1);
         if (!buffer) {
             return "";
         }
-        if (thisModem().stream.readBytes(buffer, lenght ) != lenght) {
+        if (thisModem().stream.readBytes(buffer, length ) != length) {
             free(buffer);
             return "";
         }
-        buffer[lenght] = '\0';
+        buffer[length] = '\0';
         // wait ok
         thisModem().waitResponse();
         String header = String((const char *)buffer);
@@ -175,15 +175,15 @@ public:
             return 0;
         }
 
-        size_t lenght = https_get_size();
+        size_t length = https_get_size();
 
-        if (lenght == 0)return 0;
+        if (length == 0)return 0;
 
-        if (lenght > buffer_size) {
-            lenght = buffer_size;
+        if (length > buffer_size) {
+            length = buffer_size;
         }
 
-        thisModem().sendAT("+HTTPREAD=0,", lenght);
+        thisModem().sendAT("+HTTPREAD=0,", length);
         if (thisModem().waitResponse(3000) != 1) {
             return 0;
         }
@@ -192,7 +192,7 @@ public:
         }
         thisModem().streamGetIntBefore('\r');
         thisModem().streamGetIntBefore('\n');
-        return thisModem().stream.readBytes(buffer, lenght);
+        return thisModem().stream.readBytes(buffer, length);
     }
 
 
@@ -220,12 +220,12 @@ public:
                 free(buffer);
                 return "";
             }
-            int lenght = thisModem().streamGetIntBefore('\n');
-            if (thisModem().stream.readBytes(buffer + offset, lenght) != lenght) {
+            int length = thisModem().streamGetIntBefore('\n');
+            if (thisModem().stream.readBytes(buffer + offset, length) != length) {
                 free(buffer);
                 return "";
             }
-            offset += lenght;
+            offset += length;
         } while (total != offset);
         thisModem().waitResponse(5000UL, "+HTTPREAD: 0");
         buffer[total] = '\0';
@@ -240,9 +240,9 @@ public:
         if (thisModem().waitResponse(120000UL, "+HTTPREAD: LEN,") != 1) {
             return 0;
         }
-        size_t lenght = thisModem().streamGetLongLongBefore('\r');
+        size_t length = thisModem().streamGetLongLongBefore('\r');
         thisModem().stream.flush();
-        return lenght;
+        return length;
     }
 
     int https_post(uint8_t *payload, size_t size, uint32_t inputTimeout = 10000)
@@ -264,10 +264,10 @@ public:
         if (thisModem().waitResponse(60000UL, "+HTTPACTION:") == 1) {
             int action = thisModem().streamGetIntBefore(',');
             int status = thisModem().streamGetIntBefore(',');
-            int lenght = thisModem().streamGetIntBefore('\r');
+            int length = thisModem().streamGetIntBefore('\r');
             DBG("action:"); DBG(action);
             DBG("status:"); DBG(status);
-            DBG("lenght:"); DBG(lenght);
+            DBG("length:"); DBG(length);
             return status;
         }
         return -1;
@@ -301,10 +301,10 @@ public:
         if (thisModem().waitResponse(150000UL, "+HTTPPOSTFILE:") == 1) {
             int action = thisModem().streamGetIntBefore(',');
             int status = thisModem().streamGetIntBefore(',');
-            int lenght = thisModem().streamGetIntBefore('\r');
+            int length = thisModem().streamGetIntBefore('\r');
             DBG("action:"); DBG(action);
             DBG("status:"); DBG(status);
-            DBG("lenght:"); DBG(lenght);
+            DBG("length:"); DBG(length);
             return status;
         }
         return -1;

@@ -299,7 +299,7 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
     return res;
   }
 
-  bool enableNetwork(){
+  bool setNetworkActive(){
     sendAT(GF("+NETOPEN"));  
     int res = waitResponse(GF("+NETOPEN: 0"),GF("+IP ERROR: Network is already opened")); 
     if (res != 1 && res != 2){
@@ -308,16 +308,23 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
     return true;
   }
 
-  bool disableNetwork(){
+  bool setNetworkDeactivate(){
     sendAT(GF("+NETCLOSE"));  
     if (waitResponse() != 1){
       return false;
     }
     int res = waitResponse(GF("+NETCLOSE: 0"),GF("+NETCLOSE: 2")); 
-    if (res != 1 || res != 2){
+    if (res != 1 && res != 2){
       return false;
     }
     return true;
+  }
+
+  bool getNetworkActive() {
+    sendAT(GF("+NETOPEN?"));
+    int res = waitResponse(GF("+NETOPEN: 1"));
+    if (res == 1) { return true; }
+    return false;
   }
 
   /*

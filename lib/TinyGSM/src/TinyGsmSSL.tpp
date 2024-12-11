@@ -20,11 +20,20 @@ class TinyGsmSSL {
   /*
    * SSL functions
    */
-  bool addCertificate(const char* filename) {
-    return thisModem().addCertificateImpl(filename);
+  bool deleteCertificate(String filename) {
+    return thisModem().deleteCertificateImpl(filename.c_str());
   }
-  bool deleteCertificate() {
-    return thisModem().deleteCertificateImpl();
+
+  bool deleteCertificate(const char* filename) {
+    return thisModem().deleteCertificateImpl(filename);
+  }
+
+  bool downloadCertificate(const char* filename, const char* buffer) {
+    return thisModem().downloadCertificateImpl(String(filename), buffer);
+  }
+
+  bool downloadCertificate(String filename, const char* buffer) {
+    return thisModem().downloadCertificateImpl(filename, buffer);
   }
 
   /*
@@ -64,8 +73,9 @@ class TinyGsmSSL {
    * SSL functions
    */
  protected:
-  bool addCertificateImpl(const char* filename) TINY_GSM_ATTR_NOT_IMPLEMENTED;
-  bool deleteCertificateImpl() TINY_GSM_ATTR_NOT_IMPLEMENTED;
+  bool deleteCertificateImpl(const char* filename) TINY_GSM_ATTR_NOT_IMPLEMENTED;
+  bool downloadCertificateImpl(String      filename,
+                               const char* buffer) TINY_GSM_ATTR_NOT_IMPLEMENTED;
 };
 
 #endif  // SRC_TINYGSMSSL_H_
