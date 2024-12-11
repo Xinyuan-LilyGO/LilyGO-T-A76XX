@@ -19,11 +19,11 @@ jobs:
           [
             T-A7670X,
             T-Call-A7670X-V1-0,
-            T-Call-A7670X-V1-1,
             T-SIM7672G,
             T-A7608X,
             T-A7608X-S3,
-            T-A7608X-DC-S3,
+            # T-Call-A7670X-V1-1,
+            # T-A7608X-DC-S3,
           ]
         examples:
           - examples/ATdebug
@@ -61,9 +61,9 @@ jobs:
           - examples/SendLocationFromSMS
           - examples/SendLocationFromSMS_Use_TinyGPS
           - examples/PowerMonitoring
-          # - examples/GPS_BuiltInEx
-          # - examples/TextToSpeech
-          # - examples/ULP_Monitor
+          - examples/GPS_BuiltInEx
+          - examples/TextToSpeech
+          - examples/ULP_Monitor
 
     steps:
       - uses: actions/checkout@v3
