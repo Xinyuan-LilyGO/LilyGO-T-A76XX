@@ -51,12 +51,15 @@
 | Blynk_Console                   | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
 | GPSShield                       | ✅ (Only T-A7670G) | ❌   (Can't run)    | ❌   (Can't run)    | ❌   (Can't run) | ❌   (Can't run)   | ❌   (Can't run) |
 | GPS_BuiltIn                     | ✅ (Except A7670G) | ✅(Except A7670G)   | ✅                  | ✅               | ✅                 | ✅               |
+| GPS_BuiltInEx                   | ✅ (Except A7670G) | ✅(Except A7670G)   | ✅                  | ✅               | ✅                 | ✅               |
 | GPS_NMEA_Parse                  | ✅ (Except A7670G) | ✅(Except A7670G)   | ✅                  | ✅               | ✅                 | ✅               |
 | GPS_NMEA_Output                 | ✅ (Except A7670G) | ✅(Except A7670G)   | ✅                  | ✅               | ✅                 | ✅               |
 | GPS_Acceleration                | ✅ (Except A7670G) | ✅(Except A7670G)   | ❌   (Can't run)    | ✅               | ✅                 | ✅               |
 | HttpClient                      | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
 | HttpsClient                     | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
 | MqttClient                      | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| TextToSpeech                    | ✅                 | ✅                  | ❌   (Can't run)    | ✅               | ✅                 | ✅               |
+| SecureClient                    | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
 | ReadBattery                     | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ❌   (Can't run)   | ✅               |
 | DeepSleep                       | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
 | ModemSleep                      | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
@@ -87,6 +90,7 @@
 | SimHatCurrentSensor[3]          | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
 | SimHatOneWireSensor[3]          | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
 | SimHatRelay[3]                  | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
+| ULP_Monitor                     | ✅                 | ✅                  | ❌                  | ✅               | ✅                 | ❌               |
 
 - HP303BSensor,SPIExample it only demonstrates how to define and use SPI and I2C. Please confirm the pin connection and IO definition before use.
 - [1] T-A7608-ESP32 Conflict with Solar ADC
