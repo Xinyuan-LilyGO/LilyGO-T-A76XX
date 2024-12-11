@@ -157,7 +157,7 @@ void setup()
         Serial.println(ueInfo);
     }
 
-    if (!modem.enableNetwork()) {
+    if (!modem.setNetworkActive()) {
         Serial.println("Enable network failed!");
     }
 
