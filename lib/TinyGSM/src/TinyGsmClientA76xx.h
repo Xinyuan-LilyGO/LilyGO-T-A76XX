@@ -265,6 +265,45 @@ class TinyGsmA76xx : public TinyGsmModem<TinyGsmA76xx<modemType>>,
 
 
   /*
+   * Return code:
+   *     -1 ping failed
+   *     1 Ping success
+   *     2 Ping time out
+   *     3 Ping result
+   * * */
+  int ping(const char* url, String& resolved_ip_addr, uint32_t& rep_data_packet_size,
+           uint32_t& tripTime, uint8_t& TTL) {
+    uint8_t  dest_addr_type   = 1;
+    uint8_t  num_pings        = 1;
+    uint8_t  data_packet_size = 64;
+    uint32_t interval_time    = 1000;
+    uint32_t wait_time        = 10000;
+    uint8_t  ttl              = 0xFF;
+    int      result_type      = -1;
+
+    thisModem().sendAT("+CPING=\"", url, "\"", ",", dest_addr_type, ",", num_pings, ",",
+                       data_packet_size, ",", interval_time, ",", wait_time, ",", ttl);
+
+    if (thisModem().waitResponse() != 1) { return -1; }
+    if (thisModem().waitResponse(10000UL, "+CPING: ") == 1) {
+      result_type = thisModem().streamGetIntBefore(',');
+      switch (result_type) {
+        case 1:
+          resolved_ip_addr     = stream.readStringUntil(',');
+          rep_data_packet_size = thisModem().streamGetIntBefore(',');
+          tripTime             = thisModem().streamGetIntBefore(',');
+          TTL                  = thisModem().streamGetIntBefore('\n');
+          break;
+        case 2: break;
+        case 3: break;
+        default: break;
+      }
+    }
+    return result_type;
+  }
+
+
+  /*
    * GPRS functions
    */
  protected:
