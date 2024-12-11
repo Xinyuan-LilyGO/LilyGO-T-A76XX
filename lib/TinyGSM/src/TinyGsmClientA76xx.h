@@ -24,6 +24,7 @@
 #include "TinyGsmTemperature.tpp"
 #include "TinyGsmTextToSpeech.tpp"
 #include "TinyGsmGPS_EX.tpp"
+#include "TinyGsmCalling.tpp"
 
 #define GSM_NL "\r\n"
 static const char GSM_OK[] TINY_GSM_PROGMEM    = "OK" GSM_NL;
@@ -61,6 +62,7 @@ class TinyGsmA76xx : public TinyGsmModem<TinyGsmA76xx<modemType>>,
                      public TinyGsmTemperature<TinyGsmA76xx<modemType>>,
                      public TinyGsmTextToSpeech<TinyGsmA76xx<modemType>>,
                      public TinyGsmGSMLocation<TinyGsmA76xx<modemType>>,
+                     public TinyGsmCalling<TinyGsmA76xx<modemType>>,
                      public TinyGsmGPSEx<TinyGsmA76xx<modemType>> {
   friend class TinyGsmModem<TinyGsmA76xx<modemType>>;
   friend class TinyGsmGPRS<TinyGsmA76xx<modemType>>;
@@ -73,6 +75,7 @@ class TinyGsmA76xx : public TinyGsmModem<TinyGsmA76xx<modemType>>,
   friend class TinyGsmTemperature<TinyGsmA76xx<modemType>>;
   friend class TinyGsmTextToSpeech<TinyGsmA76xx<modemType>>;
   friend class TinyGsmGPSEx<TinyGsmA76xx<modemType>>;
+  friend class TinyGsmCalling<TinyGsmA76xx<modemType>>;
   /*
    * CRTP Helper
    */
