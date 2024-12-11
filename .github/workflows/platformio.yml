@@ -61,6 +61,9 @@ jobs:
           - examples/SendLocationFromSMS
           - examples/SendLocationFromSMS_Use_TinyGPS
           - examples/PowerMonitoring
+          - examples/GPS_BuiltInEx
+          - examples/TextToSpeech
+          - examples/ULP_Monitor
 
     steps:
       - uses: actions/checkout@v3
