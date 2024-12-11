@@ -748,7 +748,7 @@ class TinyGsmA76xx : public TinyGsmModem<TinyGsmA76xx<modemType>>,
    */
  protected:
   bool textToSpeechImpl(String& text, uint8_t mode) {
-    thisModem().sendAT(GF("+CTTS="), mode, ',', text);
+    thisModem().sendAT(GF("+CTTS="), mode, ',', '"',text, '"');
     if (thisModem().waitResponse() != 1) { return false; }
     if (thisModem().waitResponse(10000UL, GF("+CTTS: 0")) != 1) { return false; }
     return true;
