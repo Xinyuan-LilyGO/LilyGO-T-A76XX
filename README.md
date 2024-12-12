@@ -256,7 +256,7 @@
    - [T-A7608X-V2 Schematic](./schematic/A7608-ESP32-V2.pdf)
    - [T-A7670X Schematic](./schematic/T-A7670X-V1.1.pdf)
    - [T-Call-A7670 Schematic](./schematic/T-Call-A7670-V1.0.pdf)
-   - [T-SIM7672-S3 Schematic](./schematic/T-SIM7672-S3-V1.0.pdf)
+   - [T-SIM7672-S3 Schematic](./schematic/T-SIM767X-S3-V1.0.pdf)
 5. Dimensions
    - [T-A7608-S3 DWG](./dimensions/T-A7608-S3-V1.0.dwg)
    - [T-A7608X-DC-S3 DWG](./dimensions/T-A7608X-DC-S3-V1.0.dwg)
