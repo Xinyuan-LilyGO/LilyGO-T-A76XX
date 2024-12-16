@@ -14,10 +14,18 @@
 
 ## Firmware
 
-### A7670G-LLSE No GPS
+### A7670G-LLSE No GPS 
 
 <!-- * [A7670G B18](https://drive.google.com/file/d/10BxF-O2aPQ9vB5N97VT3bxPguURNoMvF/view?usp=sharing) Known HTTP 715 Errors Don't use this version- -->
-* [A7670G A124B01](https://drive.google.com/file/d/1-UOq_7TxU8aNAY4KKuXtnoRt0UZwipSQ/view?usp=sharing)
+* [A7670G-LLSE A124B01](https://drive.google.com/file/d/1-UOq_7TxU8aNAY4KKuXtnoRt0UZwipSQ/view?usp=sharing)
+
+<!-- (LTE-FDD B1/B2/B3/B4/B5/B7/B8/B12*/B13*LB18*/B19*/B20/B25*/B26*/B28/B66/ LTE-TDD B34/B38/B39/B40/B41 GSM/GPRS/EDGE 850/900/1800/1900 MHz) -->
+
+### A7670G-LABE No GPS
+
+* [A7670G-LABE A110B06](https://drive.google.com/file/d/10fsorFI8SuTlcffufgphpYbt2JjUpqtg/view?usp=sharing)
+
+<!-- (LTE-FDD B1/B2/B3/B4/B5/B7/B8/B20B28/B66/ LTE-TDD B34/B38/B39/B40/B41 GSM/GPRS/EDGE 850/900/1800/1900 MHz) -->
 
 ------------------------
 
