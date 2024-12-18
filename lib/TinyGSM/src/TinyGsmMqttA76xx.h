@@ -270,12 +270,14 @@ public:
         return true;
     }
 
-    bool mqtt_subscribe(uint8_t clientIndex, const char *topic, uint8_t qos = 0)
+bool mqtt_subscribe(uint8_t clientIndex, const char *topic, uint8_t qos = 0, uint8_t dup = 0)
     {
         if (clientIndex > muxCount) {
             return false;
         }
-        thisModem().sendAT("+CMQTTSUBTOPIC=", clientIndex, ',', strlen(topic), ',', qos);
+        // Subscribe a message to server
+        // +CMQTTSUB: (0-1),(1-1024),(0-2),(0-1)
+        thisModem().sendAT("+CMQTTSUB=", clientIndex, ',', strlen(topic), ',', qos, ',', dup);
         if (thisModem().waitResponse(10000UL, ">") != 1) {
             return false;
         }
@@ -283,12 +285,6 @@ public:
         thisModem().stream.write(topic);
         thisModem().stream.println();
         // Wait return OK
-        if (thisModem().waitResponse(10000UL) != 1) {
-            return false;
-        }
-        // Subscribe a message to server
-        // +CMQTTSUB: (0-1),(1-1024),(0-2),(0-1)
-        thisModem().sendAT("+CMQTTSUB=", clientIndex);
         if (thisModem().waitResponse(10000UL) != 1) {
             return false;
         }
