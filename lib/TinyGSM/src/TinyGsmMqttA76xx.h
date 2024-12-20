@@ -270,7 +270,7 @@ public:
         return true;
     }
 
-bool mqtt_subscribe(uint8_t clientIndex, const char *topic, uint8_t qos = 0, uint8_t dup = 0)
+    bool mqtt_subscribe(uint8_t clientIndex, const char *topic, uint8_t qos = 0, uint8_t dup = 0)
     {
         if (clientIndex > muxCount) {
             return false;
