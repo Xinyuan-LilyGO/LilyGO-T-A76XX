@@ -23,6 +23,7 @@
 
 ### A7670G-LABE No GPS
 
+* [A7670G-LABE A069B01](https://drive.google.com/file/d/10oSTTqhw7ZiiZ_LiqAb3WYV3LXwbpKtV/view?usp=sharing)
 * [A7670G-LABE A110B06](https://drive.google.com/file/d/10fsorFI8SuTlcffufgphpYbt2JjUpqtg/view?usp=sharing)
 
 <!-- (LTE-FDD B1/B2/B3/B4/B5/B7/B8/B20B28/B66/ LTE-TDD B34/B38/B39/B40/B41 GSM/GPRS/EDGE 850/900/1800/1900 MHz) -->
