@@ -24,6 +24,17 @@ Before submitting any issue, please make sure you have searched for related issu
 
 Modem: <!-- Model, variant, firmware version, e.g. T-A7670-->
 
+[ ] T-A7670X-ESP32
+[ ] T-Call-A7670X-V1-0-ESP32
+[ ] T-SIM7672G-ESP32S3
+[ ] T-A7608X-ESP32
+[ ] T-A7608X-S3-ESP32
+[ ] T-PCIE-A7670X-ESP32
+
+Examples: <!-- Which sample program? e.g. examples/GPS_BuiltIn -->
+
+
+
 ### AT+SIMCOMATI command returns  
 
 String: <!-- Use the ATDebug sketch, after booting the modem, send the characters returned by `AT+SIMCOMATI`: -->
