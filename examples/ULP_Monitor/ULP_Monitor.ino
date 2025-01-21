@@ -127,6 +127,10 @@ void setup()
         adc_result = RTC_SLOW_MEM[1] & 0xFFF;
         Serial.print("adc result = ");
         Serial.println(adc_result);
+        Serial.println("===========================");
+    	for (int i = 0; i <= 10; i++) {
+        	Serial.printf("[%02d] %4i\n", i, RTC_SLOW_MEM[i] & 0xFFF);  // Only 12 LS bits are used for ADC conversion and (at least with some ESP32 boards) the bits are inverted
+    	}
         break;
     default:
         Serial.printf("Wakeup was not caused by deep sleep: %d\n", wakeup_reason);
@@ -145,15 +149,37 @@ void setup()
 
     // Run ULP program
     ESP_ERROR_CHECK(ulp_run(ULP_START_OFFSET));
+}
+
+void loop()
+{
+// Disable this code and debug to print the simulated value of the ulp conversion
+#if 1
+  	// read battery voltage before deep sleep
+    Serial.println("===========================");
+    for (int i = 0; i <= 10; i++) {
+        uint32_t battery_voltage = analogReadMilliVolts(BOARD_BAT_ADC_PIN);
+        battery_voltage *= 2;
+        Serial.printf("Battery:%umV\n", battery_voltage);
+        ++i;
+        delay(1000);
+    }
 
     Serial.println("Sleeping...");
 
     delay(1000);
 
-    // Disable this code and debug to print the simulated value of the ulp conversion
-#if 1
     // Set power domain keep open
     esp_sleep_pd_config(ESP_PD_DOMAIN_RTC_PERIPH, ESP_PD_OPTION_ON);
+
+    if (ADC_CH == 0) {
+    	// configure channel for ulp usage
+    	adc1_config_channel_atten(static_cast<adc1_channel_t>(ADC_PAD_INDEX), ADC_ATTEN_DB_11);
+    	adc1_config_width(ADC_WIDTH_BIT_12);
+    	// adc value before ULP enable, fixes reading issues in deep sleep
+    	adc1_get_raw(static_cast<adc1_channel_t>(ADC_PAD_INDEX));
+    	adc1_ulp_enable();
+    }
 
 #if SOC_PM_SUPPORT_RTC_SLOW_MEM_PD
     esp_sleep_pd_config(ESP_PD_DOMAIN_RTC_SLOW_MEM, ESP_PD_OPTION_ON);
@@ -164,14 +190,12 @@ void setup()
 
     // Entering sleep mode
     esp_deep_sleep_start();
-#endif
-}
 
-void loop()
-{
+#else
     Serial.println("===========================");
     for (int i = 0; i <= 10; i++) {
         Serial.printf("[%02d] %4i\n", i, RTC_SLOW_MEM[i] & 0xFFF);  // Only 12 LS bits are used for ADC conversion and (at least with some ESP32 boards) the bits are inverted
     }
     delay(1000);
+#endif
 }
