@@ -22,7 +22,11 @@ Before submitting any issue, please make sure you have searched for related issu
 
 ### What are you using?
 
-Modem: <!-- Model, variant, firmware version, e.g. T-A7670-->
+Modem: <!-- Model, variant, firmware version, e.g. T-A7670 -->
+
+<!-- This option must be filled in, otherwise no support can be provided -->
+<!-- This option must be filled in, otherwise no support can be provided -->
+<!-- This option must be filled in, otherwise no support can be provided -->
 
 [ ] T-A7670X-ESP32
 [ ] T-Call-A7670X-V1-0-ESP32
@@ -37,6 +41,9 @@ Examples: <!-- Which sample program? e.g. examples/GPS_BuiltIn -->
 
 ### AT+SIMCOMATI command returns  
 
+<!-- This option must be filled in, otherwise no support can be provided -->
+<!-- This option must be filled in, otherwise no support can be provided -->
+<!-- This option must be filled in, otherwise no support can be provided -->
 String: <!-- Use the ATDebug sketch, after booting the modem, send the characters returned by `AT+SIMCOMATI`: -->
 
 ### Scenario, steps to reproduce
