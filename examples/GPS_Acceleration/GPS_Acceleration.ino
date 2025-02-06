@@ -4,9 +4,8 @@
  * @license   MIT
  * @copyright Copyright (c) 2024  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2024-09-09
- * @note      
- *            GPS acceleration only supports A7670X/A7608X (excluding A7670G and other versions that do not support positioning). 
- *            SIM7670G does not support GPS acceleration function
+ * @note
+ *            GPS acceleration only supports A7670X/A7608X (excluding A7670G and other versions that do not support positioning).
  */
 #include "utilities.h"
 
@@ -34,9 +33,6 @@ TinyGsm modem(SerialAT);
 #endif
 
 
-#ifdef TINY_GSM_MODEM_SIM7672
-#error "SIM7670G is not support gps acceleration"
-#endif
 
 
 // It depends on the operator whether to set up an APN. If some operators do not set up an APN,
@@ -131,6 +127,7 @@ void setup()
         delay(1000);
     }
 
+#ifndef TINY_GSM_MODEM_SIM7672
     //SIM7672G Can't set network mode
     if (!modem.setNetworkMode(MODEM_NETWORK_AUTO)) {
         Serial.println("Set network mode failed!");
@@ -138,7 +135,7 @@ void setup()
     String mode = modem.getNetworkModes();
     Serial.print("Current network mode : ");
     Serial.println(mode);
-
+#endif
 
 #ifdef NETWORK_APN
     Serial.printf("Set network apn : %s\n", NETWORK_APN);
@@ -226,12 +223,12 @@ void setup()
     modem.setGPSBaud(115200);
 
 
-    // GPS acceleration only supports A7670X/A7608X (excluding A7670G and other versions that do not support positioning). 
+    // GPS acceleration only supports A7670X/A7608X (excluding A7670G and other versions that do not support positioning).
     // SIM7670G does not support GPS acceleration function
     Serial.println("GPS acceleration is enabled");
     if (!modem.enableAGPS()) {
         Serial.println(" failed !!!");
-    }else{
+    } else {
         Serial.println(" success!!!");
     }
 
