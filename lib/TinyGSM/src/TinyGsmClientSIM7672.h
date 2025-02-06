@@ -537,6 +537,15 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
     return true;
   }
 
+  bool enableAGPSImpl() {
+    sendAT(GF("+CGNSSPWR?"));
+    if (waitResponse("+CGNSSPWR: 1") != 1) { return false; }
+    // +CGNSSPWR:<GNSS_Power_status>
+    sendAT("+CAGPS");
+    if (waitResponse(30000UL, "+AGPS: success") != 1) { return false; }
+    return true;
+  }
+  
   // get the RAW GPS output
   String getGPSrawImpl() {
     sendAT(GF("+CGNSSINFO"));
