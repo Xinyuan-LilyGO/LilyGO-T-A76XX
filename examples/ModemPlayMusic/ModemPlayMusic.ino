@@ -74,6 +74,7 @@ void setup()
 
     // For detailed AT commands, please see datasheet/A76XX/A76XX_Series_AT_Command_Manual_V1.12.pdf
     // The total capacity of A7670 is 4MB and cannot exceed the available space.
+    // You need to connect the speaker to the board SPK+ ,SPK- to hear the sound, see images/speaker.jpg
     modem.sendAT("+FSMEM");
     if (modem.waitResponse("+FSMEM: C:(") != 1) {
         Serial.println("Failed to get memory size!"); return;
