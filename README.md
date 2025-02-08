@@ -60,6 +60,7 @@
 | HttpsClient                     | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
 | MqttClient                      | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
 | TextToSpeech                    | ✅                 | ✅                  | ❌   (Can't run)    | ✅               | ✅                 | ✅               |
+| ModemPlayMusic                  | ✅                 | ✅                  | ❌   (Can't run)    | ✅               | ✅                 | ✅               |
 | SecureClient                    | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
 | ReadBattery                     | ✅                 | ❌   (Can't run)    | ✅                  | ✅               | ❌   (Can't run)   | ✅               |
 | DeepSleep                       | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
