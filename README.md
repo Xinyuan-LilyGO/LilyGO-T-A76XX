@@ -36,16 +36,16 @@
 
 [1]: https://www.lilygo.cc/products/t-sim-a7670eZ
 [2]: https://www.lilygo.cc/products/t-call-v1-4
-<!-- [3]: https://www.lilygo.cc/products/t-call-v1-4 -->
+[3]: https://lilygo.cc/products/t-a7608e-h?variant=42860532433077
 [4]: https://www.lilygo.cc/products/t-a7608e-h
-<!-- [5]: https://www.lilygo.cc -->
+[5]: https://lilygo.cc/products/t-a7608e-h
 [6]: https://lilygo.cc/products/t-a7608e-h?variant=43932699033781
 [7]: https://www.lilygo.cc/products/t-sim-7670g-s3
 [8]: https://lilygo.cc/products/a-t-pcie?variant=42335922094261
 
 ## 2️⃣Examples
 
-| Example                         | [T-A7670X][1]     | [T-Call-A7670X][2] | [T-SIM767XG-S3][6] | [T-A7608/V2][3] | [T-PCIE-A767X][8] | [T-A7608-S3][5] |
+| Example                         | [T-A7670X][1]     | [T-Call-A7670X][2] | [T-SIM767XG-S3][6] | [T-A7608][3]    | [T-PCIE-A767X][8] | [T-A7608-S3][5] |
 | ------------------------------- | ----------------- | ------------------ | ------------------ | --------------- | ----------------- | --------------- |
 | ATdebug                         | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
 | Blynk_Console                   | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
@@ -171,7 +171,7 @@
 
 - **GPS not working?**
    1. See [issue#137](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/137)
-   
+
 - **VOLTE FAQ**
   1. See [issues/115](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/115)
 
@@ -182,6 +182,11 @@
    4. Release the RST button
    5. Release the BOOT button (If there is no BOOT button, disconnect IO0 from GND.)
    6. Upload sketch
+- **If the above method still fails to upload the sketch, please follow the method below to test whether the USB2TTL communication is normal.**
+  1. Connect USB-C to PC
+  2. Open the serial monitor and adjust the baud rate to 115200
+  3. Press the RST button on the board to restart
+  4. If you can see the startup information, it means that the USB2TTL communication is normal. If nothing is displayed in the serial monitor, it may be that the USB2TTL bridge is damaged.
 - **Upgrade modem firmware**
    1. [T-A76XX Upgrade docs](./docs/update_fw.md) / [Video](https://youtu.be/AZkm-Z7mKn8)
    2. [SIM7670G Upgrade issue](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/122) / [Video](https://www.youtube.com/watch?v=fAtrz_4DfVs)
