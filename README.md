@@ -253,11 +253,11 @@
    - [A76xx Sleep Application](./datasheet/A76XX/A76XX%20Series_Sleep%20Mode_Application%20Note_V1.02.pdf)
    - [A76xx Hardware Design manual](./datasheet/A76XX/A7670C_R2_硬件设计手册_V1.06.pdf)
    - [A76xx TCPIP Application](./datasheet/A76XX/A76XX%20Series_TCPIP_Application%20Note_V1.02.pdf)
-3. SIM767XG-Datasheet
-   - [SIM7672 Hardware Design manual](./datasheet/SIM767X/SIM7672X_Series_Hardware_Design_V1.02.pdf)
-   - [SIM7672 AT Command](./datasheet/SIM767X/SIM767XX%20Series_AT_Command_Manual_V1.06.pdf)
-   - [SIM7672 CE Certificate](./datasheet/SIM767X/SIM7670G_CE%20Certificate_2023.pdf)
-   - [SIM7672 Series CMUX USER GUIDE](./datasheet/SIM767X/SIM767XX%20Series_CMUX_USER_GUIDE_V1.00.pdf)
+3. SIM7670G-Datasheet
+   - [SIM7670G Hardware Design manual](./datasheet/SIM767X/SIM7672X_Series_Hardware_Design_V1.02.pdf)
+   - [SIM7670G AT Command](./datasheet/SIM767X/SIM767XX%20Series_AT_Command_Manual_V1.06.pdf)
+   - [SIM7670G CE Certificate](./datasheet/SIM767X/SIM7670G_CE%20Certificate_2023.pdf)
+   - [SIM7670G Series CMUX USER GUIDE](./datasheet/SIM767X/SIM767XX%20Series_CMUX_USER_GUIDE_V1.00.pdf)
 4. Schematic
    - [T-A7608-S3 Schematic](./schematic/T-A7608-S3-V1.0.pdf)
    - [T-A7608X-DC-S3 Schematic](./schematic/T-A7608X-DC-S3-V1.0.pdf)
@@ -265,14 +265,14 @@
    - [T-A7608X-V2 Schematic](./schematic/A7608-ESP32-V2.pdf)
    - [T-A7670X Schematic](./schematic/T-A7670X-V1.1.pdf)
    - [T-Call-A7670 Schematic](./schematic/T-Call-A7670-V1.0.pdf)
-   - [T-SIM7672-S3 Schematic](./schematic/T-SIM767X-S3-V1.0.pdf)
+   - [T-SIM7670G-S3 Schematic](./schematic/T-SIM7670G-S3-V1.0.pdf)
 5. Dimensions
    - [T-A7608-S3 DWG](./dimensions/T-A7608-S3-V1.0.dwg)
    - [T-A7608X-DC-S3 DWG](./dimensions/T-A7608X-DC-S3-V1.0.dwg)
    - [T-A7608X DWG](./dimensions/T-A7608X-V1.0.dwg)
    - [T-A7670X DWG](./dimensions/T-A7670X-V1.1.dwg)
    - [T-Call-A7670 DWG](./dimensions/T-Call-A7670-V1.0.dwg)
-   - [T-SIM7672-S3 DWG](./dimensions/T-SIM7672-S3-V1.0.dwg)
+   - [T-SIM7672-S3 DWG](./dimensions/T-SIM7670G-S3-V1.0.dwg)
 
 
 
