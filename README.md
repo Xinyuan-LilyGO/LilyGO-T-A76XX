@@ -93,6 +93,7 @@
 | SimHatOneWireSensor[3]          | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
 | SimHatRelay[3]                  | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
 | ULP_Monitor                     | ✅                 | ✅                  | ❌                  | ✅               | ✅                 | ❌               |
+| Traccar(Modern GPS Tracking)    | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
 
 - HP303BSensor,SPIExample it only demonstrates how to define and use SPI and I2C. Please confirm the pin connection and IO definition before use.
 - [1] T-A7608-ESP32 Conflict with Solar ADC
