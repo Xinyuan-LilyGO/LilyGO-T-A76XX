@@ -138,9 +138,11 @@
     | --------------------------------------------------------------- | ------------------------------------ |
     | ![esp32dev](images/esp32dev.jpg)                                | ![esp32s3dev](images/esp32s3dev.jpg) |
 6. `LilyGO-T-A76XX` folder -> `examples` -> `Choose the appropriate example from the list above`
-7. Open the corresponding board macro definition above [utilities.h](./examples/ATdebug/utilities.h)
+7. Open the corresponding board macro definition above [utilities.h](./examples/ATdebug/utilities.h) , For example, if you use LILYGO-A7670X, you need to change ` // #define LILYGO_T_A7670` to ` #define LILYGO_T_A7670`
+   ![](./images/board_select.jpg)
+
 8. Connect the board to the computer USB-C , Micro-USB is used for module firmware upgrade
-9. Select `Port`
+9.  Select `Port`
 10. Click `upload` , Wait for compilation and writing to complete
 11. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
 
