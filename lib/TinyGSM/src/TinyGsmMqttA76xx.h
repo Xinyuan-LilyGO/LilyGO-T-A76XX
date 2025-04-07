@@ -358,6 +358,9 @@ public:
         if (size == 0) {
             return false;
         }
+        if (size == this->bufferSize) {
+            return true;
+        }
         if (this->bufferSize == 0) {
             this->buffer = (uint8_t *)TINY_GSM_MALLOC(size);
         } else {
