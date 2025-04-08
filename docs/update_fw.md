@@ -14,7 +14,7 @@
 
 ## Firmware
 
-### A7670G-LLSE No GPS 
+### A7670G-LLSE No GPS
 
 <!-- * [A7670G B18](https://drive.google.com/file/d/10BxF-O2aPQ9vB5N97VT3bxPguURNoMvF/view?usp=sharing) Known HTTP 715 Errors Don't use this version- -->
 * [A7670G-LLSE A124B01](https://drive.google.com/file/d/1-UOq_7TxU8aNAY4KKuXtnoRt0UZwipSQ/view?usp=sharing)
@@ -54,6 +54,10 @@
 ### A7670SA-LASE No GPS
 
 * [A7670SA-LASE B19](https://drive.google.com/file/d/1-evoE-qTLzQEG3OrGdrq9SVuDxEVGHeQ/view?usp=sharing)
+
+### A7670SA-LASC No GPS
+
+* [A7670SA-LASC B01](https://drive.google.com/file/d/127FpmjV9TNFJcNEUK03X03sGpGGqFc-u/view?usp=sharing)
 
 ------------------------
 
