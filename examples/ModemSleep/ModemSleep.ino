@@ -122,7 +122,7 @@ void setup()
     while (modem.testAT()) {
         Serial.print("."); delay(500);
     }
-    Serial.println("Modem is not respone ,modem has sleep !");
+    Serial.println("Modem is not response ,modem has sleep !");
 
     delay(5000);
 
