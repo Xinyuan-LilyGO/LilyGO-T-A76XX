@@ -77,8 +77,10 @@ void setup()
 #endif
 
     // Set modem reset
+#ifdef MODEM_RESET_PIN
     pinMode(MODEM_RESET_PIN, OUTPUT);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+#endif
     // Turn on modem
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);

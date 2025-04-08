@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2024-01-11
- * @note      
+ * @note
  * * * Example is suitable for A7670X/A7608X/SIM7672 series
  * * Connect MQTT Broker as https://www.emqx.com/zh/mqtt/public-mqtt5-broker
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
@@ -26,12 +26,12 @@ TinyGsm modem(debugger);
 TinyGsm modem(SerialAT);
 #endif
 
-// It depends on the operator whether to set up an APN. If some operators do not set up an APN, 
+// It depends on the operator whether to set up an APN. If some operators do not set up an APN,
 // they will be rejected when registering for the network. You need to ask the local operator for the specific APN.
 // APNs from other operators are welcome to submit PRs for filling.
 // #define NETWORK_APN     "CHN-CT"             //CHN-CT: China Telecom
 
-// MQTT details 
+// MQTT details
 const char *broker = "broker.emqx.io";
 const uint16_t broker_port = 8883;
 const char *client_id = "A76XX";
@@ -99,10 +99,12 @@ void setup()
 #endif
 
     // Set modem reset pin ,reset modem
+#ifdef MODEM_RESET_PIN
     pinMode(MODEM_RESET_PIN, OUTPUT);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);
     digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL); delay(2600);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+#endif
 
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);

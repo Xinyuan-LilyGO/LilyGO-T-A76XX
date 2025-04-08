@@ -51,10 +51,12 @@ void setup()
 #endif
 
     // Set modem reset pin ,reset modem
+#ifdef MODEM_RESET_PIN
     pinMode(MODEM_RESET_PIN, OUTPUT);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);
     digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL); delay(2600);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+#endif
 
     // Turn on modem
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);

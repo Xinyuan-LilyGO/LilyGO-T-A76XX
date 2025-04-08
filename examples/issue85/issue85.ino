@@ -53,10 +53,12 @@ void setup()
     // Set modem reset pin ,reset modem
     // The module will also be started during reset.
     Serial.println("Set Reset Pin.");
+#ifdef MODEM_RESET_PIN
     pinMode(MODEM_RESET_PIN, OUTPUT);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);
     digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL); delay(2600);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+#endif
 
 
     Serial.println("Power on the modem");

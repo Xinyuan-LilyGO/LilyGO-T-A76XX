@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-06-28
- * @note      GPS only supports A7670X/A7608X (excluding A7670G and other versions that do not support positioning). 
+ * @note      GPS only supports A7670X/A7608X (excluding A7670G and other versions that do not support positioning).
  */
 #include "utilities.h"
 
@@ -41,10 +41,12 @@ void setup()
 #endif
 
     // Set modem reset pin ,reset modem
+#ifdef MODEM_RESET_PIN
     pinMode(MODEM_RESET_PIN, OUTPUT);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);
     digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL); delay(2600);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+#endif
 
     // Turn on modem
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);

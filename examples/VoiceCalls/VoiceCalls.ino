@@ -8,7 +8,7 @@
  * * Voice calls require external welding of the condenser microphone and speaker.
  * * Generally, the board silk screen is marked SPK. The speaker needs to be welded,
  * * and the MIC silk screen position needs to weld the condenser microphone.
- * *  Although the manual of SIM7672G/SIM7670G states that it has the functions of making voice calls and sending text messages, 
+ * *  Although the manual of SIM7672G/SIM7670G states that it has the functions of making voice calls and sending text messages,
  * * the current firmware does not support it.
  */
 
@@ -47,10 +47,12 @@ void setup()
 #endif
 
     // Set modem reset pin ,reset modem
+#ifdef MODEM_RESET_PIN
     pinMode(MODEM_RESET_PIN, OUTPUT);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);
     digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL); delay(2600);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+#endif
 
     // Turn on modem
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);

@@ -46,10 +46,12 @@ void setup()
 #endif
 
     // Set modem reset pin ,reset modem
+#ifdef MODEM_RESET_PIN
     pinMode(MODEM_RESET_PIN, OUTPUT);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);
     digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL); delay(2600);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+#endif
 
     // Turn on modem
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);
@@ -149,7 +151,7 @@ void setup()
 
     // A76XX_Series_AT_Command_Manual_V1.12.pdf : https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/blob/main/datasheet/A76XX/A76XX_Series_AT_Command_Manual_V1.12.pdf
     // A76XX Series_SMS_Application Note_V3.00.pdf : https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/blob/main/datasheet/A76XX/A76XX%20Series_SMS_Application%20Note_V3.00.pdf
-    
+
     String data;
     int8_t res;
 

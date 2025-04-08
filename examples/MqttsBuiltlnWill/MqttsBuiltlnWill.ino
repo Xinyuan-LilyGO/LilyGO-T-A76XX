@@ -6,7 +6,7 @@
  * @date      2024-10-25
  * @note
  * * * Example is suitable for A7670X/A7608X/SIM7672 series
- * * MQTT will message example, use a private server for testing, please prepare your own MQTT server, 
+ * * MQTT will message example, use a private server for testing, please prepare your own MQTT server,
  * * and only support MQTT3.1.1 version, and set up the will message function
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  */
@@ -104,10 +104,12 @@ void setup()
 #endif
 
     // Set modem reset pin ,reset modem
+#ifdef MODEM_RESET_PIN
     pinMode(MODEM_RESET_PIN, OUTPUT);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);
     digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL); delay(2600);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+#endif
 
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);

@@ -40,10 +40,12 @@ void setup()
 #endif
 
     // Set modem reset pin ,reset modem
+#ifdef MODEM_RESET_PIN
     pinMode(MODEM_RESET_PIN, OUTPUT);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);
     digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL); delay(2600);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+#endif
 
     // Turn on modem
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);
@@ -73,7 +75,7 @@ void setup()
 
 void loop()
 {
-    // You need to wait for the network to be activated before you can use the LBS function. 
+    // You need to wait for the network to be activated before you can use the LBS function.
     // By default, the network is automatically activated after the modem is started.
     float lat      = 0;
     float lon      = 0;

@@ -5,15 +5,15 @@
  * @copyright Copyright (c) 2024  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2024-12-11
  * @note      Secure Client support A7670X/A7608X/SIM7670G
- * 
- * 
+ *
+ *
  * Tested on the following firmware versions
  * Model: SIM7670G-MNGV
  * Revision: 2374B05SIM767XM5A_M
- * 
+ *
  * Model: A7608SA-H
  * Revision: A50C4B12A7600M7 , A7600M7_B12V01_240315
- * 
+ *
  * Model: A7670SA-FASE
  * Revision: A011B07A7670M7_F,A7670M7_B07V01_240927
  */
@@ -67,10 +67,12 @@ void setup()
 #endif
 
     // Set modem reset pin ,reset modem
+#ifdef MODEM_RESET_PIN
     pinMode(MODEM_RESET_PIN, OUTPUT);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);
     digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL); delay(2600);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+#endif
 
     // Turn on modem
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);

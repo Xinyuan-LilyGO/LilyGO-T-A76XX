@@ -4,8 +4,8 @@
  * @license   MIT
  * @copyright Copyright (c) 2025  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2025-03-25
- * @note      This demo uploads the location obtained by the device to [traccar](https://www.traccar.org/). 
- *            For more information about [traccar](https://www.traccar.org/), please visit the official website. 
+ * @note      This demo uploads the location obtained by the device to [traccar](https://www.traccar.org/).
+ *            For more information about [traccar](https://www.traccar.org/), please visit the official website.
  *            This demo only demonstrates uploading the location.
  */
 #define TINY_GSM_RX_BUFFER          1024 // Set RX buffer to 1Kb
@@ -14,7 +14,7 @@
 // #define DUMP_AT_COMMANDS
 
 // If defined, cancel shallow sleep and use delay to replace shallow sleep
-// #define DEBUG_SKETCH 
+// #define DEBUG_SKETCH
 
 #define REPORT_LOCATION_RATE_SECOND     20
 
@@ -188,10 +188,12 @@ void setup()
 #endif
 
     // Set modem reset pin ,reset modem
+#ifdef MODEM_RESET_PIN
     pinMode(MODEM_RESET_PIN, OUTPUT);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);
     digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL); delay(2600);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+#endif
 
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
@@ -389,12 +391,12 @@ void loop()
     } else {
         rlst = post_location(info);
         if (rlst) {
-            // If the positioning is successful and the location is sent successfully, 
+            // If the positioning is successful and the location is sent successfully,
             // the ESP and modem are set to sleep mode. The sleep mode consumes about 2~3mA
             // For power consumption records, please see README
             modem_enter_sleep(REPORT_LOCATION_RATE_SECOND * 1000);
         } else {
-            // If the positioning is successful, if the sending of the position fails, 
+            // If the positioning is successful, if the sending of the position fails,
             // set the ESP to sleep mode and wait for the next sending
             light_sleep_delay(REPORT_LOCATION_RATE_SECOND * 1000);
         }
