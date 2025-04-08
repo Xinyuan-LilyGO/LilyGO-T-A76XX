@@ -34,7 +34,8 @@ const char *request_url[] = {
     "https://httpbin.org/get",
     "https://vsh.pp.ua/TinyGSM/logo.txt",
     "https://ipapi.co/timezone",         // Access may be blocked by a firewall
-    "http://ip-api.com/json/23.158.104.183"
+    "http://ip-api.com/json/23.158.104.183",
+    "https://ikfu.azurewebsites.net/api/GetUtcTime"  // https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/243
 };
 
 void setup()
