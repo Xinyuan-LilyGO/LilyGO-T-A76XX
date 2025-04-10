@@ -9,6 +9,13 @@
 
 #include "TinyGsmCommon.h"
 
+enum ServerSSLVersion {
+    TINYGSM_SSL_TLS3_0,
+    TINYGSM_SSL_TLS1_0,
+    TINYGSM_SSL_TLS1_1,
+    TINYGSM_SSL_TLS1_2,
+    TINYGSM_SSL_AUTO,
+};
 
 template <class modemType>
 class TinyGsmHttpsA76xx
@@ -38,8 +45,13 @@ public:
         thisModem().waitResponse(3000);
     }
 
-    bool https_set_url(const String &url)
+    bool https_set_url(const String &url, ServerSSLVersion ssl_version = TINYGSM_SSL_AUTO)
     {
+        // https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/243
+        // Set SSL Version
+        thisModem().sendAT("+CSSLCFG=\"sslversion\",0,", ssl_version);
+        thisModem().waitResponse();
+
         thisModem().sendAT("+HTTPPARA=\"URL\",", "\"", url, "\"");
         return thisModem().waitResponse(3000) == 1;
     }
