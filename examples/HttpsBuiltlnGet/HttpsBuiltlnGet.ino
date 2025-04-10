@@ -38,6 +38,16 @@ const char *request_url[] = {
     "https://ikfu.azurewebsites.net/api/GetUtcTime"  // https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/243
 };
 
+// ISSUES ： https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/243
+// Azure server does not support automatic negotiation of SSL protocol and needs to be configured as SSL1.2
+ServerSSLVersion sslVersion[] = {
+    TINYGSM_SSL_AUTO,   // httpbin.org
+    TINYGSM_SSL_AUTO,   // vsh.pp.ua
+    TINYGSM_SSL_AUTO,   // ipapi.co
+    TINYGSM_SSL_AUTO,   // ip-api.com
+    TINYGSM_SSL_TLS1_2  // azure
+};
+
 void setup()
 {
     Serial.begin(115200); // Set console baud rate
@@ -185,7 +195,7 @@ void setup()
             Serial.println(request_url[i]);
 
             // Set GET URT
-            if (!modem.https_set_url(request_url[i])) {
+            if (!modem.https_set_url(request_url[i], sslVersion[i])) {
                 Serial.print("Failed to request : "); Serial.println(request_url[i]);
 
                 // Debug
