@@ -186,6 +186,12 @@ void setup()
 {
     Serial.begin(115200);
 
+#ifdef BOARD_POWERON_PIN
+    // T-A7670X V1.x SD card power supply and Modem are controlled by IO12. When using battery, IO12 must be set to HIGH
+    pinMode(BOARD_POWERON_PIN, OUTPUT);
+    digitalWrite(BOARD_POWERON_PIN, HIGH);
+#endif
+
     SPI.begin(BOARD_SCK_PIN, BOARD_MISO_PIN, BOARD_MOSI_PIN);
     if (!SD.begin(BOARD_SD_CS_PIN)) {
         Serial.println("Card Mount Failed");
