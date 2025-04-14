@@ -6,6 +6,7 @@
  * @date      2023-11-16
  * @note      SIM7670G - SIM7670G-MNGV 2374B04 version supports SMS function,
  *            but it requires the operator base station to support SMS Over SGS service to send, otherwise it will be invalid
+ *            `A7670E-LNXY-UBL` this version does not support voice and SMS functions.
  */
 
 #include "utilities.h"

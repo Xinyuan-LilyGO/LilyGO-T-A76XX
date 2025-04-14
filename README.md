@@ -18,6 +18,7 @@
   2. T-A7608-V2 Remove power on pin (IO12)
   3. Add onboard LED (IO12)
   4. Add solar voltage ADC(IO34) detection function
+- **A7670E-LNXY-UBL** this version does not support voice and SMS functions.
 
 # 1️⃣Product
 

@@ -10,6 +10,7 @@
  * * and the MIC silk screen position needs to weld the condenser microphone.
  * *  Although the manual of SIM7672G/SIM7670G states that it has the functions of making voice calls and sending text messages,
  * * the current firmware does not support it.
+ * * `A7670E-LNXY-UBL` this version does not support voice and SMS functions.
  */
 
 #include "utilities.h"
