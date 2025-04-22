@@ -1,0 +1,79 @@
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+labels: [bug, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: How would you catagorize this issue?
+      multiple: true
+      options:
+        - Hardware
+        - MQTT
+        - HTTPS
+        - GNSS
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: hardware
+    attributes:
+      label: Hardware
+      description: What hardware are you encountering this issue on?
+      multiple: true
+      options:
+        - Not Applicable
+        - T-A7670
+        - T-A7670 S3
+        - T-Call-A7670
+        - T-A7608
+        - T-A7608 S3
+        - T-SIM7670G S3
+        - T-PCIE-A7670
+        - T-ETH-ELite-A7670
+
+    validations:
+      required: true
+
+  - type: input
+    id: pn_number
+    attributes:
+      label: PN Number
+      description: The PN number is located on the modem label..
+      placeholder: xx-xxxxx-xxxxx
+    validations:
+      required: true
+
+  - type: textarea
+    id: version
+    attributes:
+      label: Firmware Version
+      description: The firmware version can be queried by sending AT+SIMCOMATI.
+      render: Shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: body
+    attributes:
+      label: Description
+      description: Please provide details on what steps you performed for this to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: If you have any log output to help in diagnosing your bug, please provide it here.
+      render: Shell
+    validations:
+      required: false
