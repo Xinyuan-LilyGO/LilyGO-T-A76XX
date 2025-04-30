@@ -23,7 +23,7 @@ TinyGsm modem(SerialAT);
 
 #include "music.h"
 
-#ifdef LILYGO_T_SIM767XG_S3
+#ifdef LILYGO_T_SIM7670G_S3
 #error "Only support A7670X A7608X , Not support SIM7670G"
 #endif
 

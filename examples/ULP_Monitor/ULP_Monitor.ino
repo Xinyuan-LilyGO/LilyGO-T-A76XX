@@ -44,7 +44,7 @@
 #define ADC_CH 0
 #define ADC_PAD_INDEX 7
 
-#elif defined(LILYGO_T_SIM767XG_S3) || defined(LILYGO_T_A7608X_S3)      //No support
+#elif defined(LILYGO_T_SIM7670G_S3) || defined(LILYGO_T_A7608X_S3)      //No support
 
 // GPIO4 ADC1 CH3
 #define ADC_CH 0
