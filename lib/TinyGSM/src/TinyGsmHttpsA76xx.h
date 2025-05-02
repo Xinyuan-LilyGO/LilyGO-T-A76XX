@@ -17,6 +17,15 @@ enum ServerSSLVersion {
     TINYGSM_SSL_AUTO,
 };
 
+enum HttpMethod {
+    TINYGSM_HTTP_GET = 0,
+    TINYGSM_HTTP_POST,
+    TINYGSM_HTTP_HEAD,
+    TINYGSM_HTTP_DELETE,
+    TINYGSM_HTTP_PUT,
+    TINYGSM_HTTP_PATCH,
+};
+
 template <class modemType>
 class TinyGsmHttpsA76xx
 {
@@ -257,39 +266,110 @@ public:
         return length;
     }
 
-    int https_post(uint8_t *payload, size_t size, uint32_t inputTimeout = 10000)
+    /**
+     * @brief Sends an HTTPS POST request with a raw payload.
+     *
+     * This function sends an HTTPS POST request using the provided payload. It checks
+     * the size of the payload to ensure it does not exceed the maximum allowed length.
+     * It then configures the HTTP body and sends the request.
+     *
+     * @param payload A pointer to the raw payload data to be sent in the request.
+     * @param size The size of the payload in bytes.
+     * @return The HTTP status code of the response if the request is successful, -1
+     * otherwise.
+     */
+    int https_post(const char *payload, size_t size)
     {
-        if (payload) {
-            thisModem().sendAT("+HTTPDATA=", size, ",", inputTimeout);
-            if (thisModem().waitResponse(30000UL, "DOWNLOAD") != 1) {
-                return -1;
-            }
-            thisModem().stream.write(payload, size);
-            if (thisModem().waitResponse(30000UL) != 1) {
-                return -1;
-            }
-        }
-        thisModem().sendAT("+HTTPACTION=1");
-        if (thisModem().waitResponse(3000) != 1) {
-            return -1;
-        }
-        if (thisModem().waitResponse(60000UL, "+HTTPACTION:") == 1) {
-            int action = thisModem().streamGetIntBefore(',');
-            int status = thisModem().streamGetIntBefore(',');
-            int length = thisModem().streamGetIntBefore('\r');
-            DBG("action:"); DBG(action);
-            DBG("status:"); DBG(status);
-            DBG("length:"); DBG(length);
-            return status;
-        }
-        return -1;
+        return https_method(TINYGSM_HTTP_POST, payload, size);
     }
 
+    /**
+     * @brief Sends an HTTPS POST request with a String payload.
+     *
+     * This is a wrapper function that converts a String object to a C-style string
+     * and its length, then calls the https_post function with raw payload parameters.
+     *
+     * @param payload The String object containing the payload data to be sent in the
+     * request.
+     * @return The HTTP status code of the response if the request is successful, -1
+     * otherwise.
+     */
     int https_post(const String &payload)
     {
-        return https_post((uint8_t *) payload.c_str(), payload.length());
+        return https_method(TINYGSM_HTTP_POST, payload.c_str(), payload.length());
     }
 
+    /**
+     * @brief Sends an HTTPS POST request with a JSON-formatted String payload.
+     *
+     * This method is the same as the https_post method, just to unify the API for compatibility with the examples
+     *
+     * @param json The String object containing the JSON data to be sent in the request.
+     * @return The HTTP status code of the response if the request is successful, -1
+     * otherwise.
+     */
+    int https_post_json_format(const String &json)
+    {
+        return https_method(TINYGSM_HTTP_POST, json.c_str(), json.length());
+    }
+
+    /**
+    * @brief Perform an HTTP PUT request with a C-style string payload.
+    *
+    * This function calls the `https_method` function to perform an HTTP PUT request,
+    * passing the provided C-style string and its length as the request payload.
+    *
+    * @param payload A pointer to a character array containing the request payload data.
+    * @param size The size of the request payload data in bytes.
+    * @return int The return value of the `https_method` function, indicating the result of the request.
+    */
+    int https_put(const char *payload, size_t size)
+    {
+        return https_method(TINYGSM_HTTP_PUT, payload, size);
+    }
+
+    /**
+     * @brief Perform an HTTP PUT request with a `String` object payload.
+     *
+     * This function calls the `https_method` function to perform an HTTP PUT request,
+     * converting the provided `String` object to a C-style string and passing its length as the request payload.
+     *
+     * @param payload A reference to a `String` object containing the request payload data.
+     * @return int The return value of the `https_method` function, indicating the result of the request.
+     */
+    int https_put(const String &payload)
+    {
+        return https_method(TINYGSM_HTTP_PUT, payload.c_str(), payload.length());
+    }
+
+    /**
+     * @brief Perform an HTTP DELETE request with a C-style string payload.
+     *
+     * This function calls the `https_method` function to perform an HTTP DELETE request,
+     * passing the provided C-style string and its length as the request payload.
+     *
+     * @param payload A pointer to a character array containing the request payload data.
+     * @param size The size of the request payload data in bytes.
+     * @return int The return value of the `https_method` function, indicating the result of the request.
+     */
+    int https_delete(const char *payload, size_t size)
+    {
+        return https_method(TINYGSM_HTTP_DELETE, payload, size);
+    }
+
+    /**
+     * @brief Perform an HTTP DELETE request with a `String` object payload.
+     *
+     * This function calls the `https_method` function to perform an HTTP DELETE request,
+     * converting the provided `String` object to a C-style string and passing its length as the request payload.
+     *
+     * @param payload A reference to a `String` object containing the request payload data.
+     * @return int The return value of the `https_method` function, indicating the result of the request.
+     */
+    int https_delete(const String &payload)
+    {
+        return https_method(TINYGSM_HTTP_DELETE, payload.c_str(), payload.length());
+    }
 
     /**
      * @brief  POSTFile
@@ -321,7 +401,34 @@ public:
         }
         return -1;
     }
-
+private:
+    int https_method(HttpMethod method, const char *payload, size_t size, uint32_t inputTimeout = 10000)
+    {
+        if (payload) {
+            thisModem().sendAT("+HTTPDATA=", size, ",", inputTimeout);
+            if (thisModem().waitResponse(30000UL, "DOWNLOAD") != 1) {
+                return -1;
+            }
+            thisModem().stream.write(payload, size);
+            if (thisModem().waitResponse(30000UL) != 1) {
+                return -1;
+            }
+        }
+        thisModem().sendAT("+HTTPACTION=", method);
+        if (thisModem().waitResponse(3000) != 1) {
+            return -1;
+        }
+        if (thisModem().waitResponse(60000UL, "+HTTPACTION:") == 1) {
+            int action = thisModem().streamGetIntBefore(',');
+            int status = thisModem().streamGetIntBefore(',');
+            int length = thisModem().streamGetIntBefore('\r');
+            DBG("action:"); DBG(action);
+            DBG("status:"); DBG(status);
+            DBG("length:"); DBG(length);
+            return status;
+        }
+        return -1;
+    }
     /*
      * CRTP Helper
      */

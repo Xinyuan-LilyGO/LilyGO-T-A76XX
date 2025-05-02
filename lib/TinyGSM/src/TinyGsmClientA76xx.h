@@ -378,7 +378,9 @@ class TinyGsmA76xx : public TinyGsmModem<TinyGsmA76xx<modemType>>,
     thisModem().sendAT(GF("+CGNSSPWR?"));
     if (thisModem().waitResponse("+CGNSSPWR:") != 1) { return false; }
     // +CGNSSPWR:<GNSS_Power_status>,<AP_Flash_status>,<GNSS_dynamic_load>
-    return 1 == thisModem().streamGetIntBefore(',');
+    bool running = 1 == thisModem().streamGetIntBefore(',');
+    thisModem().waitResponse();
+    return running;
   }
 
   bool enableAGPSImpl() {
@@ -751,7 +753,7 @@ class TinyGsmA76xx : public TinyGsmModem<TinyGsmA76xx<modemType>>,
    */
  protected:
   bool textToSpeechImpl(String& text, uint8_t mode) {
-    thisModem().sendAT(GF("+CTTS="), mode, ',', '"',text, '"');
+    thisModem().sendAT(GF("+CTTS="), mode, ',', '"', text, '"');
     if (thisModem().waitResponse() != 1) { return false; }
     if (thisModem().waitResponse(10000UL, GF("+CTTS: 0")) != 1) { return false; }
     return true;

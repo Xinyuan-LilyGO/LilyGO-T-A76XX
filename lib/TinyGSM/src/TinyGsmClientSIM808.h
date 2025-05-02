@@ -42,7 +42,9 @@ class TinyGsmSim808 : public TinyGsmSim800, public TinyGsmGPS<TinyGsmSim808>, pu
   bool isEnableGPSImpl(){
     sendAT(GF("+CGNSPWR?"));
     if (waitResponse(GF(GSM_NL "+CGNSPWR:")) != 1) { return false; }
-    return 1 == streamGetIntBefore('\r'); 
+    bool running = 1 == streamGetIntBefore('\r');
+    waitResponse();
+    return running;
   }
 
   bool setGPSBaudImpl(uint32_t baud){

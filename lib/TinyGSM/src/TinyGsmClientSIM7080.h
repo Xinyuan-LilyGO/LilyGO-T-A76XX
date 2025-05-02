@@ -199,22 +199,29 @@ class TinyGsmSim7080 : public TinyGsmSim70xx<TinyGsmSim7080>,
     return res;
   }
   
+  bool setNetworkDeactivateImpl() {
+    if(!getNetworkActiveImpl())return true;
+    sendAT(GF("+CNACT=0,0"));
+    if (waitResponse(60000L, GF(GSM_NL "+APP PDP: 0,DEACTIVE"), 
+        GSM_ERROR) != 1) { return false; }
+    return true;
+  }
   
   bool setNetworkActiveImpl(){
+    if(getNetworkActiveImpl())return true;
     sendAT(GF("+CNACT=0,1"));
     if (waitResponse(60000L, GF(GSM_NL "+APP PDP: 0,ACTIVE"),
-          GF(GSM_NL "+APP PDP: 0,DEACTIVE")) != 1) { return false; }
+          GF(GSM_NL "+APP PDP: 0,DEACTIVE"), GSM_ERROR) != 1) { return false; }
     return true;
   }
 
-  String getNetworkActiveImpl(){
+  bool getNetworkActiveImpl(){
     sendAT(GF("+CNACT?"));
-    String res;
-    if (waitResponse(GF(GSM_NL "+CNACT: 0")) != 1) { return ""; }
-    streamSkipUntil('\"');
-    res = stream.readStringUntil('\"');
+    if (waitResponse(GF(GSM_NL "+CNACT: ")) != 1) { return ""; }
+    streamGetIntBefore(',');
+    int16_t  connected = streamGetIntBefore(',');
     waitResponse();
-    return res;
+    return connected == 1;
   }
 
   /*

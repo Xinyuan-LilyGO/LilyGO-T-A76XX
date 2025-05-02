@@ -19,7 +19,6 @@ class GPSInfo {
   // GNSS information every the seconds.
   // The function will take effect immediately.
 
-
   uint8_t  isFix;                  // Fix mode,2=2D fix,3=3D fix
   uint16_t gps_satellite_num;      // GPS satellite visible numbers
   uint16_t beidou_satellite_num;   // BEIDOU satellite visible numbers
@@ -43,6 +42,10 @@ class GPSInfo {
   float   PDOP;      // Position Dilution Of Precision.
   float   HDOP;      // Horizontal Dilution Of Precision.
   float   VDOP;      // Vertical Dilution Of Precision.
+
+  float   GSV;       // GNSS Satellites in View
+  float   GSU;       // GNSS Satellites Used
+  
 };
 
 template <class modemType>

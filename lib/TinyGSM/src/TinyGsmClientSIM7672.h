@@ -534,6 +534,7 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
   bool isEnableGPSImpl(){
     sendAT(GF("+CGNSSPWR?"));
     if (waitResponse("+CGNSSPWR: 1") != 1) { return false; }
+    waitResponse();
     return true;
   }
 

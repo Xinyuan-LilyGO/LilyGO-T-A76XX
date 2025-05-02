@@ -506,7 +506,9 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
   bool isEnableGPSImpl(){
     sendAT(GF("+CGPS?"));
     if (waitResponse("+CGPS:") != 1) { return false; }
-    return 1 == streamGetIntBefore(','); 
+    bool running = 1 == streamGetIntBefore(','); 
+    waitResponse();
+    return running;
   }
 
   // get the RAW GPS output

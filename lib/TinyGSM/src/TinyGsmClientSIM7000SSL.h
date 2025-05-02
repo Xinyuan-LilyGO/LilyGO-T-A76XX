@@ -17,15 +17,11 @@
 
 #include "TinyGsmClientSIM70xx.h"
 #include "TinyGsmTCP.tpp"
-#include "TinyGsmSSL.tpp"
 
-class TinyGsmSim7000SSL
-    : public TinyGsmSim70xx<TinyGsmSim7000SSL>,
-      public TinyGsmTCP<TinyGsmSim7000SSL, TINY_GSM_MUX_COUNT>,
-      public TinyGsmSSL<TinyGsmSim7000SSL> {
+class TinyGsmSim7000SSL : public TinyGsmSim70xx<TinyGsmSim7000SSL>,
+                          public TinyGsmTCP<TinyGsmSim7000SSL, TINY_GSM_MUX_COUNT> {
   friend class TinyGsmSim70xx<TinyGsmSim7000SSL>;
   friend class TinyGsmTCP<TinyGsmSim7000SSL, TINY_GSM_MUX_COUNT>;
-  friend class TinyGsmSSL<TinyGsmSim7000SSL>;
 
   /*
    * Inner Client
@@ -217,7 +213,7 @@ class TinyGsmSim7000SSL
  protected:
   bool gprsConnectImpl(const char* apn, const char* user = NULL,
                        const char* pwd = NULL) {
-    gprsDisconnect();
+      gprsDisconnect();
 
     // Define the PDP context
     sendAT(GF("+CGDCONT=1,\"IP\",\""), apn, '"');
@@ -283,6 +279,28 @@ class TinyGsmSim7000SSL
     sendAT(GF("+CGATT=0"));  // Deactivate the bearer context
     if (waitResponse(60000L) != 1) { return false; }
 
+    return true;
+  }
+
+  bool setNetworkDeactivateImpl() {
+    if (!getNetworkActiveImpl()) { return true; }
+    sendAT(GF("+CNACT=0"));
+    if (waitResponse(10000L) != 1) { return false; }
+    if (waitResponse(60000L, "+APP PDP: DEACTIVE") != 1) { return false; }
+    return true;
+  }
+
+  bool setNetworkActiveImpl() {
+    if (getNetworkActiveImpl()) { return true; }
+    sendAT(GF("+CNACT=1"));
+    if (waitResponse(10000L) != 1) { return false; }
+    return waitResponse(60000L, "+APP PDP: ACTIVE", "+APP PDP: DEACTIVE") == 1;
+  }
+
+  bool getNetworkActiveImpl() {
+    sendAT(GF("+CNACT?"));
+    if (waitResponse(GF(GSM_NL "+CNACT: 1")) != 1) { return false; }
+    waitResponse();
     return true;
   }
 
@@ -372,7 +390,7 @@ class TinyGsmSim7000SSL
         // <cid> Application connection ID (set with AT+CACID above)
         // <certname> certificate name
         sendAT(GF("+CASSLCFG="), mux, ",CACERT,\"", certificates[mux].c_str(),
-               "\"");
+               "\"");        
         if (waitResponse(5000L) != 1) return false;
       }
 
