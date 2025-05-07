@@ -1,41 +1,39 @@
-<h1 align = "center">🌟LilyGO T-A76XX🌟</h1>
+<div align="center" markdown="1">
+  <img src=".github/LilyGo_logo.png" alt="LilyGo logo" width="100"/>
+</div>
+
+<h1 align = "center">🌟LilyGo-Modem-Series🌟</h1>
 
 [![PlatformIO CI](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/actions/workflows/platformio.yml/badge.svg)](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/actions/workflows/platformio.yml)
 
 # News
 
 - The TinyGSM used in the example is a [fork](https://github.com/lewisxhe/TinyGSM) to support A7670,A7608,SIM7672G,SIM7670G, If you use the master branch, the compilation will not go smoothly
-- A7670G/A7670E/A7670SA are collectively referred to as A7670X
-- A7672G is exactly the same as A7670G. A7672G is just another name.
+- A7670G/A7670E/A7670SA/A7672G are collectively referred to as A7670X
 - A7608SA-H/A7608E-H,A7608E,A7608SA are collectively referred to as A7608X
-- **SIM7672G** and **SIM7670G** are exactly the same, except for the name change , The readme file indicates these two models with **SIM767X**
 - **SIM7670G** uses the **Qualcomm** platform, **A7670x** uses the **Asrmicro** platform.
-- When using T-Call-A767X, you need to distinguish between versions. Pinmaps for **V1.0** and **V1.1** are different and cannot be used universally.
 - The usage methods of A7670/A7670 R2 are exactly the same, but the internal chip manufacturing process of the module is different.
-- The difference between A7608X-S3 V1.0 and V1.1 is that V1.1 adds a solar input voltage dividing resistor (occupies IO3), the others are the same
-- Differences between T-A7608 and T-A7608-V2:
-  1. T-A7608-V2 Remove modem reset pin (IO5)
-  2. T-A7608-V2 Remove power on pin (IO12)
-  3. Add onboard LED (IO12)
-  4. Add solar voltage ADC(IO34) detection function
 - **A7670E-LNXY-UBL** this version does not support voice and SMS functions.
 
 # 1️⃣Product
 
-| Product(PinMap)         | SOC              | Flash    | PSRAM     | Schematic                                                                                    |
-| ----------------------- | ---------------- | -------- | --------- | -------------------------------------------------------------------------------------------- |
-| [T-A7670X][1]           | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) | [schematic](./schematic/T-A7670X-V1.1.pdf)                                                   |
-| [T-Call-A7670X-V1.0][2] | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) | [schematic](./schematic/T-Call-A7670-V1.0.pdf)                                               |
-| [T-A7608][4]            | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) | [schematic](./schematic/T-A7608X-V1.0.pdf)                                                   |
-| [T-A7608-V2][8]         | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) | [schematic](./schematic/A7608-ESP32-V2.pdf)                                                  |
-| [T-A7608-S3][6]         | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  | [schematic](./schematic/T-A7608-S3-V1.0.pdf)                                                 |
-| [T-SIM767XG-S3][7]      | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  | [schematic](./schematic/T-SIM767XG-S3-V1.0.pdf)                                              |
-| [T-PCIE-A7670][8]       | ESP32-WROVER-E   | 16MB/4MB | 8MB(QSPI) | [schematic](https://github.com/Xinyuan-LilyGO/LilyGo-T-PCIE/blob/master/schematic/A7670.pdf) |
+| Product(PinMap)    | SOC              | Flash    | PSRAM     |
+| ------------------ | ---------------- | -------- | --------- |
+| [T-A7670X][1]      | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) |
+| [T-Call-A7670X][2] | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) |
+| [T-A7608][4]       | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) |
+| [T-A7608-S3][6]    | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  |
+| [T-SIM7670G-S3][7] | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  |
+| [T-PCIE-A7670][8]  | ESP32-WROVER-E   | 16MB/4MB | 8MB(QSPI) |
+| [T-ETH-ELite][9]   | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  |
 
-<!-- | [T-Call-A7670X-V1.1][3] | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) | [schematic](./schematic/T-Call-A7670-V1.1.pdf)                                               | -->
-<!-- | [T-A7608-DC-S3][5]      | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  | [schematic](./schematic/T-A7608X-DC-S3-V1.0.pdf)                                             | -->
+- For applications that do not require voice and SMS, it is recommended to use [T-SIM7670G-S3](7)
 
-[1]: https://www.lilygo.cc/products/t-sim-a7670eZ
+<!-- | [T-A7608-V2][8]         | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) | [schematic](./schematic/A7608-ESP32-V2.pdf) | -->
+<!-- | [T-Call-A7670X-V1.1][3] | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) | [schematic](./schematic/T-Call-A7670-V1.1.pdf)   | -->
+<!-- | [T-A7608-DC-S3][5]      | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  | [schematic](./schematic/T-A7608X-DC-S3-V1.0.pdf) | -->
+
+[1]: https://www.lilygo.cc/products/t-sim-a7670e
 [2]: https://www.lilygo.cc/products/t-call-v1-4
 [3]: https://lilygo.cc/products/t-a7608e-h?variant=42860532433077
 [4]: https://www.lilygo.cc/products/t-a7608e-h
@@ -43,6 +41,7 @@
 [6]: https://lilygo.cc/products/t-a7608e-h?variant=43932699033781
 [7]: https://www.lilygo.cc/products/t-sim-7670g-s3
 [8]: https://lilygo.cc/products/a-t-pcie?variant=42335922094261
+[9]: https://lilygo.cc/products/t-eth-elite-1?variant=44498205049013
 
 ## 2️⃣Examples
 
@@ -122,7 +121,6 @@
 11. Connect the board to the computer USB-C , Micro-USB is used for module firmware upgrade
 12. Click (→) to upload firmware
 13. Click (plug symbol) to monitor serial output
-14. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
 
 ## 4️⃣ Arduino IDE Quick Start
 
@@ -135,49 +133,54 @@
 3. Install [Arduino ESP32 2.0.5 or above](https://docs.espressif.com/projects/arduino-esp32/en/latest/) 
 4. Copy all folders in [lib folder](./lib/)  to Arduino library folder (e.g. C:\Users\YourName\Documents\Arduino\libraries)
 5. Open ArduinoIDE  ,`Tools` , Look at the picture to choose , **If you use the ESP32-S3 controller and need to use serial, then USB CDC ON Boot needs to be set to Enabled**
+
     | [T-A7670X][1]/[T-Call-A7670X][2]/[T-A7608][4]/[T-PCIE-A7670][8] | [T-A7608-S3][6]/[T-SIM767XG-S3][7]   |
     | --------------------------------------------------------------- | ------------------------------------ |
     | ![esp32dev](images/esp32dev.jpg)                                | ![esp32s3dev](images/esp32s3dev.jpg) |
+
 6. `LilyGO-T-A76XX` folder -> `examples` -> `Choose the appropriate example from the list above`
 7. Open the corresponding board macro definition above [utilities.h](./examples/ATdebug/utilities.h) , For example, if you use LILYGO-A7670X, you need to change ` // #define LILYGO_T_A7670` to ` #define LILYGO_T_A7670`
-   ![](./images/board_select.jpg)
+
+   ![board_select](./images/board_select.jpg)
 
 8. Connect the board to the computer USB-C , Micro-USB is used for module firmware upgrade
-9.  Select `Port`
+9. Select `Port`
 10. Click `upload` , Wait for compilation and writing to complete
-11. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
 
-
+> \[!IMPORTANT]
+> Unable to upload any code? Please see the FAQ below
+>
 
 ### Writing as a beginner
 
 - When opening the Arduino IDE, you will be prompted that there are new libraries that can be updated. Please do not click update. There is no guarantee that it can be compiled, run, etc. after the update. Make sure that the board is running normally before deciding whether to update. You have to Know that problems may occur after updating due to library differences, or the default configuration (such as TinyGSM) will be overwritten.
 - If it runs abnormally after the update, please follow Article 4 of the Arduino Quick Start to delete the directory in libraries, and drag the folder in lib into the libraries directory again.
 
-## 5️⃣ Notes for new Users <T-A7670X/T-A7608X>
+# 5️⃣ FAQ
 
-1. The A7670G does not have a built-in GPS modem, regardless of whether the motherboard contains a GPS connector.
-
-- **The following does not apply to T-Call-A7670**
-
-1. Pin VIN is a USB input, if a battery is being used to power the device there will be no voltage output from VIN meaning 3.3v is the only power output.
-2. When using the built-in battery pack the on/off switch will function as normal, supplying/cutting off power to the board, However, if an external battery pack is used and attached to the VBAT pin the on/off switch will be bypassed meaning the only way to shut off will be to disconnect the batteries.
-3. On/off switch is for battery use only, it will not function when plugged into USB.
-4. Recommended solar panels are 4.4v to 6v **DO NOT EXCEED OR BOARD MAY BE DAMAGED** 
-5. When an SD card in you can not upload software in Arduino IDE since the SD card uses IO2 as CS, the SD card must be removed when uploading a new sketch.
-6. The `T-A7670G` modem does not contain a GPS positioning component and requires an additional external GPS positioning module to use the positioning function. [LilyGo T-A7670G with GPS](https://www.lilygo.cc/products/t-sim-a7670e?variant=43043706077365) uses [Quectel L76K](https://www.quectel.com/cn/product/gnss-l76k) as the **T-A7670G** auxiliary positioning function, which requires a part of the IO, please refer to the [GPSShield example](./examples/GPSShield/) , How to identify whether you have an external GPS module please see [#issues56](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/56#issuecomment-1672628977)
-7. Known issues, ESP32 (V1.2) version of [T-A7670][1], [T-A7608][4], when using battery power supply mode, BOARD_POWERON_PIN (IO12) must be set to high level after esp32 starts, otherwise a reset will occur.
-
-# 6️⃣ FAQ
+- **ESP32 (V1.x) version [T-A7670X][1]/[T-A7608X][4]  known issue**
+  - When using battery power mode, BOARD_POWERON_PIN (IO12) must be set to a high level after ESP32 starts, otherwise a reset will occur.
 
 - **Can't turn on the phone after connecting the battery for the first time?**
-   1. This is due to the characteristics of the onboard battery over-discharge and over-charge chip. It cannot be turned on when the battery is connected for the first time. This can be solved by inserting a USB charger or reconnecting the battery. For details, please see the remarks on [page 4](https://www.lcsc.com/datasheet/lcsc_datasheet_2010160933_Shenzhen-Fuman-Elec-DW06D_C82123.pdf) of the datasheet.
+  - This is due to the characteristics of the onboard battery over-discharge and over-charge chip. It cannot be turned on when the battery is connected for the first time. This can be solved by inserting a USB charger or reconnecting the battery. For details, please see the remarks on [page 4](https://www.lcsc.com/datasheet/lcsc_datasheet_2010160933_Shenzhen-Fuman-Elec-DW06D_C82123.pdf) of the datasheet.
 
 - **GPS not working?**
-   1. See [issue#137](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/137)
+  - See [issue/137](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/137)
+
+- **How to identify whether an external GPS module is installed**
+  - See [issue/56](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/56#issuecomment-1672628977)
 
 - **VOLTE FAQ**
-  1. See [issues/115](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/115)
+  - See [issue/115](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/115)
+
+- **Network registration denied?**
+  - When the network registration is refused, please check whether the APN is set correctly. For details, please refer to [issue/104](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/104)
+
+- **Can't use 2G(GSM)?**
+  - LilyGo has launched a separate 4G(LTE) version that can only use 4G(LTE) network. Please check whether it is a separate 4G(LTE) version during ordering.
+
+- **How to use voice call example?**
+  - Voice calls require external welding of the condenser microphone and speaker. Generally, the board silk screen is marked SPK. The speaker needs to be welded, and the MIC silk screen position needs to weld the condenser microphone. , **T-A7670** the microphone and speaker connections are located [issue/130](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/130)
 
 - **Can't upload any sketch，Please enter the upload mode manually.**
    1. Connect the board via the USB cable
@@ -186,31 +189,40 @@
    4. Release the RST button
    5. Release the BOOT button (If there is no BOOT button, disconnect IO0 from GND.)
    6. Upload sketch
+
+> \[!IMPORTANT]
+> ESP32 version Since the SD card uses IO2 as CS, you cannot upload software in the Arduino IDE when you insert the SD card, so you must remove the SD card when uploading new code
+>
+
 - **If the above method still fails to upload the sketch, please follow the method below to test whether the USB2TTL communication is normal.**
   1. Connect USB-C to PC
   2. Open the serial monitor and adjust the baud rate to 115200
   3. Press the RST button on the board to restart
   4. If you can see the startup information, it means that the USB2TTL communication is normal. If nothing is displayed in the serial monitor, it may be that the USB2TTL bridge is damaged.
+
 - **Upgrade modem firmware**
    1. [T-A76XX Upgrade docs](./docs/update_fw.md) / [Video](https://youtu.be/AZkm-Z7mKn8)
    2. [SIM7670G Upgrade issue](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/122) / [Video](https://www.youtube.com/watch?v=fAtrz_4DfVs)
+
 - **How do I connect the antenna correctly?**
    1. Check the silk screen on the board. **GPS** stands for GPS antenna. Only active GPS antenna can be connected here.
    2. **SIM** or **MAIN**, this is the main antenna interface of LTE
    3. **AUX** This is the diversity antenna for LTE, used to enhance the signal
+
 - **Solar input voltage range?**
    1. **4.4 ~ 6V** , As long as the voltage matches, the solar panel power is not limited
-- **Where can I access solar energy to charge the panel?**
-   1. Some boards(T-A7670,T-A7608,T-A7670-S3,T-A7608-S3) have their own solar battery input interface, you just need to connect the solar panel correctly according to the polarity.
-   2. If the board has an external VBAT pin, you can connect the solar rechargeable battery input to VBAT. Please be careful not to exceed the battery supply voltage, which is usually 4.2V.
-   3. If there is no VBAT, you can also connect it to the VBUS Pin, which is the input pin for USB power supply. Connecting it to VBUS will share the 5V of the USBC. Please note that when connecting an external charger, disconnect the USBC or disconnect the solar energy. enter
-- **How to use voice call example?**
-   1. Voice calls require external welding of the condenser microphone and speaker. Generally, the board silk screen is marked SPK. The speaker needs to be welded, and the MIC silk screen position needs to weld the condenser microphone. , **T-A7670** the microphone and speaker connections are located [issue#130](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/130)
+
+- **Where can I connect a solar panel to charge the battery?**
+  1. Some development boards (T-A7670, T-A7608, T-A7670-S3, T-A7608-S3) have a built-in solar cell input interface. Just connect the solar panel according to the correct polarity.
+  2. If the board has a battery and charging management, you can also connect an external power supply to the VBUS pin, which is the input pin of the USB power supply. Connecting to VBUS will share the 5V voltage of USB-C. Please note that when connecting an external charger, please disconnect USB-C.
+
 - **SIM767XG sendSMS and VoiceCall?**
    1. Although the manual of SIM767XG states that it has the functions of making voice calls and sending text messages, the current firmware does not support it.
+
 - **Unable to detect SIMCard?**
    1. All SIM series need to insert the SIMCard into the board first and then power on to detect the SIM card. If the order is reversed, it will report that the SIMCard cannot be detected.
-- **For ESP32S3 users , If you use external power supply instead of USBC, please turn off the CDC option. This is because the board will wait for USB access when it starts.**
+
+- **For ESP32S3 users, if you use external power instead of USB-C, please turn off the CDC option. This is because the board will wait for USB access when it boots up (early versions, Arduino esp-core < 3.0)**
    1. For Arduino IDE users, it can be turned off in the options , Please note that turning off USB CDC will turn off Serial redirection to USBC. At this time, you will not see any Serial message output when opening the port from USBC, but output from GPIO43 and GPIO44.
 
     ```c
@@ -219,7 +231,7 @@
 
    2. For Platformio users, you can add the following compilation flags in the ini file
 
-    ```c
+    ```bash
     build_flags =
         ; Enable UARDUINO_USB_CDC_ON_BOOT will start printing and wait for terminal access during startup
         ; -DARDUINO_USB_CDC_ON_BOOT=1
@@ -227,18 +239,21 @@
         ; Enable UARDUINO_USB_CDC_ON_BOOT will turn off printing and will not block when using the battery
         -UARDUINO_USB_CDC_ON_BOOT
     ```
+
 - **How to release the limitations of ESP32-WROVER-E GPIO12?**
   1. Since the ESP32-WROVER-E module is used, the internal flash voltage of the module is 3.3V by default. IO12 controls the startup flash startup voltage. If the external device connected to IO12 defaults to the HIGH level, then the startup will fall into an infinite restart. ,
   Two solutions,
-  1. Replace the IO port and connect the default low-level device to IO12
-  2. Use espefuse to forcefully set the flash voltage to 3.3V. For details, please refer [here](https://docs.espressif.com/projects/esptool/en/latest/esp32/espefuse/set-flash-voltage-cmd.html#set-flash-voltage), this can only be set once, and cannot be set incorrectly. If the setting is incorrect, the module will never start.
+  2. Replace the IO port and connect the default low-level device to IO12
+  3. Use espefuse to forcefully set the flash voltage to 3.3V. For details, please refer [here](https://docs.espressif.com/projects/esptool/en/latest/esp32/espefuse/set-flash-voltage-cmd.html#set-flash-voltage), this can only be set once, and cannot be set incorrectly. If the setting is incorrect, the module will never start.
 
-- **Network registration denied?**
-   2. When the network registration is refused, please check whether the APN is set correctly. For details, please refer to [issues104](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/104)
+- **What the onboard switch does**
+  - When using the internal battery pack, the switch will work normally to power/power down the board. However, if an external battery pack is used and connected to the VBAT pin, the switch will be bypassed, meaning the only way to shut down is to disconnect the battery.
+  - The switch is only for battery power and has no effect when plugged into USB
 
-- **Can't use 2G(GSM)?**
-- LilyGo has launched a separate 4G(LTE) version that can only use 4G(LTE) network. Please check whether it is a separate 4G(LTE) version during ordering.
-
+- **About VBUS Pin**
+  - VBUS Pin and USB-C are on the same line. Only when USB-C is connected, VBUS has voltage
+  - When only the battery is connected, VBUS has no voltage output
+  - If you want to connect an external power supply without connecting USB-C, VBUS Pin is the only voltage input pin. Please note that the maximum input of VBUS Pin is 5V, do not exceed 5V
 
 # 7️⃣Resource
 
@@ -278,9 +293,14 @@
    - [T-Call-A7670 DWG](./dimensions/T-Call-A7670-V1.0.dwg)
    - [T-SIM7672-S3 DWG](./dimensions/T-SIM7670G-S3-V1.0.dwg)
 
-
-
-
+6. Schematic
+   - [T-A7670X schematic](./schematic/T-A7670X-V1.1.pdf)
+   - [T-Call-A7670X schematic](./schematic/T-Call-A7670-V1.0.pdf)
+   - [T-A7608 schematic](./schematic/T-A7608X-V1.0.pdf)
+   - [T-A7608-S3 schematic](./schematic/T-A7608-S3-V1.0.pdf)
+   - [T-SIM7670G-S3 schematic](./schematic/T-SIM767XG-S3-V1.0.pdf)
+   - [T-PCIE-A7670 schematic](https://github.com/Xinyuan-LilyGO/LilyGo-T-PCIE/blob/master/schematic/A7670.pdf)
+   - [T-ETH-ELite schematic](https://github.com/Xinyuan-LilyGO/LilyGO-T-ETH-Series/blob/master/schematic/T-ETH-ELite-LTE-Shield.pdf)
 
 
 
