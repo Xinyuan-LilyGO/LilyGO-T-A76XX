@@ -7,21 +7,22 @@
 
 # 1️⃣ Quickly diagnose hardware
 
-| Product                 | GPS Test Firmware                               | Network Test Firmware                    | NMEA Output                                                   |
-| ----------------------- | ----------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------- |
-| [T-A7670X][1]           | [firmware](./T-A7670X_GPS_NMEA_Parse.bin)       | [firmware](./T-A7670X_Network.bin)       | [firmware](./GPS_NMEA_Output_T-A7608X-DC-S3_20240813.bin)     |
-| [T-Call-A7670X V1.1][2] | [firmware](./T-Call-A7670X_GPS_NMEA_Parse.bin)  | [firmware](./T-Call-A7670X_Network.bin)  | [firmware](./GPS_NMEA_Output_T-Call-A7670X-V1-1_20240813.bin) |
-| [T-A7608][3]            | [firmware](./T-A7608X_GPS_NMEA_Parse.bin)       | [firmware](./T-A7608X_Network.bin)       | [firmware](./GPS_NMEA_Output_T-A7608X_20240813.bin)           |
-| [T-A7608-DC-S3][4]      | [firmware](./T-A7608X-DC-S3_GPS_NMEA_Parse.bin) | [firmware](./T-A7608X-DC-S3_Network.bin) | [firmware](./GPS_NMEA_Output_T-A7608X-DC-S3_20240813.bin)     |
-| [T-A7608-S3][5]         | [firmware](./T-A7608X-S3_GPS_NMEA_Parse.bin)    | [firmware](./T-A7608X-S3_Network.bin)    | [firmware](./GPS_NMEA_Output_T-A7608X-S3_20240813.bin)        |
-| [T-SIM7672G-S3][6]      | [firmware](./T-SIM7672G_GPS_NMEA_Parse.bin)     | [firmware](./T-SIM7672G_Network.bin)     | [firmware](./GPS_NMEA_Output_T-SIM7672G_20240813.bin)         |
+| Product            | GPS Test Firmware                               | Network Test Firmware                    | NMEA Output                                                   |
+| ------------------ | ----------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------- |
+| [T-A7670X][1]      | [firmware](./T-A7670X_GPS_NMEA_Parse.bin)       | [firmware](./T-A7670X_Network.bin)       | [firmware](./GPS_NMEA_Output_T-A7608X-DC-S3_20240813.bin)     |
+| [T-Call-A7670X][2] | [firmware](./T-Call-A7670X_GPS_NMEA_Parse.bin)  | [firmware](./T-Call-A7670X_Network.bin)  | [firmware](./GPS_NMEA_Output_T-Call-A7670X-V1-0_20240813.bin) |
+| [T-A7608][3]       | [firmware](./T-A7608X_GPS_NMEA_Parse.bin)       | [firmware](./T-A7608X_Network.bin)       | [firmware](./GPS_NMEA_Output_T-A7608X_20240813.bin)           |
+| [T-A7608-S3][5]    | [firmware](./T-A7608X-S3_GPS_NMEA_Parse.bin)    | [firmware](./T-A7608X-S3_Network.bin)    | [firmware](./GPS_NMEA_Output_T-A7608X-S3_20240813.bin)        |
+| [T-SIM7670G-S3][6] | [firmware](./T-SIM7670G_GPS_NMEA_Parse.bin)     | [firmware](./T-SIM7670G_Network.bin)     | [firmware](./GPS_NMEA_Output_T-SIM7670G_20240813.bin)         |
+
+<!-- | [T-A7608-DC-S3][4] | [firmware](./T-A7608X-DC-S3_GPS_NMEA_Parse.bin) | [firmware](./T-A7608X-DC-S3_Network.bin) | [firmware](./GPS_NMEA_Output_T-A7608X-DC-S3_20240813.bin)     | -->
 
 [1]: https://www.lilygo.cc/products/t-sim-a7670e
-[2]: https://www.lilygo.cc
+[2]: https://www.lilygo.cc/products/t-call-v1-4
 [3]: https://www.lilygo.cc/products/t-a7608e-h
 [4]: https://www.lilygo.cc
-[5]: https://www.lilygo.cc
-[6]: https://www.lilygo.cc
+[5]: https://lilygo.cc/products/t-a7608e-h
+[6]: https://www.lilygo.cc/products/t-sim-7670g-s3
 
 ## Use ESP Download Tool
 
@@ -38,12 +39,16 @@
 
 # 2️⃣FAQ
 
-- Can't upload any sketch，Please enter the upload mode manually.
+- **Can't upload any sketch，Please enter the upload mode manually.**
    1. Connect the board via the USB cable
    2. Press and hold the BOOT button , While still pressing the BOOT button (If there is no BOOT button, you need to use wires to connect GND and IO0 together.)
    3. Press RST button
    4. Release the RST button
    5. Release the BOOT button (If there is no BOOT button, disconnect IO0 from GND.)
    6. Upload sketch
+
+> \[!IMPORTANT]
+> ESP32 version Since the SD card uses IO2 as CS, you cannot upload software in the Arduino IDE when you insert the SD card, so you must remove the SD card when uploading new code
+>
 
 
