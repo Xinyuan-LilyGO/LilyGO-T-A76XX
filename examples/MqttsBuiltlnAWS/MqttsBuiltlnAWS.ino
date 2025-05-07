@@ -222,6 +222,10 @@ void setup()
     String ipAddress = modem.getLocalIP();
     Serial.print("Network IP:"); Serial.println(ipAddress);
 
+    // Check firmware version
+    modem.sendAT("+SIMCOMATI");
+    modem.waitResponse();
+
     // Initialize MQTT, use SSL
     modem.mqtt_begin(true);
 
@@ -266,6 +270,18 @@ void loop()
 
 /*
 TEST WITH
+
+20250507:
+ISSUE: https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/245#issuecomment-2854747063
+Manufacturer: INCORPORATED
+Model: A7670E-FASE
+Revision: A011B07A7670M7_F
+A7670M7_B07V01_240927
+QCN:
+IMEI: XXXXXXXXXXXXXXXXX
+MEID:
++GCAP: +CGSM,+FCLASS,+DS
+DeviceInfo:
 
 20240821:
 A7670E-FASE: PN:S2-10AAW-Z319S
