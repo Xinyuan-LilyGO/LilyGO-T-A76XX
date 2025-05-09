@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-05-24
  * @record    https://youtu.be/2cjNsYcU6TU
- * @note      T-A7608 & T-A7608-S3 VBUS of the modem is connected to VUSB.
+ * @note      T-A7608 & T-A7608-S3 & T-A7670x VBUS of the modem is connected to VBUS.
  *            When using USB power supply, the modem cannot be set to sleep mode. Please see README for details.
  */
 #include "utilities.h"
@@ -118,6 +118,8 @@ void setup()
 
     delay(5000);
 
+    // If it doesn't sleep, please see README to remove the resistor, which is only needed when USB-C is used for power supply.
+    // https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/tree/main/examples/ModemSleep
     Serial.println("Check modem response .");
     while (modem.testAT()) {
         Serial.print("."); delay(500);
