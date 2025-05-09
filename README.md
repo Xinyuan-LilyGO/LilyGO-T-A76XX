@@ -92,6 +92,9 @@
 | SimHatCurrentSensor[3]          | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
 | SimHatOneWireSensor[3]          | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
 | SimHatRelay[3]                  | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
+| SimHatRS485[3]                  | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
+| SimHatCanBusRecv[3]             | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
+| SimHatCanBusSend[3]             | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
 | ULP_Monitor                     | ✅                 | ✅                  | ❌                  | ✅               | ✅                 | ❌               |
 | Traccar(Modern GPS Tracking)    | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
 
