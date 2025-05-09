@@ -9,10 +9,18 @@
 
 ## FlashTools
 
-* [A7670X//A7608X Flash Tools](https://drive.google.com/drive/folders/1-g62XMu5g_O6CzTG5M1eAE5d3Q_mhWlV?usp=sharing)
+> \[!IMPORTANT]
+> [A76XX_A79XX_MADL V1.13 Only for Update] HAS BUG DON'T USE THIS TOOL ,PLEASE USE V1.32 VERSION UPDATE TOOLS
+>
+
+* [A7670X//A7608X Flash Tools](https://drive.google.com/file/d/12nt5-wcsUT6bRaEhfOMBSq0EhOl8R2by/view?usp=sharing)
 * [SIM7670G Flash Tools](https://drive.google.com/file/d/1-CHQOXQhCJRr1S8rP_AGHVWGqE823wem/view?usp=sharing)
 
 ## Firmware
+
+### A7670E-LNXY-UBL No GPS,No Voice,No SMS
+
+* [A7670E-LNXY-UBL 23124B03](https://drive.google.com/file/d/12i1YNPVsygzwKhNnboiGVRn_nG6QulQA/view?usp=sharing)
 
 ### A7670G-LLSE No GPS
 
