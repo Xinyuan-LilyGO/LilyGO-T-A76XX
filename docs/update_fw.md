@@ -12,6 +12,7 @@
 > \[!IMPORTANT]
 > [A76XX_A79XX_MADL V1.13 Only for Update] HAS BUG DON'T USE THIS TOOL ,PLEASE USE V1.32 VERSION UPDATE TOOLS
 >
+> Before upgrading, please send "AT+SIMCOMATI" to check the hardware version. If the wrong version of firmware is written, the modem may be damaged.
 
 * [A7670X//A7608X Flash Tools](https://drive.google.com/file/d/12nt5-wcsUT6bRaEhfOMBSq0EhOl8R2by/view?usp=sharing)
 * [SIM7670G Flash Tools](https://drive.google.com/file/d/1-CHQOXQhCJRr1S8rP_AGHVWGqE823wem/view?usp=sharing)
@@ -90,8 +91,6 @@
 * [A7608SA-H A50C4B13](https://drive.google.com/file/d/1-LsgDug-Zz_0kU96HlCGtfks3ruvjcQb/view?usp=sharing)
 
 ------------------------
-
-!!! ** Before upgrading, please send `AT+SIMCOMATI` to check the hardware version, Modem will brick if wrong version firmware is written
 
 **Please provide the information in the QR code on the modem to LilyGo to confirm the firmware version.**
 
