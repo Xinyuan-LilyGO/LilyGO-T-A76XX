@@ -16,6 +16,9 @@
 // If defined, cancel shallow sleep and use delay to replace shallow sleep
 // #define DEBUG_SKETCH
 
+// For external LED connection to observe status
+// #define EXT_LED_PIN     32
+
 #define REPORT_LOCATION_RATE_SECOND     20
 
 #include "utilities.h"
@@ -141,7 +144,8 @@ bool loopGPS(GPSInfo &info)
 
 void modem_enter_sleep(uint32_t ms)
 {
-    Serial.println("Enter modem sleep mode!");
+    Serial.printf("Enter modem sleep mode,Will wake up in %u seconds\n", ms / 1000);
+
 #ifdef BOARD_LED_PIN
     digitalWrite(BOARD_LED_PIN, LOW);
 #endif
@@ -152,8 +156,21 @@ void modem_enter_sleep(uint32_t ms)
     if (!modem.sleepEnable(true)) {
         Serial.println("modem sleep failed!");
     } else {
-        Serial.println("Modem enter sleep modem!");
+        Serial.println("Modem enter sleep modem successes!");
     }
+
+    // debug
+#if 0
+    Serial.println("Check modem response .");
+    while (modem.testAT()) {
+        Serial.print("."); delay(500);
+    }
+    Serial.println("Modem is not response ,modem has sleep !");
+
+    Serial.flush();
+
+    delay(100);
+#endif
 
     light_sleep_delay(ms);
 
@@ -175,6 +192,12 @@ void setup()
     Serial.begin(115200); // Set console baud rate
     Serial.println("Start Sketch");
 
+#ifdef EXT_LED_PIN
+    pinMode(EXT_LED_PIN, OUTPUT);
+    digitalWrite(EXT_LED_PIN, HIGH);
+#endif
+
+
 #ifdef BOARD_LED_PIN
     pinMode(BOARD_LED_PIN, OUTPUT);
     digitalWrite(BOARD_LED_PIN, LOW);
@@ -185,6 +208,8 @@ void setup()
 #ifdef BOARD_POWERON_PIN
     pinMode(BOARD_POWERON_PIN, OUTPUT);
     digitalWrite(BOARD_POWERON_PIN, HIGH);
+    gpio_hold_en((gpio_num_t )BOARD_POWERON_PIN);
+    gpio_deep_sleep_hold_en();
 #endif
 
     // Set modem reset pin ,reset modem
@@ -193,6 +218,8 @@ void setup()
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL); delay(100);
     digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL); delay(2600);
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+    gpio_hold_en((gpio_num_t)MODEM_RESET_PIN);
+    gpio_deep_sleep_hold_en();
 #endif
 
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);
@@ -370,7 +397,7 @@ void setup()
 #ifndef TINY_GSM_MODEM_SIM7672
     // GPS acceleration only supports A7670X/A7608X (excluding A7670G and other versions that do not support positioning).
     // SIM7670G does not support GPS acceleration function
-    Serial.println("GPS acceleration is enabled");
+    Serial.print("GPS acceleration is enable");
     if (!modem.enableAGPS()) {
         Serial.println(" failed !!!");
     } else {
@@ -384,7 +411,26 @@ void setup()
 void loop()
 {
     GPSInfo info;
+
+#ifdef EXT_LED_PIN
+    digitalWrite(EXT_LED_PIN, HIGH);
+#endif
+
+    // Check if the modem is responsive, otherwise reboot
+    bool isPowerOn = modem.testAT(3000);
+    if (!isPowerOn) {
+        Serial.println("Power Off , restart device");
+        Serial.flush(); delay(100);
+        esp_restart();
+    }
+
     bool rlst = loopGPS(info);
+
+
+#ifdef EXT_LED_PIN
+    digitalWrite(EXT_LED_PIN, LOW);
+#endif
+
     if (!rlst) {
         // If positioning is not successful, set ESP to enter light sleep mode to save power consumption
         light_sleep_delay(15000);
