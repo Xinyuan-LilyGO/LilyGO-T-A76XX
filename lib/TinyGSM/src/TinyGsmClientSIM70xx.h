@@ -442,9 +442,9 @@ class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType>>,
     return true;
   }
 
-  bool disableGPSImpl(int8_t power_en_pin ,uint8_t disbale_level) {
+  bool disableGPSImpl(int8_t power_en_pin ,uint8_t disable_level) {
     if(power_en_pin != -1){
-      thisModem().sendAT("+CGPIO=0,",power_en_pin,",1,",disbale_level);
+      thisModem().sendAT("+CGPIO=0,",power_en_pin,",1,",disable_level);
       thisModem().waitResponse();
     } 
     thisModem().sendAT(GF("+CGNSPWR=0"));

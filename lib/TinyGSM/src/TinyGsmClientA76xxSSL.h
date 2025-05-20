@@ -21,7 +21,7 @@
 #include "TinyGsmTCP.tpp"
 #include "TinyGsmSSL.tpp"
 #include "TinyGsmMqttA76xx.h"
-#include "TinyGsmHttpsA76xx.h"
+#include "TinyGsmHttpsComm.h"
 
 // Websocket callback function
 typedef void (*websocket_cb_t)(const uint8_t* buffer, size_t length);
@@ -31,12 +31,12 @@ class TinyGsmA76xxSSL : public TinyGsmA76xx<TinyGsmA76xxSSL>,
                         public TinyGsmTCP<TinyGsmA76xxSSL, TINY_GSM_MUX_COUNT>,
                         public TinyGsmSSL<TinyGsmA76xxSSL>,
                         public TinyGsmMqttA76xx<TinyGsmA76xxSSL, TINY_GSM_MQTT_CLI_COUNT>,
-                        public TinyGsmHttpsA76xx<TinyGsmA76xxSSL> {
+                        public TinyGsmHttpsComm<TinyGsmA76xxSSL,ASR_A7670X> {
   friend class TinyGsmA76xx<TinyGsmA76xxSSL>;
   friend class TinyGsmTCP<TinyGsmA76xxSSL, TINY_GSM_MUX_COUNT>;
   friend class TinyGsmSSL<TinyGsmA76xxSSL>;
   friend class TinyGsmMqttA76xx<TinyGsmA76xxSSL, TINY_GSM_MQTT_CLI_COUNT>;
-  friend class TinyGsmHttpsA76xx<TinyGsmA76xxSSL>;
+  friend class TinyGsmHttpsComm<TinyGsmA76xxSSL,ASR_A7670X>;
 
   /*
    * Inner Client

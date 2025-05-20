@@ -26,12 +26,14 @@
 #include "TinyGsmTemperature.tpp"
 #include "TinyGsmTime.tpp"
 #include "TinyGsmNTP.tpp"
-
+#include "TinyGsmGPS_EX.tpp"
+#include "TinyGsmMqttA76xx.h"
+#include "TinyGsmHttpsComm.h"
 
 #define GSM_NL "\r\n"
 static const char GSM_OK[] TINY_GSM_PROGMEM    = "OK" GSM_NL;
 static const char GSM_ERROR[] TINY_GSM_PROGMEM = "ERROR" GSM_NL;
-#if defined       TINY_GSM_DEBUG
+#if defined TINY_GSM_DEBUG
 static const char GSM_CME_ERROR[] TINY_GSM_PROGMEM = GSM_NL "+CME ERROR:";
 static const char GSM_CMS_ERROR[] TINY_GSM_PROGMEM = GSM_NL "+CMS ERROR:";
 #endif
@@ -47,10 +49,17 @@ enum RegStatus {
 };
 
 enum NetworkMode {
-  MODEM_NETWORK_AUTO = 2,
-  MODEM_NETWORK_GSM = 13,
+  MODEM_NETWORK_AUTO  = 2,
+  MODEM_NETWORK_GSM   = 13,
   MODEM_NETWORK_WCDMA = 14,
-  MODEM_NETWORK_LTE = 38,
+  MODEM_NETWORK_LTE   = 38,
+};
+
+enum GPSWorkMode {
+  GNSS_USE_GLONASS  = _BV(0),
+  GNSS_USE_BEIDOU   = _BV(1),
+  GNSS_USE_GALILEAN = _BV(2),
+  GNSS_USE_QZSS     = _BV(3),
 };
 
 class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
@@ -63,7 +72,10 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
                        public TinyGsmNTP<TinyGsmSim7600>,
                        public TinyGsmBattery<TinyGsmSim7600>,
                        public TinyGsmTemperature<TinyGsmSim7600>,
-                       public TinyGsmCalling<TinyGsmSim7600> {
+                       public TinyGsmCalling<TinyGsmSim7600>,
+                       public TinyGsmGPSEx<TinyGsmSim7600>,
+                       public TinyGsmMqttA76xx<TinyGsmSim7600, TINY_GSM_MQTT_CLI_COUNT>,
+                       public TinyGsmHttpsComm<TinyGsmSim7600, QUALCOMM_SIM7600G> {
   friend class TinyGsmModem<TinyGsmSim7600>;
   friend class TinyGsmGPRS<TinyGsmSim7600>;
   friend class TinyGsmTCP<TinyGsmSim7600, TINY_GSM_MUX_COUNT>;
@@ -75,6 +87,9 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
   friend class TinyGsmBattery<TinyGsmSim7600>;
   friend class TinyGsmTemperature<TinyGsmSim7600>;
   friend class TinyGsmCalling<TinyGsmSim7600>;
+  friend class TinyGsmMqttA76xx<TinyGsmSim7600, TINY_GSM_MQTT_CLI_COUNT>;
+  friend class TinyGsmHttpsComm<TinyGsmSim7600, QUALCOMM_SIM7600G>;
+  friend class TinyGsmGPSEx<TinyGsmSim7600>;
 
   /*
    * Inner Client
@@ -219,20 +234,17 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
 
     sendAT("I");
     if (waitResponse(10000L, res) != 1) {
-        DBG("MODEM STRING NO FOUND!");
-        return name;
+      DBG("MODEM STRING NO FOUND!");
+      return name;
     }
-    int modelIndex = res.indexOf("Model:") + 6;
+    int modelIndex    = res.indexOf("Model:") + 6;
     int nextLineIndex = res.indexOf('\n', modelIndex);
     if (nextLineIndex != -1) {
-        String modelString = res.substring(modelIndex, nextLineIndex);
-        modelString.trim();
-        if(modelString.startsWith("SIM7600")){
-          name = modelString;
-          DBG("### Modem:", name);
-        }
+      String modelString = res.substring(modelIndex, nextLineIndex);
+      int    start       = modelString.indexOf("SIM7600");
+      if (start != -1) { name = modelString.substring(start); }
     } else {
-        DBG("Model string not found.");
+      DBG("Model string not found.");
     }
     return name;
   }
@@ -291,18 +303,12 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
  public:
   String getNetworkModes() {
     int16_t mode = getNetworkMode();
-   switch (mode)
-    {
-    case MODEM_NETWORK_AUTO:
-      return "AUTO";
-    case MODEM_NETWORK_GSM:
-      return "GSM";
-    case MODEM_NETWORK_WCDMA:
-      return "WCDMA";
-    case MODEM_NETWORK_LTE:
-      return "LTE";
-    default:
-      break;
+    switch (mode) {
+      case MODEM_NETWORK_AUTO: return "AUTO";
+      case MODEM_NETWORK_GSM: return "GSM";
+      case MODEM_NETWORK_WCDMA: return "WCDMA";
+      case MODEM_NETWORK_LTE: return "LTE";
+      default: break;
     }
     return "UNKNOWN";
   }
@@ -316,15 +322,12 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
   }
 
   bool setNetworkMode(NetworkMode mode) {
-    switch (mode)
-    {
-    case MODEM_NETWORK_AUTO:
-    case MODEM_NETWORK_GSM:
-    case MODEM_NETWORK_WCDMA:
-    case MODEM_NETWORK_LTE:
-      break;
-    default:
-      return false;
+    switch (mode) {
+      case MODEM_NETWORK_AUTO:
+      case MODEM_NETWORK_GSM:
+      case MODEM_NETWORK_WCDMA:
+      case MODEM_NETWORK_LTE: break;
+      default: return false;
     }
     sendAT(GF("+CNMP="), mode);
     return waitResponse() == 1;
@@ -332,21 +335,64 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
 
   String getLocalIPImpl() {
     sendAT(GF("+IPADDR"));  // Inquire Socket PDP address
-    // sendAT(GF("+CGPADDR=1"));  // Show PDP address
-    String res;
-    if (waitResponse(10000L, res) != 1) { return ""; }
-    res.replace(GSM_NL "OK" GSM_NL, "");
-    res.replace(GSM_NL, "");
-    res.trim();
+    String ipAddress = "NOT OPEN NETWORK";
+    int    res       = waitResponse(GF("+IPADDR: "), GF("+IP ERROR: Network not opened"));
+    if (res == 1) {
+      ipAddress = stream.readStringUntil('\n');
+    } else if (res == 2) {
+      waitResponse();
+    }
+    return ipAddress;
+  }
+
+  bool setNetworkActive() {
+    sendAT(GF("+NETOPEN"));
+    int res = waitResponse(GF("+NETOPEN: 0"), GF("+IP ERROR: Network is already opened"));
+    if (res == 2) {
+      // DBG("> Network has open......");
+      waitResponse();
+    }
+    if (res != 1 && res != 2) { return false; }
+    return true;
+  }
+
+  bool setNetworkDeactivate() {
+    sendAT(GF("+NETCLOSE"));
+    if (waitResponse() != 1) { return false; }
+    int res = waitResponse(GF("+NETCLOSE: 0"), GF("+NETCLOSE: 2"));
+    if (res != 1 && res != 2) { return false; }
+    return true;
+  }
+
+  bool getNetworkActive() {
+    sendAT(GF("+NETOPEN?"));
+    int res = waitResponse(GF("+NETOPEN: 1"));
+    if (res == 1) { return true; }
+    return false;
+  }
+
+  String getNetworkAPN() {
+    sendAT("+CGDCONT?");
+    if (waitResponse(GF(GSM_NL "+CGDCONT: ")) != 1) { return "ERROR"; }
+    streamSkipUntil(',');
+    streamSkipUntil(',');
+    streamSkipUntil('\"');
+    String res = stream.readStringUntil('\"');
+    waitResponse();
+    if (res == "") { res = "APN IS NOT SET"; }
     return res;
+  }
+
+  bool setNetworkAPN(String apn) {
+    sendAT(GF("+CGDCONT=1,\"IP\",\""), apn, "\"");
+    return waitResponse() == 1;
   }
 
   /*
    * GPRS functions
    */
  protected:
-  bool gprsConnectImpl(const char* apn, const char* user = NULL,
-                       const char* pwd = NULL) {
+  bool gprsConnectImpl(const char* apn, const char* user = NULL, const char* pwd = NULL) {
     gprsDisconnect();  // Make sure we're not connected first
 
     // Define the PDP context
@@ -471,44 +517,55 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
    */
  protected:
   // enable GPS
-  bool enableGPSImpl(int8_t power_en_pin ,uint8_t enable_level) {
-    if(power_en_pin == GSM_MODEM_AUX_POWER){
+  bool enableGPSImpl(int8_t power_en_pin, uint8_t enable_level) {
+    if (power_en_pin == GSM_MODEM_AUX_POWER) {
       sendAT("+CVAUXV=2800");
       waitResponse();
       sendAT("+CVAUXS=1");
       waitResponse();
-    }else if(power_en_pin != -1){
-      sendAT("+CGDRT=",power_en_pin,",1");
+    } else if (power_en_pin != -1) {
+      sendAT("+CGDRT=", power_en_pin, ",1");
       waitResponse();
-      sendAT("+CGSETV=",power_en_pin,",",enable_level);
+      sendAT("+CGSETV=", power_en_pin, ",", enable_level);
       waitResponse();
-    } 
+    }
+    if (isEnableGPSImpl()) { return true; }
     sendAT(GF("+CGPS=1"));
     if (waitResponse() != 1) { return false; }
     return true;
   }
 
-  bool disableGPSImpl(int8_t power_en_pin ,uint8_t disbale_level) {
-    if(power_en_pin == GSM_MODEM_AUX_POWER){
+  bool disableGPSImpl(int8_t power_en_pin, uint8_t disable_level) {
+    bool isEnabled = isEnableGPSImpl();
+    if (power_en_pin == GSM_MODEM_AUX_POWER) {
       sendAT("+CVAUXS=0");
       waitResponse();
-    }else if(power_en_pin != -1){
-      sendAT("+CGSETV=",power_en_pin,",",disbale_level);
+    } else if (power_en_pin != -1) {
+      sendAT("+CGSETV=", power_en_pin, ",", disable_level);
       waitResponse();
-      sendAT("+CGDRT=",power_en_pin,",0");
+      sendAT("+CGDRT=", power_en_pin, ",0");
       waitResponse();
-    } 
+    }
     sendAT(GF("+CGPS=0"));
     if (waitResponse() != 1) { return false; }
-    return waitResponse(30000UL,GF("+CGPS: 0")) == 1;
+    if (isEnabled) {
+      return waitResponse(60000UL, GF("+CGPS: 0")) == 1;
+    } else {
+      return true;
+    }
   }
 
-  bool isEnableGPSImpl(){
+  bool isEnableGPSImpl() {
     sendAT(GF("+CGPS?"));
-    if (waitResponse("+CGPS:") != 1) { return false; }
-    bool running = 1 == streamGetIntBefore(','); 
+    if (waitResponse(60000UL, "+CGPS:") != 1) { return false; }
+    bool running = 1 == streamGetIntBefore(',');
     waitResponse();
     return running;
+  }
+
+  bool enableAGPSImpl() {
+    // TODO:
+    return false;
   }
 
   // get the RAW GPS output
@@ -521,9 +578,107 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
     return res;
   }
 
+  bool gpsColdStartImpl() {
+    sendAT(GF("+CGPSCOLD"));
+    if (waitResponse(10000L) != 1) { return false; }
+    return true;
+  }
+
+  bool gpsWarmStartImpl() {
+    sendAT(GF("+CGPSWARM"));
+    if (waitResponse(10000L) != 1) { return false; }
+    return true;
+  }
+
+  bool gpsHotStartImpl() {
+    sendAT(GF("+CGPSHOT"));
+    if (waitResponse(10000L) != 1) { return false; }
+    return true;
+  }
+
+  bool getGPS_ExImpl(GPSInfo& info) {
+    float lat = 0;
+    float lon = 0;
+    // +CGNSSINFO:[<mode>],
+    // [<GPS-SVs>],[BEIDOU-SVs],[<GLONASS-SVs>],[<GALILEO-SVs>],
+    // [<lat>],[<N/S>],[<log>],[<E/W>],[<date>],[<UTC-time>],[<alt>],[<speed>],[<course>],[<PDOP>],[HDOP],[VDOP]
+    sendAT(GF("+CGNSSINFO"));
+    if (waitResponse(GF(GSM_NL "+CGNSSINFO: ")) != 1) { return false; }
+
+    info.isFix = streamGetIntBefore(',');  // mode 2=2D Fix or 3=3DFix
+    if (info.isFix == 2 || info.isFix == 3) {
+      int16_t ret = -9999;
+      // GPS-SVs      satellite valid numbers
+      ret                    = streamGetIntBefore(',');
+      info.gps_satellite_num = ret != -9999 ? ret : 0;
+      // BEIDOU-SVs   satellite valid numbers
+      ret                       = streamGetIntBefore(',');
+      info.beidou_satellite_num = ret != -9999 ? ret : 0;
+      // GLONASS-SVs  satellite valid numbers
+      ret                        = streamGetIntBefore(',');
+      info.glonass_satellite_num = ret != -9999 ? ret : 0;
+      // Latitude in ddmm.mmmmmm
+      lat = streamGetFloatBefore(',');
+      // N/S Indicator, N=north or S=south
+      info.NS_indicator = stream.read();
+      streamSkipUntil(',');
+      // Longitude in ddmm.mmmmmm
+      lon = streamGetFloatBefore(',');
+      // E/W Indicator, E=east or W=west
+      info.EW_indicator = stream.read();
+      streamSkipUntil(',');
+      // Date. Output format is ddmmyy
+      // Two digit day
+      info.day = streamGetIntLength(2);
+      // Two digit month
+      info.month = streamGetIntLength(2);
+      // Two digit year
+      info.year = streamGetIntBefore(',');
+      // UTC Time. Output format is hhmmss.s
+      // Two digit hour
+      info.hour = streamGetIntLength(2);
+      // Two digit minute
+      info.minute = streamGetIntLength(2);
+      // 4 digit second with subseconds
+      float secondWithSS = streamGetFloatBefore(',');
+      info.second        = static_cast<int>(secondWithSS);
+      // MSL Altitude. Unit is meters
+      info.altitude = streamGetFloatBefore(',');
+      // Speed Over Ground. Unit is knots.
+      info.speed = streamGetFloatBefore(',');
+      // Course Over Ground. Degrees.
+      info.course = streamSkipUntil(',');
+      // After set, will report GPS every x seconds
+      streamSkipUntil(',');
+      // Position Dilution Of Precision
+      float pdop = streamGetFloatBefore(',');
+      info.PDOP  = pdop != -9999.0F ? pdop : 0;
+      // Horizontal Dilution Of Precision
+      float hdop = streamGetFloatBefore(',');
+      info.HDOP  = hdop != -9999.0F ? hdop : 0;
+      // Vertical Dilution Of Precision
+      float vdop = streamGetFloatBefore(',');
+      info.VDOP  = vdop != -9999.0F ? vdop : 0;
+      streamSkipUntil('\n');
+      waitResponse();
+      info.latitude = (floor(lat / 100) + fmod(lat, 100.) / 60) *
+          (info.NS_indicator == 'N' ? 1 : -1);
+      info.longitude = (floor(lon / 100) + fmod(lon, 100.) / 60) *
+          (info.EW_indicator == 'E' ? 1 : -1);
+
+
+      if (info.year < 2000) { info.year += 2000; }
+      return true;
+    }
+
+    waitResponse();
+    return false;
+  }
+
+
   // get GPS informations
-  bool getGPSImpl(uint8_t *status,float* lat, float* lon, float* speed = 0, float* alt = 0,
-                  int* vsat = 0, int* usat = 0, float* accuracy = 0,
+  bool getGPSImpl(uint8_t* status, float* lat, float* lon, float* speed = 0,
+                  float* alt = 0, int* vsat = 0, int* usat = 0, float* accuracy = 0,
                   int* year = 0, int* month = 0, int* day = 0, int* hour = 0,
                   int* minute = 0, int* second = 0) {
     sendAT(GF("+CGNSSINFO"));
@@ -565,30 +720,25 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
       iyear  = streamGetIntBefore(',');  // Two digit year
 
       // UTC Time. Output format is hhmmss.s
-      ihour = streamGetIntLength(2);  // Two digit hour
-      imin  = streamGetIntLength(2);  // Two digit minute
-      secondWithSS =
-          streamGetFloatBefore(',');  // 4 digit second with subseconds
+      ihour        = streamGetIntLength(2);      // Two digit hour
+      imin         = streamGetIntLength(2);      // Two digit minute
+      secondWithSS = streamGetFloatBefore(',');  // 4 digit second with subseconds
 
       ialt   = streamGetFloatBefore(',');  // MSL Altitude. Unit is meters
       ispeed = streamGetFloatBefore(',');  // Speed Over Ground. Unit is knots.
       streamSkipUntil(',');                // Course Over Ground. Degrees.
-      streamSkipUntil(',');  // After set, will report GPS every x seconds
+      streamSkipUntil(',');                // After set, will report GPS every x seconds
       iaccuracy = streamGetFloatBefore(',');  // Position Dilution Of Precision
-      streamSkipUntil(',');   // Horizontal Dilution Of Precision
-      streamSkipUntil(',');   // Vertical Dilution Of Precision
-      streamSkipUntil('\n');  // TODO(?) is one more field reported??
-      
-      if (status){
-          *status = fixMode;
-      }
+      streamSkipUntil(',');                   // Horizontal Dilution Of Precision
+      streamSkipUntil(',');                   // Vertical Dilution Of Precision
+      streamSkipUntil('\n');                  // TODO(?) is one more field reported??
+
+      if (status) { *status = fixMode; }
       // Set pointers
       if (lat != NULL)
-        *lat = (floor(ilat / 100) + fmod(ilat, 100.) / 60) *
-            (north == 'N' ? 1 : -1);
+        *lat = (floor(ilat / 100) + fmod(ilat, 100.) / 60) * (north == 'N' ? 1 : -1);
       if (lon != NULL)
-        *lon = (floor(ilon / 100) + fmod(ilon, 100.) / 60) *
-            (east == 'E' ? 1 : -1);
+        *lon = (floor(ilon / 100) + fmod(ilon, 100.) / 60) * (east == 'E' ? 1 : -1);
       if (speed != NULL) *speed = ispeed;
       if (alt != NULL) *alt = ialt;
       if (vsat != NULL) *vsat = ivsat;
@@ -609,28 +759,29 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
     return false;
   }
 
-  bool setGPSBaudImpl(uint32_t baud){
+  bool setGPSBaudImpl(uint32_t baud) {
     DBG("Modem does not support set GPS baudrate.");
     return true;
   }
 
-  // Range – 0 to 15
-  // Bit0 – GLONASS
-  // Bit1 – BEIDOU
-  // Bit2 – GALILEO
-  // Bit3 – QZSS
-  bool setGPSModeImpl(uint8_t mode){
-    sendAT("+CGNSSMODE=",mode,",1");
-    return waitResponse(1000UL) == 1;
+  // mode: See GPSWorkMode enum
+  bool setGPSModeImpl(uint8_t mode) {
+    // Set gnss mode must turn off gps model
+    disableGPSImpl(-1, -1);
+    sendAT("+CGNSSMODE=", mode, ",1");
+    bool rlst = waitResponse(1000UL) == 1;
+    enableGPSImpl(-1, -1);
+    log_d("set gpio mode : %d\n", rlst);
+    return rlst;
   }
 
   // 1 = 1HZ , other = 10HZ
-  bool setGPSOutputRateImpl(uint8_t rate_hz){
-    sendAT("+CGPSNMEARATE=",rate_hz == 1 ? 1 : 10);
+  bool setGPSOutputRateImpl(uint8_t rate_hz) {
+    sendAT("+CGPSNMEARATE=", rate_hz == 1 ? 1 : 10);
     return waitResponse(1000UL) == 1;
   }
 
-  bool enableNMEAImpl(){
+  bool enableNMEAImpl() {
     // sendAT("+CGPS=0");
     // waitResponse(1000UL);
     // waitResponse(30000UL,"+CGPS: 0");
@@ -646,19 +797,20 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
     return waitResponse(1000UL) == 1;
   }
 
-  bool disableNMEAImpl(){
+  bool disableNMEAImpl() {
     sendAT("+CGPSINFOCFG=0,31");
     return waitResponse(1000UL) == 1;
   }
 
-  bool configNMEASentenceImpl(bool CGA,bool GLL,bool GSA,bool GSV,bool RMC,bool VTG,bool ZDA,bool ANT){
+  bool configNMEASentenceImpl(bool CGA, bool GLL, bool GSA, bool GSV, bool RMC, bool VTG,
+                              bool ZDA, bool ANT) {
     (void)GLL;
     uint32_t mask = CGA ? _BV(0) : 0;
     mask |= GSA ? _BV(7) : 0;
     mask |= GSV ? _BV(6) : 0;
     mask |= RMC ? _BV(1) : 0;
     mask |= VTG ? _BV(4) : 0;
-    sendAT("+CGPSNMEA=" , mask);
+    sendAT("+CGPSNMEA=", mask);
     return waitResponse(1000UL) == 1;
   }
   /*
@@ -694,8 +846,7 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
 
   uint8_t getBattChargeStateImpl() TINY_GSM_ATTR_NOT_AVAILABLE;
 
-  bool getBattStatsImpl(uint8_t& chargeState, int8_t& percent,
-                        uint16_t& milliVolts) {
+  bool getBattStatsImpl(uint8_t& chargeState, int8_t& percent, uint16_t& milliVolts) {
     chargeState = 0;
     percent     = 0;
     milliVolts  = getBattVoltage();
@@ -721,8 +872,8 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
    * Client related functions
    */
  protected:
-  bool modemConnect(const char* host, uint16_t port, uint8_t mux,
-                    bool ssl = false, int timeout_s = 15) {
+  bool modemConnect(const char* host, uint16_t port, uint8_t mux, bool ssl = false,
+                    int timeout_s = 15) {
     if (ssl) { DBG("SSL not yet supported on this module!"); }
     // Make sure we'll be getting data manually on this connection
     sendAT(GF("+CIPRXGET=1"));
@@ -730,8 +881,7 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
 
     // Establish a connection in multi-socket mode
     uint32_t timeout_ms = ((uint32_t)timeout_s) * 1000;
-    sendAT(GF("+CIPOPEN="), mux, ',', GF("\"TCP"), GF("\",\""), host, GF("\","),
-           port);
+    sendAT(GF("+CIPOPEN="), mux, ',', GF("\"TCP"), GF("\",\""), host, GF("\","), port);
     // The reply is OK followed by +CIPOPEN: <link_num>,<err> where <link_num>
     // is the mux number and <err> should be 0 if there's no error
     if (waitResponse(timeout_ms, GF(GSM_NL "+CIPOPEN:")) != 1) { return false; }
@@ -782,8 +932,7 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
       buf[1] = stream.read();
       char c = strtol(buf, NULL, 16);
 #else
-      while (!stream.available() &&
-             (millis() - startMillis < sockets[mux]->_timeout)) {
+      while (!stream.available() && (millis() - startMillis < sockets[mux]->_timeout)) {
         TINY_GSM_YIELD();
       }
       char c = stream.read();
@@ -833,8 +982,7 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
    */
  public:
   // TODO(vshymanskyy): Optimize this!
-  int8_t waitResponse(uint32_t timeout_ms, String& data,
-                      GsmConstStr r1 = GFP(GSM_OK),
+  int8_t waitResponse(uint32_t timeout_ms, String& data, GsmConstStr r1 = GFP(GSM_OK),
                       GsmConstStr r2 = GFP(GSM_ERROR),
 #if defined TINY_GSM_DEBUG
                       GsmConstStr r3 = GFP(GSM_CME_ERROR),
@@ -942,8 +1090,7 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
     return waitResponse(timeout_ms, data, r1, r2, r3, r4, r5);
   }
 
-  int8_t waitResponse(GsmConstStr r1 = GFP(GSM_OK),
-                      GsmConstStr r2 = GFP(GSM_ERROR),
+  int8_t waitResponse(GsmConstStr r1 = GFP(GSM_OK), GsmConstStr r2 = GFP(GSM_ERROR),
 #if defined TINY_GSM_DEBUG
                       GsmConstStr r3 = GFP(GSM_CME_ERROR),
                       GsmConstStr r4 = GFP(GSM_CMS_ERROR),

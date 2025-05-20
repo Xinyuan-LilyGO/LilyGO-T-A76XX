@@ -80,7 +80,7 @@ typedef TinyGsmA76xxSSL::GsmClientSecureA76xxSSL    TinyGsmClientSecure;
 #include "TinyGsmClientA7608.h"
 typedef TinyGsmA7608                    TinyGsm;
 typedef TinyGsmA7608::GsmClientA7608 TinyGsmClient;
-#elif defined(TINY_GSM_MODEM_SIM7672)
+#elif defined(TINY_GSM_MODEM_SIM7672) || defined(TINY_GSM_MODEM_SIM7670G)
 #include "TinyGsmClientSIM7672.h"
 typedef TinyGsmSim7672                   TinyGsm;
 typedef TinyGsmSim7672::GsmClientSim7672 TinyGsmClient;

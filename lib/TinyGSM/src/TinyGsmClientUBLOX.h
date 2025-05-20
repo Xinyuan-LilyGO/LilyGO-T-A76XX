@@ -443,7 +443,7 @@ class TinyGsmUBLOX : public TinyGsmModem<TinyGsmUBLOX>,
     if (waitResponse(10000L, GF(GSM_NL "+UGPS:")) != 1) { return false; }
     return waitResponse(10000L) == 1;
   }
-  bool disableGPSImpl(int8_t power_en_pin ,uint8_t disbale_level) {
+  bool disableGPSImpl(int8_t power_en_pin ,uint8_t disable_level) {
     sendAT(GF("+UGPS=0"));
     if (waitResponse(10000L, GF(GSM_NL "+UGPS:")) != 1) { return false; }
     return waitResponse(10000L) == 1;

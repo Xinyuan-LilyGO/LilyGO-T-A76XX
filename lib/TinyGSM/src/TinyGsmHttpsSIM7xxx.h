@@ -85,11 +85,6 @@ public:
 
     void https_end()
     {
-        https_disconnect();
-    }
-
-    void https_disconnect()
-    {
         thisModem().sendAT("+SHDISC");
         thisModem().waitResponse(3000);
     }

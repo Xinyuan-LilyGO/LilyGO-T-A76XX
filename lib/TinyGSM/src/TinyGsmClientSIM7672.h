@@ -27,7 +27,7 @@
 #include "TinyGsmTime.tpp"
 #include "TinyGsmNTP.tpp"
 #include "TinyGsmMqttA76xx.h"
-#include "TinyGsmHttpsA76xx.h"
+#include "TinyGsmHttpsComm.h"
 #include "TinyGsmGPS_EX.tpp"
 
 #define GSM_NL "\r\n"
@@ -62,7 +62,7 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
                        public TinyGsmCalling<TinyGsmSim7672>,
                        public TinyGsmMqttA76xx<TinyGsmSim7672, TINY_GSM_MQTT_CLI_COUNT>,
                        public TinyGsmGPSEx<TinyGsmSim7672>,
-                       public TinyGsmHttpsA76xx<TinyGsmSim7672> 
+                       public TinyGsmHttpsComm<TinyGsmSim7672,QUALCOMM_SIM7670G> 
 {
   friend class TinyGsmModem<TinyGsmSim7672>;
   friend class TinyGsmGPRS<TinyGsmSim7672>;
@@ -76,7 +76,7 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
   friend class TinyGsmTemperature<TinyGsmSim7672>;
   friend class TinyGsmCalling<TinyGsmSim7672>;
   friend class TinyGsmMqttA76xx<TinyGsmSim7672, TINY_GSM_MQTT_CLI_COUNT>;
-  friend class TinyGsmHttpsA76xx<TinyGsmSim7672>;
+  friend class TinyGsmHttpsComm<TinyGsmSim7672,QUALCOMM_SIM7670G>;
   friend class TinyGsmGPSEx<TinyGsmSim7672>;
 
 
@@ -330,6 +330,23 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
     return false;
   }
 
+  String getNetworkAPN() {
+    sendAT("+CGDCONT?");
+    if (waitResponse(GF(GSM_NL "+CGDCONT: ")) != 1) { return "ERROR"; }
+    streamSkipUntil(',');
+    streamSkipUntil(',');
+    streamSkipUntil('\"');
+    String res = stream.readStringUntil('\"');
+    waitResponse();
+    if (res == "") { res = "APN IS NOT SET"; }
+    return res;
+  }
+
+  bool setNetworkAPN(String apn) {
+    sendAT(GF("+CGDCONT=1,\"IP\",\""), apn, "\"");
+    return waitResponse() == 1;
+  }
+  
   /*
   * Return code:
   *     -1 ping failed
@@ -519,9 +536,9 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
     return true;
   }
 
-  bool disableGPSImpl(int8_t power_en_pin ,uint8_t disbale_level) {
+  bool disableGPSImpl(int8_t power_en_pin ,uint8_t disable_level) {
     if(power_en_pin!= -1){
-      sendAT("+CGSETV=",power_en_pin,",",disbale_level);
+      sendAT("+CGSETV=",power_en_pin,",",disable_level);
       waitResponse();
       sendAT("+CGDRT=",power_en_pin,",0");
       waitResponse();

@@ -23,11 +23,11 @@ protected:
     uint32_t    bufferSize = 256;
     callback_t  callback;
     const char *cert_pem; /*!< SSL server certification, PEM format as string, if the client
-                           requires to verify server */
+                         requires to verify server */
     const char *client_cert_pem; /*!< SSL client certification, PEM format as string, if the
-                                  server requires to verify client */
+                                server requires to verify client */
     const char *client_key_pem;  /*!< SSL client key, PEM format as string, if the server
-                                  requires to verify client */
+                                requires to verify client */
     const char *will_topic;
     const char *will_msg;
     uint8_t     will_qos = 0;
@@ -95,21 +95,24 @@ public:
             }
 
             if (this->client_cert_pem) {
-                if (!thisModem().downloadCertificateImpl("deviceCert.crt", this->client_cert_pem)) {
+                if (!thisModem().downloadCertificateImpl("deviceCert.crt",
+                        this->client_cert_pem)) {
                     log_e("Download deviceCert failed!");
                     return false;
                 }
             }
 
             if (this->client_key_pem) {
-                if (!thisModem().downloadCertificateImpl("devicePrivateKey.crt", this->client_key_pem)) {
+                if (!thisModem().downloadCertificateImpl("devicePrivateKey.crt",
+                        this->client_key_pem)) {
                     log_e("Download devicePSK failed!");
                     return false;
                 }
             }
 
             if (this->client_key_pem && this->client_cert_pem) {
-                if (!thisModem().convertCertificateImpl(1, "deviceCert.crt", "devicePrivateKey.crt")) {
+                if (!thisModem().convertCertificateImpl(1, "deviceCert.crt",
+                                                        "devicePrivateKey.crt")) {
                     log_e("Convert deviceCert or client_key failed!");
                     return false;
                 }
@@ -126,6 +129,14 @@ public:
                 return false;
             }
 
+            if (this->cert_pem && !this->client_cert_pem) {
+                thisModem().sendAT("+SMSSL=1,", '"', "rootCA.pem", '"', ',', "\"\"");
+                if (thisModem().waitResponse() != 1) {
+                    log_e("Setting SMSSL failed!");
+                    return false;
+                }
+            }
+
             //! AT+SMSSL=<index>,<ca list>,<cert name> , depes AT+CSSLCFG
             //! <index>SSL status, range: 0-6
             //!     0 Not support SSL
@@ -140,17 +151,6 @@ public:
                     return false;
                 }
             }
-
-            // if (this->cert_pem) {
-            //     thisModem().sendAT("+SMSSL=1,", '"', "rootCA.pem", '"', ',', "\"\"");
-            //     if (thisModem().waitResponse() != 1) {
-            //         log_e("Setting SMSSL failed!");
-            //         return false;
-            //     }
-            // }
-
-
-
         } else {
             thisModem().sendAT("+SMSSL=0");
             thisModem().waitResponse();
@@ -177,40 +177,22 @@ public:
             thisModem().sendAT("+SMCONF=\"CLIENTID\",", clientID);
             if (thisModem().waitResponse(3000) != 1) return false;
         }
-        // else {
-        //   thisModem().sendAT("+SMCONF=\"CLIENTID\",", "\"\"");
-        // }
-        // if (thisModem().waitResponse(3000) != 1) return false;
+
 
         if (username) {
             thisModem().sendAT("+SMCONF=\"USERNAME\",\"", username, "\"");
             if (thisModem().waitResponse(3000) != 1) return false;
         }
-        // else {
-        //   thisModem().sendAT("+SMCONF=\"USERNAME\",\"", "\"");
-        // }
-        // if (thisModem().waitResponse(3000) != 1) return false;
+
 
         if (password) {
             thisModem().sendAT("+SMCONF=\"PASSWORD\",\"", password, "\"");
             if (thisModem().waitResponse(3000) != 1) return false;
         }
-        // else {
-        //   thisModem().sendAT("+SMCONF=\"PASSWORD\",\"", "\"");
-        // }
-        // if (thisModem().waitResponse(3000) != 1) return false;
 
         thisModem().sendAT("+SMCONF=URL,", "\"", server, "\",", port);
         if (thisModem().waitResponse(3000) != 1) return false;
 
-      if (this->cert_pem) {
-                thisModem().sendAT("+SMSSL=1,", '"', "rootCA.pem", '"', ',', "\"\"");
-                if (thisModem().waitResponse() != 1) {
-                    log_e("Setting SMSSL failed!");
-                    return false;
-                }
-            }
-            
         // ! Will message
         if (will_msg && will_topic) {
             thisModem().sendAT("+SMCONF=\"TOPIC\",", will_topic);
@@ -230,16 +212,16 @@ public:
         return thisModem().waitResponse(60000UL) == 1;
     }
 
-    bool mqtt_publish(uint8_t clientIndex, const char* topic, const char* playload,
+    bool mqtt_publish(uint8_t clientIndex, const char* topic, const char* payload,
                       uint8_t qos = 0, uint32_t timeout = 60)
     {
         // AT+SMPUB=<topic>,<contentlength>,<qos>,<retain>
         //  publish message topic
-        thisModem().sendAT("+SMPUB=\"", topic, "\",", strlen(playload), ",", qos, ",", "1");
+        thisModem().sendAT("+SMPUB=\"", topic, "\",", strlen(payload), ",", qos, ",", "1");
         if (thisModem().waitResponse(10000UL, ">") != 1) {
             return false;
         }
-        thisModem().stream.write(playload);
+        thisModem().stream.write(payload);
         thisModem().stream.println();
         // Wait return OK
         return thisModem().waitResponse() == 1;
@@ -305,14 +287,14 @@ public:
     bool mqtt_handle(uint32_t timeout = 100)
     {
         if (thisModem().waitResponse(timeout, "+SMSUB:") == 1) {
-            size_t topicSize    = 0;
-            size_t playloadSize = 0;
-            topicSize           = thisModem().stream.readBytesUntil(',', buffer, bufferSize);
-            playloadSize        = thisModem().stream.readBytesUntil(',', buffer + topicSize,
-                                  bufferSize - topicSize - 1);
+            size_t topicSize   = 0;
+            size_t payloadSize = 0;
+            topicSize          = thisModem().stream.readBytesUntil(',', buffer, bufferSize);
+            payloadSize        = thisModem().stream.readBytesUntil(',', buffer + topicSize,
+                                 bufferSize - topicSize - 1);
             if (this->callback) {
                 buffer[topicSize] = '\0';
-                this->callback((const char*)buffer, buffer + topicSize + 1, playloadSize);
+                this->callback((const char*)buffer, buffer + topicSize + 1, payloadSize);
             }
             memset(this->buffer, 0, bufferSize);
             return true;
