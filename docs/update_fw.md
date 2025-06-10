@@ -81,7 +81,8 @@
 
 ### A7608E-H
 
-* [A7608E-H B11](https://drive.google.com/file/d/1IfNkPfQmfG3oqbXEZl0YD_9qgLsN4e_D/view?usp=sharing)
+<!-- * [A7608E-H B11](https://drive.google.com/file/d/1IfNkPfQmfG3oqbXEZl0YD_9qgLsN4e_D/view?usp=sharing) -->
+* [A7608E-H B14](https://drive.google.com/file/d/1NNixH5VYale9fS1JkHSBdoM-KiiMboWY/view?usp=sharing)
 
 ------------------------
 
