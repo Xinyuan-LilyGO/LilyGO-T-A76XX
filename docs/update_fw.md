@@ -90,7 +90,7 @@
 
 * [A7608SA-H B11](https://drive.google.com/file/d/1ktLzCjnd0TXzbiythU1EaWVkAokXzkf9/view?usp=sharing)
 * [A7608SA-H A50C4B13](https://drive.google.com/file/d/1-LsgDug-Zz_0kU96HlCGtfks3ruvjcQb/view?usp=sharing)
-
+* [A7608SA-H A81C4B01 latest](https://drive.google.com/file/d/1lf7EFa7uaI9fyr25b4Ik2SW36P-22rWG/view?usp=sharing)
 ------------------------
 
 **Please provide the information in the QR code on the modem to LilyGo to confirm the firmware version.**
