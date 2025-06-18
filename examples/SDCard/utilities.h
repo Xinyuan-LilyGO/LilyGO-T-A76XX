@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2025  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2025-04-30
- * 
+ *
  */
 
 #pragma once
@@ -52,6 +52,9 @@
 // Products Link: https://lilygo.cc/products/t-eth-elite-1?variant=44498205049013
 // #define LILYGO_T_ETH_ELITE_A7670X
 
+// https://lilygo.cc/products/t-sim7600
+// #define LILYGO_SIM7600X
+
 
 #if defined(LILYGO_T_A7670)
 
@@ -61,7 +64,6 @@
     #define MODEM_RX_PIN                        (27)
     // The modem boot pin needs to follow the startup sequence.
     #define BOARD_PWRKEY_PIN                    (4)
-    #define BOARD_BAT_ADC_PIN                       (35)
     // The modem power switch must be set to HIGH for the modem to supply power.
     #define BOARD_POWERON_PIN                   (12)
     #define MODEM_RING_PIN                      (33)
@@ -93,8 +95,6 @@
     // The modem boot pin needs to follow the startup sequence.
     #define BOARD_PWRKEY_PIN                    (4)
     #define BOARD_LED_PIN                       (12)
-    // There is no modem power control, the LED Pin is used as a power indicator here.
-    #define BOARD_POWERON_PIN                   (BOARD_LED_PIN)
     #define MODEM_RING_PIN                      (13)
     #define MODEM_RESET_PIN                     (27)
     #define MODEM_RESET_LEVEL                   LOW
@@ -119,7 +119,6 @@
     #define BOARD_PWRKEY_PIN                    (4)
     #define BOARD_LED_PIN                       (13)
     // There is no modem power control, the LED Pin is used as a power indicator here.
-    #define BOARD_POWERON_PIN                   (BOARD_LED_PIN)
     #define MODEM_RING_PIN                      (33)
     #define MODEM_RESET_PIN                     (5)
     #define MODEM_RESET_LEVEL                   LOW
@@ -140,8 +139,8 @@
     // The modem boot pin needs to follow the startup sequence.
     #define BOARD_PWRKEY_PIN                    (18)
     #define BOARD_LED_PIN                       (12)
+    #define LED_ON                              (LOW)
     // There is no modem power control, the LED Pin is used as a power indicator here.
-    #define BOARD_POWERON_PIN                   (BOARD_LED_PIN)
     #define MODEM_RING_PIN                      (3)
     #define MODEM_RESET_PIN                     (17)
     #define MODEM_RESET_LEVEL                   LOW
@@ -172,9 +171,9 @@
     #define BOARD_PWRKEY_PIN                    (4)
     #define BOARD_BAT_ADC_PIN                   (35)
     // The modem power switch must be set to HIGH for the modem to supply power.
-    #define BOARD_POWERON_PIN                   (12)        //T-A7608-V2 is onboard led
+    #define BOARD_POWERON_PIN                   (12)
     #define MODEM_RING_PIN                      (33)
-    #define MODEM_RESET_PIN                     (5)         //T-A7608-V2 no connection
+    #define MODEM_RESET_PIN                     (5)
     #define BOARD_MISO_PIN                      (2)
     #define BOARD_MOSI_PIN                      (15)
     #define BOARD_SCK_PIN                       (14)
@@ -205,8 +204,6 @@
     // The modem boot pin needs to follow the startup sequence.
     #define BOARD_PWRKEY_PIN                    (15)
     #define BOARD_BAT_ADC_PIN                   (4)
-    // The modem power switch must be set to HIGH for the modem to supply power.
-    // #define BOARD_POWERON_PIN                   (12)
     #define MODEM_RING_PIN                      (6)
     #define MODEM_RESET_PIN                     (16)
     #define BOARD_MISO_PIN                      (47)
@@ -260,8 +257,9 @@
 
     // The modem boot pin needs to follow the startup sequence.
     #define BOARD_PWRKEY_PIN                    (4)
-    #define MODEM_RING_PIN                      (33)
     #define BOARD_LED_PIN                       (12)
+
+    
     #define LED_ON                              (LOW)
 
     #define SerialAT                            Serial1
@@ -271,30 +269,59 @@
     #endif
 
     // 127 is defined in GSM as the AUXVDD index
-    #define MODEM_GPS_ENABLE_GPIO               (4)
-    #define MODEM_GPS_ENABLE_LEVEL              (0)
+    #define MODEM_GPS_ENABLE_GPIO               (48)
+    #define MODEM_GPS_ENABLE_LEVEL              (1)
+
+#elif defined(LILYGO_SIM7600X)
+
+    #define MODEM_DTR_PIN                       (32)
+    #define MODEM_RX_PIN                        (26)
+    #define MODEM_TX_PIN                        (27)
+    #define MODEM_FLIGHT_PIN                    (25)
+    #define MODEM_STATUS_PIN                    (34)
+
+    #define BOARD_MISO_PIN                      (2)
+    #define BOARD_MOSI_PIN                      (15)
+    #define BOARD_SCK_PIN                       (14)
+    #define BOARD_SD_CS_PIN                     (13)
+
+    // The modem boot pin needs to follow the startup sequence.
+    #define BOARD_PWRKEY_PIN                    (4)
+    #define MODEM_RING_PIN                      (33)
+    #define BOARD_LED_PIN                       (12)
+    #define LED_ON                              (HIGH)
+
+    #define SerialAT                            Serial1
+
+    #ifndef TINY_GSM_MODEM_SIM7600
+        #define TINY_GSM_MODEM_SIM7600
+    #endif
+
+    // 127 is defined in GSM as the AUXVDD index
+    #define MODEM_GPS_ENABLE_GPIO               (127)
+    #define MODEM_GPS_ENABLE_LEVEL              (1)
 
 
 #elif defined(LILYGO_A7670X_S3)
 
+    #define MODEM_BAUDRATE                      (115200)
 
     #define BOARD_SDA_PIN                       (3)
     #define BOARD_SCL_PIN                       (2)
 
-    #define MODEM_BAUDRATE                      (115200)
     #define MODEM_DTR_PIN                       (7)
-    #define MODEM_TX_PIN                        (4)
-    #define MODEM_RX_PIN                        (5)
+    #define MODEM_TX_PIN                        (5) 
+    #define MODEM_RX_PIN                        (4) 
     #define MODEM_RING_PIN                      (6)
 
-    #define MODEM_GPS_RX_PIN                    (15)
-    #define MODEM_GPS_TX_PIN                    (16)
+    #define MODEM_GPS_RX_PIN                    (48)
+    #define MODEM_GPS_TX_PIN                    (45)
     #define MODEM_GPS_PPS_PIN                   (17)
 
     // The modem boot pin needs to follow the startup sequence.
     #define BOARD_PWRKEY_PIN                    (46)
 
-    #define BOARD_BAT_ADC_PIN                       (8)
+    #define BOARD_BAT_ADC_PIN                   (8)
     #define BOARD_SOLAR_ADC_PIN                 (18)
 
     #define BOARD_MISO_PIN                      (13)
@@ -304,27 +331,27 @@
 
     #define CAMERA_PWDN_PIN                     (-1)
     #define CAMERA_RESET_PIN                    (-1)
-    #define CAMERA_XCLK_PIN                     (36)
-    #define CAMERA_SIOD_PIN                     (40)
-    #define CAMERA_SIOC_PIN                     (1)
-    #define CAMERA_VSYNC_PIN                    (42)
-    #define CAMERA_HREF_PIN                     (9)
-    #define CAMERA_PCLK_PIN                     (41)
-    #define CAMERA_Y9_PIN                       (45)
+    #define CAMERA_XCLK_PIN                     (21)
+    #define CAMERA_SIOD_PIN                     (1)
+    #define CAMERA_SIOC_PIN                     (2)
+    #define CAMERA_VSYNC_PIN                    (9)
+    #define CAMERA_HREF_PIN                     (14)
+    #define CAMERA_PCLK_PIN                     (37)
+    #define CAMERA_Y9_PIN                       (40)
     #define CAMERA_Y8_PIN                       (39)
     #define CAMERA_Y7_PIN                       (38)
-    #define CAMERA_Y6_PIN                       (7)
-    #define CAMERA_Y5_PIN                       (35)
-    #define CAMERA_Y4_PIN                       (48)
-    #define CAMERA_Y3_PIN                       (47)
-    #define CAMERA_Y2_PIN                       (14)
+    #define CAMERA_Y6_PIN                       (36)
+    #define CAMERA_Y5_PIN                       (16)
+    #define CAMERA_Y4_PIN                       (47)
+    #define CAMERA_Y3_PIN                       (15)
+    #define CAMERA_Y2_PIN                       (35)
 
-    #define BOARD_LED_PIN                       (37)
+    #define BOARD_LED_PIN                       (17)
     #define LED_ON                              (HIGH)
 
     #define SerialAT                            Serial1
 
-    #define MODEM_GPS_ENABLE_GPIO               (1)
+    #define MODEM_GPS_ENABLE_GPIO               (2)
     #define MODEM_GPS_ENABLE_LEVEL              (1)
 
     #ifndef TINY_GSM_MODEM_A7670
@@ -344,10 +371,6 @@
     #define BOARD_LED_PIN                       (12)
     #define PMU_IRQ                             (35)
 
-    // No connect to reset pin to modem ,set dummy reset pin
-    #define MODEM_RESET_PIN                     (BOARD_LED_PIN)
-    #define MODEM_RESET_LEVEL                   (0)
-
     #define SerialAT                            Serial1
 
     #ifndef TINY_GSM_MODEM_A7670
@@ -366,6 +389,10 @@
         #define TINY_GSM_MODEM_SIM7000SSL
     #endif
 
+    // 127 is defined in GSM as the AUXVDD index
+    #define MODEM_GPS_ENABLE_GPIO               (48)
+    #define MODEM_GPS_ENABLE_LEVEL              (1)
+    
 #elif defined(LILYGO_T_PCIE_SIM7080G)
 
     #define LILYGO_T_PCIE
@@ -381,6 +408,8 @@
     #ifndef TINY_GSM_MODEM_A7670
         #define TINY_GSM_MODEM_A7670
     #endif
+
+
 
 #else
     #error "Use ArduinoIDE, please open the macro definition corresponding to the board above <utilities.h>"
