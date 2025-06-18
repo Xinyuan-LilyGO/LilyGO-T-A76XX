@@ -57,6 +57,10 @@ void setup()
         digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
 #endif
 
+        // Pull down DTR to wake up MODEM
+        pinMode(MODEM_DTR_PIN, OUTPUT);
+        digitalWrite(MODEM_DTR_PIN, LOW);
+
         /*
         BOARD_PWRKEY_PIN IO:4 The power-on signal of the modulator must be given to it,
         otherwise the modulator will not reply when the command is sent
@@ -100,6 +104,17 @@ void setup()
 
     delay(5000);
 
+#if 0
+    int retry = 15;
+    Serial.println("Disable GPS/GNSS/GLONASS");
+    while (!modem.disableGPS(MODEM_GPS_ENABLE_GPIO, !MODEM_GPS_ENABLE_LEVEL)) {
+        Serial.print(".");
+        if (retry-- <= 0) {
+            Serial.println("GPS startup failed. Please check whether the board you ordered contains GPS function."); delay(1000);
+        }
+    }
+#endif
+
 
     Serial.println("Enter modem sleep mode!");
 
@@ -134,7 +149,7 @@ void setup()
 #endif
 
 #ifdef MODEM_RESET_PIN
-    // Keep it low during the sleep period. If the module uses GPIO5 as reset, 
+    // Keep it low during the sleep period. If the module uses GPIO5 as reset,
     // there will be a pulse when waking up from sleep that will cause the module to start directly.
     // https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/85
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
