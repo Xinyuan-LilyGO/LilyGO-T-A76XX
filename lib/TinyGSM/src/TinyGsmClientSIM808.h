@@ -62,7 +62,7 @@ class TinyGsmSim808 : public TinyGsmSim800, public TinyGsmGPS<TinyGsmSim808>, pu
     return  false;
   }
 
-  bool enableNMEAImpl(){
+  bool enableNMEAImpl(bool outputAtPort){
     DBG("Modem does not support set GPS NMEA output.");
     return true;
   }

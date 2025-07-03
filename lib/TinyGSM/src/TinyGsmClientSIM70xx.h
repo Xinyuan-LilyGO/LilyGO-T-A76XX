@@ -477,7 +477,7 @@ class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType>>,
     return false;
   }
 
-  bool enableNMEAImpl() {
+  bool enableNMEAImpl(bool outputAtPort) {
     // 7070G 2019.11.07 Delete commands,see datasheet  Version History
     thisModem().sendAT("+CGNSPORT=3");
     thisModem().waitResponse(1000UL);

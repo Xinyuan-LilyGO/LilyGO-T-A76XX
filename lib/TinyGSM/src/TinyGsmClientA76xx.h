@@ -370,8 +370,12 @@ class TinyGsmA76xx : public TinyGsmModem<TinyGsmA76xx<modemType>>,
       thisModem().sendAT("+CGSETV=", power_en_pin, ",", enable_level);
       thisModem().waitResponse();
     }
+    // Detection turned on?
+    if(gpsHotStartImpl()){
+      return true;
+    }
     thisModem().sendAT(GF("+CGNSSPWR=1"));
-    if (thisModem().waitResponse(10000UL, "+CGNSSPWR: READY!") != 1) { return false; }
+    if (thisModem().waitResponse(30000UL, "+CGNSSPWR: READY!") != 1) { return false; }
     return true;
   }
 
@@ -380,10 +384,16 @@ class TinyGsmA76xx : public TinyGsmModem<TinyGsmA76xx<modemType>>,
       thisModem().sendAT("+CVAUXS=0");
       thisModem().waitResponse();
     } else if (power_en_pin != -1) {
+      thisModem().sendAT("+CGDRT=", power_en_pin, ",1");
+      thisModem().waitResponse();
       thisModem().sendAT("+CGSETV=", power_en_pin, ",", disable_level);
       thisModem().waitResponse();
       thisModem().sendAT("+CGDRT=", power_en_pin, ",0");
       thisModem().waitResponse();
+    }
+    // Detection turned off?
+    if(!isEnableGPSImpl()){
+      return true;
     }
     thisModem().sendAT(GF("+CGNSSPWR=0"));
     if (thisModem().waitResponse() != 1) { return false; }
@@ -427,8 +437,12 @@ class TinyGsmA76xx : public TinyGsmModem<TinyGsmA76xx<modemType>>,
     return thisModem().waitResponse(1000L) == 1;
   }
 
-  bool enableNMEAImpl() {
-    thisModem().sendAT("+CGNSSTST=1");
+  bool enableNMEAImpl(bool outputAtPort) {
+    if(outputAtPort){
+      thisModem().sendAT("+CGNSSTST=1");
+    }else{
+      thisModem().sendAT("+CGNSSTST=0");
+    }
     if (thisModem().waitResponse(1000L) != 1) { return false; }
     // Select the output port for NMEA sentence
     thisModem().sendAT("+CGNSSPORTSWITCH=0,1");

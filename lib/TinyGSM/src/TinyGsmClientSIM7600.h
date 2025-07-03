@@ -781,7 +781,7 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
     return waitResponse(1000UL) == 1;
   }
 
-  bool enableNMEAImpl() {
+  bool enableNMEAImpl(bool outputAtPort) {
     // sendAT("+CGPS=0");
     // waitResponse(1000UL);
     // waitResponse(30000UL,"+CGPS: 0");

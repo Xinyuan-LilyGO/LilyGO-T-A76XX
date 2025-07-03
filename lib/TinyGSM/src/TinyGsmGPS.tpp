@@ -64,8 +64,8 @@ class TinyGsmGPS {
     return thisModem().setGPSOutputRateImpl(rate_hz);
   }
 
-  bool enableNMEA(){
-    return thisModem().enableNMEAImpl();
+  bool enableNMEA(bool outputAtPort = true){
+    return thisModem().enableNMEAImpl(outputAtPort);
   }
 
   bool disableNMEA(){
@@ -103,7 +103,7 @@ class TinyGsmGPS {
   bool    setGPSBaudImpl(uint32_t baud)TINY_GSM_ATTR_NOT_IMPLEMENTED;
   bool    setGPSModeImpl(uint8_t mode)TINY_GSM_ATTR_NOT_IMPLEMENTED;
   bool    setGPSOutputRateImpl(uint8_t rate_hz)TINY_GSM_ATTR_NOT_IMPLEMENTED;
-  bool    enableNMEAImpl()TINY_GSM_ATTR_NOT_IMPLEMENTED;
+  bool    enableNMEAImpl(bool outputAtPort = true)TINY_GSM_ATTR_NOT_IMPLEMENTED;
   bool    disableNMEAImpl()TINY_GSM_ATTR_NOT_IMPLEMENTED;
   bool    configNMEASentenceImpl()TINY_GSM_ATTR_NOT_IMPLEMENTED;
 };
