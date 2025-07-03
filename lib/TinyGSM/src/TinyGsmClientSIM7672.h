@@ -12,7 +12,7 @@
 // #define TINY_GSM_DEBUG Serial
 // #define TINY_GSM_USE_HEX
 
-#define TINY_GSM_MUX_COUNT 10
+#define TINY_GSM_MUX_COUNT 4
 #define TINY_GSM_BUFFER_READ_AND_CHECK_SIZE
 
 #include "TinyGsmBattery.tpp"
@@ -531,6 +531,9 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
       sendAT("+CGSETV=",power_en_pin,",",enable_level);
       waitResponse();
     }
+    if(isEnableGPSImpl()){
+      return true;
+    }
     sendAT(GF("+CGNSSPWR=1"));
     if (waitResponse() != 1) { return false; }
     return true;
@@ -542,6 +545,9 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
       waitResponse();
       sendAT("+CGDRT=",power_en_pin,",0");
       waitResponse();
+    }
+    if(!isEnableGPSImpl()){
+      return true;
     }
     sendAT(GF("+CGNSSPWR=0"));
     if (waitResponse() != 1) { return false; }
@@ -766,8 +772,12 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
       return waitResponse(1000L) == 1;
   }
 
-  bool enableNMEAImpl(){
-      sendAT("+CGNSSTST=1");
+  bool enableNMEAImpl(bool outputAtPort){
+      if(outputAtPort){
+        sendAT("+CGNSSTST=1");
+      }else{
+        sendAT("+CGNSSTST=0");
+      }
       waitResponse(1000L);
     // Select the output port for NMEA sentence
       sendAT("+CGNSSPORTSWITCH=0,1");
