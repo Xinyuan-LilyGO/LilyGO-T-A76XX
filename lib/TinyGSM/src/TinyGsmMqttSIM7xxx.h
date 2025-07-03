@@ -31,7 +31,8 @@ protected:
     const char *will_topic;
     const char *will_msg;
     uint8_t     will_qos = 0;
-
+    bool        _isConnected = false;
+    uint32_t    _lastCheckConnect = 0;
 public:
     /*
      * Basic functions
@@ -46,6 +47,8 @@ public:
         this->cert_pem        = NULL;
         this->client_cert_pem = NULL;
         this->client_key_pem  = NULL;
+        _isConnected = false;
+        _lastCheckConnect = 0;
         memset(this->buffer, 0, bufferSize);
         thisModem().sendAT("+SMDISC");
         thisModem().waitResponse();
@@ -59,6 +62,8 @@ public:
             this->buffer = NULL;
         }
         mqtt_disconnect();
+        _isConnected = false;
+        _lastCheckConnect = 0;
         return true;
     }
 
@@ -242,18 +247,19 @@ public:
 
     bool mqtt_connected(uint8_t clientIndex = 0)
     {
-        static uint32_t lastCheck = 0;
-        if (millis() - lastCheck < 10000) {
-            return true;
+        if (millis() - _lastCheckConnect < 10000) {
+            return _isConnected;
         }
-        lastCheck  = millis();
+        _lastCheckConnect  = millis();
         int result = 0;
         thisModem().sendAT("+SMSTATE?");
         if (thisModem().waitResponse("+SMSTATE: ") == 1) {
             result = thisModem().streamGetIntBefore('\n');
             thisModem().waitResponse();
-            return result == 1;
+            _isConnected = (result == 1);
+            return _isConnected;
         }
+        _isConnected = false;
         return false;
     }
 
