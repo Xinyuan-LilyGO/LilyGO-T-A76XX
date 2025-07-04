@@ -287,12 +287,12 @@
    - [T-Call-A7670 Schematic](./schematic/T-Call-A7670-V1.0.pdf)
    - [T-SIM7670G-S3 Schematic](./schematic/T-SIM7670G-S3-V1.0.pdf)
 5. Dimensions
-   - [T-A7608-S3 DWG](./dimensions/T-A7608-S3-V1.0.dwg)
-   - [T-A7608X-DC-S3 DWG](./dimensions/T-A7608X-DC-S3-V1.0.dwg)
-   - [T-A7608X DWG](./dimensions/T-A7608X-V1.0.dwg)
-   - [T-A7670X DWG](./dimensions/T-A7670X-V1.1.dwg)
-   - [T-Call-A7670 DWG](./dimensions/T-Call-A7670-V1.0.dwg)
-   - [T-SIM7672-S3 DWG](./dimensions/T-SIM7670G-S3-V1.0.dwg)
+   - [T-A7608X-ESP32](./dimensions/T-A7608X-ESP32.dxf)
+   - [T-A7670X-ESP32](./dimensions/T-A7670X-ESP32.dxf)
+   - [T-Call-A7670-ESP32](./dimensions/T-Call-A7670-ESP32.dxf)
+   - [T-A7608-ESP32S3](./dimensions/T-A7608-S3.dxf)
+   - [T-SIM7670-ESP32S3](./dimensions/T-SIM7670G-S3.dxf)
+   <!-- - [T-A7608X-DC-S3 DWG](./dimensions/T-A7608X-DC-S3-V1.0.dwg) -->
 
 6. Schematic
    - [T-A7670X schematic](./schematic/T-A7670X-V1.1.pdf)
