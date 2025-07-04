@@ -95,6 +95,14 @@
 
 **Please provide the information in the QR code on the modem to LilyGo to confirm the firmware version.**
 
+> \[!IMPORTANT]
+> Steps to enter upgrade mode
+> 1. Press and hold the SBOOT button close to the Modelm and do not release it.
+> 2. Plug in MICRO-USB
+> 3. Plug in USB-C
+> 4. Check the device manager and wait for the computer port to be generated
+> 5. Release the SBOOT button after the port is identified
+
 ### Record Video 
 
 * [SIM7670G Upgrade Record](https://www.youtube.com/watch?v=fAtrz_4DfVs)
