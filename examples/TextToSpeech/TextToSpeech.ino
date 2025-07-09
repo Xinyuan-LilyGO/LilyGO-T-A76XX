@@ -5,9 +5,10 @@
  * @copyright Copyright (c) 2024  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2024-12-11
  * @note      Only support A7670X A7608X , Not support SIM7670G
+ * The SIM7600 series needs to have audio decoding function to be used, otherwise it cannot play
  */
 // See all AT commands, if wanted
-// #define DUMP_AT_COMMANDS
+#define DUMP_AT_COMMANDS
 
 #include "utilities.h"
 #include <TinyGsmClient.h>

@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-28
  * @note
- * * * Example is suitable for A7670X/A7608X/SIM7672 series
+ * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7600 series
  * * Connect MQTT Broker as https://aws.amazon.com/campaigns/IoT
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  * *!!!! When using ESP to connect to AWS, the AWS IOT HUB policy must be set to all devices, otherwise the connection cannot be made.
@@ -241,6 +241,8 @@ void setup()
     modem.sendAT("+SIMCOMATI");
     modem.waitResponse();
 
+    delay(2000);
+
     // Initialize MQTT, use SSL
     modem.mqtt_begin(true);
 
@@ -321,6 +323,17 @@ SIM767XM5_B02V01_240717
 IMEI: XXXXXXXXXXXXXXXXX
 
 -------------------------------
+
+SIM7600 Version OK 20250709
+AT+SIMCOMATI
+Manufacturer: SIMCOM INCORPORATED
+Model: SIMCOM_SIM7600G-H
+Revision: LE20B04SIM7600G22
+QCN: 
+IMEI: xxxxxxxxxxxx
+MEID: 
++GCAP: +CGSM
+DeviceInfo: 173,170
 
 */
 #ifndef TINY_GSM_FORK_LIBRARY

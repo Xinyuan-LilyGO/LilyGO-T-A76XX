@@ -9,6 +9,11 @@
  */
 #include "utilities.h"
 
+#ifdef TINY_GSM_MODEM_SIM7600
+#error "SIM7600X series does not support GPS acceleration function"
+#endif
+
+
 #define TINY_GSM_RX_BUFFER 1024 // Set RX buffer to 1Kb
 
 // Set serial for debug console (to the Serial Monitor, default speed 115200)

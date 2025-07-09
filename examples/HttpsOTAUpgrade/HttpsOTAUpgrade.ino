@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-30
  * @note
- * * Example is suitable for A7670X/A7608X/SIM7672 series
+ * * Example is suitable for A7670X/A7608X/SIM7672 series/SIM7600 series
  * * Use modem to connect to custom server to upgrade the esp32 firmware
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  */
@@ -33,6 +33,8 @@ const char *server_url =  "https://lewishe.pro/ota/firmware-a7608.bin";
 const char *server_url =  "https://lewishe.pro/ota/firmware-a7608-s3.bin";
 #elif defined(LILYGO_T_A7608X_DC_S3)
 const char *server_url =  "https://lewishe.pro/ota/firmware-a7608-s3-dc.bin";
+#elif defined(LILYGO_SIM7600X)
+const char *server_url =  "https://lewishe.pro/ota/firmware-sim7600x.bin";
 #else
 #error "Use ArduinoIDE, please open the macro definition corresponding to the board above <utilities.h>"
 #endif
@@ -86,7 +88,7 @@ void setup()
     // Pull down DTR to ensure the modem is not in sleep state
     pinMode(MODEM_DTR_PIN, OUTPUT);
     digitalWrite(MODEM_DTR_PIN, LOW);
-    
+
     // Turn on the modem
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
@@ -208,10 +210,11 @@ void setup()
         return;
     }
 
-    // Send GET request
+    size_t firmware_size = 0;
     int httpCode = 0;
     Serial.println("Get firmware form HTTPS");
-    httpCode = modem.https_get();
+    // Send http get request, if it is correct, you can get the firmware size
+    httpCode = modem.https_get(&firmware_size);
     if (httpCode != 200) {
         Serial.print("HTTP get failed ! error code = ");
         Serial.println(httpCode);
@@ -225,7 +228,6 @@ void setup()
     }
 
     // Get firmware size
-    size_t firmware_size = modem.https_get_size();
     Serial.print("Firmware size : "); Serial.print(firmware_size); Serial.println("Kb");
 
     // Begin Update firmware
@@ -292,3 +294,16 @@ void loop()
 #ifndef TINY_GSM_FORK_LIBRARY
 #error "No correct definition detected, Please copy all the [lib directories](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/tree/main/lib) to the arduino libraries directory , See README"
 #endif
+
+/*
+SIM7600 Version OK 20250709
+AT+SIMCOMATI
+Manufacturer: SIMCOM INCORPORATED
+Model: SIMCOM_SIM7600G-H
+Revision: LE20B04SIM7600G22
+QCN: 
+IMEI: xxxxxxxxxxxx
+MEID: 
++GCAP: +CGSM
+DeviceInfo: 173,170
+*/

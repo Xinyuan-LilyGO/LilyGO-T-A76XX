@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-29
  * @note
- * * Example is suitable for A7670X/A7608X/SIM7672 series
+ * * Example is suitable for A7670X/A7608X/SIM7672 series/SIM7600 series
  * * Connect https://httpbin.org test post request
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  */
@@ -228,3 +228,16 @@ void loop()
 #ifndef TINY_GSM_FORK_LIBRARY
 #error "No correct definition detected, Please copy all the [lib directories](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/tree/main/lib) to the arduino libraries directory , See README"
 #endif
+
+/*
+SIM7600 Version OK 20250709
+AT+SIMCOMATI
+Manufacturer: SIMCOM INCORPORATED
+Model: SIMCOM_SIM7600G-H
+Revision: LE20B04SIM7600G22
+QCN: 
+IMEI: xxxxxxxxxxxx
+MEID: 
++GCAP: +CGSM
+DeviceInfo: 173,170
+*/

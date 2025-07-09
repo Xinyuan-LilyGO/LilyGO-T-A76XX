@@ -6,6 +6,7 @@
  * @date      2025-02-07
  * @note      The example demonstrates multiple socket connections. The problem comes from https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/223#issuecomment-2639376887
  */
+#warning "SIM7600 has not been tested yet."
 #include "utilities.h"
 
 // It depends on the operator whether to set up an APN. If some operators do not set up an APN,

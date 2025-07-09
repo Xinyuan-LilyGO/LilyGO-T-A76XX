@@ -27,6 +27,10 @@ TinyGsm modem(SerialAT);
 #error "Only support A7670X A7608X , Not support SIM7670G"
 #endif
 
+#ifdef TINY_GSM_MODEM_SIM7600
+#error "SIM7600 series has not yet implemented this playback function"
+#endif
+
 void setup()
 {
     Serial.begin(115200); // Set console baud rate

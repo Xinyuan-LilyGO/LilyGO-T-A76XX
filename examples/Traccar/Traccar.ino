@@ -8,6 +8,7 @@
  *            For more information about [traccar](https://www.traccar.org/), please visit the official website.
  *            This demo only demonstrates uploading the location.
  */
+#warning "SIM7600 has not been tested yet."
 #define TINY_GSM_RX_BUFFER          1024 // Set RX buffer to 1Kb
 
 // See all AT commands, if wanted
@@ -206,6 +207,10 @@ void setup()
     SerialAT.begin(115200, SERIAL_8N1, MODEM_RX_PIN, MODEM_TX_PIN);
 
 #ifdef BOARD_POWERON_PIN
+    /* Set Power control pin output
+    * * @note      Known issues, ESP32 (V1.2) version of T-A7670, T-A7608,
+    *            when using battery power supply mode, BOARD_POWERON_PIN (IO12) must be set to high level after esp32 starts, otherwise a reset will occur.
+    * */
     pinMode(BOARD_POWERON_PIN, OUTPUT);
     digitalWrite(BOARD_POWERON_PIN, HIGH);
     gpio_hold_en((gpio_num_t )BOARD_POWERON_PIN);
@@ -222,6 +227,17 @@ void setup()
     gpio_deep_sleep_hold_en();
 #endif
 
+#ifdef MODEM_FLIGHT_PIN
+    // If there is an airplane mode control, you need to exit airplane mode
+    pinMode(MODEM_FLIGHT_PIN, OUTPUT);
+    digitalWrite(MODEM_FLIGHT_PIN, HIGH);
+#endif
+
+    // Pull down DTR to ensure the modem is not in sleep state
+    pinMode(MODEM_DTR_PIN, OUTPUT);
+    digitalWrite(MODEM_DTR_PIN, LOW);
+
+    // Turn on the modem
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
     delay(100);
@@ -354,6 +370,7 @@ void setup()
 
     modem.sendAT("+SIMCOMATI");
     modem.waitResponse();
+    delay(2000);
 
     Serial.println("Enabling GPS/GNSS/GLONASS");
     while (!modem.enableGPS(MODEM_GPS_ENABLE_GPIO, MODEM_GPS_ENABLE_LEVEL)) {

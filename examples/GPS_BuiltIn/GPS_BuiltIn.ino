@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-06-28
- * @note      GPS only supports A7670X/A7608X (excluding A7670G and other versions that do not support positioning).
+ * @note      GPS only supports A7670X/A7608X/SIM7600 series (excluding A7670G and other versions that do not support positioning).
  */
 #include "utilities.h"
 
@@ -200,3 +200,16 @@ void loop()
 #ifndef TINY_GSM_FORK_LIBRARY
 #error "No correct definition detected, Please copy all the [lib directories](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/tree/main/lib) to the arduino libraries directory , See README"
 #endif
+
+/*
+SIM7600 Version OK 20250709
+AT+SIMCOMATI
+Manufacturer: SIMCOM INCORPORATED
+Model: SIMCOM_SIM7600G-H
+Revision: LE20B04SIM7600G22
+QCN: 
+IMEI: xxxxxxxxxxxx
+MEID: 
++GCAP: +CGSM
+DeviceInfo: 173,170
+*/

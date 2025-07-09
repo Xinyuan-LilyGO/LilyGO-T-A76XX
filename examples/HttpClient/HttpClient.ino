@@ -2,6 +2,8 @@
   FILE: httpclient.ino
   PURPOSE: Test functionality
 */
+#warning "It is recommended to use the built-in HTTPS method to access the HTTP server. For example, use the HttpsBuiltlnXXX name." 
+
 #include "utilities.h"
 
 // Set serial for debug console (to the Serial Monitor, default speed 115200)

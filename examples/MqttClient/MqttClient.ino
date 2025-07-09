@@ -21,6 +21,8 @@
  * GsmClientTest/ledStatus with the newest LED status.
  *
  **************************************************************/
+#warning "Examples of recommended MqttsBuiltlnXXX names for connecting to MQTT servers." 
+
 #include "utilities.h"
 
 

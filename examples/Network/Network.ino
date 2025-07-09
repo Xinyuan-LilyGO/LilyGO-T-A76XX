@@ -4,12 +4,12 @@
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-16
- *
+ * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7600 series
  */
 #define TINY_GSM_RX_BUFFER          1024 // Set RX buffer to 1Kb
 
 // See all AT commands, if wanted
-#define DUMP_AT_COMMANDS
+// #define DUMP_AT_COMMANDS
 
 #include "utilities.h"
 #include <TinyGsmClient.h>
@@ -190,6 +190,7 @@ void setup()
         } else {
             Serial.printf("Error code : %d\n", res);
         }
+        delay(1000);
     }
 }
 

@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2025  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2025-04-29
- * @note      Only applicable to A7670X, A7608X series modules,
+ * @note      Only applicable to A7670X, A7608X series,SIM7600 series modules,
  *            SIM7670G - `SIM7670G-MNGV 2374B04` version supports SMS function,
  *            but it requires the operator base station to support SMS Over SGS service to send,
  *            otherwise it will be invalid

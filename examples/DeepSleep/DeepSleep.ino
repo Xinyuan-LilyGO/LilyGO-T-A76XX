@@ -8,7 +8,7 @@
  * T-A7608-S3 DeepSleep ~ 368 uA
  * T-A7608-ESP32  DeepSleep ~ 240 uA
  * T-A7670-ESP32  DeepSleep ~ 157 uA
- * 
+ * T-SIM7600-ESP32 DeepSleep ~ 200 uA
  */
 #include "utilities.h"
 #include <driver/gpio.h>

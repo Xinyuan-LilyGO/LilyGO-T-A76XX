@@ -20,6 +20,9 @@
 
 #include "utilities.h"
 
+#ifdef TINY_GSM_MODEM_SIM7600
+#error "The current TinyGSM library version for SIM7600 does not implement secure SSL access. Please use the HttpsBuiltlnXXX examples."
+#endif
 
 #ifdef TINY_GSM_MODEM_A7670
 #undef TINY_GSM_MODEM_A7670

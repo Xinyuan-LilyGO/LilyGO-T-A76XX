@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2024  Shenzhen Xin Yuan Electronic Technology Co.,
  * Ltd
  * @date      2024-12-11
- * @note      GPS only supports A7670X/A7608X (excluding A7670G and other
+ * @note      GPS only supports A7670X/A7608X/SIM7600 series (excluding A7670G and other
  * versions that do not support positioning).
  *
  * TinyGSM GPS Enhancement Example
@@ -207,7 +207,7 @@ void loop()
 {
     uint8_t gnss_length = 0;
     uint8_t a76xx_gnss_mode[] = {1, 2, 3, 4};
-    uint8_t sim767x_gnss_mode[] = {1, 3, 5, 9, 13, 15};
+    uint8_t sim767x_gnss_mode[] = {1, 3, 5, 9, 13, 15}; //SIM7600 series same
     uint8_t *gnss_mode = NULL;
     if (modemName.startsWith("A767")) {
         gnss_mode = a76xx_gnss_mode;
@@ -232,6 +232,13 @@ void loop()
          * 9  -  GPS + BDS
          * 13 -  GPS + GALILEO + BDS
          * 15 -  GPS + GLONASS + GALILEO + BDS
+         * 
+         * Model: SIM7600 series
+         * Range – 0 to 15
+         * Bit0 – GLONASS
+         * Bit1 – BEIDOU
+         * Bit2 – GALILEO
+         * Bit3 – QZSS
          * */
         loopGPS(gnss_mode[i]);
     }
@@ -256,3 +263,16 @@ void loop()
 #error                                                                         \
 "No correct definition detected, Please copy all the [lib directories](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/tree/main/lib) to the arduino libraries directory , See README"
 #endif
+
+/*
+SIM7600 Version OK 20250709
+AT+SIMCOMATI
+Manufacturer: SIMCOM INCORPORATED
+Model: SIMCOM_SIM7600G-H
+Revision: LE20B04SIM7600G22
+QCN: 
+IMEI: xxxxxxxxxxxx
+MEID: 
++GCAP: +CGSM
+DeviceInfo: 173,170
+*/
