@@ -29,6 +29,7 @@
 #include "TinyGsmGPS_EX.tpp"
 #include "TinyGsmMqttA76xx.h"
 #include "TinyGsmHttpsComm.h"
+#include "TinyGsmTextToSpeech.tpp"
 
 #define GSM_NL "\r\n"
 static const char GSM_OK[] TINY_GSM_PROGMEM    = "OK" GSM_NL;
@@ -74,6 +75,7 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
                        public TinyGsmTemperature<TinyGsmSim7600>,
                        public TinyGsmCalling<TinyGsmSim7600>,
                        public TinyGsmGPSEx<TinyGsmSim7600>,
+                       public TinyGsmTextToSpeech<TinyGsmSim7600>,
                        public TinyGsmMqttA76xx<TinyGsmSim7600, TINY_GSM_MQTT_CLI_COUNT>,
                        public TinyGsmHttpsComm<TinyGsmSim7600, QUALCOMM_SIM7600G> {
   friend class TinyGsmModem<TinyGsmSim7600>;
@@ -90,7 +92,7 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
   friend class TinyGsmMqttA76xx<TinyGsmSim7600, TINY_GSM_MQTT_CLI_COUNT>;
   friend class TinyGsmHttpsComm<TinyGsmSim7600, QUALCOMM_SIM7600G>;
   friend class TinyGsmGPSEx<TinyGsmSim7600>;
-
+  friend class TinyGsmTextToSpeech<TinyGsmSim7600>;
   /*
    * Inner Client
    */
@@ -301,6 +303,46 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
   }
 
  public:
+
+   /*
+   * Return code:
+   *     -1 ping failed
+   *     1 Ping success
+   *     2 Ping time out
+   *     3 Ping result
+   * * */
+  int ping(const char* url, String& resolved_ip_addr, uint32_t& rep_data_packet_size,
+           uint32_t& tripTime, uint8_t& TTL) {
+    uint8_t  dest_addr_type   = 1;
+    uint8_t  num_pings        = 1;
+    uint8_t  data_packet_size = 64;
+    uint32_t interval_time    = 1000;
+    uint32_t wait_time        = 10000;
+    uint8_t  ttl              = 0xFF;
+    int      result_type      = -1;
+
+    sendAT("+CPING=\"", url, "\"", ",", dest_addr_type, ",", num_pings, ",",
+                       data_packet_size, ",", interval_time, ",", wait_time, ",", ttl);
+
+    if (waitResponse() != 1) { return -1; }
+    if (waitResponse(10000UL, "+CPING: ") == 1) {
+      result_type = streamGetIntBefore(',');
+      switch (result_type) {
+        case 1:
+          resolved_ip_addr     = stream.readStringUntil(',');
+          rep_data_packet_size = streamGetIntBefore(',');
+          tripTime             = streamGetIntBefore(',');
+          TTL                  = streamGetIntBefore('\n');
+          break;
+        case 2: break;
+        case 3: break;
+        default: break;
+      }
+    }
+    waitResponse(GSM_NL);
+    return result_type;
+  }
+
   String getNetworkModes() {
     int16_t mode = getNetworkMode();
     switch (mode) {
@@ -866,6 +908,17 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
     // Wait for final OK
     waitResponse();
     return res;
+  }
+
+  /*
+   * Text to speech functions
+   */
+ protected:
+  bool textToSpeechImpl(String& text, uint8_t mode) {
+    sendAT(GF("+CTTS="), mode, ',', '"', text, '"');
+    if (waitResponse() != 1) { return false; }
+    if (waitResponse(10000UL, GF("+CTTS: 0")) != 1) { return false; }
+    return true;
   }
 
   /*
