@@ -80,7 +80,7 @@ void setup()
     }
     // Maximize the use of available IO
     Wire.begin(I2C_SDA, I2C_SCL);
-    //....I2C Devices do someing ..
+    //....I2C Devices do some things ..
 
 }
 

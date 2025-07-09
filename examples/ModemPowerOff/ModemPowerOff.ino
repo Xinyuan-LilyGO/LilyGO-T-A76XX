@@ -50,7 +50,11 @@ void setup()
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
 #endif
 
-    // PowerKey Control modem power on
+    // Pull down DTR to ensure the modem is not in sleep state
+    pinMode(MODEM_DTR_PIN, OUTPUT);
+    digitalWrite(MODEM_DTR_PIN, LOW);
+    
+    // Turn on the modem
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
     delay(100);

@@ -87,6 +87,22 @@
     #define BOARD_SOLAR_ADC_PIN                 (36)
 
 
+    //! The following pins are for SimShield and need to be used with SimShield
+    //! 以下引脚针对SimShield,需要搭配SimShield 
+    #define SIMSHIELD_MOSI                      (23)
+    #define SIMSHIELD_MISO                      (19)
+    #define SIMSHIELD_SCK                       (18)
+    #define SIMSHIELD_SD_CS                     (32)
+    #define SIMSHIELD_RADIO_BUSY                (39)
+    #define SIMSHIELD_RADIO_CS                  (5)
+    #define SIMSHIELD_RADIO_IRQ                 (34)
+    #define SIMSHIELD_RADIO_RST                 (15)
+    #define SIMSHIELD_RS_RX                     (13)
+    #define SIMSHIELD_RS_TX                     (14)
+    #define SIMSHIELD_SDA                       (21)
+    #define SIMSHIELD_SCL                       (22)
+    #define SerialRS485                         Serial2
+
 #elif defined(LILYGO_T_CALL_A7670_V1_0)
     #define MODEM_BAUDRATE                      (115200)
     #define MODEM_DTR_PIN                       (14)
@@ -160,6 +176,21 @@
     #define MODEM_GPS_ENABLE_GPIO               (4)
     #define MODEM_GPS_ENABLE_LEVEL              (1)
 
+    //! The following pins are for SimShield and need to be used with SimShield
+    //! 以下引脚针对SimShield,需要搭配SimShield 
+    #define SIMSHIELD_MOSI                      (15)
+    #define SIMSHIELD_MISO                      (7)
+    #define SIMSHIELD_SCK                       (16)
+    #define SIMSHIELD_SD_CS                     (46)
+    #define SIMSHIELD_RADIO_BUSY                (38)
+    #define SIMSHIELD_RADIO_CS                  (39)
+    #define SIMSHIELD_RADIO_IRQ                 (6)
+    #define SIMSHIELD_RADIO_RST                 (40)
+    #define SIMSHIELD_RS_RX                     (41)
+    #define SIMSHIELD_RS_TX                     (42)
+    #define SIMSHIELD_SDA                       (2)
+    #define SIMSHIELD_SCL                       (1)
+    #define SerialRS485                         Serial2
 
 #elif defined(LILYGO_T_A7608X)
 
@@ -195,6 +226,22 @@
     #define MODEM_GPS_ENABLE_GPIO               (127)
     #define MODEM_GPS_ENABLE_LEVEL              (1)
 
+    //! The following pins are for SimShield and need to be used with SimShield
+    //! 以下引脚针对SimShield,需要搭配SimShield 
+    #define SIMSHIELD_MOSI                      (23)
+    #define SIMSHIELD_MISO                      (19)
+    #define SIMSHIELD_SCK                       (18)
+    #define SIMSHIELD_SD_CS                     (32)
+    #define SIMSHIELD_RADIO_BUSY                (39)
+    #define SIMSHIELD_RADIO_CS                  (5)
+    #define SIMSHIELD_RADIO_IRQ                 (34)
+    #define SIMSHIELD_RADIO_RST                 (15)
+    #define SIMSHIELD_RS_RX                     (13)
+    #define SIMSHIELD_RS_TX                     (14)
+    #define SIMSHIELD_SDA                       (21)
+    #define SIMSHIELD_SCL                       (22)
+    #define SerialRS485                         Serial2
+
 #elif defined(LILYGO_T_A7608X_S3)
 
     #define MODEM_BAUDRATE                      (115200)
@@ -224,6 +271,22 @@
     // 127 is defined in GSM as the AUXVDD index
     #define MODEM_GPS_ENABLE_GPIO               (127)
     #define MODEM_GPS_ENABLE_LEVEL              (1)
+
+    //! The following pins are for SimShield and need to be used with SimShield
+    //! 以下引脚针对SimShield,需要搭配SimShield 
+    #define SIMSHIELD_MOSI                      (11)
+    #define SIMSHIELD_MISO                      (10)
+    #define SIMSHIELD_SCK                       (12)
+    #define SIMSHIELD_SD_CS                     (45)
+    #define SIMSHIELD_RADIO_BUSY                (38)
+    #define SIMSHIELD_RADIO_CS                  (39)
+    #define SIMSHIELD_RADIO_IRQ                 (9)
+    #define SIMSHIELD_RADIO_RST                 (40)
+    #define SIMSHIELD_RS_RX                     (42)
+    #define SIMSHIELD_RS_TX                     (41)
+    #define SIMSHIELD_SDA                       (2)
+    #define SIMSHIELD_SCL                       (1)
+    #define SerialRS485                         Serial2
 
 #elif defined(LILYGO_T_A7608X_DC_S3)
 
@@ -271,6 +334,22 @@
     // 127 is defined in GSM as the AUXVDD index
     #define MODEM_GPS_ENABLE_GPIO               (48)
     #define MODEM_GPS_ENABLE_LEVEL              (1)
+    
+    //! The following pins are for SimShield and need to be used with SimShield
+    //! 以下引脚针对SimShield,需要搭配SimShield 
+    #define SIMSHIELD_MOSI                      (23)
+    #define SIMSHIELD_MISO                      (19)
+    #define SIMSHIELD_SCK                       (18)
+    #define SIMSHIELD_SD_CS                     (32)
+    #define SIMSHIELD_RADIO_BUSY                (39)
+    #define SIMSHIELD_RADIO_CS                  (5)
+    #define SIMSHIELD_RADIO_IRQ                 (34)
+    #define SIMSHIELD_RADIO_RST                 (15)
+    #define SIMSHIELD_RS_RX                     (13)
+    #define SIMSHIELD_RS_TX                     (14)
+    #define SIMSHIELD_SDA                       (21)
+    #define SIMSHIELD_SCL                       (22)
+    #define SerialRS485                         Serial2
 
 #elif defined(LILYGO_SIM7600X)
 
@@ -301,6 +380,26 @@
     #define MODEM_GPS_ENABLE_GPIO               (127)
     #define MODEM_GPS_ENABLE_LEVEL              (1)
 
+    // T-SIM7600 startup time needs to wait
+    #define MODEM_START_WAIT_MS                 (15000)
+
+
+
+    //! The following pins are for SimShield and need to be used with SimShield
+    //! 以下引脚针对SimShield,需要搭配SimShield 
+    #define SIMSHIELD_MOSI                      (23)
+    #define SIMSHIELD_MISO                      (19)
+    #define SIMSHIELD_SCK                       (18)
+    #define SIMSHIELD_SD_CS                     (32)
+    #define SIMSHIELD_RADIO_BUSY                (39)
+    #define SIMSHIELD_RADIO_CS                  (5)
+    #define SIMSHIELD_RADIO_IRQ                 (34)
+    #define SIMSHIELD_RADIO_RST                 (14)
+    #define SIMSHIELD_RS_RX                     (12)
+    #define SIMSHIELD_RS_TX                     (13)
+    #define SIMSHIELD_SDA                       (21)
+    #define SIMSHIELD_SCL                       (22)
+    #define SerialRS485                         Serial2
 
 #elif defined(LILYGO_A7670X_S3)
 
@@ -310,8 +409,8 @@
     #define BOARD_SCL_PIN                       (2)
 
     #define MODEM_DTR_PIN                       (7)
-    #define MODEM_TX_PIN                        (5) 
-    #define MODEM_RX_PIN                        (4) 
+    #define MODEM_TX_PIN                        (4) 
+    #define MODEM_RX_PIN                        (5) 
     #define MODEM_RING_PIN                      (6)
 
     #define MODEM_GPS_RX_PIN                    (48)
@@ -469,6 +568,11 @@
     #define BOARD_LED_PIN             (38)
     #define LED_ON                    (HIGH)
 
+#endif
+
+
+#ifndef MODEM_START_WAIT_MS
+    #define MODEM_START_WAIT_MS             3000
 #endif
 
 // T-Call-A767X V1.0 and V1.1 have different Pinmaps and cannot be used universally , Invalid version

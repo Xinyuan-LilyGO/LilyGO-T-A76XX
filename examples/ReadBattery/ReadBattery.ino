@@ -85,10 +85,13 @@ void setup()
     Serial.begin(115200); // Set console baud rate
 
 #ifdef BOARD_POWERON_PIN
+    /* Set Power control pin output
+    * * @note      Known issues, ESP32 (V1.2) version of T-A7670, T-A7608,
+    *            when using battery power supply mode, BOARD_POWERON_PIN (IO12) must be set to high level after esp32 starts, otherwise a reset will occur.
+    * */
     pinMode(BOARD_POWERON_PIN, OUTPUT);
     digitalWrite(BOARD_POWERON_PIN, HIGH);
 #endif
-
 
     //Connect to the WiFi network
     connectToWiFi(networkName, networkPswd);

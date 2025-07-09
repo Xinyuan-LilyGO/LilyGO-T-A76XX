@@ -36,8 +36,11 @@ void setup()
 
     SerialAT.begin(115200, SERIAL_8N1, MODEM_RX_PIN, MODEM_TX_PIN);
 
-    // Turn on DC boost to power on the modem
 #ifdef BOARD_POWERON_PIN
+    /* Set Power control pin output
+    * * @note      Known issues, ESP32 (V1.2) version of T-A7670, T-A7608,
+    *            when using battery power supply mode, BOARD_POWERON_PIN (IO12) must be set to high level after esp32 starts, otherwise a reset will occur.
+    * */
     pinMode(BOARD_POWERON_PIN, OUTPUT);
     digitalWrite(BOARD_POWERON_PIN, HIGH);
 #endif
@@ -61,10 +64,7 @@ void setup()
         pinMode(MODEM_DTR_PIN, OUTPUT);
         digitalWrite(MODEM_DTR_PIN, LOW);
 
-        /*
-        BOARD_PWRKEY_PIN IO:4 The power-on signal of the modulator must be given to it,
-        otherwise the modulator will not reply when the command is sent
-        */
+    // Turn on the modem
         pinMode(BOARD_PWRKEY_PIN, OUTPUT);
         digitalWrite(BOARD_PWRKEY_PIN, LOW);
         delay(100);

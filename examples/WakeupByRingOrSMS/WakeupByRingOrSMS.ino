@@ -4,9 +4,9 @@
  * @license   MIT
  * @copyright Copyright (c) 2025  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2025-04-29
- * @note      Only applicable to A7670X, A7608X series modules, 
- *            SIM7670G - `SIM7670G-MNGV 2374B04` version supports SMS function, 
- *            but it requires the operator base station to support SMS Over SGS service to send, 
+ * @note      Only applicable to A7670X, A7608X series modules,
+ *            SIM7670G - `SIM7670G-MNGV 2374B04` version supports SMS function,
+ *            but it requires the operator base station to support SMS Over SGS service to send,
  *            otherwise it will be invalid
  */
 
@@ -52,12 +52,14 @@ void setup()
 
     SerialAT.begin(115200, SERIAL_8N1, MODEM_RX_PIN, MODEM_TX_PIN);
 
-    // Turn on DC boost to power on the modem
 #ifdef BOARD_POWERON_PIN
+    /* Set Power control pin output
+    * * @note      Known issues, ESP32 (V1.2) version of T-A7670, T-A7608,
+    *            when using battery power supply mode, BOARD_POWERON_PIN (IO12) must be set to high level after esp32 starts, otherwise a reset will occur.
+    * */
     pinMode(BOARD_POWERON_PIN, OUTPUT);
     digitalWrite(BOARD_POWERON_PIN, HIGH);
 #endif
-
 
     print_wakeup_reason();
 
@@ -76,10 +78,17 @@ void setup()
         digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
 #endif
 
-        /*
-        BOARD_PWRKEY_PIN IO:4 The power-on signal of the modulator must be given to it,
-        otherwise the modulator will not reply when the command is sent
-        */
+#ifdef MODEM_FLIGHT_PIN
+        // If there is an airplane mode control, you need to exit airplane mode
+        pinMode(MODEM_FLIGHT_PIN, OUTPUT);
+        digitalWrite(MODEM_FLIGHT_PIN, HIGH);
+#endif
+
+        // Pull down DTR to ensure the modem is not in sleep state
+        pinMode(MODEM_DTR_PIN, OUTPUT);
+        digitalWrite(MODEM_DTR_PIN, LOW);
+
+        // Turn on the modem
         pinMode(BOARD_PWRKEY_PIN, OUTPUT);
         digitalWrite(BOARD_PWRKEY_PIN, LOW);
         delay(100);
@@ -98,6 +107,11 @@ void setup()
 #ifdef BOARD_POWERON_PIN
         // Need to cancel GPIO hold if wake from sleep
         gpio_hold_dis((gpio_num_t )BOARD_POWERON_PIN);
+#endif
+
+#ifdef MODEM_FLIGHT_PIN
+        // Need to cancel GPIO hold if wake from sleep
+        gpio_hold_dis((gpio_num_t )MODEM_FLIGHT_PIN);
 #endif
     }
 
@@ -121,6 +135,11 @@ void setup()
     }
 
 
+#ifdef MODEM_FLIGHT_PIN
+    // Hold on flight pin
+    gpio_hold_en((gpio_num_t )MODEM_FLIGHT_PIN);
+    gpio_deep_sleep_hold_en();
+#endif
 
 #ifdef BOARD_POWERON_PIN
     Serial.println("Set modem power pin to hold on");

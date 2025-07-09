@@ -91,6 +91,10 @@ void setup()
     SerialAT.begin(115200, SERIAL_8N1, MODEM_RX_PIN, MODEM_TX_PIN);
 
 #ifdef BOARD_POWERON_PIN
+    /* Set Power control pin output
+    * * @note      Known issues, ESP32 (V1.2) version of T-A7670, T-A7608,
+    *            when using battery power supply mode, BOARD_POWERON_PIN (IO12) must be set to high level after esp32 starts, otherwise a reset will occur.
+    * */
     pinMode(BOARD_POWERON_PIN, OUTPUT);
     digitalWrite(BOARD_POWERON_PIN, HIGH);
 #endif
@@ -103,6 +107,17 @@ void setup()
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
 #endif
 
+#ifdef MODEM_FLIGHT_PIN
+    // If there is an airplane mode control, you need to exit airplane mode
+    pinMode(MODEM_FLIGHT_PIN, OUTPUT);
+    digitalWrite(MODEM_FLIGHT_PIN, HIGH);
+#endif
+
+    // Pull down DTR to ensure the modem is not in sleep state
+    pinMode(MODEM_DTR_PIN, OUTPUT);
+    digitalWrite(MODEM_DTR_PIN, LOW);
+
+    // Turn on the modem
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
     delay(100);

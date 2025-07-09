@@ -9,6 +9,19 @@
 #include "utilities.h"
 #include "Arduino.h"
 
+bool checkRespond()
+{
+    for (int j = 0; j < 10; j++) {
+        SerialAT.print("AT\r\n");
+        String input = SerialAT.readString();
+        if (input.indexOf("OK") >= 0) {
+            return true;
+        }
+        delay(200);
+    }
+    return false;
+}
+
 uint32_t AutoBaud()
 {
     static uint32_t rates[] = {115200, 9600, 57600,  38400, 19200,  74400, 74880,
@@ -40,7 +53,16 @@ void setup()
 
     SerialAT.begin(115200, SERIAL_8N1, MODEM_RX_PIN, MODEM_TX_PIN);
 
+#ifdef BOARD_LED_PIN
+    pinMode(BOARD_LED_PIN, OUTPUT);
+    digitalWrite(BOARD_LED_PIN, !LED_ON);
+#endif
+
 #ifdef BOARD_POWERON_PIN
+    /* Set Power control pin output
+    * * @note      Known issues, ESP32 (V1.2) version of T-A7670, T-A7608,
+    *            when using battery power supply mode, BOARD_POWERON_PIN (IO12) must be set to high level after esp32 starts, otherwise a reset will occur.
+    * */
     pinMode(BOARD_POWERON_PIN, OUTPUT);
     digitalWrite(BOARD_POWERON_PIN, HIGH);
 #endif
@@ -53,6 +75,18 @@ void setup()
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
 #endif
 
+#ifdef MODEM_FLIGHT_PIN
+    // If there is an airplane mode control, you need to exit airplane mode
+    pinMode(MODEM_FLIGHT_PIN, OUTPUT);
+    digitalWrite(MODEM_FLIGHT_PIN, HIGH);
+#endif
+
+    // Pull down DTR to ensure the modem is not in sleep state
+    pinMode(MODEM_DTR_PIN, OUTPUT);
+    digitalWrite(MODEM_DTR_PIN, LOW);
+
+
+    // Turn on the modem
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
     delay(100);
@@ -60,19 +94,35 @@ void setup()
     delay(100);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
 
+    // Check whether it has been started
+    bool started = checkRespond();
+    if (!started) {
+        Serial.println("Wait modem started...");
+        // Wait for the modem to finish booting
+        delay(MODEM_START_WAIT_MS);
+    }
+
+    // Determine the communication baud rate
     if (AutoBaud()) {
         Serial.println(F("***********************************************************"));
         Serial.println(F(" You can now send AT commands"));
         Serial.println(F(" Enter \"AT\" (without quotes), and you should see \"OK\""));
         Serial.println(F(" If it doesn't work, select \"Both NL & CR\" in Serial Monitor"));
         Serial.println(F(" DISCLAIMER: Entering AT commands without knowing what they do"));
-        Serial.println(F(" can have undesired consiquinces..."));
+        Serial.println(F(" can have undesired consequences..."));
         Serial.println(F("***********************************************************\n"));
     } else {
         Serial.println(F("***********************************************************"));
         Serial.println(F(" Failed to connect to the modem! Check the baud and try again."));
         Serial.println(F("***********************************************************\n"));
     }
+
+
+#ifdef BOARD_LED_PIN
+    pinMode(BOARD_LED_PIN, OUTPUT);
+    digitalWrite(BOARD_LED_PIN, LED_ON);
+#endif
+
 }
 
 void loop()
