@@ -372,6 +372,9 @@
     #define BOARD_LED_PIN                       (12)
     #define LED_ON                              (HIGH)
 
+    #define BOARD_BAT_ADC_PIN                   (35)
+    #define BOARD_SOLAR_ADC_PIN                 (36)
+
     #define SerialAT                            Serial1
 
     #ifndef TINY_GSM_MODEM_SIM7600
