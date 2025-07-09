@@ -1,0 +1,24 @@
+# Arduino Library Development file
+.development
+
+# Atom
+*.tags
+*.tags1
+
+# VS Code
+.vscode
+
+# Jetbrain IDEs
+.idea
+
+# Spectrum scan
+extras/SX126x_Spectrum_Scan/out/*
+
+# PlatformIO
+.pio*
+
+# cmake
+build/
+
+# Compote build output
+dist
