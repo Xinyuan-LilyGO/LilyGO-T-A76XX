@@ -111,6 +111,7 @@
     // The modem boot pin needs to follow the startup sequence.
     #define BOARD_PWRKEY_PIN                    (4)
     #define BOARD_LED_PIN                       (12)
+    #define LED_ON                              HIGH
     #define MODEM_RING_PIN                      (13)
     #define MODEM_RESET_PIN                     (27)
     #define MODEM_RESET_LEVEL                   LOW
@@ -134,6 +135,7 @@
     // The modem boot pin needs to follow the startup sequence.
     #define BOARD_PWRKEY_PIN                    (4)
     #define BOARD_LED_PIN                       (13)
+    #define LED_ON                              HIGH
     // There is no modem power control, the LED Pin is used as a power indicator here.
     #define MODEM_RING_PIN                      (33)
     #define MODEM_RESET_PIN                     (5)
@@ -468,6 +470,7 @@
     #define BOARD_PWRKEY_PIN                    (4)
     #define MODEM_RING_PIN                      (33)
     #define BOARD_LED_PIN                       (12)
+    #define LED_ON                              HIGH
     #define PMU_IRQ                             (35)
 
     #define SerialAT                            Serial1
