@@ -26,6 +26,7 @@
 | [T-SIM7670G-S3][7] | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  |
 | [T-PCIE-A7670][8]  | ESP32-WROVER-E   | 16MB/4MB | 8MB(QSPI) |
 | [T-ETH-ELite][9]   | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  |
+| [T-SIM7600][10]    | ESP32-S3-WROOM-1 | 4MB/16MB | 8MB(OPI)  |
 
 - For applications that do not require voice and SMS, it is recommended to use [T-SIM7670G-S3](7)
 
@@ -42,6 +43,7 @@
 [7]: https://www.lilygo.cc/products/t-sim-7670g-s3
 [8]: https://lilygo.cc/products/a-t-pcie?variant=42335922094261
 [9]: https://lilygo.cc/products/t-eth-elite-1?variant=44498205049013
+[10]: https://lilygo.cc/products/t-sim7600
 
 ## 2️⃣Examples
 
