@@ -158,6 +158,8 @@
 
 # 5️⃣ FAQ
 
+- **ESP32 users, not ESP32S3 users, ESP32 models GPIO33 and above can only be set as input, not output**
+
 - **ESP32 (V1.x) version [T-A7670X][1]/[T-A7608X][4]  known issue**
   - When using battery power mode, BOARD_POWERON_PIN (IO12) must be set to a high level after ESP32 starts, otherwise a reset will occur.
   - Modem cannot be put into sleep mode when powered by USB-C. For a solution, see [here](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/blob/main/examples/ModemSleep/README.MD)
