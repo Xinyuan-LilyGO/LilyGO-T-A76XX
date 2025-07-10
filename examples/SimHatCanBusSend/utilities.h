@@ -325,6 +325,11 @@
     #define BOARD_LED_PIN                       (12)
     #define LED_ON                              (LOW)
 
+    #define BOARD_MISO_PIN                      (2)
+    #define BOARD_MOSI_PIN                      (15)
+    #define BOARD_SCK_PIN                       (14)
+    #define BOARD_SD_CS_PIN                     (13)
+    
     #define BOARD_BAT_ADC_PIN                   (35)
     #define BOARD_SOLAR_ADC_PIN                 (36)
     
