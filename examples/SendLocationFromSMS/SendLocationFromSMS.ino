@@ -9,6 +9,9 @@
 
 #include "utilities.h"
 
+#ifdef LILYGO_SIM7000G
+#warning "SIM7000G SMS function, the network access mode must be GSM, not NB-IOT"
+#endif
 
 // Define the serial console for debug prints, if needed
 #define TINY_GSM_DEBUG SerialMon
@@ -120,8 +123,10 @@ void setup()
     delay(1000);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
 
+#ifdef MODEM_RING_PIN
     // Set ring pin input
     pinMode(MODEM_RING_PIN, INPUT_PULLUP);
+#endif
 
     // Set modem baud
     SerialAT.begin(115200, SERIAL_8N1, MODEM_RX_PIN, MODEM_TX_PIN);

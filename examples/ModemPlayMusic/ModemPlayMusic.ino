@@ -31,6 +31,10 @@ TinyGsm modem(SerialAT);
 #error "SIM7600 series has not yet implemented this playback function"
 #endif
 
+#ifdef LILYGO_SIM7000G
+#error "SIM7000G not  playback function"
+#endif
+
 void setup()
 {
     Serial.begin(115200); // Set console baud rate

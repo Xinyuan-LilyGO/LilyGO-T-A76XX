@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2024  Shenzhen Xin Yuan Electronic Technology Co.,
  * Ltd
  * @date      2024-12-11
- * @note      GPS only supports A7670X/A7608X/SIM7600 series (excluding A7670G and other
+ * @note      GPS only supports A7670X/A7608X/SIM7000G/SIM7600 series (excluding A7670G and other
  * versions that do not support positioning).
  *
  * TinyGSM GPS Enhancement Example

@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2024  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2024-12-11
- * @note      Only support A7670X A7608X , Not support SIM7670G
+ * @note      Only support A7670X A7608X , Not support SIM7670G,SIM7000G
  * The SIM7600 series needs to have audio decoding function to be used, otherwise it cannot play
  */
 // See all AT commands, if wanted
@@ -13,6 +13,10 @@
 #include "utilities.h"
 #include <TinyGsmClient.h>
 #include "Arduino.h"
+
+#ifdef LILYGO_SIM7000G
+#error "SIM7000G no tts function"
+#endif
 
 #ifdef DUMP_AT_COMMANDS  // if enabled it requires the streamDebugger lib
 #include <StreamDebugger.h>

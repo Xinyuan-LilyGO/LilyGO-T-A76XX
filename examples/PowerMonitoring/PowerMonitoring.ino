@@ -134,8 +134,10 @@ void setup()
     delay(1000);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
 
+#ifdef MODEM_RING_PIN
     // Set ring pin input
     pinMode(MODEM_RING_PIN, INPUT_PULLUP);
+#endif
 
     // Set modem baud
     SerialAT.begin(115200, SERIAL_8N1, MODEM_RX_PIN, MODEM_TX_PIN);

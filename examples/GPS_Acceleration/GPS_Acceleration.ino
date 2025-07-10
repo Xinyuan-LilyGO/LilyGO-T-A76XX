@@ -13,6 +13,10 @@
 #error "SIM7600X series does not support GPS acceleration function"
 #endif
 
+#ifdef TINY_GSM_MODEM_SIM7000SSL
+#error "SIM7000G series does not support GPS acceleration function"
+#endif
+
 
 #define TINY_GSM_RX_BUFFER 1024 // Set RX buffer to 1Kb
 
@@ -49,7 +53,7 @@ TinyGsm modem(SerialAT);
 void setup()
 {
     Serial.begin(115200);
-    
+
 #ifdef BOARD_POWERON_PIN
     /* Set Power control pin output
     * * @note      Known issues, ESP32 (V1.2) version of T-A7670, T-A7608,

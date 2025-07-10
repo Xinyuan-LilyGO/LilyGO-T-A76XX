@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-16
- * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7600 series
+ * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7000G/SIM7600 series
  */
 #define TINY_GSM_RX_BUFFER          1024 // Set RX buffer to 1Kb
 

@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-10-26
- * @note      Not support T-SIM7670G
+ * @note      Not support T-SIM7670G,SIM7000G
  * * Voice calls require external welding of the condenser microphone and speaker.
  * * Generally, the board silk screen is marked SPK. The speaker needs to be welded,
  * * and the MIC silk screen position needs to weld the condenser microphone.
@@ -14,6 +14,10 @@
  */
 
 #include "utilities.h"
+
+#ifdef LILYGO_SIM7000G
+#error "SIM7000G no voice call function"
+#endif
 
 
 // Define the serial console for debug prints, if needed

@@ -4,10 +4,13 @@
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-10-26
- * Example is suitable for A7670X/A7608X/SIM7600 series, not support SIM7670G series
+ * Example is suitable for A7670X/A7608X/SIM7600 series, not support SIM7670G/SIM7000G
 */
 #include "utilities.h"
 
+#ifdef LILYGO_SIM7000G
+#error "SIM7000G - Not LBS function"
+#endif
 
 // Define the serial console for debug prints, if needed
 #define TINY_GSM_DEBUG SerialMon

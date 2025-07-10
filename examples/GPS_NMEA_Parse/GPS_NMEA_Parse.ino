@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-06-28
- * @note      GPS only supports A7670X/A7608X/SIM7600 series (excluding A7670G and other versions that do not support positioning).
+ * @note      GPS only supports A7670X/A7608X/SIM7000G/SIM7600 series (excluding A7670G and other versions that do not support positioning).
  */
 #include "utilities.h"
 
