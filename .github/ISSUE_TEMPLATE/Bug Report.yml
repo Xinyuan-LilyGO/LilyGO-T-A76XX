@@ -39,6 +39,9 @@ body:
         - T-SIM7670G S3
         - T-PCIE-A7670
         - T-ETH-ELite-A7670
+        - T-SIM7000G
+        - T-SIM7070G
+        - T-SIM7600 Series
 
     validations:
       required: true
