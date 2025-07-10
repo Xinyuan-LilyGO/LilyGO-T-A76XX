@@ -8,6 +8,7 @@
 
 # News
 
+- 2025/07/10 : The examples have completed most of the support for SIM7000G. The non-encrypted MQTT is currently waiting for a fix, and the encrypted MQTTS access has been verified.
 - 2025/07/09 : Completed support for SIM7600 series
 - The TinyGSM used in the example is a [fork](https://github.com/lewisxhe/TinyGSM) to support A7670,A7608,SIM7672G,SIM7670G, If you use the master branch, the compilation will not go smoothly
 - A7670G/A7670E/A7670SA/A7672G are collectively referred to as A7670X
@@ -25,6 +26,7 @@
 | [T-A7608][4]       | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) |
 | [T-PCIE-A7670][8]  | ESP32-WROVER-E   | 4MB/16MB | 8MB(QSPI) |
 | [T-SIM7600][10]    | ESP32-WROVER-E   | 4MB/16MB | 8MB(QSPI) |
+| [T-SIM7000G][11]   | ESP32-WROVER-E   | 4MB/16MB | 8MB(QSPI) |
 | [T-A7608-S3][6]    | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  |
 | [T-SIM7670G-S3][7] | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  |
 | [T-ETH-ELite][9]   | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  |
@@ -45,6 +47,7 @@
 [8]: https://lilygo.cc/products/a-t-pcie?variant=42335922094261
 [9]: https://lilygo.cc/products/t-eth-elite-1?variant=44498205049013
 [10]: https://lilygo.cc/products/t-sim7600
+[11]: https://lilygo.cc/products/t-sim7000g
 
 ## 2️⃣Examples
 
@@ -141,9 +144,9 @@
 4. Copy all folders in [lib folder](./lib/)  to Arduino library folder (e.g. C:\Users\YourName\Documents\Arduino\libraries)
 5. Open ArduinoIDE  ,`Tools` , Look at the picture to choose , **If you use the ESP32-S3 controller and need to use serial, then USB CDC ON Boot needs to be set to Enabled**
 
-    | [T-A7670X][1]/[T-Call-A7670X][2]/[T-A7608][4]/[T-PCIE-A7670][8]/[T-SIM7600][10] | [T-A7608-S3][6]/[T-SIM767XG-S3][7]   |
-    | --------------------------------------------------------------- | ------------------------------------ |
-    | ![esp32dev](images/esp32dev.jpg)                                | ![esp32s3dev](images/esp32s3dev.jpg) |
+    | [T-A7670X][1]/[T-Call-A7670X][2]/[T-A7608][4]/[T-PCIE-A7670][8]/[T-SIM7600][10]/[T-SIM7000G][11] | [T-A7608-S3][6]/[T-SIM767XG-S3][7]   |
+    | ------------------------------------------------------------------------------------------------ | ------------------------------------ |
+    | ![esp32dev](images/esp32dev.jpg)                                                                 | ![esp32s3dev](images/esp32s3dev.jpg) |
 
 6. `LilyGO-T-A76XX` folder -> `examples` -> `Choose the appropriate example from the list above`
 7. Open the corresponding board macro definition above [utilities.h](./examples/ATdebug/utilities.h) , For example, if you use LILYGO-A7670X, you need to change ` // #define LILYGO_T_A7670` to ` #define LILYGO_T_A7670`
