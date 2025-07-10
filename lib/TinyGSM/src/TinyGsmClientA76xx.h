@@ -42,6 +42,8 @@ enum RegStatus {
   REG_OK_HOME      = 1,
   REG_OK_ROAMING   = 5,
   REG_UNKNOWN      = 4,
+  REG_SMS_ONLY     = 6,
+  REG_EMERGENCY_ONLY = 11
 };
 
 enum NetworkMode {
