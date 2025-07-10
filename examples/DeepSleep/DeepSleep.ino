@@ -9,6 +9,7 @@
  * T-A7608-ESP32  DeepSleep ~ 240 uA
  * T-A7670-ESP32  DeepSleep ~ 157 uA
  * T-SIM7600-ESP32 DeepSleep ~ 200 uA
+ * T-SIM7000-ESP32 DeepSleep ~ 500 uA
  */
 #include "utilities.h"
 #include <driver/gpio.h>
@@ -37,6 +38,11 @@ void setup()
     Serial.begin(115200); // Set console baud rate
 
     SerialAT.begin(115200, SERIAL_8N1, MODEM_RX_PIN, MODEM_TX_PIN);
+
+#ifdef BOARD_LED_PIN
+    pinMode(BOARD_LED_PIN, OUTPUT);
+    digitalWrite(BOARD_LED_PIN, LED_ON);
+#endif
 
     if (esp_sleep_get_wakeup_cause() == ESP_SLEEP_WAKEUP_TIMER) {
         Serial.println("Wakeup timer");
@@ -86,10 +92,6 @@ void setup()
     delay(300);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
 
-    // Pull up DTR to put the modem into sleep
-    pinMode(MODEM_DTR_PIN, OUTPUT);
-    digitalWrite(MODEM_DTR_PIN, HIGH);
-
     // Delay sometime ...
     delay(10000);
 
@@ -120,13 +122,17 @@ void setup()
 
     delay(5000);
 
+#ifdef BOARD_LED_PIN
+    digitalWrite(BOARD_LED_PIN, !LED_ON);
+#endif
+
 #ifdef BOARD_POWERON_PIN
     // Turn on DC boost to power off the modem
     digitalWrite(BOARD_POWERON_PIN, LOW);
 #endif
 
 #ifdef MODEM_RESET_PIN
-    // Keep it low during the sleep period. If the module uses GPIO5 as reset, 
+    // Keep it low during the sleep period. If the module uses GPIO5 as reset,
     // there will be a pulse when waking up from sleep that will cause the module to start directly.
     // https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/85
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
