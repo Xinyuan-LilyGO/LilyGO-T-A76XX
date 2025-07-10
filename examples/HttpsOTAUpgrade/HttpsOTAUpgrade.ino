@@ -5,14 +5,14 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-30
  * @note
- * * Example is suitable for A7670X/A7608X/SIM7672 series/SIM7600 series
+ * * Example is suitable for A7670X/A7608X/SIM767G/SIM7000G/SIM7600 series
  * * Use modem to connect to custom server to upgrade the esp32 firmware
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  */
 #define TINY_GSM_RX_BUFFER          1024 // Set RX buffer to 1Kb
 
 // See all AT commands, if wanted
-// #define DUMP_AT_COMMANDS
+#define DUMP_AT_COMMANDS
 
 #include "utilities.h"
 #include <TinyGsmClient.h>
@@ -35,6 +35,8 @@ const char *server_url =  "https://lewishe.pro/ota/firmware-a7608-s3.bin";
 const char *server_url =  "https://lewishe.pro/ota/firmware-a7608-s3-dc.bin";
 #elif defined(LILYGO_SIM7600X)
 const char *server_url =  "https://lewishe.pro/ota/firmware-sim7600x.bin";
+#elif defined(LILYGO_SIM7000G)
+const char *server_url =  "https://lewishe.pro/ota/firmware-sim7000g.bin";
 #else
 #error "Use ArduinoIDE, please open the macro definition corresponding to the board above <utilities.h>"
 #endif
@@ -216,11 +218,21 @@ void setup()
         return;
     }
 
+    /*
+    * If you use SIM7000G, the speed after sending the request depends on the wireless communication rate.
+    * By default, it will wait until the modem responds to the data before exiting.
+    * You can use https_set_timeout() to set the request response timeout.
+    * The above instructions are only for SIM7000G
+    * */
+    uint32_t start = millis();
     size_t firmware_size = 0;
     int httpCode = 0;
     Serial.println("Get firmware form HTTPS");
     // Send http get request, if it is correct, you can get the firmware size
     httpCode = modem.https_get(&firmware_size);
+    uint32_t end = millis();
+    Serial.printf("Request url use %lu ms\n", end - start);
+
     if (httpCode != 200) {
         Serial.print("HTTP get failed ! error code = ");
         Serial.println(httpCode);
@@ -307,9 +319,19 @@ AT+SIMCOMATI
 Manufacturer: SIMCOM INCORPORATED
 Model: SIMCOM_SIM7600G-H
 Revision: LE20B04SIM7600G22
-QCN: 
+QCN:
 IMEI: xxxxxxxxxxxx
-MEID: 
+MEID:
 +GCAP: +CGSM
 DeviceInfo: 173,170
+
+-----------------------------
+
+SIM7000G    # 2025/07/10:OK!
+AT+SIMCOMATI
+Revision:1529B11SIM7000G
+CSUB:V01
+APRev:1529B11SIM7000,V01
+QCN:MDM9206_TX3.0.SIM7000G_P1.03C_20240911
+
 */

@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2024-01-11
  * @note
- * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7600 series
+ * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7000G/SIM7600 series
  * * Connect MQTT Broker as https://www.emqx.com/zh/mqtt/public-mqtt5-broker
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  */
@@ -290,4 +290,23 @@ IMEI: xxxxxxxxxxxx
 MEID: 
 +GCAP: +CGSM
 DeviceInfo: 173,170
+
+
+-----------------------------
+
+SIM7000G    # 2025/07/10:OK!
+AT+SIMCOMATI
+Revision:1529B11SIM7000G
+CSUB:V01
+APRev:1529B11SIM7000,V01
+QCN:MDM9206_TX3.0.SIM7000G_P1.03C_20240911
+
+!!!!!!!!!!!!!!!!FAILED 1529B11SIM7000 QCN:MDM9206_TX3.0.SIM7000G_P1.02_20180726
+Revision:1529B11SIM7000G
+CSUB:V01
+APRev:1529B11SIM7000,V01
+QCN:MDM9206_TX3.0.SIM7000G_P1.02_20180726
+!!!!!!!!!!!!!!!!FAILED 1529B11SIM7000 QCN:MDM9206_TX3.0.SIM7000G_P1.02_20180726
+
+
 */

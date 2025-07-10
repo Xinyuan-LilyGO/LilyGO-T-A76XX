@@ -6,6 +6,7 @@
  * @date      2024-10-25
  * @note
  * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7600 series
+  * * TODO: SIM7000G To be fixed
  * * MQTT will message example, use a private server for testing, please prepare your own MQTT server,
  * * and only support MQTT3.1.1 version, and set up the will message function
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.

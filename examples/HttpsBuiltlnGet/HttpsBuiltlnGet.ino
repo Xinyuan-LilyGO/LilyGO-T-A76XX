@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-29
  * @note
- * * Example is suitable for A7670X/A7608X/SIM7672 series/SIM7600 series
+ * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7000G/SIM7600 series
  * * Connect https://httpbin.org test get request
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  */
@@ -174,7 +174,7 @@ void setup()
         }
     }
     Serial.println();
-    
+
 #ifdef MODEM_REG_SMS_ONLY
     while (status == REG_SMS_ONLY) {
         Serial.println("Registered for \"SMS only\", home network (applicable only when E-UTRAN), this type of registration cannot access the network. Please check the APN settings and ask the operator for the correct APN information and the balance and package of the SIM card. If you still cannot connect, please replace the SIM card and test again. Related ISSUE: https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/307#issuecomment-3034800353");
@@ -200,8 +200,7 @@ void setup()
     String ipAddress = modem.getLocalIP();
     Serial.print("Network IP:"); Serial.println(ipAddress);
 
-    // Initialize HTTPS
-    modem.https_begin();
+
 
     // If the status code 715 is returned, please see here
     // https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/117
@@ -211,6 +210,9 @@ void setup()
         int retry = 3;
 
         while (retry--) {
+
+            // Initialize HTTPS
+            modem.https_begin();
 
             Serial.print("Request URL : ");
             Serial.println(request_url[i]);
@@ -232,6 +234,8 @@ void setup()
             if (httpCode != 200) {
                 Serial.print("HTTP get failed ! error code = ");
                 Serial.println(httpCode);
+                // Disconnect http server
+                modem.https_end();
                 delay(3000);
                 continue;
             }
@@ -249,6 +253,9 @@ void setup()
             Serial.println(body);
 
             delay(3000);
+
+            // Disconnect http server
+            modem.https_end();
 
             break;
         }
@@ -279,9 +286,26 @@ AT+SIMCOMATI
 Manufacturer: SIMCOM INCORPORATED
 Model: SIMCOM_SIM7600G-H
 Revision: LE20B04SIM7600G22
-QCN: 
+QCN:
 IMEI: xxxxxxxxxxxx
-MEID: 
+MEID:
 +GCAP: +CGSM
 DeviceInfo: 173,170
+
+-------------------------------
+
+SIM7000G    # 2025/07/10:OK!
+Revision:1529B11SIM7000G
+CSUB:V01
+APRev:1529B11SIM7000,V01
+QCN:MDM9206_TX3.0.SIM7000G_P1.03C_20240911
+
+Revision:1529B11SIM7000G
+CSUB:V01
+APRev:1529B11SIM7000,V01
+QCN:MDM9206_TX3.0.SIM7000G_P1.02_20180726
+
+-------------------------------
+
+
 */

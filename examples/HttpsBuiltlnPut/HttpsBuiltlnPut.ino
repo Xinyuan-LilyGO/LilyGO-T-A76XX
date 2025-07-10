@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2025  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2025-05-03
  * @note
- * * Example is suitable for A7670X/A7608X/SIM7672 series , SIM7600 series not support builtln http put method
+ * * Example is suitable for A7670X/A7608X/SIM767G/SIM7000G , SIM7600 series not support builtln http put method
  * * Connect https://httpbin.org test put request
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  */
@@ -218,6 +218,9 @@ void setup()
     String body = modem.https_body();
     Serial.print("HTTP body : ");
     Serial.println(body);
+
+    // Disconnect http server
+    modem.https_end();
 }
 
 void loop()
@@ -242,9 +245,22 @@ AT+SIMCOMATI
 Manufacturer: SIMCOM INCORPORATED
 Model: SIMCOM_SIM7600G-H
 Revision: LE20B04SIM7600G22
-QCN: 
+QCN:
 IMEI: xxxxxxxxxxxx
-MEID: 
+MEID:
 +GCAP: +CGSM
 DeviceInfo: 173,170
+
+SIM7000G    # 2025/07/10:OK!
+Revision:1529B11SIM7000G
+CSUB:V01
+APRev:1529B11SIM7000,V01
+QCN:MDM9206_TX3.0.SIM7000G_P1.03C_20240911
+
+Revision:1529B11SIM7000G
+CSUB:V01
+APRev:1529B11SIM7000,V01
+QCN:MDM9206_TX3.0.SIM7000G_P1.02_20180726
+
+
 */
