@@ -23,11 +23,11 @@
 | [T-A7670X][1]      | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) |
 | [T-Call-A7670X][2] | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) |
 | [T-A7608][4]       | ESP32-WROVER-E   | 4MB      | 8MB(QSPI) |
+| [T-PCIE-A7670][8]  | ESP32-WROVER-E   | 4MB/16MB | 8MB(QSPI) |
+| [T-SIM7600][10]    | ESP32-WROVER-E   | 4MB/16MB | 8MB(QSPI) |
 | [T-A7608-S3][6]    | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  |
 | [T-SIM7670G-S3][7] | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  |
-| [T-PCIE-A7670][8]  | ESP32-WROVER-E   | 16MB/4MB | 8MB(QSPI) |
 | [T-ETH-ELite][9]   | ESP32-S3-WROOM-1 | 16MB     | 8MB(OPI)  |
-| [T-SIM7600][10]    | ESP32-S3-WROOM-1 | 4MB/16MB | 8MB(OPI)  |
 
 - For applications that do not require voice and SMS, it is recommended to use [T-SIM7670G-S3](7)
 
@@ -99,7 +99,8 @@
 | SimHatCanBusRecv[3]             | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
 | SimHatCanBusSend[3]             | ✅                 | ❌                  | ❌(No support)[2]   | ✅               | ❌                 | ✅               |
 | ULP_Monitor                     | ✅                 | ✅                  | ❌                  | ✅               | ✅                 | ❌               |
-| Traccar(Modern GPS Tracking)    | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+| Traccar(GPS Tracking)           | ✅                 | ✅                  | ✅                  | ✅               | ✅                 | ✅               |
+
 
 - HP303BSensor,SPIExample it only demonstrates how to define and use SPI and I2C. Please confirm the pin connection and IO definition before use.
 - [1] T-A7608-ESP32 Conflict with Solar ADC
