@@ -217,6 +217,10 @@ void setup()
     }
     Serial.println();
 
+    while (status == REG_SMS_ONLY) {
+        Serial.println("Registered for \"SMS only\", home network (applicable only when E-UTRAN), this type of registration cannot access the network. Please check the APN settings and ask the operator for the correct APN information and the balance and package of the SIM card. If you still cannot connect, please replace the SIM card and test again. Related ISSUE: https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/307#issuecomment-3034800353");
+        delay(5000);
+    }
 
     Serial.printf("Registration Status:%d\n", status);
     delay(1000);

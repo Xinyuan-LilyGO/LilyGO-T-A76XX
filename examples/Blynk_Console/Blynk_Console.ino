@@ -30,6 +30,11 @@
 #define BLYNK_TEMPLATE_NAME         "Device"
 #define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
+// It depends on the operator whether to set up an APN. If some operators do not set up an APN,
+// they will be rejected when registering for the network. You need to ask the local operator for the specific APN.
+// APNs from other operators are welcome to submit PRs for filling.
+// #define NETWORK_APN     "CHN-CT"             //CHN-CT: China Telecom
+
 
 // Default heartbeat interval for GSM is 60
 // If you want override this value, uncomment and set this option:
@@ -148,7 +153,7 @@ void setup()
         delay(1000);
     }
 
-    //SIM7672G Can't set network mode
+    //SIM7670G Can't set network mode
 #ifndef TINY_GSM_MODEM_SIM7672
     if (!modem.setNetworkMode(MODEM_NETWORK_AUTO)) {
         Serial.println("Set network mode failed!");
@@ -196,6 +201,10 @@ void setup()
     }
     Serial.println();
 
+    while (status == REG_SMS_ONLY) {
+        Serial.println("Registered for \"SMS only\", home network (applicable only when E-UTRAN), this type of registration cannot access the network. Please check the APN settings and ask the operator for the correct APN information and the balance and package of the SIM card. If you still cannot connect, please replace the SIM card and test again. Related ISSUE: https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/307#issuecomment-3034800353");
+        delay(5000);
+    }
 
     Serial.printf("Registration Status:%d\n", status);
     delay(1000);
@@ -271,10 +280,10 @@ IMEI: XXXXXXXXXXXX
 
 
 17:32:15.074 > Start modem...
-17:32:15.607 > 
+17:32:15.607 >
 17:32:17.615 > SIM card online
 17:32:18.616 > Wait for the modem to register with the network.Online registration successful
-17:32:18.622 > 
+17:32:18.622 >
 17:32:18.623 > Registration Status:1
 17:32:19.640 > Inquiring UE system information:LTE,Online,460-11,0x775C,117004605,399,EUTRAN-BAND3,1506,3,3,-13,-94,-81,3
 +IPADDR: 10.25.155.217 IP:AT+IPADDR
