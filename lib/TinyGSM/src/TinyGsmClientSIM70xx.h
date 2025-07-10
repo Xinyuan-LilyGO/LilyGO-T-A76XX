@@ -310,7 +310,37 @@ class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType>>,
     return res;
   }
 
+  /*
+  * <URL> String type :Address of the remote host
+  * <count> The number of Ping Echo Requset to send, range: 1~500
+  * <size> Number of data bytes to send, range: 1~1400
+  * <timeout> Ping request timeout value (in ms),range:0-60000
+  * <replyId> Echo Reply number
+  * <IP Address> IP Address of the remote host
+  * <replyTime> Time, in ms, required to receive the response
+  */
+  int ping(const char* url, String& resolved_ip_addr, uint32_t& rep_data_packet_size,
+           uint32_t& tripTime, uint8_t& TTL) {
+            
+    uint8_t  dest_addr_type   = 1;
+    uint8_t  num_pings        = 1;
+    uint8_t  data_packet_size = 64;
+    uint32_t interval_time    = 1000;
+    uint32_t wait_time        = 10000;
+    uint8_t  ttl              = 0xFF;
 
+    thisModem().sendAT("+SNPING4=\"", url, "\"", ",", num_pings, ",", data_packet_size, ",",interval_time);
+
+    if (thisModem().waitResponse(10000UL, "+SNPING4: ") == 1) {
+      thisModem().streamGetIntBefore(',');  //replyId
+      resolved_ip_addr     = stream.readStringUntil(','); //IP address
+      tripTime             = thisModem().streamGetIntBefore('\r'); //replyTime
+      if (thisModem().waitResponse() != 1) { return -1; }
+      rep_data_packet_size = data_packet_size;
+      return 1;
+    }
+    return -1;
+  }
   /*
    * GPRS functions
    */
