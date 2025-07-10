@@ -581,6 +581,10 @@
     #define MODEM_START_WAIT_MS             3000
 #endif
 
+#if defined(TINY_GSM_MODEM_SIM7672) || defined(TINY_GSM_MODEM_A7670) || defined(TINY_GSM_MODEM_A7608)
+    #define MODEM_REG_SMS_ONLY
+#endif
+
 // T-Call-A767X V1.0 and V1.1 have different Pinmaps and cannot be used universally , Invalid version
 // #define LILYGO_T_CALL_A7670_V1_1
 // #define LILYGO_T_A7608X_DC_S3
