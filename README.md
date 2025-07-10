@@ -141,7 +141,7 @@
 4. Copy all folders in [lib folder](./lib/)  to Arduino library folder (e.g. C:\Users\YourName\Documents\Arduino\libraries)
 5. Open ArduinoIDE  ,`Tools` , Look at the picture to choose , **If you use the ESP32-S3 controller and need to use serial, then USB CDC ON Boot needs to be set to Enabled**
 
-    | [T-A7670X][1]/[T-Call-A7670X][2]/[T-A7608][4]/[T-PCIE-A7670][8][T-SIM7600][10] | [T-A7608-S3][6]/[T-SIM767XG-S3][7]   |
+    | [T-A7670X][1]/[T-Call-A7670X][2]/[T-A7608][4]/[T-PCIE-A7670][8]/[T-SIM7600][10] | [T-A7608-S3][6]/[T-SIM767XG-S3][7]   |
     | --------------------------------------------------------------- | ------------------------------------ |
     | ![esp32dev](images/esp32dev.jpg)                                | ![esp32s3dev](images/esp32s3dev.jpg) |
 
