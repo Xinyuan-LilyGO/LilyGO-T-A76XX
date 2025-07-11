@@ -166,6 +166,15 @@ void setup()
         delay(1000);
     }
 
+    Serial.println("Check firmware version");
+    // Check firmware version
+    modem.sendAT("+SIMCOMATI");
+    String version;
+    modem.waitResponse(10000, version);
+    Serial.println(version);
+
+    delay(3000);
+    
     //SIM7672G Can't set network mode
 #ifndef TINY_GSM_MODEM_SIM7672
     if (!modem.setNetworkMode(MODEM_NETWORK_AUTO)) {
@@ -313,5 +322,26 @@ CSUB:V01
 APRev:1529B11SIM7000,V01
 QCN:MDM9206_TX3.0.SIM7000G_P1.02_20180726
 !!!!!!!!!!!!!!!!FAILED 1529B11SIM7000 QCN:MDM9206_TX3.0.SIM7000G_P1.02_20180726
+
+---------------------------
+
+A7608SA-H # 2025/07/11:OK!
+
+Manufacturer: INCORPORATED
+Model: A7608SA-H
+Revision: A81C4B01A7600M7
+A7600M7_B01V02_250507
++GCAP: +CGSM,+FCLASS,+DS
+DeviceInfo:
+
+!!!!!!!!!!!!!!!!FAILED Revision: A50C4B12A7600M7
+Manufacturer: INCORPORATED
+Model: A7608SA-H
+Revision: A50C4B12A7600M7
+A7600M7_B12V01_240315
++GCAP: +CGSM,+FCLASS,+DS
+!!!!!!!!!!!!!!!!FAILED Revision: A50C4B12A7600M7
+
+
 
 */

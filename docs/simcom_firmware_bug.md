@@ -38,3 +38,22 @@ SIM767XM5_B04V01_241010
 ```
 
 ------------------------
+
+
+# A7608SA-H
+
+
+### Known version firmware bugs
+
+#### BUG: Hivemq MQTT Can't connect
+
+```bash
+Manufacturer: INCORPORATED
+Model: A7608SA-H
+Revision: A50C4B12A7600M7
+A7600M7_B12V01_240315
+QCN:
+MEID:
++GCAP: +CGSM,+FCLASS,+DS
+DeviceInfo:
+```
