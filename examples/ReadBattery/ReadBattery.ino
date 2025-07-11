@@ -10,7 +10,12 @@
  *                         When connected to the USB, the battery voltage data read is not the real battery voltage, so the battery
  *                         voltage is sent to the UDP Server through UDP. When using it, please disconnect the USB-C
  *            T-A7670x :  Only version V1.4 has the resistor divider connected to the solar input, other versions IO38 is not connected
+ *            T-SIM7600 series ：When the USB is connected, the battery mV is 0 because the battery voltage cannot be read when the USB is plugged in.
+ * 
  * @note      Only support T-A7670 ,T-A7608X, T-SIM7672G board , not support T-Call A7670 , T-PCIE-A7670
+ *            The AT+CBC command is only supported by the T-A7670X-ESP32S3 version. Other versions cannot read it because the hardware is not connected.
+ *            The AT+CBC command is only supported by the T-A7670X-ESP32S3 version. Other versions cannot read it because the hardware is not connected.
+ *            The AT+CBC command is only supported by the T-A7670X-ESP32S3 version. Other versions cannot read it because the hardware is not connected.
  */
 #include <Arduino.h>
 #include <WiFi.h>
@@ -23,6 +28,21 @@
 #error "No support this board"
 #endif
 
+
+/*
+* Only T-A767X-ESP32S3 version. Other versions cannot use AT+CBC to read the battery
+* voltage because the hardware is not connected.
+* */
+#ifdef MODEM_CONNECTED_ADC_PIN
+#include <TinyGsmClient.h>
+#ifdef DUMP_AT_COMMANDS  // if enabled it requires the streamDebugger lib
+#include <StreamDebugger.h>
+StreamDebugger debugger(SerialAT, SerialMon);
+TinyGsm modem(debugger);
+#else
+TinyGsm modem(SerialAT);
+#endif
+#endif
 
 // WiFi network name and password:
 const char *networkName = "your-ssid";
@@ -93,14 +113,56 @@ void setup()
     digitalWrite(BOARD_POWERON_PIN, HIGH);
 #endif
 
+
+    /*
+    * Only T-A767X-ESP32S3 version. Other versions cannot use AT+CBC to read the battery
+    * voltage because the hardware is not connected.
+    * */
+#ifdef MODEM_CONNECTED_ADC_PIN
+    // Set modem baud
+    SerialAT.begin(115200, SERIAL_8N1, MODEM_RX_PIN, MODEM_TX_PIN);
+
+    // Pull down DTR to ensure the modem is not in sleep state
+    pinMode(MODEM_DTR_PIN, OUTPUT);
+    digitalWrite(MODEM_DTR_PIN, LOW);
+
+    // Turn on modem
+    pinMode(BOARD_PWRKEY_PIN, OUTPUT);
+    digitalWrite(BOARD_PWRKEY_PIN, LOW);
+    delay(100);
+    digitalWrite(BOARD_PWRKEY_PIN, HIGH);
+    delay(1000);
+    digitalWrite(BOARD_PWRKEY_PIN, LOW);
+
+    Serial.println("Start modem...");
+    delay(3000);
+
+    int retry = 0;
+    while (!modem.testAT(1000)) {
+        Serial.println(".");
+        if (retry++ > 10) {
+            digitalWrite(BOARD_PWRKEY_PIN, LOW);
+            delay(100);
+            digitalWrite(BOARD_PWRKEY_PIN, HIGH);
+            delay(1000);
+            digitalWrite(BOARD_PWRKEY_PIN, LOW);
+            retry = 0;
+        }
+    }
+    Serial.println();
+    delay(200);
+
+
+#endif
+
     //Connect to the WiFi network
     connectToWiFi(networkName, networkPswd);
-
+    
 
     //adc setting start
-     
+
     // You don't need to set it, because the values ​​are all default. The current version is Arduino 3.0.4, and the subsequent versions are uncertain.
-    
+
     analogSetAttenuation(ADC_11db);
 
     analogReadResolution(12);
@@ -109,7 +171,7 @@ void setup()
     analogSetWidth(12);
 #endif
 
-    //adc setting end 
+    //adc setting end
 }
 
 void loop()
@@ -126,11 +188,21 @@ void loop()
             uint32_t solar_voltage = analogReadMilliVolts(BOARD_SOLAR_ADC_PIN);
             solar_voltage *= 2;     //The hardware voltage divider resistor is half of the actual voltage, multiply it by 2 to get the true voltage
             snprintf(buf, 256, "Battery:%umV \tSolar:%umV", battery_voltage, solar_voltage);
-
 #else
             snprintf(buf, 256, "Battery:%umV ", battery_voltage);
 #endif
 
+
+
+            /*
+            * Only T-A767X-ESP32S3 version. Other versions cannot use AT+CBC to read the battery
+            * voltage because the hardware is not connected.
+            * */
+#ifdef MODEM_CONNECTED_ADC_PIN
+            uint16_t modem_voltage = modem.getBattVoltage();
+            Serial.printf("Modem voltage:%u mV\n", modem_voltage);
+            snprintf(buf, 256, "%s Modem voltage:%u mV\n", buf, modem_voltage);
+#endif
 
             // When connected to the USB, the battery voltage data read is not the real battery voltage,
             // so the battery voltage is sent to the UDP Server through UDP. When using it, please disconnect the USBC
