@@ -55,6 +55,9 @@
 // https://lilygo.cc/products/t-sim7600
 // #define LILYGO_SIM7600X
 
+// Products Link: ......
+// #define LILYGO_T_RELAY_S3_SIMSHIELD
+
 
 #if defined(LILYGO_T_A7670)
 
@@ -416,6 +419,7 @@
 
     #define MODEM_BAUDRATE                      (115200)
 
+    // Default I2C communication pin, cannot be changed
     #define BOARD_SDA_PIN                       (3)
     #define BOARD_SCL_PIN                       (2)
 
@@ -424,21 +428,32 @@
     #define MODEM_RX_PIN                        (5) 
     #define MODEM_RING_PIN                      (6)
 
+    /*
+    * GPS communication pin. If the modem has GPS function, 
+    * NMEA data can be read through this IO. 
+    * If an external GPS module is used, the same GPIO is used for communication.
+    * */
     #define MODEM_GPS_RX_PIN                    (48)
     #define MODEM_GPS_TX_PIN                    (45)
     #define MODEM_GPS_PPS_PIN                   (17)
 
+    // This IO is only used when using an external GPS module, such as A7670G+L76K GPS
+    #define GPS_SHIELD_WAKEUP_PIN               (0)
+
     // The modem boot pin needs to follow the startup sequence.
     #define BOARD_PWRKEY_PIN                    (46)
 
+    // Analog pins are already connected to the ADC voltage divider circuit and cannot be used for other purposes
     #define BOARD_BAT_ADC_PIN                   (8)
     #define BOARD_SOLAR_ADC_PIN                 (18)
 
+    // SD Socket pins
     #define BOARD_MISO_PIN                      (13)
     #define BOARD_MOSI_PIN                      (11)
     #define BOARD_SCK_PIN                       (12)
     #define BOARD_SD_CS_PIN                     (10)
 
+    // CAMERA_XXX_PIN is routed to the pin header and camera connector
     #define CAMERA_PWDN_PIN                     (-1)
     #define CAMERA_RESET_PIN                    (-1)
     #define CAMERA_XCLK_PIN                     (21)
@@ -456,11 +471,9 @@
     #define CAMERA_Y3_PIN                       (15)
     #define CAMERA_Y2_PIN                       (35)
 
-    #define BOARD_LED_PIN                       (17)
-    #define LED_ON                              (HIGH)
-
     #define SerialAT                            Serial1
-
+   
+    // GPS antenna power control GPIO, this GPIO is the modem GPIO
     #define MODEM_GPS_ENABLE_GPIO               (2)
     #define MODEM_GPS_ENABLE_LEVEL              (1)
 
@@ -468,6 +481,23 @@
         #define TINY_GSM_MODEM_A7670
     #endif
 
+    // This board has connected the ADC circuit to the modem, and the battery voltage can be read via AT+CBC
+    #define MODEM_CONNECTED_ADC_PIN
+
+#elif defined(LILYGO_T_RELAY_S3_SIMSHIELD)
+
+    #ifndef TINY_GSM_MODEM_A7670
+        #define TINY_GSM_MODEM_A7670
+    #endif
+
+    #define BOARD_PWRKEY_PIN                    46
+    #define MODEM_RX_PIN                        9
+    #define MODEM_TX_PIN                        3
+    #define MODEM_DTR_PIN                       11
+    #define MODEM_RING_PIN                      13
+
+    #define SerialAT                            Serial1
+    
 #elif defined(LILYGO_T_PCIE_A767X)
 
     #define MODEM_DTR_PIN                       (32)
