@@ -14,6 +14,7 @@ template <class modemType>
 class TinyGsmEmail
 {
 protected:
+    String _attachment_filename;
     String PATH = "C";
 
     uint32_t writeFileToEFS(const char *filename, const uint8_t *data, size_t size)
@@ -125,13 +126,16 @@ public:
     // Select attachment
     bool email_set_attachment(const char *filename, const uint8_t *data, size_t size)
     {
-        String _filename = PATH;
-        _filename.concat(":/");
+        _attachment_filename.clear();
+        _attachment_filename.concat(PATH);
+        _attachment_filename.concat(":/");
         // Check file exists or not
-        _filename.concat(filename);
-        thisModem().sendAT("+FSATTRI=", _filename);
+        _attachment_filename.concat(filename);
+        thisModem().sendAT("+FSATTRI=", _attachment_filename);
         if (thisModem().waitResponse() == 2 /*File not exist*/) {
-            writeFileToEFS(filename, data, size);
+            if (writeFileToEFS(filename, data, size) != size) {
+                return false;
+            }
         }
         thisModem().sendAT("+CSMTPSFILE=1,", "\"", PATH, ":/", filename, "\"");
         return thisModem().waitResponse(9000) == 1;
@@ -139,14 +143,19 @@ public:
 
     int32_t email_send()
     {
+        int res = -1;
         thisModem().sendAT("+CSMTPSSEND");
         if (thisModem().waitResponse(3000) != 1)return -1;
         if (thisModem().waitResponse(9000, "+CSMTPSSEND: ") == 1) {
-            int32_t res =  thisModem().streamGetLongLongBefore('\n');
+            res =  thisModem().streamGetLongLongBefore('\n');
             thisModem().stream.flush();
-            return res;
         }
-        return -1;
+        if (_attachment_filename.length()) {
+            thisModem().sendAT("+FSDEL=", _attachment_filename);
+            thisModem().waitResponse();
+            _attachment_filename.clear();
+        }
+        return res;
     }
 
     /*
