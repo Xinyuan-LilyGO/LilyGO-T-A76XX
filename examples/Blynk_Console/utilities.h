@@ -453,12 +453,15 @@
     #define BOARD_SCK_PIN                       (12)
     #define BOARD_SD_CS_PIN                     (10)
 
+    // Enable / disable power save mode (1 disabled, 0 enabled)
+    #define BOARD_POWER_SAVE_MODE_PIN           (42)
+
     // CAMERA_XXX_PIN is routed to the pin header and camera connector
     #define CAMERA_PWDN_PIN                     (-1)
     #define CAMERA_RESET_PIN                    (-1)
     #define CAMERA_XCLK_PIN                     (21)
     #define CAMERA_SIOD_PIN                     (1)
-    #define CAMERA_SIOC_PIN                     (2)
+    #define CAMERA_SIOC_PIN                     (41)
     #define CAMERA_VSYNC_PIN                    (9)
     #define CAMERA_HREF_PIN                     (14)
     #define CAMERA_PCLK_PIN                     (37)
