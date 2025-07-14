@@ -9,7 +9,7 @@
 #define TINY_GSM_RX_BUFFER          1024 // Set RX buffer to 1Kb
 
 // See all AT commands, if wanted
-// #define DUMP_AT_COMMANDS
+#define DUMP_AT_COMMANDS
 
 #include "utilities.h"
 #include <TinyGsmClient.h>
@@ -62,7 +62,7 @@ void setup()
     // Pull down DTR to ensure the modem is not in sleep state
     pinMode(MODEM_DTR_PIN, OUTPUT);
     digitalWrite(MODEM_DTR_PIN, LOW);
-    
+
     // Turn on the modem
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
@@ -88,6 +88,24 @@ void setup()
     }
     Serial.println();
 
+#define A7670X_LOG_CAPTURE  //Used to capture networking information and restart the modem
+
+#ifdef A7670X_LOG_CAPTURE
+    Serial.println("Restart modem");
+    //Rset modem
+    modem.sendAT("+CFUN=6");
+    modem.waitResponse();
+
+    // Wait modem reset
+    delay(10000);
+
+    // Check at respones
+    while (!modem.testAT(1000)) {
+        Serial.println(".");
+    }
+    Serial.println();
+#endif
+
     // Check if SIM card is online
     SimStatus sim = SIM_ERROR;
     while (sim != SIM_READY) {
@@ -110,6 +128,7 @@ void setup()
     // Get model info
     modem.sendAT("+SIMCOMATI");
     modem.waitResponse();
+    delay(3000);
 
     //SIM7672G Can't set network mode
 #ifndef TINY_GSM_MODEM_SIM7672
@@ -165,7 +184,7 @@ void setup()
         delay(5000);
     }
 #endif
-    
+
     Serial.printf("Registration Status:%d\n", status);
     delay(1000);
 
