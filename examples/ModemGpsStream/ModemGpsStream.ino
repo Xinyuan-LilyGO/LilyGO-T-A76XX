@@ -22,11 +22,6 @@
 #define DECODER_GPS_STREAM
 
 
-#ifdef DECODER_GPS_STREAM
-#include <TinyGPSPlus.h>
-TinyGPSPlus gps;
-#endif
-
 #include <TinyGsmClient.h>
 #ifdef DUMP_AT_COMMANDS  // if enabled it requires the streamDebugger lib
 #include <StreamDebugger.h>
@@ -39,6 +34,123 @@ TinyGsm modem(SerialAT);
 bool external_gps_module = false;
 
 bool pps_signal = false;
+
+
+#ifdef DECODER_GPS_STREAM
+#include <TinyGPSPlus.h>
+TinyGPSPlus gps;
+static void printFloat(float val, bool valid, int len, int prec)
+{
+    if (!valid) {
+        while (len-- > 1)
+            Serial.print('*');
+        Serial.print(' ');
+    } else {
+        Serial.print(val, prec);
+        int vi = abs((int)val);
+        int flen = prec + (val < 0.0 ? 2 : 1); // . and -
+        flen += vi >= 1000 ? 4 : vi >= 100 ? 3 : vi >= 10 ? 2 : 1;
+        for (int i = flen; i < len; ++i)
+            Serial.print(' ');
+    }
+}
+
+static void printInt(unsigned long val, bool valid, int len)
+{
+    char sz[32] = "*****************";
+    if (valid)
+        sprintf(sz, "%ld", val);
+    sz[len] = 0;
+    for (int i = strlen(sz); i < len; ++i)
+        sz[i] = ' ';
+    if (len > 0)
+        sz[len - 1] = ' ';
+    Serial.print(sz);
+}
+
+static void printDateTime(TinyGPSDate &d, TinyGPSTime &t)
+{
+    if (!d.isValid()) {
+        Serial.print(F("********** "));
+    } else {
+        char sz[32];
+        sprintf(sz, "%02d/%02d/%02d ", d.month(), d.day(), d.year());
+        Serial.print(sz);
+    }
+
+    if (!t.isValid()) {
+        Serial.print(F("******** "));
+    } else {
+        char sz[32];
+        sprintf(sz, "%02d:%02d:%02d ", t.hour(), t.minute(), t.second());
+        Serial.print(sz);
+    }
+
+    printInt(d.age(), d.isValid(), 5);
+}
+
+static void printStr(const char *str, int len)
+{
+    int slen = strlen(str);
+    for (int i = 0; i < len; ++i)
+        Serial.print(i < slen ? str[i] : ' ');
+}
+
+void printGPS()
+{
+    static uint32_t interval = 0;
+    static const double LONDON_LAT = 51.508131, LONDON_LON = -0.128002;
+
+    if (millis() < interval) {
+        return;
+    }
+
+    if (millis() > 10000 && gps.charsProcessed() < 10) {
+        Serial.println(F("No GPS data received,Please confirm that the GPS module exists"));
+        return;
+    }
+
+    printInt(gps.satellites.value(), gps.satellites.isValid(), 5);
+    printFloat(gps.hdop.hdop(), gps.hdop.isValid(), 6, 1);
+    printFloat(gps.location.lat(), gps.location.isValid(), 11, 6);
+    printFloat(gps.location.lng(), gps.location.isValid(), 12, 6);
+    printInt(gps.location.age(), gps.location.isValid(), 5);
+    printDateTime(gps.date, gps.time);
+    printFloat(gps.altitude.meters(), gps.altitude.isValid(), 7, 2);
+    printFloat(gps.course.deg(), gps.course.isValid(), 7, 2);
+    printFloat(gps.speed.kmph(), gps.speed.isValid(), 6, 2);
+    printStr(gps.course.isValid() ? TinyGPSPlus::cardinal(gps.course.deg()) : "*** ", 6);
+
+    unsigned long distanceKmToLondon =
+        (unsigned long)TinyGPSPlus::distanceBetween(
+            gps.location.lat(),
+            gps.location.lng(),
+            LONDON_LAT,
+            LONDON_LON) / 1000;
+    printInt(distanceKmToLondon, gps.location.isValid(), 9);
+
+    double courseToLondon =
+        TinyGPSPlus::courseTo(
+            gps.location.lat(),
+            gps.location.lng(),
+            LONDON_LAT,
+            LONDON_LON);
+
+    printFloat(courseToLondon, gps.location.isValid(), 7, 2);
+
+    const char *cardinalToLondon = TinyGPSPlus::cardinal(courseToLondon);
+
+    printStr(gps.location.isValid() ? cardinalToLondon : "*** ", 6);
+
+    printInt(gps.charsProcessed(), true, 6);
+    printInt(gps.sentencesWithFix(), true, 10);
+    printInt(gps.failedChecksum(), true, 9);
+    Serial.println();
+
+    interval = millis() + 1000;
+}
+
+#endif
 
 void setup()
 {
@@ -121,6 +233,8 @@ void setup()
         // If you have a GPS backup battery connected, you can try a hot start.
         modem.gpsHotStart();
 
+        // Modem gps baudrate is 115200
+        SerialGPS.begin(115200, SERIAL_8N1, MODEM_GPS_TX_PIN, MODEM_GPS_RX_PIN);
     } else {
 
         Serial.println("Start the external GPS module and use the default 9600 baud rate for communication");
@@ -129,9 +243,10 @@ void setup()
         pinMode(GPS_SHIELD_WAKEUP_PIN, OUTPUT);
         digitalWrite(GPS_SHIELD_WAKEUP_PIN, HIGH);
 
+        // External GPS module baudrate is 115200
+        SerialGPS.begin(9600, SERIAL_8N1, MODEM_GPS_TX_PIN, MODEM_GPS_RX_PIN);
     }
 
-    SerialGPS.begin(9600, SERIAL_8N1, MODEM_GPS_TX_PIN, MODEM_GPS_RX_PIN);
 
 
     Serial.println("Next you should see NMEA sentences in the serial monitor");
@@ -166,7 +281,9 @@ void loop()
 #endif
     }
 
+#ifdef DECODER_GPS_STREAM
     printGPS();
+#endif
 
     while (SerialAT.available()) {
         int  ch = SerialAT.read();
@@ -176,117 +293,6 @@ void loop()
     while (Serial.available()) {
         SerialAT.write(Serial.read());
     }
-}
-
-void printGPS()
-{
-    static uint32_t interval = 0;
-    static const double LONDON_LAT = 51.508131, LONDON_LON = -0.128002;
-
-    if (millis() < interval) {
-        return;
-    }
-
-    if (millis() > 10000 && gps.charsProcessed() < 10) {
-        Serial.println(F("No GPS data received,Please confirm that the GPS module exists"));
-        return;
-    }
-
-    printInt(gps.satellites.value(), gps.satellites.isValid(), 5);
-    printFloat(gps.hdop.hdop(), gps.hdop.isValid(), 6, 1);
-    printFloat(gps.location.lat(), gps.location.isValid(), 11, 6);
-    printFloat(gps.location.lng(), gps.location.isValid(), 12, 6);
-    printInt(gps.location.age(), gps.location.isValid(), 5);
-    printDateTime(gps.date, gps.time);
-    printFloat(gps.altitude.meters(), gps.altitude.isValid(), 7, 2);
-    printFloat(gps.course.deg(), gps.course.isValid(), 7, 2);
-    printFloat(gps.speed.kmph(), gps.speed.isValid(), 6, 2);
-    printStr(gps.course.isValid() ? TinyGPSPlus::cardinal(gps.course.deg()) : "*** ", 6);
-
-    unsigned long distanceKmToLondon =
-        (unsigned long)TinyGPSPlus::distanceBetween(
-            gps.location.lat(),
-            gps.location.lng(),
-            LONDON_LAT,
-            LONDON_LON) / 1000;
-    printInt(distanceKmToLondon, gps.location.isValid(), 9);
-
-    double courseToLondon =
-        TinyGPSPlus::courseTo(
-            gps.location.lat(),
-            gps.location.lng(),
-            LONDON_LAT,
-            LONDON_LON);
-
-    printFloat(courseToLondon, gps.location.isValid(), 7, 2);
-
-    const char *cardinalToLondon = TinyGPSPlus::cardinal(courseToLondon);
-
-    printStr(gps.location.isValid() ? cardinalToLondon : "*** ", 6);
-
-    printInt(gps.charsProcessed(), true, 6);
-    printInt(gps.sentencesWithFix(), true, 10);
-    printInt(gps.failedChecksum(), true, 9);
-    Serial.println();
-
-    interval = millis() + 1000;
-}
-
-static void printFloat(float val, bool valid, int len, int prec)
-{
-    if (!valid) {
-        while (len-- > 1)
-            Serial.print('*');
-        Serial.print(' ');
-    } else {
-        Serial.print(val, prec);
-        int vi = abs((int)val);
-        int flen = prec + (val < 0.0 ? 2 : 1); // . and -
-        flen += vi >= 1000 ? 4 : vi >= 100 ? 3 : vi >= 10 ? 2 : 1;
-        for (int i = flen; i < len; ++i)
-            Serial.print(' ');
-    }
-}
-
-static void printInt(unsigned long val, bool valid, int len)
-{
-    char sz[32] = "*****************";
-    if (valid)
-        sprintf(sz, "%ld", val);
-    sz[len] = 0;
-    for (int i = strlen(sz); i < len; ++i)
-        sz[i] = ' ';
-    if (len > 0)
-        sz[len - 1] = ' ';
-    Serial.print(sz);
-}
-
-static void printDateTime(TinyGPSDate &d, TinyGPSTime &t)
-{
-    if (!d.isValid()) {
-        Serial.print(F("********** "));
-    } else {
-        char sz[32];
-        sprintf(sz, "%02d/%02d/%02d ", d.month(), d.day(), d.year());
-        Serial.print(sz);
-    }
-
-    if (!t.isValid()) {
-        Serial.print(F("******** "));
-    } else {
-        char sz[32];
-        sprintf(sz, "%02d:%02d:%02d ", t.hour(), t.minute(), t.second());
-        Serial.print(sz);
-    }
-
-    printInt(d.age(), d.isValid(), 5);
-}
-
-static void printStr(const char *str, int len)
-{
-    int slen = strlen(str);
-    for (int i = 0; i < len; ++i)
-        Serial.print(i < slen ? str[i] : ' ');
 }
 
 
