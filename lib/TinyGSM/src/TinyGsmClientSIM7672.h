@@ -523,6 +523,25 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
    * GPS/GNSS/GLONASS location functions
    */
  protected:
+
+   bool gpsColdStartImpl() {
+    sendAT(GF("+CGPSCOLD"));
+    if (waitResponse(10000L) != 1) { return false; }
+    return true;
+  }
+
+  bool gpsWarmStartImpl() {
+    sendAT(GF("+CGPSWARM"));
+    if (waitResponse(10000L) != 1) { return false; }
+    return true;
+  }
+
+  bool gpsHotStartImpl() {
+    sendAT(GF("+CGPSHOT"));
+    if (waitResponse(10000L) != 1) { return false; }
+    return true;
+  }
+  
   // enable GPS
   bool enableGPSImpl(int8_t power_en_pin ,uint8_t enable_level) {
     if(power_en_pin!= -1){
