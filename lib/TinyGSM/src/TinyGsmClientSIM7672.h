@@ -29,6 +29,7 @@
 #include "TinyGsmMqttA76xx.h"
 #include "TinyGsmHttpsComm.h"
 #include "TinyGsmGPS_EX.tpp"
+#include "TinyGsmFSComm.tpp"
 
 #define GSM_NL "\r\n"
 static const char GSM_OK[] TINY_GSM_PROGMEM    = "OK" GSM_NL;
@@ -62,7 +63,8 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
                        public TinyGsmCalling<TinyGsmSim7672>,
                        public TinyGsmMqttA76xx<TinyGsmSim7672, TINY_GSM_MQTT_CLI_COUNT>,
                        public TinyGsmGPSEx<TinyGsmSim7672>,
-                       public TinyGsmHttpsComm<TinyGsmSim7672,QUALCOMM_SIM7670G> 
+                       public TinyGsmHttpsComm<TinyGsmSim7672,QUALCOMM_SIM7670G>,
+                       public TinyGsmFSComm<TinyGsmSim7672,QUALCOMM_SIM7670G> 
 {
   friend class TinyGsmModem<TinyGsmSim7672>;
   friend class TinyGsmGPRS<TinyGsmSim7672>;
@@ -78,6 +80,7 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
   friend class TinyGsmMqttA76xx<TinyGsmSim7672, TINY_GSM_MQTT_CLI_COUNT>;
   friend class TinyGsmHttpsComm<TinyGsmSim7672,QUALCOMM_SIM7670G>;
   friend class TinyGsmGPSEx<TinyGsmSim7672>;
+  friend class TinyGsmFSComm<TinyGsmSim7672,QUALCOMM_SIM7670G>;
 
 
   /*

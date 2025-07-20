@@ -30,6 +30,7 @@
 #include "TinyGsmMqttA76xx.h"
 #include "TinyGsmHttpsComm.h"
 #include "TinyGsmTextToSpeech.tpp"
+#include "TinyGsmFSComm.tpp"
 
 #define GSM_NL "\r\n"
 static const char GSM_OK[] TINY_GSM_PROGMEM    = "OK" GSM_NL;
@@ -77,7 +78,8 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
                        public TinyGsmGPSEx<TinyGsmSim7600>,
                        public TinyGsmTextToSpeech<TinyGsmSim7600>,
                        public TinyGsmMqttA76xx<TinyGsmSim7600, TINY_GSM_MQTT_CLI_COUNT>,
-                       public TinyGsmHttpsComm<TinyGsmSim7600, QUALCOMM_SIM7600G> {
+                       public TinyGsmHttpsComm<TinyGsmSim7600, QUALCOMM_SIM7600G>,
+                       public TinyGsmFSComm<TinyGsmSim7600, QUALCOMM_SIM7600G> {
   friend class TinyGsmModem<TinyGsmSim7600>;
   friend class TinyGsmGPRS<TinyGsmSim7600>;
   friend class TinyGsmTCP<TinyGsmSim7600, TINY_GSM_MUX_COUNT>;
@@ -93,6 +95,8 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
   friend class TinyGsmHttpsComm<TinyGsmSim7600, QUALCOMM_SIM7600G>;
   friend class TinyGsmGPSEx<TinyGsmSim7600>;
   friend class TinyGsmTextToSpeech<TinyGsmSim7600>;
+  friend class TinyGsmFSComm<TinyGsmSim7600, QUALCOMM_SIM7600G>;
+
   /*
    * Inner Client
    */

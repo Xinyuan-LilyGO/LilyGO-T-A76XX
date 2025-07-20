@@ -26,12 +26,6 @@ enum HttpMethod {
   TINYGSM_HTTP_PATCH,
 };
 
-enum ModemPlatform {
-  ASR_A7670X,
-  ASR_A7608X,
-  QUALCOMM_SIM7670G,
-  QUALCOMM_SIM7600G,
-};
 
 template <class modemType, ModemPlatform platform>
 class TinyGsmHttpsComm {

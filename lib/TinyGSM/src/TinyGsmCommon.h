@@ -125,4 +125,12 @@ uint32_t TinyGsmAutoBaud(T& SerialAT, uint32_t minimum = 9600,
   return 0;
 }
 
+enum ModemPlatform {
+    ASR_A7670X,
+    ASR_A7608X,
+    QUALCOMM_SIM7670G,
+    QUALCOMM_SIM7600G,
+};
+
+
 #endif  // SRC_TINYGSMCOMMON_H_

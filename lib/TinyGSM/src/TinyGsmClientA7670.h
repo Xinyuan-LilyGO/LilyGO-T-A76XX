@@ -20,15 +20,18 @@
 #include "TinyGsmMqttA76xx.h"
 #include "TinyGsmHttpsComm.h"
 #include "TinyGsmTCP.tpp"
+#include "TinyGsmFSComm.tpp"
 
 class TinyGsmA7670 :  public TinyGsmA76xx<TinyGsmA7670>,
                       public TinyGsmTCP<TinyGsmA7670, TINY_GSM_MUX_COUNT>,
                       public TinyGsmMqttA76xx<TinyGsmA7670, TINY_GSM_MQTT_CLI_COUNT>,
-                      public TinyGsmHttpsComm<TinyGsmA7670,ASR_A7670X> {
+                      public TinyGsmHttpsComm<TinyGsmA7670,ASR_A7670X>, 
+                      public TinyGsmFSComm<TinyGsmA7670,ASR_A7670X>{
   friend class TinyGsmA76xx<TinyGsmA7670>;
   friend class TinyGsmTCP<TinyGsmA7670, TINY_GSM_MUX_COUNT>;
   friend class TinyGsmMqttA76xx<TinyGsmA7670, TINY_GSM_MQTT_CLI_COUNT>;
   friend class TinyGsmHttpsComm<TinyGsmA7670,ASR_A7670X>;
+  friend class TinyGsmFSComm<TinyGsmA7670,ASR_A7670X>;
 
   /*
    * Inner Client
