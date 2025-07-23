@@ -379,9 +379,9 @@ class TinyGsmA76xx : public TinyGsmModem<TinyGsmA76xx<modemType>>,
       thisModem().waitResponse();
     }
     // Detection turned on?
-    if(gpsHotStartImpl()){
-      return true;
-    }
+    // if(gpsHotStartImpl()){
+    //   return true;
+    // }
     thisModem().sendAT(GF("+CGNSSPWR=1"));
     if (thisModem().waitResponse(30000UL, "+CGNSSPWR: READY!") != 1) { return false; }
     return true;
