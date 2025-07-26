@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2025  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2025-06-18
- *
+ * @note      This example is only available for SimShield
  */
 
 #include "Arduino.h"

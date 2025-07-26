@@ -16,6 +16,25 @@
 #endif
 
 
+// #define USING_SIMSHIELD //Define this line to use the SimShield pinout
+
+#ifdef USING_SIMSHIELD
+
+#define EXAMPLE_SPI_MISO    SIMSHIELD_MISO
+#define EXAMPLE_SPI_MOSI    SIMSHIELD_MOSI
+#define EXAMPLE_SPI_SCK     SIMSHIELD_SCK
+#define EXAMPLE_SD_CS       SIMSHIELD_SD_CS
+
+#else   /*USING_SIMSHIELD*/
+
+#define EXAMPLE_SPI_MISO    BOARD_MISO_PIN
+#define EXAMPLE_SPI_MOSI    BOARD_MOSI_PIN
+#define EXAMPLE_SPI_SCK     BOARD_SCK_PIN
+#define EXAMPLE_SD_CS       BOARD_SD_CS_PIN
+
+#endif  /*USING_SIMSHIELD*/
+
+
 void listDir(fs::FS &fs, const char *dirname, uint8_t levels)
 {
     Serial.printf("Listing directory: %s\n", dirname);
@@ -192,8 +211,8 @@ void setup()
     digitalWrite(BOARD_POWERON_PIN, HIGH);
 #endif
 
-    SPI.begin(BOARD_SCK_PIN, BOARD_MISO_PIN, BOARD_MOSI_PIN);
-    if (!SD.begin(BOARD_SD_CS_PIN)) {
+    SPI.begin(EXAMPLE_SPI_SCK, EXAMPLE_SPI_MISO, EXAMPLE_SPI_MOSI);
+    if (!SD.begin(EXAMPLE_SD_CS)) {
         Serial.println("Card Mount Failed");
         return;
     }

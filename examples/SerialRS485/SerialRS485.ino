@@ -11,15 +11,22 @@
 
 #define SerialRS485     Serial2
 
+// #define USING_SIMSHIELD //Define this line to use the SimShield pinout
+
+#ifdef USING_SIMSHIELD
+#define RS485_RX_PIN    SIMSHIELD_RS_RX  // GPIO34 only input 
+#define RS485_TX_PIN    SIMSHIELD_RS_TX  // GPIO32 can output 
+#else /*USING_SIMSHIELD*/
 // You can freely choose unused GPIO as RS485 TX, RX
 #if CONFIG_IDF_TARGET_ESP32S3
 #define RS485_RX_PIN    15
 #define RS485_TX_PIN    16
-#else
+#else /*CONFIG_IDF_TARGET_ESP32S3*/
 // GPIO above ESP32 GPIO33 can only be used as input, ESP32S3 has no restrictions
 #define RS485_RX_PIN    34  // GPIO34 only input 
 #define RS485_TX_PIN    32  // GPIO32 can output 
 #endif
+#endif /*USING_SIMSHIELD*/
 
 void setup()
 {
