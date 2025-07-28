@@ -313,5 +313,7 @@
    - [T-PCIE-A7670 schematic](https://github.com/Xinyuan-LilyGO/LilyGo-T-PCIE/blob/master/schematic/A7670.pdf)
    - [T-ETH-ELite schematic](https://github.com/Xinyuan-LilyGO/LilyGO-T-ETH-Series/blob/master/schematic/T-ETH-ELite-LTE-Shield.pdf)
 
-
+7. Antenna Specifications
+   - [GPS Antenna](./datasheet/GPS%20Antenna%20Specifications.pdf)
+   - [LTE Antenna](./datasheet/LTE%20Antenna%20Specifications.pdf)
 
