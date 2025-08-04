@@ -63,31 +63,37 @@ enum GPSWorkMode {
 };
 
 
-template <class modemType>
-class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType>>,
-                       public TinyGsmGPRS<TinyGsmSim70xx<modemType>>,
-                       public TinyGsmSMS<TinyGsmSim70xx<modemType>>,
-                       public TinyGsmGPS<TinyGsmSim70xx<modemType>>,
-                       public TinyGsmTime<TinyGsmSim70xx<modemType>>,
-                       public TinyGsmNTP<TinyGsmSim70xx<modemType>>,
-                       public TinyGsmBattery<TinyGsmSim70xx<modemType>>,
-                       public TinyGsmGSMLocation<TinyGsmSim70xx<modemType>>,
-                       public TinyGsmGPSEx<TinyGsmSim70xx<modemType>>,
-                       public TinyGsmHttpsSIM7xxx<TinyGsmSim70xx<modemType>>,
-                       public TinyGsmMqttSIM7xxx<TinyGsmSim70xx<modemType>>,
-                       public TinyGsmSSL<TinyGsmSim70xx<modemType>>{
-  friend class TinyGsmModem<TinyGsmSim70xx<modemType>>;
-  friend class TinyGsmGPRS<TinyGsmSim70xx<modemType>>;
-  friend class TinyGsmSMS<TinyGsmSim70xx<modemType>>;
-  friend class TinyGsmGPS<TinyGsmSim70xx<modemType>>;
-  friend class TinyGsmTime<TinyGsmSim70xx<modemType>>;
-  friend class TinyGsmNTP<TinyGsmSim70xx<modemType>>;
-  friend class TinyGsmBattery<TinyGsmSim70xx<modemType>>;
-  friend class TinyGsmGSMLocation<TinyGsmSim70xx<modemType>>;
-  friend class TinyGsmGPSEx<TinyGsmSim70xx<modemType>>;
-  friend class TinyGsmHttpsSIM7xxx<TinyGsmSim70xx<modemType>>;
-  friend class TinyGsmMqttSIM7xxx<TinyGsmSim70xx<modemType>>;
-  friend class TinyGsmSSL<TinyGsmSim70xx<modemType>>;
+enum ModemType{
+  MODEM_TYPE_SIM7000G,
+  MODEM_TYPE_SIM7070G,
+  MODEM_TYPE_SIM7080G,
+};
+
+template <class modemType,ModemType model>
+class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType,model>>,
+                       public TinyGsmGPRS<TinyGsmSim70xx<modemType,model>>,
+                       public TinyGsmSMS<TinyGsmSim70xx<modemType,model>>,
+                       public TinyGsmGPS<TinyGsmSim70xx<modemType,model>>,
+                       public TinyGsmTime<TinyGsmSim70xx<modemType,model>>,
+                       public TinyGsmNTP<TinyGsmSim70xx<modemType,model>>,
+                       public TinyGsmBattery<TinyGsmSim70xx<modemType,model>>,
+                       public TinyGsmGSMLocation<TinyGsmSim70xx<modemType,model>>,
+                       public TinyGsmGPSEx<TinyGsmSim70xx<modemType,model>>,
+                       public TinyGsmHttpsSIM7xxx<TinyGsmSim70xx<modemType,model>>,
+                       public TinyGsmMqttSIM7xxx<TinyGsmSim70xx<modemType,model>>,
+                       public TinyGsmSSL<TinyGsmSim70xx<modemType,model>>{
+  friend class TinyGsmModem<TinyGsmSim70xx<modemType,model>>;
+  friend class TinyGsmGPRS<TinyGsmSim70xx<modemType,model>>;
+  friend class TinyGsmSMS<TinyGsmSim70xx<modemType,model>>;
+  friend class TinyGsmGPS<TinyGsmSim70xx<modemType,model>>;
+  friend class TinyGsmTime<TinyGsmSim70xx<modemType,model>>;
+  friend class TinyGsmNTP<TinyGsmSim70xx<modemType,model>>;
+  friend class TinyGsmBattery<TinyGsmSim70xx<modemType,model>>;
+  friend class TinyGsmGSMLocation<TinyGsmSim70xx<modemType,model>>;
+  friend class TinyGsmGPSEx<TinyGsmSim70xx<modemType,model>>;
+  friend class TinyGsmHttpsSIM7xxx<TinyGsmSim70xx<modemType,model>>;
+  friend class TinyGsmMqttSIM7xxx<TinyGsmSim70xx<modemType,model>>;
+  friend class TinyGsmSSL<TinyGsmSim70xx<modemType,model>>;
   /*
    * CRTP Helper
    */
@@ -120,24 +126,56 @@ class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType>>,
     thisModem().sendAT(GF("E0"));  // Echo Off
     thisModem().waitResponse();
 
-    thisModem().sendAT("I");
+    thisModem().sendAT("+SIMCOMATI");
     if (thisModem().waitResponse(10000L, res) != 1) {
       DBG("MODEM STRING NO FOUND!");
       return name;
     }
 
-    int    modelIndex    = res.indexOf("S");
-    int    nextLineIndex = res.indexOf('\n', modelIndex);
-    String modelString   = res.substring(modelIndex, nextLineIndex);
-    modelString.trim();
-    if (modelString.startsWith("SIM70")) {
-      int space = modelString.indexOf(" ");
-      if (space != -1) {
-        name = modelString.substring(0, space);
-      } else {
-        name = modelString;
+  /*
+  * String simple
+  * 
+  * AT+SIMCOMATI
+  * 
+  * Revision:1951B16SIM7080
+  * CSUB:B16V01
+  * APRev:1951B16SIM7080,B16V01
+  * QCN:SIM7080G_P1.03_20210823
+  * IMEI:xxxxxxxxxxxxxx
+  * 
+  * Revision:1529B10SIM7000G 
+  * CSUB:V02
+  * APRev:1529B10SIM7000,V02
+  * QCN:MDM9206_TX3.0.SIM7000G_P1.03C_20240911
+  * IMEI:xxxxxxxxxxxxxx
+  * 
+  * * */
+
+    String prefix = "SIM70";
+    int index = 0;
+    while (index < res.length()) {
+      int startPos = res.indexOf(prefix, index);
+      if (startPos == -1) {
+        break; 
       }
-      DBG("### Modem:", name);
+      int endPos = res.indexOf('_', startPos);
+      if (endPos == -1) {
+        endPos = res.indexOf('\n', startPos);
+        if (endPos == -1) {
+          endPos = res.length();
+        }
+      }
+      String modelString = res.substring(startPos, endPos);
+      if (modelString.length() > prefix.length()) {
+        index = modelString.indexOf('\n');
+        if(index != -1){
+          name = modelString.substring(0, index - 1);
+        }else{
+          name = modelString;
+        }
+        break;
+      }
+      index = endPos + 1;
     }
     return name;
   }
@@ -464,7 +502,11 @@ class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType>>,
   // enable GPS
   bool enableGPSImpl(int8_t power_en_pin ,uint8_t enable_level) {
     if(power_en_pin != -1){
-      thisModem().sendAT("+CGPIO=0,",power_en_pin,",1,",enable_level);
+      if(model == MODEM_TYPE_SIM7080G){
+        thisModem().sendAT("+SGPIO=0,",power_en_pin,",1,",enable_level);
+      }else{
+        thisModem().sendAT("+CGPIO=0,",power_en_pin,",1,",enable_level);
+      }
       thisModem().waitResponse();
     } 
     thisModem().sendAT(GF("+CGNSPWR=1"));
@@ -474,7 +516,11 @@ class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType>>,
 
   bool disableGPSImpl(int8_t power_en_pin ,uint8_t disable_level) {
     if(power_en_pin != -1){
-      thisModem().sendAT("+CGPIO=0,",power_en_pin,",1,",disable_level);
+      if(model == MODEM_TYPE_SIM7080G){
+        thisModem().sendAT("+SGPIO=0,",power_en_pin,",1,",disable_level);
+      }else{
+        thisModem().sendAT("+CGPIO=0,",power_en_pin,",1,",disable_level);
+      }
       thisModem().waitResponse();
     } 
     thisModem().sendAT(GF("+CGNSPWR=0"));

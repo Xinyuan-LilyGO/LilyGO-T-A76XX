@@ -19,9 +19,9 @@
 #include "TinyGsmTCP.tpp"
 
 
-class TinyGsmSim7000 : public TinyGsmSim70xx<TinyGsmSim7000>,
+class TinyGsmSim7000 : public TinyGsmSim70xx<TinyGsmSim7000,MODEM_TYPE_SIM7000G>,
                        public TinyGsmTCP<TinyGsmSim7000, TINY_GSM_MUX_COUNT> {
-  friend class TinyGsmSim70xx<TinyGsmSim7000>;
+  friend class TinyGsmSim70xx<TinyGsmSim7000,MODEM_TYPE_SIM7000G>;
   friend class TinyGsmTCP<TinyGsmSim7000, TINY_GSM_MUX_COUNT>;
 
   /*
@@ -92,7 +92,7 @@ class TinyGsmSim7000 : public TinyGsmSim70xx<TinyGsmSim7000>,
    */
  public:
   explicit TinyGsmSim7000(Stream& stream)
-      : TinyGsmSim70xx<TinyGsmSim7000>(stream) {
+      : TinyGsmSim70xx<TinyGsmSim7000,MODEM_TYPE_SIM7000G>(stream) {
     memset(sockets, 0, sizeof(sockets));
   }
 
