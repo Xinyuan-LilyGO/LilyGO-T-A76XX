@@ -27,7 +27,7 @@
     "openocd_target": "esp32s3.cfg"
   },
   "frameworks": ["arduino", "espidf"],
-  "name": "LilyGo T-A7670X-ESP32S3 (16M Flash 2M QSPI PSRAM )",
+  "name": "Espressif ESP32S3-WROOM-1 (16M Flash 2M QSPI PSRAM )",
   "upload": {
     "flash_size": "16MB",
     "maximum_ram_size": 327680,
