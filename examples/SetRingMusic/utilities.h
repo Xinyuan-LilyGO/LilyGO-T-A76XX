@@ -178,8 +178,8 @@
     #define BOARD_SCK_PIN                       (21)
     #define BOARD_SD_CS_PIN                     (13)
 
-    #ifndef TINY_GSM_MODEM_SIM7672
-        #define TINY_GSM_MODEM_SIM7672
+    #ifndef TINY_GSM_MODEM_SIM7670G
+        #define TINY_GSM_MODEM_SIM7670G
     #endif
 
     #define MODEM_GPS_ENABLE_GPIO               (4)
@@ -515,6 +515,8 @@
         // GPS antenna power control GPIO, this GPIO is the modem GPIO
         #define MODEM_GPS_ENABLE_GPIO               (1)
         #define MODEM_GPS_ENABLE_LEVEL              (1)
+        #define MODEM_AUDIO_PA_ENABLE_GPIO          (3)
+        #define MODEM_AUDIO_PA_ENABLE_LEVEL         (1)
     #endif
 
 #elif defined(LILYGO_SIM7080G_S3)
@@ -711,7 +713,7 @@
     #define MODEM_START_WAIT_MS             3000
 #endif
 
-#if defined(TINY_GSM_MODEM_SIM7672) || defined(TINY_GSM_MODEM_A7670) || defined(TINY_GSM_MODEM_A7608)
+#if defined(TINY_GSM_MODEM_SIM7670G) || defined(TINY_GSM_MODEM_A7670) || defined(TINY_GSM_MODEM_A7608)
     #define MODEM_REG_SMS_ONLY
 #endif
 

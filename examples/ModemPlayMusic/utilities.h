@@ -34,9 +34,6 @@
 // Products Link: https://lilygo.cc/products/t-a7608e-h?variant=43932699033781
 // #define LILYGO_T_A7608X_S3
 
-// Products Link: ......
-// #define LILYGO_A7670X_S3
-
 // Products Link: https://lilygo.cc/products/t-sim7000g
 // #define LILYGO_SIM7000G
 
@@ -57,6 +54,13 @@
 
 // Products Link: ......
 // #define LILYGO_T_RELAY_S3_SIMSHIELD
+
+
+// SIMCOM standard interface series
+// #define LILYGO_SIM7000G_S3_STAN
+// #define LILYGO_SIM7080G_S3_STAN
+// #define LILYGO_SIM7670G_S3_STAN
+// #define LILYGO_A7670X_S3_STAN
 
 
 #if defined(LILYGO_T_A7670)
@@ -174,8 +178,8 @@
     #define BOARD_SCK_PIN                       (21)
     #define BOARD_SD_CS_PIN                     (13)
 
-    #ifndef TINY_GSM_MODEM_SIM7672
-        #define TINY_GSM_MODEM_SIM7672
+    #ifndef TINY_GSM_MODEM_SIM7670G
+        #define TINY_GSM_MODEM_SIM7670G
     #endif
 
     #define MODEM_GPS_ENABLE_GPIO               (4)
@@ -415,7 +419,8 @@
     #define SIMSHIELD_SCL                       (22)
     #define SerialRS485                         Serial2
 
-#elif defined(LILYGO_A7670X_S3)
+#elif defined(LILYGO_SIM7000G_S3_STAN) || defined(LILYGO_SIM7080G_S3_STAN) \
+    || defined(LILYGO_SIM7670G_S3_STAN) || defined(LILYGO_A7670X_S3_STAN)
 
     #define MODEM_BAUDRATE                      (115200)
 
@@ -476,17 +481,43 @@
 
     #define SerialAT                            Serial1
    
-    // GPS antenna power control GPIO, this GPIO is the modem GPIO
-    #define MODEM_GPS_ENABLE_GPIO               (2)
-    #define MODEM_GPS_ENABLE_LEVEL              (1)
-
-    #ifndef TINY_GSM_MODEM_A7670
-        #define TINY_GSM_MODEM_A7670
-    #endif
-
+    
     // This board has connected the ADC circuit to the modem, and the battery voltage can be read via AT+CBC
     #define MODEM_CONNECTED_ADC_PIN
 
+    #ifdef LILYGO_SIM7000G_S3_STAN
+        // Modem model:SIM7000G
+        #define TINY_GSM_MODEM_SIM7000SSL
+        // GPS antenna power control GPIO, this GPIO is the modem GPIO
+        #define MODEM_GPS_ENABLE_GPIO               (48)
+        #define MODEM_GPS_ENABLE_LEVEL              (1)
+    #endif
+
+    #ifdef LILYGO_SIM7080G_S3_STAN
+        // Modem model:SIM7080G
+        #define TINY_GSM_MODEM_SIM7080
+        // GPS antenna power control GPIO, this GPIO is the modem GPIO
+        #define MODEM_GPS_ENABLE_GPIO               (5)
+        #define MODEM_GPS_ENABLE_LEVEL              (1)
+    #endif
+
+    #ifdef LILYGO_SIM7670G_S3_STAN
+        // Modem model:SIM7670G
+        #define TINY_GSM_MODEM_SIM7670G
+        // GPS antenna power control GPIO, this GPIO is the modem GPIO
+        #define MODEM_GPS_ENABLE_GPIO               (1)
+        #define MODEM_GPS_ENABLE_LEVEL              (1)
+    #endif
+
+    #ifdef LILYGO_A7670X_S3_STAN
+        // Modem model:A7670G/A7670E/A7670SA
+        #define TINY_GSM_MODEM_A7670
+        // GPS antenna power control GPIO, this GPIO is the modem GPIO
+        #define MODEM_GPS_ENABLE_GPIO               (1)
+        #define MODEM_GPS_ENABLE_LEVEL              (1)
+        #define MODEM_AUDIO_PA_ENABLE_GPIO          (3)
+        #define MODEM_AUDIO_PA_ENABLE_LEVEL         (1)
+    #endif
 
 #elif defined(LILYGO_SIM7080G_S3)
 
@@ -682,7 +713,7 @@
     #define MODEM_START_WAIT_MS             3000
 #endif
 
-#if defined(TINY_GSM_MODEM_SIM7672) || defined(TINY_GSM_MODEM_A7670) || defined(TINY_GSM_MODEM_A7608)
+#if defined(TINY_GSM_MODEM_SIM7670G) || defined(TINY_GSM_MODEM_A7670) || defined(TINY_GSM_MODEM_A7608)
     #define MODEM_REG_SMS_ONLY
 #endif
 
