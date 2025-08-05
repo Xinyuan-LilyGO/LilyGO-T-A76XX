@@ -5,9 +5,9 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-16
  * @record    T-A7608-S3 : https://youtu.be/5G4COjtKsFU
- * 
+ *
  * !The following test parameters are all obtained by testing at a voltage of 4.2V using a battery holder. Instrument: VICTOR 8246A
- * 
+ *
  * T-A7608-S3 DeepSleep ~ 368 uA
  * T-A7608-ESP32  DeepSleep ~ 240 uA
  * T-A7670-ESP32  DeepSleep ~ 157 uA
@@ -15,14 +15,18 @@
  * T-SIM7000-ESP32 DeepSleep ~ 500 uA
  * T-SIM7080G-S3-Standard DeepSleep Current dynamic changes Min:60uA , Max186uA ,Avg:128uA
  * T-SIM7000G-S3-Standard DeepSleep Current dynamic changes Min:59uA , Max273uA ,Avg:166uA
- * T-A7670X-S3-Standard DeepSleep Current dynamic changes Min:63uA , Max288uA ,Avg:181uA
  * T-SIM7670G-S3-Standard DeepSleep Current dynamic changes Min:64uA , Max201uA ,Avg:147uA
+ * T-A7670X-S3-Standard DeepSleep Current dynamic changes Min:63uA , Max288uA ,Avg:181uA
+ * T-A7670G-S3-Standard + L76K GPS Module DeepSleep Current dynamic changes Min:282uA , Max334uA ,Avg:314uA
+ * 
  */
 
 #include "utilities.h"
 #include <driver/gpio.h>
 
-#define TINY_GSM_RX_BUFFER          1024 // Set RX buffer to 1Kb
+// If use the A7670G + L76K GPS module,
+// Need to set the GPS to sleep mode, otherwise the sleep current will not drop.
+// #define USING_L76K_MODULE
 
 // See all AT commands, if wanted
 #define DUMP_AT_COMMANDS
@@ -145,6 +149,14 @@ void setup()
     // https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/85
     digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
     gpio_hold_en((gpio_num_t)MODEM_RESET_PIN);
+    gpio_deep_sleep_hold_en();
+#endif
+
+
+#ifdef USING_L76K_MODULE
+    pinMode(GPS_SHIELD_WAKEUP_PIN, OUTPUT);
+    digitalWrite(GPS_SHIELD_WAKEUP_PIN, LOW);
+    gpio_hold_en((gpio_num_t) GPS_SHIELD_WAKEUP_PIN);
     gpio_deep_sleep_hold_en();
 #endif
 
