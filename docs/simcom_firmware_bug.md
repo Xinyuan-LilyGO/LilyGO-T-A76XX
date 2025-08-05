@@ -1,8 +1,20 @@
 
 # This page summarizes SIMCOM firmware BUG version numbers
 
-------------------------
+## A7670G-LLSE
 
+### Known version firmware bugs
+#### BUG: There is a problem with FS writing
+
+-----------------------
+
+```bash
+Model: A7670G-LLSE
+Revision: A124B01A7670M7
+A7670M7_B01V01_240722
+```
+
+------------------------
 
 ## A7670E-LNXY-UBL
 
