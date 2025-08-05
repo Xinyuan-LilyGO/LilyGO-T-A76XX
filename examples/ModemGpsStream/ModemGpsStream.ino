@@ -4,12 +4,19 @@
  * @license   MIT
  * @copyright Copyright (c) 2025  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2025-07-12
- * @note      Sketch is only suitable for LilyGo-A7670X-S3 version,Other versions are not supported
+ * @note      
+ *      This sketch is only applicable to the
+ *      1. T-A7670X-S3-Standard
+ *      2. T-SIM7000G-S3-Standard
+ *      3. T-SIM7080G-S3-Standard
+ *      4. T-SIM7670G-S3-Standard
+ *      Other models are not supported
  */
 #include "utilities.h"
 
-#ifndef LILYGO_A7670X_S3
-#error "Sketch is only suitable for LilyGo-A7670X-S3 version , Other versions are not supported"
+#if !defined(LILYGO_SIM7000G_S3_STAN) && !defined(LILYGO_SIM7080G_S3_STAN) \
+    && !defined(LILYGO_SIM7670G_S3_STAN) && !defined(LILYGO_A7670X_S3_STAN)
+#error "This sketch is only applicable to the T-A7670X-S3-Standard,T-SIM7000G-S3-Standard,T-SIM7080G-S3-Standard,T-SIM7670G-S3-Standard"
 #endif
 
 #define TINY_GSM_RX_BUFFER 1024 // Set RX buffer to 1Kb
@@ -222,6 +229,7 @@ void setup()
                 Serial.println("GPS startup failed. Please check whether the board you ordered contains GPS function.");
                 delay(1000);
             }
+            delay(2000);
         }
         Serial.println();
 

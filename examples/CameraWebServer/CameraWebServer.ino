@@ -18,10 +18,12 @@
 #include "esp_camera.h"
 #include <WiFi.h>
 #include <Wire.h>
-
-
-
 #include "utilities.h"
+
+#if !defined(LILYGO_SIM7000G_S3_STAN) && !defined(LILYGO_SIM7080G_S3_STAN) \
+    && !defined(LILYGO_SIM7670G_S3_STAN) && !defined(LILYGO_A7670X_S3_STAN)
+#error "This sketch is only applicable to the T-A7670X-S3-Standard,T-SIM7000G-S3-Standard,T-SIM7080G-S3-Standard,T-SIM7670G-S3-Standard"
+#endif
 
 // ===========================
 // Enter your WiFi credentials
