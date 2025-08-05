@@ -22,6 +22,21 @@
 #include "TinyGsmTCP.tpp"
 #include "TinyGsmFSComm.tpp"
 
+/*
+* UC6228CI lite G1B1E1 COM1
+* PN N/A
+* HWVer N/A
+* FWVer R3.4.21.0Build16211
+* Copyright (c), Unicore Communications Inc.
+* All rights reserved.
+* */
+enum A7670X_GPSMode {
+  GNSS_MODE_GPS_BDS_QZSS = 1,               //  GPS L1+SBAS+QZSS
+  GNSS_MODE_BDS = 2,                        //  BDS B1
+  GNSS_MODE_GPS_QZSS = 3,                   //  GPS+GLONASS+GALILEO+SBAS+QZSS
+  GNSS_MODE_GPS_BDS_GALILEO_SBAS_QZSS = 4   //  GPS+BDS+GALILEO+SBAS+QZSS
+};
+
 class TinyGsmA7670 :  public TinyGsmA76xx<TinyGsmA7670>,
                       public TinyGsmTCP<TinyGsmA7670, TINY_GSM_MUX_COUNT>,
                       public TinyGsmMqttA76xx<TinyGsmA7670, TINY_GSM_MQTT_CLI_COUNT>,

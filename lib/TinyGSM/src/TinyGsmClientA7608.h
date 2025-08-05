@@ -22,6 +22,14 @@
 #include "TinyGsmTCP.tpp"
 #include "TinyGsmFSComm.tpp"
 
+// UNIC GPS MODEL
+enum A7608X_GPSMode {
+  GNSS_MODE_GPS_BDS_QZSS = 1,               //  GPS L1+SBAS+QZSS
+  GNSS_MODE_BDS = 2,                        //  BDS B1
+  GNSS_MODE_GPS_QZSS = 3,                   //  GPS+GLONASS+GALILEO+SBAS+QZSS
+  GNSS_MODE_GPS_BDS_GALILEO_SBAS_QZSS = 4   //  GPS+BDS+GALILEO+SBAS+QZSS
+};
+
 class TinyGsmA7608 :    public TinyGsmA76xx<TinyGsmA7608>,
                         public TinyGsmTCP<TinyGsmA7608, TINY_GSM_MUX_COUNT>,
                         public TinyGsmMqttA76xx<TinyGsmA7608, TINY_GSM_MQTT_CLI_COUNT>,

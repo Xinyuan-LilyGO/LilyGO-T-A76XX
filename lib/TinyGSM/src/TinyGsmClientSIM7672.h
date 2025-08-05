@@ -50,6 +50,18 @@ enum RegStatus {
   REG_SMS_ONLY     = 6,
 };
 
+
+// AG3352 GPS MODEL
+enum SIM7670G_GPSMode {
+  GNSS_MODE_GPS = 1,                   //  GPS
+  GNSS_MODE_GPS_GLONASS = 3,           //  GPS + GLONASS
+  GNSS_MODE_GPS_GALILEO = 5,           //  GPS + GALILEO
+  GNSS_MODE_GPS_BDS = 9,               //  GPS + BDS
+  GNSS_MODE_GPS_GLONASS_BDS = 13,      //  GPS + GALILEO + BDS
+  GNSS_MODE_GPS_GLONASS_BDS = 15       //  GPS + GLONASS + GALILEO + BDS
+};
+
+
 class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
                        public TinyGsmGPRS<TinyGsmSim7672>,
                        public TinyGsmTCP<TinyGsmSim7672, TINY_GSM_MUX_COUNT>,

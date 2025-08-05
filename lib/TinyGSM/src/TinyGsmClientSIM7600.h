@@ -57,11 +57,23 @@ enum NetworkMode {
   MODEM_NETWORK_LTE   = 38,
 };
 
-enum GPSWorkMode {
-  GNSS_USE_GLONASS  = _BV(0),
-  GNSS_USE_BEIDOU   = _BV(1),
-  GNSS_USE_GALILEAN = _BV(2),
-  GNSS_USE_QZSS     = _BV(3),
+enum SIM7600X_GPSMode {
+    GNSS_MODE_GPS = 0,                                // 0b0000  GPS
+    GNSS_MODE_GPS_GLONASS = 1 << 0,                   // 0b0001 GPS + GLONASS
+    GNSS_MODE_GPS_BDS = 1 << 1,                       // 0b0010 GPS + BDS
+    GNSS_MODE_GPS_GLONASS_BDS = (1 << 0) | (1 << 1), // 0b0011 GPS + GLONASS + BDS
+    GNSS_MODE_GPS_GALILEO = 1 << 2,                  // 0b0100 ，GPS + GALILEO
+    GNSS_MODE_GPS_GLONASS_GALILEO = (1 << 0) | (1 << 2), // 0b0101 ，GPS + GLONASS + GALILEO
+    GNSS_MODE_GPS_BDS_GALILEO = (1 << 1) | (1 << 2),  // 0b0110 ，GPS + BDS + GALILEO
+    GNSS_MODE_GPS_GLONASS_BDS_GALILEO = (1 << 0) | (1 << 1) | (1 << 2), // 0b0111 ，GPS + GLONASS + BDS + GALILEO
+    GNSS_MODE_GPS_QZSS = 1 << 3,               // 0b1000 ，GPS + QZSS
+    GNSS_MODE_GPS_GLONASS_QZSS = (1 << 0) | (1 << 3),    // 0b1001 ，GPS + GLONASS + QZSS 
+    GNSS_MODE_GPS_BDS_QZSS = (1 << 1) | (1 << 3),     // 0b1010 ，GPS + BDS + QZSS 
+    GNSS_MODE_GPS_GLONASS_BDS_QZSS = (1 << 0) | (1 << 1) | (1 << 3), // 0b1011 ，GPS + GLONASS + BDS + QZSS 
+    GNSS_MODE_GPS_GALILEO_QZSS = (1 << 2) | (1 << 3),    // 0b1100 ，GPS + GALILEO + QZSS 
+    GNSS_MODE_GPS_GLONASS_GALILEO_QZSS = (1 << 0) | (1 << 2) | (1 << 3), // 0b1101 ，GPS + GLONASS + GALILEO + QZSS 
+    GNSS_MODE_GPS_BDS_GALILEO_QZSS = (1 << 1) | (1 << 2) | (1 << 3),  // 0b1110 ，GPS + BDS + GALILEO + QZSS 
+    GNSS_MODE_ALL = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) // 0b1111 ，GPS + all other supported systems
 };
 
 class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
@@ -810,7 +822,7 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
     return true;
   }
 
-  // mode: See GPSWorkMode enum
+  // mode: See SIM7600X_GPSMode enum
   bool setGPSModeImpl(uint8_t mode) {
     // Set gnss mode must turn off gps model
     disableGPSImpl(-1, -1);
