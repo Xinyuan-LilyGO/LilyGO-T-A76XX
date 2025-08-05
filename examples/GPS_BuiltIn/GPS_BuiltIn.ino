@@ -18,7 +18,7 @@
 #define TINY_GSM_DEBUG SerialMon
 
 // See all AT commands, if wanted
-#define DUMP_AT_COMMANDS
+// #define DUMP_AT_COMMANDS
 
 
 #include <TinyGsmClient.h>
@@ -103,8 +103,11 @@ void setup()
         delay(5000);
     }
 
+    // Print modem software version
+    String res;
     modem.sendAT("+SIMCOMATI");
-    modem.waitResponse();
+    modem.waitResponse(10000UL,res);
+    Serial.println(res);
 
     /*
     *   A7608 B08 firmware has GPS positioning problems. If it is B08 version, you need to upgrade the A7608 firmware.
@@ -184,7 +187,7 @@ void loop()
     Serial.println(gps_raw);
     Serial.println("Disabling GPS");
 
-    modem.disableGPS();
+    modem.disableGPS(MODEM_GPS_ENABLE_GPIO, !MODEM_GPS_ENABLE_LEVEL);
 
     while (1) {
         if (SerialAT.available()) {
@@ -207,9 +210,9 @@ AT+SIMCOMATI
 Manufacturer: SIMCOM INCORPORATED
 Model: SIMCOM_SIM7600G-H
 Revision: LE20B04SIM7600G22
-QCN: 
+QCN:
 IMEI: xxxxxxxxxxxx
-MEID: 
+MEID:
 +GCAP: +CGSM
 DeviceInfo: 173,170
 */

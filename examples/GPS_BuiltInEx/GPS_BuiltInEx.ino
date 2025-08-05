@@ -110,8 +110,11 @@ void setup()
         delay(5000);
     }
 
+    // Print modem software version
+    String res;
     modem.sendAT("+SIMCOMATI");
-    modem.waitResponse();
+    modem.waitResponse(10000UL,res);
+    Serial.println(res);
 
     Serial.println("Enabling GPS/GNSS/GLONASS");
     while (!modem.enableGPS(MODEM_GPS_ENABLE_GPIO, MODEM_GPS_ENABLE_LEVEL)) {
@@ -208,10 +211,14 @@ void loop()
     uint8_t gnss_length = 0;
     uint8_t a76xx_gnss_mode[] = {1, 2, 3, 4};
     uint8_t sim767x_gnss_mode[] = {1, 3, 5, 9, 13, 15}; //SIM7600 series same
+    uint8_t sim70xx_gnss_mode[] = {0, 1, 2};
     uint8_t *gnss_mode = NULL;
     if (modemName.startsWith("A767")) {
         gnss_mode = a76xx_gnss_mode;
         gnss_length = sizeof(a76xx_gnss_mode) / sizeof(a76xx_gnss_mode[0]);
+    } else if (modemName.startsWith("SIM7080") || modemName.startsWith("SIM7000") || modemName.startsWith("SIM7070") ) {
+        gnss_mode = sim70xx_gnss_mode;
+        gnss_length = sizeof(sim70xx_gnss_mode) / sizeof(sim70xx_gnss_mode[0]);
     } else {
         gnss_mode = sim767x_gnss_mode;
         gnss_length = sizeof(sim767x_gnss_mode) / sizeof(sim767x_gnss_mode[0]);
@@ -232,7 +239,7 @@ void loop()
          * 9  -  GPS + BDS
          * 13 -  GPS + GALILEO + BDS
          * 15 -  GPS + GLONASS + GALILEO + BDS
-         * 
+         *
          * Model: SIM7600 series
          * Range – 0 to 15
          * Bit0 – GLONASS
@@ -246,7 +253,7 @@ void loop()
 
     Serial.println("Disabling GPS");
 
-    modem.disableGPS();
+    modem.disableGPS(MODEM_GPS_ENABLE_GPIO, !MODEM_GPS_ENABLE_LEVEL);
 
     while (1) {
         if (SerialAT.available()) {
@@ -270,9 +277,9 @@ AT+SIMCOMATI
 Manufacturer: SIMCOM INCORPORATED
 Model: SIMCOM_SIM7600G-H
 Revision: LE20B04SIM7600G22
-QCN: 
+QCN:
 IMEI: xxxxxxxxxxxx
-MEID: 
+MEID:
 +GCAP: +CGSM
 DeviceInfo: 173,170
 */

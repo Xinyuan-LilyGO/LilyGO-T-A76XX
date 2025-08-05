@@ -8,6 +8,10 @@
  */
 #include "utilities.h"
 
+#ifdef TINY_GSM_MODEM_SIM7080
+#error "SIM7080G NOT SUPPORT GPS NMEA OUTPUT TO SERIAL,PLEASE USE THE GPS_BuiltIn EXAMPLE"
+#endif
+
 #define TINY_GSM_RX_BUFFER 1024 // Set RX buffer to 1Kb
 #define SerialAT Serial1
 
@@ -34,7 +38,7 @@ void displayInfo();
 void setup()
 {
     Serial.begin(115200);
-    
+
 #ifdef BOARD_POWERON_PIN
     /* Set Power control pin output
     * * @note      Known issues, ESP32 (V1.2) version of T-A7670, T-A7608,
@@ -122,7 +126,13 @@ void setup()
 
     modem.setGPSBaud(115200);
 
-    modem.setGPSMode(3);    //GPS + BD
+#if defined(TINY_GSM_MODEM_A7670) || defined(TINY_GSM_MODEM_A7608)
+    modem.setGPSMode(GNSS_MODE_GPS_BDS_GALILEO_SBAS_QZSS);
+#elif defined(TINY_GSM_MODEM_SIM7670G)
+    modem.setGPSMode(GNSS_MODE_GPS_GLONASS_BDS);
+#elif defined(TINY_GSM_MODEM_SIM7600)
+    modem.setGPSMode(GNSS_MODE_GPS_BDS_GALILEO_SBAS_QZSS);
+#endif
 
     modem.configNMEASentence(1, 1, 1, 1, 1, 1);
 
@@ -324,9 +334,9 @@ AT+SIMCOMATI
 Manufacturer: SIMCOM INCORPORATED
 Model: SIMCOM_SIM7600G-H
 Revision: LE20B04SIM7600G22
-QCN: 
+QCN:
 IMEI: xxxxxxxxxxxx
-MEID: 
+MEID:
 +GCAP: +CGSM
 DeviceInfo: 173,170
 */
