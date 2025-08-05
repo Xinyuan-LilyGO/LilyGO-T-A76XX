@@ -390,31 +390,14 @@ void setup()
     // Set GPS Baud to 115200
     modem.setGPSBaud(115200);
 
-    /*
-    * Model: A76XX
-    * 1 - GPS L1 + SBAS + QZSS
-    * 2 - BDS B1
-    * 3 - GPS + GLONASS + GALILEO + SBAS + QZSS
-    * 4 - GPS + BDS + GALILEO + SBAS + QZSS.
-    *
-    * Model: SIM7670G
-    * 1  -  GPS
-    * 3  -  GPS + GLONASS
-    * 5  -  GPS + GALILEO
-    * 9  -  GPS + BDS
-    * 13 -  GPS + GALILEO + BDS
-    * 15 -  GPS + GLONASS + GALILEO + BDS
-    * */
 
-    uint8_t gpsMode = 0;
-    if (modemName.startsWith("A767")) {
-        Serial.println("Set A76XX GNSS MODE = GPS + BDS + GALILEO + SBAS + QZSS");
-        gpsMode = 4;
-    } else {
-        gpsMode = 15;
-        Serial.println("Set SIM7670G GNSS MODE = GPS + GLONASS + GALILEO + BDS");
-    }
-    modem.setGPSMode(gpsMode);
+#if defined(TINY_GSM_MODEM_A7670) || defined(TINY_GSM_MODEM_A7608)
+    modem.setGPSMode(GNSS_MODE_GPS_BDS_GALILEO_SBAS_QZSS);
+#elif defined(TINY_GSM_MODEM_SIM7670G)
+    modem.setGPSMode(GNSS_MODE_GPS_GLONASS_BDS);
+#elif defined(TINY_GSM_MODEM_SIM7600)
+    modem.setGPSMode(GNSS_MODE_ALL);
+#endif
 
 
 #ifndef TINY_GSM_MODEM_SIM7672
