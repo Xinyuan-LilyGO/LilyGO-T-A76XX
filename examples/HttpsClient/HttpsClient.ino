@@ -109,7 +109,7 @@ void setup()
         return;
     }
 
-#ifndef TINY_GSM_MODEM_SIM7672
+#ifndef TINY_GSM_MODEM_SIM7670G
     bool ret;
     ret = modem.setNetworkMode(MODEM_NETWORK_AUTO);
     if (modem.waitResponse(10000L) != 1) {

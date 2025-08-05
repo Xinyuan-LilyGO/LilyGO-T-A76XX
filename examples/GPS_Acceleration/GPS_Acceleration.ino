@@ -146,7 +146,7 @@ void setup()
         delay(1000);
     }
 
-#ifndef TINY_GSM_MODEM_SIM7672
+#ifndef TINY_GSM_MODEM_SIM7670G
     //SIM7672G Can't set network mode
     if (!modem.setNetworkMode(MODEM_NETWORK_AUTO)) {
         Serial.println("Set network mode failed!");

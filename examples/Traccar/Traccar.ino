@@ -301,7 +301,7 @@ void setup()
     }
 
     //SIM7672G Can't set network mode
-#ifndef TINY_GSM_MODEM_SIM7672
+#ifndef TINY_GSM_MODEM_SIM7670G
     if (!modem.setNetworkMode(MODEM_NETWORK_AUTO)) {
         Serial.println("Set network mode failed!");
     }
@@ -400,7 +400,7 @@ void setup()
 #endif
 
 
-#ifndef TINY_GSM_MODEM_SIM7672
+#ifndef TINY_GSM_MODEM_SIM7670G
     // GPS acceleration only supports A7670X/A7608X (excluding A7670G and other versions that do not support positioning).
     // SIM7670G does not support GPS acceleration function
     Serial.print("GPS acceleration is enable");
