@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2024  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2024-12-11
- * @note      Only support A7670X A7608X , Not support SIM7670G,SIM7000G
+ * @note      Only support A7670X A7608X , Not support SIM7670G,SIM7000G,SIM7080G
  * The SIM7600 series needs to have audio decoding function to be used, otherwise it cannot play
  */
 // See all AT commands, if wanted
@@ -25,6 +25,8 @@ TinyGsm modem(debugger);
 #else
 TinyGsm modem(SerialAT);
 #endif
+
+uint32_t count = 0;
 
 void setup()
 {
@@ -88,15 +90,22 @@ void setup()
 
     delay(5000);
 
+#ifdef MODEM_AUDIO_PA_ENABLE_GPIO
+    // If an external PA pin is defined, initialize it. Enable the external power amplifier.
+    modem.sendAT("+CGDRT=", MODEM_AUDIO_PA_ENABLE_GPIO, ',', 1);
+    modem.waitResponse();
+
+    modem.sendAT("+CGSETV=", MODEM_AUDIO_PA_ENABLE_GPIO, ',', MODEM_AUDIO_PA_ENABLE_LEVEL);
+    modem.waitResponse();
+#endif
+
     // Mode 1. Start to synth and play,<text> is in UCS2 coding format.
     String text = "6B228FCE4F7F75288BED97F3540862107CFB7EDF";
     if (modem.textToSpeech(text, 1)) {
         Serial.println("Play successfully.");
     }
-
 }
 
-uint32_t count = 0;
 
 void loop()
 {

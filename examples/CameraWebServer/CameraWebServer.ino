@@ -127,12 +127,12 @@ void setup()
     digitalWrite(MODEM_DTR_PIN, LOW);
 
     Serial.println("Power on the modem PWRKEY.");
+    // Turn on the modem
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
     delay(100);
     digitalWrite(BOARD_PWRKEY_PIN, HIGH);
-    //Ton >= 100 <= 500
-    delay(300);
+    delay(MODEM_POWERON_PULSE_WIDTH_MS);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
 
 

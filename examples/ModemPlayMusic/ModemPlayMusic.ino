@@ -69,24 +69,24 @@ void setup()
     int retry = 0;
     while (!modem.testAT(1000)) {
         Serial.println(".");
-        if (retry++ > 10) {
+        if (retry++ > 30) {
             digitalWrite(BOARD_PWRKEY_PIN, LOW);
             delay(100);
             digitalWrite(BOARD_PWRKEY_PIN, HIGH);
-            delay(1000);
+            delay(MODEM_POWERON_PULSE_WIDTH_MS);
             digitalWrite(BOARD_PWRKEY_PIN, LOW);
             retry = 0;
         }
     }
     Serial.println();
-    delay(5000);
 
+    delay(5000);
 
     // For detailed AT commands, please see datasheet/A76XX/A76XX_Series_AT_Command_Manual_V1.12.pdf
     // The total capacity of A7670 is 4MB and cannot exceed the available space.
     // You need to connect the speaker to the board SPK+ ,SPK- to hear the sound, see images/speaker.jpg
     modem.sendAT("+FSMEM");
-    if (modem.waitResponse("+FSMEM: C:(") != 1) {
+    if (modem.waitResponse(10000UL, "+FSMEM: C:(") != 1) {
         Serial.println("Failed to get memory size!"); return;
     }
     String capSize = modem.stream.readStringUntil('\n');
@@ -121,6 +121,22 @@ void setup()
     if (modem.waitResponse() != 1) {
         Serial.println("Close file failed!"); return ;
     }
+
+    // Adjust out gain
+    modem.sendAT("+COUTGAIN=7");
+    modem.waitResponse();
+
+
+
+#ifdef MODEM_AUDIO_PA_ENABLE_GPIO
+    // If an external PA pin is defined, initialize it. Enable the external power amplifier.
+    modem.sendAT("+CGDRT=", MODEM_AUDIO_PA_ENABLE_GPIO, ',', 1);
+    modem.waitResponse();
+
+    modem.sendAT("+CGSETV=", MODEM_AUDIO_PA_ENABLE_GPIO, ',', MODEM_AUDIO_PA_ENABLE_LEVEL);
+    modem.waitResponse();
+#endif
+
     Serial.println("Play File...");
     uint8_t repeat = 3; //Repeat times
     modem.sendAT("+CCMXPLAY=\"C:/music.mp3\",0,", repeat);
@@ -128,6 +144,13 @@ void setup()
         Serial.println("Play mp3 failed!"); return ;
     }
     Serial.println("Play mp3 success!");
+
+    // Wait play done
+    delay(10000);
+
+    // Generate specifically tone
+    modem.sendAT("+SIMTONE=1,1400,200,200,1000");
+    modem.waitResponse();
 }
 
 void loop()
