@@ -737,5 +737,8 @@
 #elif defined(TINY_GSM_MODEM_A7608)
     #define MODEM_POWERON_PULSE_WIDTH_MS      (1000)
     #define MODEM_POWEROFF_PULSE_WIDTH_MS     (3000)
+#elif defined(TINY_GSM_MODEM_SIM7000SSL) || defined(TINY_GSM_MODEM_SIM7000)
+    #define MODEM_POWERON_PULSE_WIDTH_MS      (1200)
+    #define MODEM_POWEROFF_PULSE_WIDTH_MS     (1300)
 #endif
 
