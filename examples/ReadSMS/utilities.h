@@ -721,3 +721,21 @@
 // #define LILYGO_T_CALL_A7670_V1_1
 // #define LILYGO_T_A7608X_DC_S3
 
+// Power on/off sequence
+#if defined(TINY_GSM_MODEM_A7670)
+    #define MODEM_POWERON_PULSE_WIDTH_MS      (100)
+    #define MODEM_POWEROFF_PULSE_WIDTH_MS     (3000)
+#elif defined(TINY_GSM_MODEM_SIM7670G)
+    #define MODEM_POWERON_PULSE_WIDTH_MS      (100)
+    #define MODEM_POWEROFF_PULSE_WIDTH_MS     (3000)
+#elif defined(TINY_GSM_MODEM_SIM7600)
+    #define MODEM_POWERON_PULSE_WIDTH_MS      (500)
+    #define MODEM_POWEROFF_PULSE_WIDTH_MS     (3000)
+#elif defined(TINY_GSM_MODEM_SIM7080)
+    #define MODEM_POWERON_PULSE_WIDTH_MS      (1000)
+    #define MODEM_POWEROFF_PULSE_WIDTH_MS     (1300)
+#elif defined(TINY_GSM_MODEM_A7608)
+    #define MODEM_POWERON_PULSE_WIDTH_MS      (1000)
+    #define MODEM_POWEROFF_PULSE_WIDTH_MS     (3000)
+#endif
+

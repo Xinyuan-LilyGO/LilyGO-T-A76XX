@@ -80,7 +80,7 @@ void setup()
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
     delay(100);
     digitalWrite(BOARD_PWRKEY_PIN, HIGH);
-    delay(1000);
+    delay(MODEM_POWERON_PULSE_WIDTH_MS);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
 
     // Set modem baud

@@ -72,7 +72,7 @@ void setup()
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
     delay(100);
     digitalWrite(BOARD_PWRKEY_PIN, HIGH);
-    delay(100);
+    delay(MODEM_POWERON_PULSE_WIDTH_MS);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
 
     // Check if the modem is online

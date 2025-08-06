@@ -98,8 +98,7 @@ void setup()
         digitalWrite(BOARD_PWRKEY_PIN, LOW);
         delay(100);
         digitalWrite(BOARD_PWRKEY_PIN, HIGH);
-        //Ton >= 100 <= 500
-        delay(100);
+        delay(MODEM_POWERON_PULSE_WIDTH_MS);
         digitalWrite(BOARD_PWRKEY_PIN, LOW);
 
 
