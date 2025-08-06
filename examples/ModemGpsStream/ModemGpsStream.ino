@@ -13,7 +13,7 @@
 #include "utilities.h"
 
 #if !defined(LILYGO_SIM7670G_S3_STAN) && !defined(LILYGO_A7670X_S3_STAN)
-#error "This sketch is only applicable to the T-A7670X-S3-Standard,T-SIM7000G-S3-Standard,T-SIM7080G-S3-Standard,T-SIM7670G-S3-Standard"
+#error "This sketch is only applicable to the T-A7670X-S3-Standard,T-SIM7670G-S3-Standard"
 #endif
 
 #define TINY_GSM_RX_BUFFER 1024 // Set RX buffer to 1Kb
