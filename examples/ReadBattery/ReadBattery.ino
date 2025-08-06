@@ -11,11 +11,15 @@
  *                         voltage is sent to the UDP Server through UDP. When using it, please disconnect the USB-C
  *            T-A7670x :  Only version V1.4 has the resistor divider connected to the solar input, other versions IO38 is not connected
  *            T-SIM7600 series ：When the USB is connected, the battery mV is 0 because the battery voltage cannot be read when the USB is plugged in.
- * 
+ *
  * @note      Only support T-A7670 ,T-A7608X, T-SIM7672G board , not support T-Call A7670 , T-PCIE-A7670
- *            The AT+CBC command is only supported by the T-A7670X-ESP32S3 version. Other versions cannot read it because the hardware is not connected.
- *            The AT+CBC command is only supported by the T-A7670X-ESP32S3 version. Other versions cannot read it because the hardware is not connected.
- *            The AT+CBC command is only supported by the T-A7670X-ESP32S3 version. Other versions cannot read it because the hardware is not connected.
+ *
+ *            The AT+CBC command only supports the following versions , Other versions cannot read it because the hardware is not connected.
+ *              1. T-A7670X-S3-Standard
+ *              2. T-SIM7000G-S3-Standard
+ *              3. T-SIM7080G-S3-Standard
+ *              4. T-SIM7670G-S3-Standard
+ *
  */
 #include <Arduino.h>
 #include <WiFi.h>
@@ -28,7 +32,14 @@
 #error "No support this board"
 #endif
 
+// See all AT commands, if wanted
+// #define DUMP_AT_COMMANDS
 
+// Set serial for debug console (to the Serial Monitor, default speed 115200)
+#define SerialMon Serial
+
+// Define the serial console for debug prints, if needed
+#define TINY_GSM_DEBUG SerialMon
 /*
 * Only T-A767X-ESP32S3 version. Other versions cannot use AT+CBC to read the battery
 * voltage because the hardware is not connected.
@@ -140,11 +151,11 @@ void setup()
     int retry = 0;
     while (!modem.testAT(1000)) {
         Serial.println(".");
-        if (retry++ > 10) {
+        if (retry++ > 30) {
             digitalWrite(BOARD_PWRKEY_PIN, LOW);
             delay(100);
             digitalWrite(BOARD_PWRKEY_PIN, HIGH);
-            delay(1000);
+            delay(MODEM_POWERON_PULSE_WIDTH_MS);
             digitalWrite(BOARD_PWRKEY_PIN, LOW);
             retry = 0;
         }
@@ -157,7 +168,7 @@ void setup()
 
     //Connect to the WiFi network
     connectToWiFi(networkName, networkPswd);
-    
+
 
     //adc setting start
 
@@ -195,8 +206,7 @@ void loop()
 
 
             /*
-            * Only T-A767X-ESP32S3 version. Other versions cannot use AT+CBC to read the battery
-            * voltage because the hardware is not connected.
+            * modem.getBattVoltage() See sketch title
             * */
 #ifdef MODEM_CONNECTED_ADC_PIN
             uint16_t modem_voltage = modem.getBattVoltage();
