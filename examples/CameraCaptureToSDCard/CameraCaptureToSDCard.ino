@@ -5,15 +5,22 @@
  * @copyright Copyright (c) 2025  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2025-07-13
  * @note      Sketch is only suitable for LilyGo-A7670X-S3 version,Other versions are not supported
+ *      This sketch is only applicable to the
+ *      1. T-A7670X-S3-Standard
+ *      2. T-SIM7000G-S3-Standard
+ *      3. T-SIM7080G-S3-Standard
+ *      4. T-SIM7670G-S3-Standard
+ *      Other models are not supported
  *
- */
+ * */
 #include <esp_camera.h>
 #include <Wire.h>
 #include <FS.h>
 #include <SD.h>
 
-#ifndef LILYGO_A7670X_S3
-#error "Sketch is only suitable for LilyGo-A7670X-S3 version , Other versions are not supported"
+#if !defined(LILYGO_SIM7000G_S3_STAN) && !defined(LILYGO_SIM7080G_S3_STAN) \
+    && !defined(LILYGO_SIM7670G_S3_STAN) && !defined(LILYGO_A7670X_S3_STAN)
+#error "This sketch is only applicable to the T-A7670X-S3-Standard,T-SIM7000G-S3-Standard,T-SIM7080G-S3-Standard,T-SIM7670G-S3-Standard"
 #endif
 
 #define ENABLE_BATTERY_MON

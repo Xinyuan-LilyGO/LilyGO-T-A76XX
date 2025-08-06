@@ -9,12 +9,8 @@
  */
 #include "utilities.h"
 
-#ifdef TINY_GSM_MODEM_SIM7600
-#error "SIM7600X series does not support GPS acceleration function"
-#endif
-
-#ifdef TINY_GSM_MODEM_SIM7000SSL
-#error "SIM7000G series does not support GPS acceleration function"
+#if defined(TINY_GSM_MODEM_SIM7600) || defined(TINY_GSM_MODEM_SIM7000) || defined(TINY_GSM_MODEM_SIM7000SSL) || defined(TINY_GSM_MODEM_SIM7080)
+#error "SIM7600/SIM7000/SIM7080 does not support GPS acceleration function"
 #endif
 
 
