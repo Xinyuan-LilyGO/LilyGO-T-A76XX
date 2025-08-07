@@ -13,6 +13,13 @@
 // #define DUMP_AT_COMMANDS
 
 #include "utilities.h"
+
+
+#if defined(TINY_GSM_MODEM_SIM7000SSL) || defined(TINY_GSM_MODEM_SIM7000) \
+    || defined(TINY_GSM_MODEM_SIM7080) || defined(TINY_GSM_MODEM_SIM7600) 
+#error "This modem not support email function"
+#endif
+
 #include <TinyGsmClient.h>
 
 #ifdef DUMP_AT_COMMANDS  // if enabled it requires the streamDebugger lib

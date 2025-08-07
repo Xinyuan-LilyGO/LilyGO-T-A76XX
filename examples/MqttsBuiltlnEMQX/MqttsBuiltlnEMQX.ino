@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2024-01-11
  * @note
- * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7000G/SIM7600 series
+ * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7000G/SIM7080G/SIM7600 series
  * * Connect MQTT Broker as https://www.emqx.com/zh/mqtt/public-mqtt5-broker
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  */
@@ -237,6 +237,13 @@ void setup()
     String ipAddress = modem.getLocalIP();
     Serial.print("Network IP:"); Serial.println(ipAddress);
 
+
+    // Print modem software version
+    String res;
+    modem.sendAT("+SIMCOMATI");
+    modem.waitResponse(10000UL, res);
+    Serial.println(res);
+    
     // Initialize MQTT, use SSL, skip authentication server
     modem.mqtt_begin(true);
 
@@ -310,5 +317,16 @@ APRev:1529B11SIM7000,V01
 QCN:MDM9206_TX3.0.SIM7000G_P1.02_20180726
 !!!!!!!!!!!!!!!!FAILED 1529B11SIM7000 QCN:MDM9206_TX3.0.SIM7000G_P1.02_20180726
 
+
+-----------------------------
+
+SIM7080G  # 20250807:OK!
+
+Revision:1951B16SIM7080
+CSUB:B16V01
+APRev:1951B16SIM7080,B16V01
+QCN:SIM7080G_P1.03_20210823
+
+-------------------------------
 
 */

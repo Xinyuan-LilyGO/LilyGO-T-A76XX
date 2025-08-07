@@ -12,6 +12,9 @@
 
 #include "utilities.h"
 
+#ifdef TINY_GSM_MODEM_SIM7080
+#error "This modem not sms function"
+#endif
 
 // Define the serial console for debug prints, if needed
 #define TINY_GSM_DEBUG SerialMon

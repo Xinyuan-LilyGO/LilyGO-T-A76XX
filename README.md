@@ -8,8 +8,9 @@
 
 # News
 
+- 2025/08/07 : Completed support for SIM7080G series
 - 2025/07/26 : Add **T-SimShield** support, please refer to the [document](./docs/SimshieldUsageGuide/SimshieldUsageGuide.md) here for quick setup
-- 2025/07/10 : The examples have completed most of the support for SIM7000G. The non-encrypted MQTT is currently waiting for a fix, and the encrypted MQTTS access has been verified.
+- 2025/07/10 : The example has completed most of the support for SIM7000G. For non-encrypted MQTT, please refer to the description above the example. Some of them are not supported.
 - 2025/07/09 : Completed support for SIM7600 series
 - The TinyGSM used in the example is a [fork](https://github.com/lewisxhe/TinyGSM) to support A7670,A7608,SIM7672G,SIM7670G, If you use the master branch, the compilation will not go smoothly
 - A7670G/A7670E/A7670SA/A7672G are collectively referred to as A7670X

@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2025  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2025-08-05
- * @note      Only support A7670X A7608X , Not support SIM7670G
+ * @note      Only support A7670X A7608X , Not support SIM7670G,SIM7000G,SIM7600G,SIM7080G
  */
 
 // See all AT commands, if wanted
@@ -24,16 +24,11 @@ TinyGsm modem(SerialAT);
 
 #include "ring_buffer.h"
 
-#ifdef LILYGO_T_SIM7670G_S3
-#error "Only support A7670X A7608X , Not support SIM7670G"
-#endif
 
-#ifdef TINY_GSM_MODEM_SIM7600
-#error "SIM7600 series has not yet implemented this playback function"
-#endif
-
-#ifdef LILYGO_SIM7000G
-#error "SIM7000G not  playback function"
+#if defined(TINY_GSM_MODEM_SIM7000SSL) || defined(TINY_GSM_MODEM_SIM7000) \
+    || defined(TINY_GSM_MODEM_SIM7080) || defined(TINY_GSM_MODEM_SIM7600) \
+    defined(TINY_GSM_MODEM_SIM7670G)
+#error "This modem not support play audio function"
 #endif
 
 void setup()

@@ -6,7 +6,7 @@
  * @date      2024-09-10
  * @note
  * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7600 series
- *   TODO: SIM7000G To be fixed
+ * * TODO: SIM7000G To be fixed
  * * Connect MQTT Broker as https://test.mosquitto.org/  MQTT, encrypted, unauthenticated
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  */
@@ -234,6 +234,13 @@ void setup()
     String ipAddress = modem.getLocalIP();
     Serial.print("Network IP:"); Serial.println(ipAddress);
 
+
+    // Print modem software version
+    String res;
+    modem.sendAT("+SIMCOMATI");
+    modem.waitResponse(10000UL, res);
+    Serial.println(res);
+
     // Initialize MQTT, No use SSL, skip authentication server
     modem.mqtt_begin(false);
 
@@ -289,4 +296,18 @@ IMEI: xxxxxxxxxxxx
 MEID:
 +GCAP: +CGSM
 DeviceInfo: 173,170
+
+
+-----------------------------
+
+SIM7080G  # 20250807:OK!
+
+Revision:1951B16SIM7080
+CSUB:B16V01
+APRev:1951B16SIM7080,B16V01
+QCN:SIM7080G_P1.03_20210823
+
+-------------------------------
+
+
 */

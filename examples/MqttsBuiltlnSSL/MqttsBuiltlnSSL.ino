@@ -131,11 +131,11 @@ void setup()
     int retry = 0;
     while (!modem.testAT(1000)) {
         Serial.println(".");
-        if (retry++ > 10) {
+        if (retry++ > 30) {
             digitalWrite(BOARD_PWRKEY_PIN, LOW);
             delay(100);
             digitalWrite(BOARD_PWRKEY_PIN, HIGH);
-            delay(1000);
+            delay(MODEM_POWERON_PULSE_WIDTH_MS);
             digitalWrite(BOARD_PWRKEY_PIN, LOW);
             retry = 0;
         }
@@ -234,6 +234,13 @@ void setup()
     String ipAddress = modem.getLocalIP();
     Serial.print("Network IP:"); Serial.println(ipAddress);
 
+
+    // Print modem software version
+    String res;
+    modem.sendAT("+SIMCOMATI");
+    modem.waitResponse(10000UL, res);
+    Serial.println(res);
+
     // Initialize MQTT, use SSL, skip authentication server
     modem.mqtt_begin(true);
 
@@ -279,6 +286,7 @@ void loop()
 #endif
 
 /*
+
 SIM7600 Version OK 20250709
 AT+SIMCOMATI
 Manufacturer: SIMCOM INCORPORATED
@@ -289,4 +297,17 @@ IMEI: xxxxxxxxxxxx
 MEID:
 +GCAP: +CGSM
 DeviceInfo: 173,170
+
+-----------------------------
+
+SIM7080G  # 20250807:OK!
+
+Revision:1951B16SIM7080
+CSUB:B16V01
+APRev:1951B16SIM7080,B16V01
+QCN:SIM7080G_P1.03_20210823
+
+-------------------------------
+
+
 */

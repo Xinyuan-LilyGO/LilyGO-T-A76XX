@@ -5,8 +5,7 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-28
  * @note
- * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7600 series
-  * * TODO: SIM7000G To be fixed
+ * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7000G/SIM7080G/SIM7600 series
  * * Connect MQTT Broker as https://test.mosquitto.org/
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  */
@@ -33,7 +32,7 @@ TinyGsm modem(SerialAT);
 
 // MQTT details
 const char *broker = "test.mosquitto.org";
-const uint16_t broker_port = 8885;
+const uint16_t broker_port = 1884;
 const char *broker_username = "rw";
 const char *broker_password = "readwrite";
 const char *client_id = "A76XX";
@@ -132,11 +131,11 @@ void setup()
     int retry = 0;
     while (!modem.testAT(1000)) {
         Serial.println(".");
-        if (retry++ > 10) {
+        if (retry++ > 30) {
             digitalWrite(BOARD_PWRKEY_PIN, LOW);
             delay(100);
             digitalWrite(BOARD_PWRKEY_PIN, HIGH);
-            delay(1000);
+            delay(MODEM_POWERON_PULSE_WIDTH_MS);
             digitalWrite(BOARD_PWRKEY_PIN, LOW);
             retry = 0;
         }
@@ -235,6 +234,15 @@ void setup()
     String ipAddress = modem.getLocalIP();
     Serial.print("Network IP:"); Serial.println(ipAddress);
 
+
+
+    // Print modem software version
+    String res;
+    modem.sendAT("+SIMCOMATI");
+    modem.waitResponse(10000UL, res);
+    Serial.println(res);
+
+    
     // Initialize MQTT, use SSL, skip authentication server
     modem.mqtt_begin(true);
 
@@ -290,4 +298,25 @@ IMEI: xxxxxxxxxxxx
 MEID:
 +GCAP: +CGSM
 DeviceInfo: 173,170
+
+-----------------------------
+
+SIM7000G  # 20250807:OK!
+
+Revision:1529B10SIM7000G
+CSUB:V02
+APRev:1529B10SIM7000,V02
+QCN:MDM9206_TX3.0.SIM7000G_P1.03C_20240911
+
+-----------------------------
+
+SIM7080G  # 20250807:OK!
+
+Revision:1951B16SIM7080
+CSUB:B16V01
+APRev:1951B16SIM7080,B16V01
+QCN:SIM7080G_P1.03_20210823
+
+-------------------------------
+
 */

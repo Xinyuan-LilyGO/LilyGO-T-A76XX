@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-28
  * @note
- * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7000G/SIM7600 series
+ * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7000G/SIM7080G/SIM7600 series
  * * Connect MQTT Broker as https://aws.amazon.com/campaigns/IoT
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  * *!!!! When using ESP to connect to AWS, the AWS IOT HUB policy must be set to all devices, otherwise the connection cannot be made.
@@ -243,9 +243,11 @@ void setup()
     String ipAddress = modem.getLocalIP();
     Serial.print("Network IP:"); Serial.println(ipAddress);
 
-    // Check firmware version
+    // Print modem software version
+    String res;
     modem.sendAT("+SIMCOMATI");
-    modem.waitResponse();
+    modem.waitResponse(10000UL, res);
+    Serial.println(res);
 
     delay(2000);
 

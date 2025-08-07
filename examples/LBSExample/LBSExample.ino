@@ -8,8 +8,8 @@
 */
 #include "utilities.h"
 
-#ifdef LILYGO_SIM7000G
-#error "SIM7000G - Not LBS function"
+#if defined(TINY_GSM_MODEM_SIM7000SSL) || defined(TINY_GSM_MODEM_SIM7000)
+#error "This modem not have LBS function"
 #endif
 
 // Define the serial console for debug prints, if needed

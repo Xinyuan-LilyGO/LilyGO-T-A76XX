@@ -14,6 +14,11 @@
 #include <TinyGsmClient.h>
 #include "Arduino.h"
 
+#if defined(TINY_GSM_MODEM_SIM7000SSL) || defined(TINY_GSM_MODEM_SIM7000) \
+    || defined(TINY_GSM_MODEM_SIM7080) 
+#error "This example currently only supports A7670X/A7608X/SIM767G/SIM7600 series"
+#endif
+
 #ifdef DUMP_AT_COMMANDS  // if enabled it requires the streamDebugger lib
 #include <StreamDebugger.h>
 StreamDebugger debugger(SerialAT, Serial);

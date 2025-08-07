@@ -15,6 +15,10 @@
 #warning "SIM7000G SMS function, the network access mode must be GSM, not NB-IOT"
 #endif
 
+#ifdef TINY_GSM_MODEM_SIM7080
+#error "This modem not sms function"
+#endif
+
 // Define the serial console for debug prints, if needed
 #define TINY_GSM_DEBUG SerialMon
 

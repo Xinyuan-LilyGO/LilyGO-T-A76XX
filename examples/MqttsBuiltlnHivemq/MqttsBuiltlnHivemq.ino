@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-28
  * @note
- * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7000G/SIM7600 series
+ * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7000G/SIM7080G/SIM7600 series
  * * Connect MQTT Broker as https://www.hivemq.com/
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  */
@@ -248,6 +248,13 @@ void setup()
     String ipAddress = modem.getLocalIP();
     Serial.print("Network IP:"); Serial.println(ipAddress);
 
+
+    // Print modem software version
+    String res;
+    modem.sendAT("+SIMCOMATI");
+    modem.waitResponse(10000UL, res);
+    Serial.println(res);
+    
     // Initialize MQTT
     // Hivemq needs to enable sni before it can be run and connected.
     bool enableSSL = true;
@@ -359,5 +366,16 @@ Model: A7608E-H
 Revision: A50C4B14A7600M7
 A7600M7_B14V01_250115
 +GCAP: +CGSM,+FCLASS,+DS
+
+-----------------------------
+
+SIM7080G  # 20250807:OK!
+
+Revision:1951B16SIM7080
+CSUB:B16V01
+APRev:1951B16SIM7080,B16V01
+QCN:SIM7080G_P1.03_20210823
+
+-------------------------------
 
 */
