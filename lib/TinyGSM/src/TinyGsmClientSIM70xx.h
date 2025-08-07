@@ -63,13 +63,7 @@ enum GPSWorkMode {
 };
 
 
-enum ModemType{
-  MODEM_TYPE_SIM7000G,
-  MODEM_TYPE_SIM7070G,
-  MODEM_TYPE_SIM7080G,
-};
-
-template <class modemType,ModemType model>
+template <class modemType,ModemPlatform model>
 class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType,model>>,
                        public TinyGsmGPRS<TinyGsmSim70xx<modemType,model>>,
                        public TinyGsmSMS<TinyGsmSim70xx<modemType,model>>,
@@ -79,7 +73,7 @@ class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType,model>>,
                        public TinyGsmBattery<TinyGsmSim70xx<modemType,model>>,
                        public TinyGsmGSMLocation<TinyGsmSim70xx<modemType,model>>,
                        public TinyGsmGPSEx<TinyGsmSim70xx<modemType,model>>,
-                       public TinyGsmHttpsSIM7xxx<TinyGsmSim70xx<modemType,model>>,
+                       public TinyGsmHttpsSIM7xxx<TinyGsmSim70xx<modemType,model>,model>,
                        public TinyGsmMqttSIM7xxx<TinyGsmSim70xx<modemType,model>>,
                        public TinyGsmSSL<TinyGsmSim70xx<modemType,model>>{
   friend class TinyGsmModem<TinyGsmSim70xx<modemType,model>>;
@@ -91,7 +85,7 @@ class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType,model>>,
   friend class TinyGsmBattery<TinyGsmSim70xx<modemType,model>>;
   friend class TinyGsmGSMLocation<TinyGsmSim70xx<modemType,model>>;
   friend class TinyGsmGPSEx<TinyGsmSim70xx<modemType,model>>;
-  friend class TinyGsmHttpsSIM7xxx<TinyGsmSim70xx<modemType,model>>;
+  friend class TinyGsmHttpsSIM7xxx<TinyGsmSim70xx<modemType,model>,model>;
   friend class TinyGsmMqttSIM7xxx<TinyGsmSim70xx<modemType,model>>;
   friend class TinyGsmSSL<TinyGsmSim70xx<modemType,model>>;
   /*
@@ -502,7 +496,7 @@ class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType,model>>,
   // enable GPS
   bool enableGPSImpl(int8_t power_en_pin ,uint8_t enable_level) {
     if(power_en_pin != -1){
-      if(model == MODEM_TYPE_SIM7080G){
+      if(model == QUALCOMM_SIM7080G){
         thisModem().sendAT("+SGPIO=0,",power_en_pin,",1,",enable_level);
       }else{
         thisModem().sendAT("+CGPIO=0,",power_en_pin,",1,",enable_level);
@@ -516,7 +510,7 @@ class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType,model>>,
 
   bool disableGPSImpl(int8_t power_en_pin ,uint8_t disable_level) {
     if(power_en_pin != -1){
-      if(model == MODEM_TYPE_SIM7080G){
+      if(model == QUALCOMM_SIM7080G){
         thisModem().sendAT("+SGPIO=0,",power_en_pin,",1,",disable_level);
       }else{
         thisModem().sendAT("+CGPIO=0,",power_en_pin,",1,",disable_level);

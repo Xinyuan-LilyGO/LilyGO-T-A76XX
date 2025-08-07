@@ -18,9 +18,9 @@
 #include "TinyGsmClientSIM70xx.h"
 #include "TinyGsmTCP.tpp"
 
-class TinyGsmSim7000SSL : public TinyGsmSim70xx<TinyGsmSim7000SSL,MODEM_TYPE_SIM7000G>,
+class TinyGsmSim7000SSL : public TinyGsmSim70xx<TinyGsmSim7000SSL,QUALCOMM_SIM7000G>,
                           public TinyGsmTCP<TinyGsmSim7000SSL, TINY_GSM_MUX_COUNT> {
-  friend class TinyGsmSim70xx<TinyGsmSim7000SSL,MODEM_TYPE_SIM7000G>;
+  friend class TinyGsmSim70xx<TinyGsmSim7000SSL,QUALCOMM_SIM7000G>;
   friend class TinyGsmTCP<TinyGsmSim7000SSL, TINY_GSM_MUX_COUNT>;
 
   /*
@@ -114,7 +114,7 @@ class TinyGsmSim7000SSL : public TinyGsmSim70xx<TinyGsmSim7000SSL,MODEM_TYPE_SIM
    */
  public:
   explicit TinyGsmSim7000SSL(Stream& stream)
-      : TinyGsmSim70xx<TinyGsmSim7000SSL,MODEM_TYPE_SIM7000G>(stream),
+      : TinyGsmSim70xx<TinyGsmSim7000SSL,QUALCOMM_SIM7000G>(stream),
         certificates() {
     memset(sockets, 0, sizeof(sockets));
   }

@@ -29,7 +29,7 @@ enum HttpMethod {
 #define TINYGSM_MODEM_HTTPS_NO_HEADER
 #define TINYGSM_SIM7XXX_HTTP_BODY_MAX_LEN 1024
 
-template <class modemType>
+template <class modemType, ModemPlatform platform>
 class TinyGsmHttpsSIM7xxx
 {
 private:
@@ -479,9 +479,22 @@ private:
                      uint32_t inputTimeout = 10000)
     {
         if (payload) {
-            thisModem().sendAT("+SHBOD=", '"', (char *)payload, '"', ',', size);
-            if (thisModem().waitResponse(30000UL) != 1) {
-                return -1;
+            if(platform == QUALCOMM_SIM7080G){
+                thisModem().sendAT("+SHBOD=", size, "," , inputTimeout);
+                if (thisModem().waitResponse(30000UL, ">") != 1) {
+                    return -1;
+                }
+                thisModem().stream.write(payload);
+                thisModem().stream.println();
+                // Wait return OK
+                if(thisModem().waitResponse() != 1){
+                    return -1;
+                }
+            }else{
+                thisModem().sendAT("+SHBOD=", '"', (char *)payload, '"', ',', size);
+                if (thisModem().waitResponse(30000UL) != 1) {
+                    return -1;
+                }
             }
         }
         thisModem().sendAT("+SHREQ=\"", _pathParam, "\",", method);
