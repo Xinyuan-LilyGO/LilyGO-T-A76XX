@@ -5,14 +5,14 @@
  * @copyright Copyright (c) 2023  Shenzhen Xin Yuan Electronic Technology Co., Ltd
  * @date      2023-11-29
  * @note
- * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7000G/SIM7600 series
+ * * Example is suitable for A7670X/A7608X/SIM7670G/SIM7000G/SIM7080G/SIM7600 series
  * * Connect https://httpbin.org test post request
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  */
 #define TINY_GSM_RX_BUFFER          1024 // Set RX buffer to 1Kb
 
 // See all AT commands, if wanted
-// #define DUMP_AT_COMMANDS
+#define DUMP_AT_COMMANDS
 
 #include "utilities.h"
 #include <TinyGsmClient.h>
@@ -270,5 +270,12 @@ Revision:1529B11SIM7000G
 CSUB:V01
 APRev:1529B11SIM7000,V01
 QCN:MDM9206_TX3.0.SIM7000G_P1.02_20180726
+
+
+SIM7080G    # 2025/08/07:OK!
+Revision:1951B16SIM7080
+CSUB:B16V01
+APRev:1951B16SIM7080,B16V01
+QCN:SIM7080G_P1.03_20210823
 
 */
