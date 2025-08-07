@@ -50,6 +50,10 @@ class TinyGsmModem {
     return thisModem().factoryDefaultImpl();
   }
 
+  void getRevision(String&model, String &revision) {
+    thisModem().getRevisionImpl(model,revision);
+  }
+
   /*
    * Power functions
    */
@@ -160,6 +164,68 @@ class TinyGsmModem {
     thisModem().waitResponse();
     thisModem().sendAT(GF("&W"));  // Write configuration
     return thisModem().waitResponse() == 1;
+  }
+
+  void getRevisionImpl(String&model, String &revision) {
+      int first, last, index;
+      String res;
+      const String modelPrefix = "Model:";
+      const String revPrefix = "Revision:";
+
+      thisModem().sendAT("ATE0");
+      thisModem().waitResponse();
+
+      thisModem().sendAT("+SIMCOMATI");
+      if (thisModem().waitResponse(3000UL, res) == 1) {
+          index =  res.indexOf(modelPrefix);
+          if (index != - 1) {
+              model = res.substring(index + modelPrefix.length());
+
+              index = model.indexOf("\n");
+              if (index != - 1) {
+                  model = model.substring(0, index);
+                  model.replace(" ", "");
+                  model.trim();
+              }
+          } else {
+              String gmm ;
+              thisModem().sendAT("+GMM");
+              if (thisModem().waitResponse(2000, gmm) == 1) {
+                  gmm.replace("AT+GMM", "");
+                  gmm.replace("OK", "");
+                  gmm.trim();
+                  model = gmm;
+              }
+          }
+
+          if (model.startsWith("SIMCOM_")) {
+              model.replace("SIMCOM_", "");
+          }
+
+          index = res.indexOf(revPrefix);
+          if (index != - 1) {
+              revision = res.substring(index + revPrefix.length());
+              first = revision.indexOf("\n");
+              if (first != -1) {
+                  if (model.startsWith("SIM7600")) {
+                      revision = revision.substring(0, first);
+                      revision.replace(" ", "");
+                      revision.replace("\n", " ");
+                      revision.replace("\r", "");
+                  } else {
+                      last = revision.indexOf("\n", first + 1);
+                      if (last != -1) {
+                          revision = revision.substring(0, last);
+                          revision.replace(" ", "");
+                          revision.replace("\n", " ");
+                          revision.replace("\r", "");
+                      }
+                  }
+              }
+          } else {
+              DBG("Not found revision");
+          }
+      }
   }
 
   /*

@@ -329,6 +329,34 @@ class TinyGsmA76xx : public TinyGsmModem<TinyGsmA76xx<modemType>>,
     return result_type;
   }
 
+  /*
+   * Hardware functions
+   */
+  bool pinMode(uint8_t pin, uint8_t mode) {
+      switch (mode) {
+      case INPUT:
+          mode = 0;   //IN
+          break;
+      case OUTPUT:
+          mode = 1;   //OUTPUT
+          break;
+      default:
+          return false;
+      }
+      thisModem().sendAT("+CGDRT=", pin, ',', mode);
+      if (thisModem().waitResponse() != 1) {
+          return false;
+      }
+      return true;
+  }
+
+  bool digitalWrite(uint8_t pin, uint8_t val) {
+      thisModem().sendAT("+CGSETV=", pin, ',', val);
+      if (thisModem().waitResponse() != 1) {
+          return false;
+      }
+      return true;
+  }
 
   /*
    * GPRS functions
