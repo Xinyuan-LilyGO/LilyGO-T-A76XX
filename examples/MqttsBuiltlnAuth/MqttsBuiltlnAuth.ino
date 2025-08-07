@@ -216,7 +216,7 @@ void setup()
         delay(5000);
     }
 #endif
-    
+
     Serial.printf("Registration Status:%d\n", status);
     delay(1000);
 
@@ -240,6 +240,8 @@ void setup()
 
 
     if (!mqtt_connect()) {
+        Serial.println("Please make sure you are using the latest released version of the firmware. Find the latest version here: https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/blob/main/docs/update_fw.md");
+        Serial.println("If you still have problems with the latest firmware, please open an issue. Otherwise, please do not create meaningless issues.");
         return ;
     }
 
@@ -283,9 +285,9 @@ AT+SIMCOMATI
 Manufacturer: SIMCOM INCORPORATED
 Model: SIMCOM_SIM7600G-H
 Revision: LE20B04SIM7600G22
-QCN: 
+QCN:
 IMEI: xxxxxxxxxxxx
-MEID: 
+MEID:
 +GCAP: +CGSM
 DeviceInfo: 173,170
 */

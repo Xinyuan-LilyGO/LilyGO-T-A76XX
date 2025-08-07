@@ -204,6 +204,8 @@ void setup()
 
     // If the status code 715 is returned, please see here
     // https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/117
+    Serial.println("Please make sure you are using the latest released version of the firmware. Find the latest version here: https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/blob/main/docs/update_fw.md");
+    Serial.println("If you still have problems with the latest firmware, please open an issue. Otherwise, please do not create meaningless issues.");
 
     for (int i = 0; i < sizeof(request_url) / sizeof(request_url[0]); ++i) {
 

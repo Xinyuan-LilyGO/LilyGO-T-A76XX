@@ -188,6 +188,9 @@ void setup()
     String ipAddress = modem.getLocalIP();
     Serial.print("Network IP:"); Serial.println(ipAddress);
 
+    Serial.println("Please make sure you are using the latest released version of the firmware. Find the latest version here: https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/blob/main/docs/update_fw.md");
+    Serial.println("If you still have problems with the latest firmware, please open an issue. Otherwise, please do not create meaningless issues.");
+
     // Initialize HTTPS
     modem.https_begin();
 

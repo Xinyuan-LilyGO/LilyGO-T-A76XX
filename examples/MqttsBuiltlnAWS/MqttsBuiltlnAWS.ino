@@ -257,6 +257,8 @@ void setup()
 
     // Connecting to AWS IOT Core
     if (!mqtt_connect()) {
+        Serial.println("Please make sure you are using the latest released version of the firmware. Find the latest version here: https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/blob/main/docs/update_fw.md");
+        Serial.println("If you still have problems with the latest firmware, please open an issue. Otherwise, please do not create meaningless issues.");
         return ;
     }
 
@@ -326,7 +328,14 @@ Manufacturer: SIMCOM INCORPORATED
 Model: SIM7670G-MNGV
 Revision: 2374B02SIM767XM5A_M
 SIM767XM5_B02V01_240717
-IMEI: XXXXXXXXXXXXXXXXX
+
+!!!!!!!!!!!!!!!!FAILED 2374B03SIM767XM5A_M
+https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/275
+Manufacturer: SIMCOM INCORPORATED
+Model: SIM7670G-MNGV
+Revision: 2374B03SIM767XM5A_M
+SIM767XM5_B03V02_240914
+!!!!!!!!!!!!!!!!FAILED 2374B03SIM767XM5A_M
 
 -------------------------------
 

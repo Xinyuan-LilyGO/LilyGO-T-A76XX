@@ -121,7 +121,7 @@ void setup()
     // Pull down DTR to ensure the modem is not in sleep state
     pinMode(MODEM_DTR_PIN, OUTPUT);
     digitalWrite(MODEM_DTR_PIN, LOW);
-    
+
     // Turn on the modem
     pinMode(BOARD_PWRKEY_PIN, OUTPUT);
     digitalWrite(BOARD_PWRKEY_PIN, LOW);
@@ -174,7 +174,7 @@ void setup()
     Serial.println(version);
 
     delay(3000);
-    
+
     //SIM7672G Can't set network mode
 #ifndef TINY_GSM_MODEM_SIM7670G
     if (!modem.setNetworkMode(MODEM_NETWORK_AUTO)) {
@@ -229,7 +229,7 @@ void setup()
         delay(5000);
     }
 #endif
-    
+
     Serial.printf("Registration Status:%d\n", status);
     delay(1000);
 
@@ -258,6 +258,8 @@ void setup()
     modem.mqtt_set_certificate(HivemqRootCA);
 
     if (!mqtt_connect()) {
+        Serial.println("Please make sure you are using the latest released version of the firmware. Find the latest version here: https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/blob/main/docs/update_fw.md");
+        Serial.println("If you still have problems with the latest firmware, please open an issue. Otherwise, please do not create meaningless issues.");
         return ;
     }
 
@@ -301,9 +303,9 @@ AT+SIMCOMATI
 Manufacturer: SIMCOM INCORPORATED
 Model: SIMCOM_SIM7600G-H
 Revision: LE20B04SIM7600G22
-QCN: 
+QCN:
 IMEI: xxxxxxxxxxxx
-MEID: 
+MEID:
 +GCAP: +CGSM
 DeviceInfo: 173,170
 
