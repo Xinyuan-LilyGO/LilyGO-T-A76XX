@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2025  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2025-07-20
- * @note      Example is suitable for A7670X/A7608X/SIM767G/SIM7600 series,SIM7000 series not support
+ * @note      Example is suitable for A7670X/A7608X/SIM767G/SIM7600 series,SIM7000/SIM7080 series not support
  */
 
 // See all AT commands, if wanted

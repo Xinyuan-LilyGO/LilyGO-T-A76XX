@@ -106,25 +106,14 @@ void setup()
     // Print modem software version
     String res;
     modem.sendAT("+SIMCOMATI");
-    modem.waitResponse(10000UL,res);
+    modem.waitResponse(10000UL, res);
     Serial.println(res);
 
-    /*
-    *   A7608 B08 firmware has GPS positioning problems. If it is B08 version, you need to upgrade the A7608 firmware.
-    *
-    *   Manufacturer: INCORPORATED
-    *   Model: A7608SA-H
-    *   Revision: A50C4B08A7600M7
-    *   A7600M7_B08V02_220929
-    *   QCN:
-    *   IMEI: xxxxxxxxxxxxx
-    *   MEID:
-    *   +GCAP: +CGSM,+FCLASS,+DS
-    *   DeviceInfo:
-    *
-    *   +CGNSSINFO: 2,04,00,21.xxxxx,N,114.xxxxxxxx,E,020924,094145.00,-34.0,1.403,,6.9,6.8,1.0,03
-    */
-
+#ifdef TINY_GSM_MODEM_SIM7080
+    // SIM7080G/SIM7070G GPS and LTE connections cannot be enabled at the same time
+    // Disconnect the cellular connection first.
+    modem.setNetworkDeactivate();
+#endif
 
     Serial.println("Enabling GPS/GNSS/GLONASS");
     while (!modem.enableGPS(MODEM_GPS_ENABLE_GPIO, MODEM_GPS_ENABLE_LEVEL)) {

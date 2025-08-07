@@ -200,7 +200,11 @@ void setup()
     String ipAddress = modem.getLocalIP();
     Serial.print("Network IP:"); Serial.println(ipAddress);
 
-
+    // Print modem software version
+    String res;
+    modem.sendAT("+SIMCOMATI");
+    modem.waitResponse(10000UL, res);
+    Serial.println(res);
 
     // If the status code 715 is returned, please see here
     // https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/117
@@ -309,5 +313,13 @@ QCN:MDM9206_TX3.0.SIM7000G_P1.02_20180726
 
 -------------------------------
 
+SIM7080G  # 20250807:OK!
+
+Revision:1951B16SIM7080
+CSUB:B16V01
+APRev:1951B16SIM7080,B16V01
+QCN:SIM7080G_P1.03_20210823
+
+-------------------------------
 
 */

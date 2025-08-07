@@ -367,6 +367,17 @@ APRev:1529B11SIM7000,V01
 QCN:MDM9206_TX3.0.SIM7000G_P1.02_20180726
 !!!!!!!!!!!!!!!!FAILED 1529B11SIM7000 QCN:MDM9206_TX3.0.SIM7000G_P1.02_20180726
 
+-----------------------------
+
+SIM7080G  # 20250807:OK!
+
+Revision:1951B16SIM7080
+CSUB:B16V01
+APRev:1951B16SIM7080,B16V01
+QCN:SIM7080G_P1.03_20210823
+
+-------------------------------
+
 */
 #ifndef TINY_GSM_FORK_LIBRARY
 #error "No correct definition detected, Please copy all the [lib directories](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/tree/main/lib) to the arduino libraries directory , See README"

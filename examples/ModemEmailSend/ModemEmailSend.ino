@@ -4,7 +4,7 @@
  * @license   MIT
  * @copyright Copyright (c) 2025  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2025-07-13
- * * Example is suitable for A7670X/A7608X/SIM7670G , Other models are not yet compatible , SIM7000 not support
+ * * Example is suitable for A7670X/A7608X/SIM7670G , Other models are not yet compatible , SIM7000/SIM7080 not support
  * * Example uses a forked TinyGSM <https://github.com/lewisxhe/TinyGSM>, which will not compile successfully using the mainline TinyGSM.
  */
 #define TINY_GSM_RX_BUFFER          1024 // Set RX buffer to 1Kb

@@ -113,8 +113,15 @@ void setup()
     // Print modem software version
     String res;
     modem.sendAT("+SIMCOMATI");
-    modem.waitResponse(10000UL,res);
+    modem.waitResponse(10000UL, res);
     Serial.println(res);
+
+
+#ifdef TINY_GSM_MODEM_SIM7080
+    // SIM7080G/SIM7070G GPS and LTE connections cannot be enabled at the same time
+    // Disconnect the cellular connection first.
+    modem.setNetworkDeactivate();
+#endif
 
     Serial.println("Enabling GPS/GNSS/GLONASS");
     while (!modem.enableGPS(MODEM_GPS_ENABLE_GPIO, MODEM_GPS_ENABLE_LEVEL)) {
