@@ -152,6 +152,7 @@
 * [T-SIM7670G Schematic](../../../../schematic/esp32s3/T-SIM7670G-S3-V1.1.pdf)
 * [SIMCOM official SIM7670G All Datasheet](https://cn.simcom.com/product/SIM7670X.html)
 * [For SIM7670G series documentation, please visit the datasheet directory.](../../../../datasheet/SIM767X/)
+* [Board dimensions](../../../../dimensions/esp32s3/T-SIM7670G-S3.dxf)
 
 ### FAQ
 

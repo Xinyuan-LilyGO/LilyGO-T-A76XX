@@ -182,6 +182,8 @@
 * [T-SIM7600X Schematic](../../../../schematic/esp32/T-SIM7600X-V1.3.pdf)
 * [SIMCOM official SIM7600X All Datasheet](https://cn.simcom.com/product/SIM7600X.html)
 * [For SIM7600 series documentation, please visit the datasheet directory.](../../../../datasheet/SIM7600X/)
+* [Board dimensions](../../../../dimensions/esp32/T-SIM7600-ESP32.dxf)
+* [Case](../../../../dimensions/esp32/T-SIM7600-ESP32-Case.zip)
 
 ### FAQ
 

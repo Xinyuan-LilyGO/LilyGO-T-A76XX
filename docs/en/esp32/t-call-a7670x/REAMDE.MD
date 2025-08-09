@@ -168,6 +168,7 @@
 * [T-Call-A7670-V1.1 Schematic](../../../../schematic/esp32/T-Call-A7670-V1.1.pdf)
 * [SIMCOM official A7670X All Datasheet](https://cn.simcom.com/product/A7670X.html)
 * [For A7670X series documentation, please visit the datasheet directory.](../../../../datasheet/A7670X/)
+* [Board dimensions](../../../../dimensions/esp32/T-Call-A7670-ESP32.dxf)
 
 ### FAQ
 

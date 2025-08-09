@@ -152,6 +152,7 @@
 * [T-A7608X Schematic](../../../../schematic/esp32/T-A7608X-V1.0.pdf)
 * [SIMCOM official A7608X All Datasheet](https://cn.simcom.com/product/A7608X-H-E_SA.html)
 * [For A7608 series documentation, please visit the datasheet directory.](../../../../datasheet/A76XX/)
+* [Board dimensions](../../../../dimensions/esp32s3/T-A7608-S3.dxf)
 
 ### FAQ
 

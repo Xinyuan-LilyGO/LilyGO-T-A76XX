@@ -172,6 +172,8 @@
 * [T-SIM7000G Schematic](../../../../schematic/esp32/T-SIM7000G-200415.pdf)
 * [SIMCOM official SIM7000G All Datasheet](https://cn.simcom.com/product/SIM7000X.html)
 * [For SIM7000 series documentation, please visit the datasheet directory.](../../../../datasheet/SIM7000/)
+* [Board dimensions](../../../../dimensions/esp32/T-SIM7000-ESP32.dxf)
+* [Case](../../../../dimensions/esp32/T-SIM7000-ESP32-Case.zip)
 
 ### FAQ
 

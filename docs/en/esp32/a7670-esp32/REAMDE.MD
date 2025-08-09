@@ -185,6 +185,8 @@
 * [T-A7670X Schematic](../../../../schematic/esp32/T-A7670X-V1.4.pdf)
 * [SIMCOM official A7670X All Datasheet](https://cn.simcom.com/product/A7670X.html)
 * [For A7670X series documentation, please visit the datasheet directory.](../../../../datasheet/A7670X/)
+* [Board dimensions](../../../../dimensions/esp32/T-A760X-ESP32.dxf)
+* [Case](../../../../dimensions/esp32/T-A7670X-Shell+GPS.7z)
 
 ### FAQ
 
