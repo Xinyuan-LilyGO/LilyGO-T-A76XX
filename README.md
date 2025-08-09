@@ -31,6 +31,14 @@
 - 🔧 **[T-A7608X Quick Start](./docs/en/esp32s3/a7608x-s3/REAMDE.MD)**
 - 🔧 **[T-SIM7670G Quick Start](./docs/en/esp32s3/sim7670g-s3/REAMDE.MD)**
 
-## T-SimShield
+## ESP32S3 Version Standard Series Get Started
 
-- 🔧 **[T-A7608X Quick Start](./docs/en/SimshieldUsageGuide/README.md)**
+- 🔧 **[T-A7670X-S3-Standard Quick Start](./docs/en/esp32s3/a7670x-s3-standard/REAMDE.MD)**
+- 🔧 **[T-SIM7670G-S3-Standard Quick Start](./docs/en/esp32s3/sim7670g-s3-standard/REAMDE.MD)**
+- 🔧 **[T-SIM7000G-S3-Standard Quick Start](./docs/en/esp32s3/)**
+- 🔧 **[T-SIM7080G-S3-Standard Quick Start](./docs/en/esp32s3/)**
+- 🔧 **[T-SIM7600X-S3-Standard Quick Start](./docs/en/esp32s3/)**
+
+## T-SimShield Usage Guide
+
+- 🔧 **[SimShield Usage Guide](./docs/en/SimshieldUsageGuide/README.md)**
