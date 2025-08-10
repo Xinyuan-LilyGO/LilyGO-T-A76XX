@@ -27,7 +27,7 @@
 7. Cancel the `;` symbol in front of the line `default_envs = T-A7670X-S3-Standard` and use `T-A7670X-S3-Standard` as the default environment
 8. Uncomment one of the lines `src_dir = xxxx` to ensure that only one line is valid. For example, to enable `src_dir = examples/ATdebug`, remove the leading `;` symbol and save the file. The ATDebug example will now be compiled.
 9. Click the (✔) symbol in the lower left corner to compile
-10. Connect the board to the computer USB-C , Micro-USB is used for module firmware upgrade
+10. Connect the board to the computer `ESP-USB` , `Modem-USB` is used for module firmware upgrade
 11. Click (→) to upload firmware
 12. Click (plug symbol) to monitor serial output
 13. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below

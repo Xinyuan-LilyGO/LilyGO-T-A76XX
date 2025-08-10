@@ -37,7 +37,7 @@
 7. Cancel the `;` symbol in front of the line `default_envs = T-SIM7080G-S3-Standard` and use `T-SIM7080G-S3-Standard` as the default environment
 8. Uncomment one of the lines `src_dir = xxxx` to ensure that only one line is valid. For example, to enable `src_dir = examples/ATdebug`, remove the leading `;` symbol and save the file. The ATDebug example will now be compiled.
 9. Click the (✔) symbol in the lower left corner to compile
-10. Connect the board to the computer USB-C , Micro-USB is used for module firmware upgrade
+10. Connect the board to the computer `ESP-USB` , `Modem-USB` is used for module firmware upgrade
 11. Click (→) to upload firmware
 12. Click (plug symbol) to monitor serial output
 13. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
@@ -196,7 +196,6 @@
 | --------------- | -------------------------------- | ---------------------------------------------------------------------- |
 | MODEM STATE     | RED   (Near the modem)           | Startup:ON                                                             |
 | MODEM NET       | RED   (Near the modem)           | Network status indicator                                               |
-| GPS PPS LED     | RED  (Near the modem)            | Starting:ON,Startup completed:OFF,Position fix:Flashes once per second |
 | CHARGE LED      | RED  (Near the battery switch)   | Charging:ON  Charging complete:OFF                                     |
 | CHARGE DONE LED | GREEN  (Near the battery switch) | Charging:OFF  Charging complete:ON                                     |
 
@@ -207,14 +206,14 @@
 
 * [GPS Antenna](../../../../datasheet/GPS%20Antenna%20Specifications.pdf)
 * [LTE Antenna](../../../../datasheet/LTE%20Antenna%20Specifications.pdf)
-* [T-SIM7080G-S3-S3-Standard Schematic](../../../../schematic/standard/T-SIM7080G-S3-Standard_Rev1.0.pdf)
+* [T-SIM7080G-S3-Standard Schematic](../../../../schematic/standard/T-SIM7080G-S3-Standard_Rev1.0.pdf)
 * [SIMCOM official SIM7080G-S3 All Datasheet](https://cn.simcom.com/product/SIM7080G.html)
 * [For SIM7080G-S3 series documentation, please visit the datasheet directory.](../../../../datasheet/SIM7080/)
 
 ### FAQ
 
 * **Upgrade modem firmware**
-  1. [T-SIM7000X Upgrade docs](../../esp32/sim7000-esp32/upgrade/README.md)
+  1. [SIM7080G Upgrade docs](./upgrade/README.MD)
 
 * **Unable to detect SIMCard?**
    1. Need to insert the SIMCard into the board first and then power on to detect the SIM card. If the order is reversed, it will report that the SIMCard cannot be detected.
