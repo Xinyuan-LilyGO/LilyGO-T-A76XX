@@ -14,6 +14,7 @@
 
 #define TINY_GSM_MUX_COUNT 10
 #define TINY_GSM_BUFFER_READ_AND_CHECK_SIZE
+#define TINY_GSM_MODEM_HAS_NETWORK_MODE
 
 #include "TinyGsmBattery.tpp"
 #include "TinyGsmCalling.tpp"
@@ -51,10 +52,23 @@ enum RegStatus {
 };
 
 enum NetworkMode {
-  MODEM_NETWORK_AUTO  = 2,
-  MODEM_NETWORK_GSM   = 13,
-  MODEM_NETWORK_WCDMA = 14,
-  MODEM_NETWORK_LTE   = 38,
+  MODEM_NETWORK_AUTO                     = 2,    
+  MODEM_NETWORK_GSM                      = 13,   
+  MODEM_NETWORK_WCDMA                    = 14,   
+  MODEM_NETWORK_LTE                      = 38,   
+  MODEM_NETWORK_TDSCDMA                  = 59,   
+  MODEM_NETWORK_CDMA                     = 9,    
+  MODEM_NETWORK_EVDO                     = 10,   
+  MODEM_NETWORK_GSM_WCDMA                = 19,   
+  MODEM_NETWORK_CDMA_EVDO                = 22,   
+  MODEM_NETWORK_ANY_BUT_LTE              = 48,   
+  MODEM_NETWORK_GSM_TDSCDMA              = 60,   
+  MODEM_NETWORK_GSM_WCDMA_TDSCDMA        = 63,   
+  MODEM_NETWORK_CDMA_EVDO_GSM_WCDMA_TDSCDMA = 67,
+  MODEM_NETWORK_GSM_WCDMA_LTE            = 39,   
+  MODEM_NETWORK_GSM_LTE                  = 51,   
+  MODEM_NETWORK_WCDMA_LTE                = 54,   
+  MODEM_NETWORK_UNKNOWN                  = 255   
 };
 
 enum SIM7600X_GPSMode {
@@ -244,7 +258,7 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
   }
 
   String getModemNameImpl() {
-    String name = "UNKOWN";
+    String name = "UNKNOWN";
     String res;
 
     sendAT(GF("E0"));  // Echo Off
@@ -359,34 +373,57 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
     return result_type;
   }
 
-  String getNetworkModes() {
-    int16_t mode = getNetworkMode();
-    switch (mode) {
-      case MODEM_NETWORK_AUTO: return "AUTO";
-      case MODEM_NETWORK_GSM: return "GSM";
-      case MODEM_NETWORK_WCDMA: return "WCDMA";
-      case MODEM_NETWORK_LTE: return "LTE";
-      default: break;
-    }
-    return "UNKNOWN";
+  String getNetworkModeString() {
+      int16_t mode = getNetworkMode();
+      switch (mode) {
+          case MODEM_NETWORK_AUTO: 
+              return "AUTO";
+          case MODEM_NETWORK_GSM: 
+              return "GSM Only";
+          case MODEM_NETWORK_WCDMA: 
+              return "WCDMA Only";
+          case MODEM_NETWORK_LTE: 
+              return "LTE Only";
+          case MODEM_NETWORK_TDSCDMA: 
+              return "TDS-CDMA Only";
+          case MODEM_NETWORK_CDMA: 
+              return "CDMA Only";
+          case MODEM_NETWORK_EVDO: 
+              return "EVDO Only";
+          case MODEM_NETWORK_GSM_WCDMA: 
+              return "GSM+WCDMA Only";
+          case MODEM_NETWORK_CDMA_EVDO: 
+              return "CDMA+EVDO Only";
+          case MODEM_NETWORK_ANY_BUT_LTE: 
+              return "Any but LTE";
+          case MODEM_NETWORK_GSM_TDSCDMA: 
+              return "GSM+TDSCDMA Only";
+          case MODEM_NETWORK_GSM_WCDMA_TDSCDMA: 
+              return "GSM+WCDMA+TDSCDMA Only";
+          case MODEM_NETWORK_CDMA_EVDO_GSM_WCDMA_TDSCDMA: 
+              return "CDMA+EVDO+GSM+WCDMA+TDSCDMA Only";
+          case MODEM_NETWORK_GSM_WCDMA_LTE: 
+              return "GSM+WCDMA+LTE Only";
+          case MODEM_NETWORK_GSM_LTE: 
+              return "GSM+LTE Only";
+          case MODEM_NETWORK_WCDMA_LTE: 
+              return "WCDMA+LTE Only";
+          case MODEM_NETWORK_UNKNOWN: 
+              return "UNKNOWN";
+          default: 
+              return "UNKNOWN";
+      }
   }
 
-  int16_t getNetworkMode() {
+  NetworkMode getNetworkMode() {
     sendAT(GF("+CNMP?"));
-    if (waitResponse(GF(GSM_NL "+CNMP:")) != 1) { return -1; }
+    if (waitResponse(GF(GSM_NL "+CNMP:")) != 1) { return MODEM_NETWORK_UNKNOWN; }
     int16_t mode = streamGetIntBefore('\n');
     waitResponse();
-    return mode;
+    return static_cast<NetworkMode>(mode);
   }
 
   bool setNetworkMode(NetworkMode mode) {
-    switch (mode) {
-      case MODEM_NETWORK_AUTO:
-      case MODEM_NETWORK_GSM:
-      case MODEM_NETWORK_WCDMA:
-      case MODEM_NETWORK_LTE: break;
-      default: return false;
-    }
     sendAT(GF("+CNMP="), mode);
     return waitResponse() == 1;
   }

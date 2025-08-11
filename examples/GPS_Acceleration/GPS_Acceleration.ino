@@ -142,15 +142,24 @@ void setup()
         delay(1000);
     }
 
-#ifndef TINY_GSM_MODEM_SIM7670G
-    //SIM7672G Can't set network mode
+#ifdef TINY_GSM_MODEM_HAS_NETWORK_MODE
     if (!modem.setNetworkMode(MODEM_NETWORK_AUTO)) {
         Serial.println("Set network mode failed!");
     }
-    String mode = modem.getNetworkModes();
+    String mode = modem.getNetworkModeString();
     Serial.print("Current network mode : ");
     Serial.println(mode);
 #endif
+
+#ifdef TINY_GSM_MODEM_HAS_PREFERRED_MODE
+    if (!modem.setPreferredMode(MODEM_PREFERRED_CATM_NBIOT)) {
+        Serial.println("Set network preferred failed!");
+    }
+    String prefMode = modem.getPreferredModeString();
+    Serial.print("Current preferred mode : ");
+    Serial.println(prefMode);
+#endif
+
 
 
 #ifdef NETWORK_APN

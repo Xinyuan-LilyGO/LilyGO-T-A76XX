@@ -265,7 +265,7 @@ class TinyGsmSim5360 : public TinyGsmModem<TinyGsmSim5360>,
   }
 
  public:
-  String getNetworkModes() {
+  String getNetworkModeString() {
     sendAT(GF("+CNMP=?"));
     if (waitResponse(GF(GSM_NL "+CNMP:")) != 1) { return ""; }
     String res = stream.readStringUntil('\n');

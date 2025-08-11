@@ -52,6 +52,7 @@ enum NetworkMode {
   MODEM_NETWORK_GSM   = 13,
   MODEM_NETWORK_WCDMA = 14,
   MODEM_NETWORK_LTE   = 38,
+  MODEM_NETWORK_UNKNOWN  = 255,
 };
 
 
@@ -110,7 +111,7 @@ class TinyGsmA76xx : public TinyGsmModem<TinyGsmA76xx<modemType>>,
   }
 
   String getModemNameImpl() {
-    String name = "UNKOWN";
+    String name = "UNKNOWN";
     String res;
 
     thisModem().sendAT(GF("E0"));  // Echo Off
@@ -204,7 +205,7 @@ class TinyGsmA76xx : public TinyGsmModem<TinyGsmA76xx<modemType>>,
   }
 
  public:
-  String getNetworkModes() {
+  String getNetworkModeString() {
     int16_t mode = getNetworkMode();
     switch (mode) {
       case MODEM_NETWORK_AUTO: return "AUTO";
@@ -216,15 +217,15 @@ class TinyGsmA76xx : public TinyGsmModem<TinyGsmA76xx<modemType>>,
     return "UNKNOWN";
   }
 
-  int16_t getNetworkMode() {
+  NetworkMode getNetworkMode() {
     thisModem().sendAT(GF("+CNMP?"));
-    if (thisModem().waitResponse(GF(GSM_NL "+CNMP:")) != 1) { return -1; }
+    if (thisModem().waitResponse(GF(GSM_NL "+CNMP:")) != 1) { return MODEM_NETWORK_UNKNOWN; }
     int16_t mode = thisModem().streamGetIntBefore('\n');
     thisModem().waitResponse();
-    return mode;
+    return static_cast<NetworkMode>(mode);
   }
 
-  bool setNetworkMode(uint8_t mode) {
+  bool setNetworkMode(NetworkMode mode) {
     switch (mode) {
       case MODEM_NETWORK_AUTO:
       case MODEM_NETWORK_GSM:

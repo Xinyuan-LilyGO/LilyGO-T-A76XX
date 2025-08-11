@@ -10,7 +10,7 @@
 #include "TinyGsmCommon.h"
 
 enum ServerSSLVersion {
-    TINYGSM_SSL_AUTO,  // Unkown
+    TINYGSM_SSL_AUTO,  // UNKNOWN
     TINYGSM_SSL_TLS1_0,
     TINYGSM_SSL_TLS1_1,
     TINYGSM_SSL_TLS1_2,

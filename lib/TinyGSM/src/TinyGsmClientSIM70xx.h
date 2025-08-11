@@ -25,6 +25,9 @@
 #include "TinyGsmMqttSIM7xxx.h"
 #include "TinyGsmSSL.tpp"
 
+#define TINY_GSM_MODEM_HAS_NETWORK_MODE
+#define TINY_GSM_MODEM_HAS_PREFERRED_MODE
+
 #define GSM_NL "\r\n"
 static const char GSM_OK[] TINY_GSM_PROGMEM    = "OK" GSM_NL;
 static const char GSM_ERROR[] TINY_GSM_PROGMEM = "ERROR" GSM_NL;
@@ -48,12 +51,14 @@ enum NetworkMode {
   MODEM_NETWORK_GSM     = 13,
   MODEM_NETWORK_LTE     = 38,
   MODEM_NETWORK_GSM_LTE = 51,
+  MODEM_NETWORK_UNKNOWN  = 255,
 };
 
 enum NetworkPreferred {
-  MODEM_NETWORK_CATM       = 1,
-  MODEM_NETWORK_NBIOT      = 2,
-  MODEM_NETWORK_CATM_NBIOT = 3,
+  MODEM_PREFERRED_CATM       = 1,
+  MODEM_PREFERRED_NB_IOT      = 2,
+  MODEM_PREFERRED_CATM_NBIOT = 3,
+  MODEM_PREFERRED_UNKNOWN = 255,
 };
 
 enum GPSWorkMode {
@@ -75,7 +80,7 @@ class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType,model>>,
                        public TinyGsmGPSEx<TinyGsmSim70xx<modemType,model>>,
                        public TinyGsmHttpsSIM7xxx<TinyGsmSim70xx<modemType,model>,model>,
                        public TinyGsmMqttSIM7xxx<TinyGsmSim70xx<modemType,model>>,
-                       public TinyGsmSSL<TinyGsmSim70xx<modemType,model>>{
+                       public TinyGsmSSL<TinyGsmSim70xx<modemType,model>> {
   friend class TinyGsmModem<TinyGsmSim70xx<modemType,model>>;
   friend class TinyGsmGPRS<TinyGsmSim70xx<modemType,model>>;
   friend class TinyGsmSMS<TinyGsmSim70xx<modemType,model>>;
@@ -114,7 +119,7 @@ class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType,model>>,
   }
 
   String getModemNameImpl() {
-    String name = "UNKOWN";
+    String name = "UNKNOWN";
     String res;
 
     thisModem().sendAT(GF("E0"));  // Echo Off
@@ -243,58 +248,61 @@ class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType,model>>,
     return (s == REG_OK_HOME || s == REG_OK_ROAMING);
   }
 
- public:
-  String getNetworkModes() {
-    // Get the help string, not the setting value
-    thisModem().sendAT(GF("+CNMP=?"));
-    if (thisModem().waitResponse(GF(GSM_NL "+CNMP:")) != 1) { return ""; }
-    String res = stream.readStringUntil('\n');
-    thisModem().waitResponse();
-    return res;
-  }
-
-  int16_t getNetworkMode() {
+public:
+  NetworkMode getNetworkMode() {
     thisModem().sendAT(GF("+CNMP?"));
-    if (thisModem().waitResponse(GF(GSM_NL "+CNMP:")) != 1) { return false; }
+    if (thisModem().waitResponse(GF(GSM_NL "+CNMP:")) != 1) { return MODEM_NETWORK_UNKNOWN; }
     int16_t mode = thisModem().streamGetIntBefore('\n');
     thisModem().waitResponse();
-    return mode;
+    return static_cast<NetworkMode>(mode);
   }
 
-  bool setNetworkMode(uint8_t mode) {
-    // 2 Automatic
-    // 13 GSM only
-    // 38 LTE only
-    // 51 GSM and LTE only
+  bool setNetworkMode(NetworkMode mode) {
     thisModem().sendAT(GF("+CNMP="), mode);
     return thisModem().waitResponse() == 1;
   }
 
-  String getPreferredModes() {
-    // Get the help string, not the setting value
-    thisModem().sendAT(GF("+CMNB=?"));
-    if (thisModem().waitResponse(GF(GSM_NL "+CMNB:")) != 1) { return ""; }
-    String res = stream.readStringUntil('\n');
-    thisModem().waitResponse();
-    return res;
-  }
-
-  int16_t getPreferredMode() {
-    thisModem().sendAT(GF("+CMNB?"));
-    if (thisModem().waitResponse(GF(GSM_NL "+CMNB:")) != 1) { return false; }
-    int16_t mode = thisModem().streamGetIntBefore('\n');
-    thisModem().waitResponse();
-    return mode;
-  }
-
-  bool setPreferredMode(uint8_t mode) {
-    // 1 CAT-M
-    // 2 NB-IoT
-    // 3 CAT-M and NB-IoT
+  bool setPreferredMode(NetworkPreferred mode) {
     thisModem().sendAT(GF("+CMNB="), mode);
     return thisModem().waitResponse() == 1;
   }
 
+  NetworkPreferred getPreferredMode() {
+    thisModem().sendAT(GF("+CMNB?"));
+    if (thisModem().waitResponse(GF(GSM_NL "+CMNB:")) != 1) { return MODEM_PREFERRED_UNKNOWN; }
+    int16_t mode = thisModem().streamGetIntBefore('\n');
+    thisModem().waitResponse();
+    return static_cast<NetworkPreferred>(mode);
+  }
+
+  String getNetworkModeString() {
+    NetworkMode mode = getNetworkMode();
+    switch (mode)
+    {
+    case MODEM_NETWORK_AUTO: return "Automatic";
+    case MODEM_NETWORK_GSM: return "GSM";
+    case MODEM_NETWORK_LTE: return "LTE";
+    case MODEM_NETWORK_GSM_LTE: return "GSM and LTE";
+    default:
+      break;
+    }
+    return "UNKNOWN";
+  }
+
+  String getPreferredModeString() {
+    NetworkPreferred mode = getPreferredMode();
+    switch (mode)
+    {
+    case MODEM_PREFERRED_CATM: return "CAT-M";
+    case MODEM_PREFERRED_NB_IOT: return "NB-IOT";
+    case MODEM_PREFERRED_CATM_NBIOT: return "CAT-M and NB-IOT";
+    default:
+      break;
+    }
+    return "UNKNOWN";
+  }
+
+ public:
   bool getNetworkSystemMode(bool& n, int16_t& stat) {
     // n: whether to automatically report the system mode info
     // stat: the current service. 0 if it not connected
