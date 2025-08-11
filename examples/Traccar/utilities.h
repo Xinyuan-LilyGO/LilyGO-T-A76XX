@@ -519,6 +519,16 @@
         #define MODEM_AUDIO_PA_ENABLE_LEVEL         (1)
     #endif
 
+    #ifdef LILYGO_SIM7600X_S3_STAN
+        // Modem model:SIM7600E/A/SA/G
+        #define TINY_GSM_MODEM_SIM7600
+        // MODEM aux power supply
+        #define MODEM_GPS_ENABLE_GPIO               (127)
+        #define MODEM_GPS_ENABLE_LEVEL              (1)
+        #define MODEM_AUDIO_PA_ENABLE_GPIO          (77)
+        #define MODEM_AUDIO_PA_ENABLE_LEVEL         (1)
+    #endif
+
 #elif defined(LILYGO_SIM7080G_S3)
 
     #define SerialAT                    Serial1
@@ -636,6 +646,14 @@
 
     #ifndef TINY_GSM_MODEM_SIM7080
         #define TINY_GSM_MODEM_SIM7080
+    #endif
+
+#elif defined(LILYGO_T_PCIE_SIM7600X)
+
+    #define LILYGO_T_PCIE
+
+    #ifndef TINY_GSM_MODEM_SIM7600
+        #define TINY_GSM_MODEM_SIM7600
     #endif
 
 #elif defined(LILYGO_T_ETH_ELITE_A7670X)
