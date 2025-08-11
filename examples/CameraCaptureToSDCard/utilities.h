@@ -420,7 +420,8 @@
     #define SerialRS485                         Serial2
 
 #elif defined(LILYGO_SIM7000G_S3_STAN) || defined(LILYGO_SIM7080G_S3_STAN) \
-    || defined(LILYGO_SIM7670G_S3_STAN) || defined(LILYGO_A7670X_S3_STAN)
+    || defined(LILYGO_SIM7670G_S3_STAN) || defined(LILYGO_A7670X_S3_STAN)   \
+    || defined(LILYGO_SIM7600X_S3_STAN)
 
     #define MODEM_BAUDRATE                      (115200)
 
