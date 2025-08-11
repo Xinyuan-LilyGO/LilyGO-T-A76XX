@@ -8,6 +8,8 @@
  */
 #define TINY_GSM_RX_BUFFER          1024 // Set RX buffer to 1Kb
 
+// #define MODEM_LOG_CAPTURE  //Used to capture networking information and restart the modem
+
 // See all AT commands, if wanted
 #define DUMP_AT_COMMANDS
 
@@ -88,8 +90,7 @@ void setup()
     }
     Serial.println();
 
-// #define A7670X_LOG_CAPTURE  //Used to capture networking information and restart the modem
-#ifdef A7670X_LOG_CAPTURE
+#ifdef MODEM_LOG_CAPTURE
     Serial.println("Restart modem");
     //Rset modem
     modem.sendAT("+CFUN=6");
@@ -124,9 +125,11 @@ void setup()
         delay(1000);
     }
 
-    // Get model info
+    // Print modem software version
+    String res;
     modem.sendAT("+SIMCOMATI");
-    modem.waitResponse();
+    modem.waitResponse(10000UL, res);
+    Serial.println(res);
     delay(3000);
 
     //SIM7672G Can't set network mode
@@ -141,8 +144,7 @@ void setup()
 
 #ifdef NETWORK_APN
     Serial.printf("Set network apn : %s\n", NETWORK_APN);
-    modem.sendAT(GF("+CGDCONT=1,\"IP\",\""), NETWORK_APN, "\"");
-    if (modem.waitResponse() != 1) {
+    if (!modem.setNetworkAPN(NETWORK_APN)) {
         Serial.println("Set network apn error !");
     }
 #endif

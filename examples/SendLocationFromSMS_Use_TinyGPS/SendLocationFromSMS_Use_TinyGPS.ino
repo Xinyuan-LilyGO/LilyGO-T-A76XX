@@ -166,13 +166,14 @@ void setup()
     }
 
 
+
 #ifdef NETWORK_APN
     Serial.printf("Set network apn : %s\n", NETWORK_APN);
-    modem.sendAT(GF("+CGDCONT=1,\"IP\",\""), NETWORK_APN, "\"");
-    if (modem.waitResponse() != 1) {
+    if (!modem.setNetworkAPN(NETWORK_APN)) {
         Serial.println("Set network apn error !");
     }
 #endif
+
 
     // Check network registration status and network signal status
     int16_t sq ;

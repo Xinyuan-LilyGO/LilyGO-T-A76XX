@@ -139,13 +139,14 @@ void setup()
     }
 
 
+
 #ifdef NETWORK_APN
     Serial.printf("Set network apn : %s\n", NETWORK_APN);
-    modem.sendAT(GF("+CGDCONT=1,\"IP\",\""), NETWORK_APN, "\"");
-    if (modem.waitResponse() != 1) {
+    if (!modem.setNetworkAPN(NETWORK_APN)) {
         Serial.println("Set network apn error !");
     }
 #endif
+
 
     Serial.println("Enabling GPS/GNSS/GLONASS");
     while (!modem.enableGPS(MODEM_GPS_ENABLE_GPIO, MODEM_GPS_ENABLE_LEVEL)) {
