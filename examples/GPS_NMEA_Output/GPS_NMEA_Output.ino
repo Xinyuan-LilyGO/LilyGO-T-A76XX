@@ -80,7 +80,7 @@ void setup()
     int retry = 0;
     while (!modem.testAT(1000)) {
         Serial.println(".");
-        if (retry++ > 10) {
+        if (retry++ > 30) {
             digitalWrite(BOARD_PWRKEY_PIN, LOW);
             delay(100);
             digitalWrite(BOARD_PWRKEY_PIN, HIGH);
