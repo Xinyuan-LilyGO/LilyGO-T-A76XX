@@ -38,7 +38,7 @@ TinyGsm modem(SerialAT);
 // APNs from other operators are welcome to submit PRs for filling.
 // #define NETWORK_APN     "CHN-CT"             //CHN-CT: China Telecom
 
-String modemName = "UNKOWN";
+String modemName = "UNKNOWN";
 const char *client_id = "yout tarrcar device id";
 const char *request_url = "https://your_tarrcar_server.com";
 const char *post_format = "deviceid=%s&lat=%.7f&lon=%.7f&speed=%.2f&altitude=%.2f&batt=%u";
@@ -264,21 +264,27 @@ void setup()
 
     while (1) {
         modemName = modem.getModemName();
-        if (modemName == "UNKOWN") {
+        if (modemName == "UNKNOWN") {
             Serial.println("Unable to obtain module information normally, try again");
-            light_sleep_delay(1000);
-        } else if (modemName.startsWith("A7670G")) {
+            delay(1000);
+        } else if (modemName.startsWith("A7670E-FASE") || modemName.startsWith("A7670SA-FASE")) {
+            Serial.println("Modem support built-in GPS function, keep running");
+        } else if (modemName.startsWith("A7670E-LNXY-UBL")
+                   || modemName.startsWith("A7670SA-LASE")
+                   || modemName.startsWith("A7670SA-LASC")
+                   ||  modemName.startsWith("A7670G-LLSE")
+                   ||  modemName.startsWith("A7670G-LABE")
+                   ||  modemName.startsWith("A7670E-LASE ")) {
             while (1) {
-                Serial.println("A7670G does not support built-in GPS function, please "
-                               "run examples/GPSShield");
-                light_sleep_delay(1000);
+                Serial.println("The modem does not have built-in GPS function.");
+                delay(1000);
             }
         } else {
             Serial.print("Model Name:");
             Serial.println(modemName);
             break;
         }
-        light_sleep_delay(5000);
+        delay(5000);
     }
 
     // Check if SIM card is online

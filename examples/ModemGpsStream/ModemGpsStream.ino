@@ -190,23 +190,31 @@ void setup()
         digitalWrite(BOARD_PWRKEY_PIN, LOW);
         delay(100);
         digitalWrite(BOARD_PWRKEY_PIN, HIGH);
-        delay(1000);    //Ton = 1000ms ,Min = 500ms, Max 2000ms
+        delay(MODEM_POWERON_PULSE_WIDTH_MS); 
         digitalWrite(BOARD_PWRKEY_PIN, LOW);
     }
     Serial.println();
 
     delay(2000);
 
-    String modemName = "UNKOWN";
+    String modemName = "UNKNOWN";
     while (1) {
         modemName = modem.getModemName();
-        if (modemName == "UNKOWN") {
+        if (modemName == "UNKNOWN") {
             Serial.println("Unable to obtain module information normally, try again");
             delay(1000);
-        } else if (modemName.startsWith("A7670G")) {
-            Serial.println("A7670G does not support built-in GPS function, try to access external GPS module");
-            external_gps_module = true;
-            break;
+        } else if (modemName.startsWith("A7670E-FASE") || modemName.startsWith("A7670SA-FASE")) {
+            Serial.println("Modem support built-in GPS function, keep running");
+        } else if (modemName.startsWith("A7670E-LNXY-UBL")
+                   || modemName.startsWith("A7670SA-LASE")
+                   || modemName.startsWith("A7670SA-LASC")
+                   ||  modemName.startsWith("A7670G-LLSE")
+                   ||  modemName.startsWith("A7670G-LABE")
+                   ||  modemName.startsWith("A7670E-LASE ")) {
+            while (1) {
+                Serial.println("The modem does not have built-in GPS function.");
+                delay(1000);
+            }
         } else {
             Serial.print("Model Name:");
             Serial.println(modemName);

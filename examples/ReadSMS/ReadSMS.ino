@@ -94,15 +94,22 @@ void setup()
         delay(10);
     }
 
-    String modemName = "UNKOWN";
+    String modemName = "UNKNOWN";
     while (1) {
         modemName = modem.getModemName();
-        if (modemName == "UNKOWN") {
+        if (modemName == "UNKNOWN") {
             Serial.println("Unable to obtain module information normally, try again");
             delay(1000);
-        } else if (modemName.startsWith("SIM7670")) {
+        } else if (modemName.startsWith("A7670E-FASE") || modemName.startsWith("A7670SA-FASE")) {
+            Serial.println("Modem support built-in GPS function, keep running");
+        } else if (modemName.startsWith("A7670E-LNXY-UBL")
+                   || modemName.startsWith("A7670SA-LASE")
+                   || modemName.startsWith("A7670SA-LASC")
+                   ||  modemName.startsWith("A7670G-LLSE")
+                   ||  modemName.startsWith("A7670G-LABE")
+                   ||  modemName.startsWith("A7670E-LASE ")) {
             while (1) {
-                Serial.println("SIM7670 does not support SMS Function");
+                Serial.println("The modem does not have built-in GPS function.");
                 delay(1000);
             }
         } else {
