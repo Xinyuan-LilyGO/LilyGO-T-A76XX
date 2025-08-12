@@ -90,6 +90,27 @@ enum SIM7600X_GPSMode {
     GNSS_MODE_ALL = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) // 0b1111 ，GPS + all other supported systems
 };
 
+enum NMEA_Sentences {
+    NMEA_GPGGA   = _BV(0),    // Bit 0: GPGGA (global positioning system fix data)
+    NMEA_GPRMC   = _BV(1),    // Bit 1: GPRMC (recommended minimum specific GPS/TRANSIT data)
+    NMEA_GPGSV   = _BV(2),    // Bit 2: GPGSV (GPS satellites in view)
+    NMEA_GPGSA   = _BV(3),    // Bit 3: GPGSA (GPS DOP and active satellites)
+    NMEA_GPVTG   = _BV(4),    // Bit 4: GPVTG (track made good and ground speed)
+    NMEA_PQXFI   = _BV(5),    // Bit 5: PQXFI (Global Positioning System Extended Fix Data)
+    NMEA_GLGSV   = _BV(6),    // Bit 6: GLGSV (GLONASS satellites in view GLONASS fixes only)
+    NMEA_GNGSA   = _BV(7),    // Bit 7: GNGSA (1. GPS/2. Glonass/3. GALILE DOP and Active Satellites)
+    NMEA_GNGNS   = _BV(8),    // Bit 8: GNGNS (fix data for GNSS receivers;output for GPS,GLONASS,GALILEO)
+    // Bit 9: reserve
+    NMEA_GAGSV   = _BV(10),   // Bit 10: GAGSV (GALILEO satellites in view)
+    // Bit 11: reserve
+    // Bit 12: reserve
+    // Bit 13: reserve
+    // Bit 14: reserve
+    // Bit 15: reserve
+    NMEA_BDGSA_PQGSA = _BV(16),  // Bit 16: BDGSA/PQGSA (BEIDOU/QZSS DOP and active satellites)
+    NMEA_BDGSV_PQGSV = _BV(17)   // Bit 17: BDGSV/PQGSV (BEIDOUQZSS satellites in view)
+};
+
 class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
                        public TinyGsmGPRS<TinyGsmSim7600>,
                        public TinyGsmTCP<TinyGsmSim7600, TINY_GSM_MUX_COUNT>,
@@ -897,16 +918,9 @@ class TinyGsmSim7600 : public TinyGsmModem<TinyGsmSim7600>,
     return waitResponse(1000UL) == 1;
   }
 
-  bool configNMEASentenceImpl(bool CGA, bool GLL, bool GSA, bool GSV, bool RMC, bool VTG,
-                              bool ZDA, bool ANT) {
-    (void)GLL;
-    uint32_t mask = CGA ? _BV(0) : 0;
-    mask |= GSA ? _BV(7) : 0;
-    mask |= GSV ? _BV(6) : 0;
-    mask |= RMC ? _BV(1) : 0;
-    mask |= VTG ? _BV(4) : 0;
-    sendAT("+CGPSNMEA=", mask);
-    return waitResponse(1000UL) == 1;
+  bool configNMEASentenceImpl(uint32_t nmea_mask) {
+    sendAT("+CGPSNMEA=",nmea_mask);
+    return waitResponse(1000L) == 1;
   }
   /*
    * Time functions

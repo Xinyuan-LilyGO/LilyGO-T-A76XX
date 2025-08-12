@@ -72,8 +72,8 @@ class TinyGsmGPS {
     return thisModem().disableNMEAImpl();
   }
 
-  bool configNMEASentence(bool CGA,bool GLL,bool GSA,bool GSV,bool RMC,bool VTG = 0,bool ZDA = 0,bool ANT = 0){
-    return thisModem().configNMEASentenceImpl( CGA, GLL, GSA, GSV, RMC, VTG, ZDA, ANT);
+  bool configNMEASentence(uint32_t nmea_mask){
+    return thisModem().configNMEASentenceImpl(nmea_mask);
   }
   /*
    * CRTP Helper
@@ -105,7 +105,7 @@ class TinyGsmGPS {
   bool    setGPSOutputRateImpl(uint8_t rate_hz)TINY_GSM_ATTR_NOT_IMPLEMENTED;
   bool    enableNMEAImpl(bool outputAtPort = true)TINY_GSM_ATTR_NOT_IMPLEMENTED;
   bool    disableNMEAImpl()TINY_GSM_ATTR_NOT_IMPLEMENTED;
-  bool    configNMEASentenceImpl()TINY_GSM_ATTR_NOT_IMPLEMENTED;
+  bool    configNMEASentenceImpl(uint32_t nmea_mask)TINY_GSM_ATTR_NOT_IMPLEMENTED;
 };
 
 

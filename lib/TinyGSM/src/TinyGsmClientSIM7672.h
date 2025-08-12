@@ -61,6 +61,18 @@ enum SIM7670G_GPSMode {
   GNSS_MODE_GPS_GLONASS_GALILEO_BDS = 15       //  GPS + GLONASS + GALILEO + BDS
 };
 
+enum NMEA_Sentences {
+    NMEA_GPGGA   = _BV(0),    // Bit 0: GPGGA (global positioning system fix data)
+    NMEA_GPGLL   = _BV(1),    // Bit 1: GPGLL (The latitude and longitude of the ship's current position, positioning time and status)
+    NMEA_GPGSA   = _BV(2),    // Bit 2: GPGSA (GPS DOP and active satellites)
+    NMEA_GPGSV   = _BV(3),    // Bit 3: GPGSV (GPS satellites in view)
+    NMEA_GPRMC   = _BV(4),    // Bit 4: GPRMC (recommended minimum specific GPS/TRANSIT data)
+    NMEA_GPVTG   = _BV(5),    // Bit 5: GPVTG (track made good and ground speed)
+    NMEA_ZDA   = _BV(6),      // Bit 6: https://receiverhelp.trimble.com/alloy-gnss/en-us/NMEA-0183messages_ZDA.html
+    NMEA_GRS   = _BV(7),      // Bit 7: https://receiverhelp.trimble.com/alloy-gnss/en-us/nmea0183-messages-grs.html?Highlight=GRS
+    NMEA_GST   = _BV(8),      // Bit 8: https://receiverhelp.trimble.com/alloy-gnss/en-us/nmea0183-messages-gst.html?Highlight=GST
+    NMEA_GNS   = _BV(9),      // Bit 9: https://receiverhelp.trimble.com/alloy-gnss/en-us/nmea0183-messages-gns.html?Highlight=gns
+};
 
 class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
                        public TinyGsmGPRS<TinyGsmSim7672>,
@@ -802,7 +814,7 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
   }
 
   bool setGPSOutputRateImpl(uint8_t rate_hz){
-      sendAT("+CGPSNMEARATE=",rate_hz);
+      sendAT("+CGNSSNMEARATE=",rate_hz);
       return waitResponse(1000L) == 1;
   }
 
@@ -826,11 +838,19 @@ class TinyGsmSim7672 : public TinyGsmModem<TinyGsmSim7672>,
       return waitResponse(1000L) == 1;
   }
 
-  bool configNMEASentenceImpl(bool CGA,bool GLL,bool GSA,bool GSV,bool RMC,bool VTG,bool ZDA,bool ANT){
-      char buffer[32];
-      snprintf(buffer,32,"%u,%u,%u,%u,%u,%u,%u,0", CGA, GLL, GSA, GSV, RMC, VTG, ZDA);
-      sendAT("+CGNSSNMEA=",buffer);
-      return waitResponse(1000L) == 1;
+  bool configNMEASentenceImpl(uint32_t nmea_mask){
+    sendAT("+CGNSSNMEA=", 
+      nmea_mask & NMEA_GPGGA ? "1": "0", "," ,
+      nmea_mask & NMEA_GPGLL ? "1": "0", "," ,
+      nmea_mask & NMEA_GPGSA ? "1": "0", "," ,
+      nmea_mask & NMEA_GPGSV ? "1": "0", "," ,
+      nmea_mask & NMEA_GPRMC ? "1": "0", "," ,
+      nmea_mask & NMEA_GPVTG ? "1": "0", "," ,
+      nmea_mask & NMEA_ZDA   ? "1": "0", "," ,
+      nmea_mask & NMEA_GRS   ? "1": "0", "," ,
+      nmea_mask & NMEA_GST   ? "1": "0", "," ,
+      nmea_mask & NMEA_GNS   ? "1": "0");
+    return waitResponse(1000L) == 1;
   }
   /*
    * Time functions

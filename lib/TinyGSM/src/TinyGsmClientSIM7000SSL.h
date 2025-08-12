@@ -18,6 +18,27 @@
 #include "TinyGsmClientSIM70xx.h"
 #include "TinyGsmTCP.tpp"
 
+enum NMEA_Sentences {
+    NMEA_GPGGA   = _BV(0),    // Bit 0: GPGGA (global positioning system fix data)
+    NMEA_GPRMC   = _BV(1),    // Bit 1: GPRMC (recommended minimum specific GPS/TRANSIT data)
+    NMEA_GPGSV   = _BV(2),    // Bit 2: GPGSV (GPS satellites in view)
+    NMEA_GPGSA   = _BV(3),    // Bit 3: GPGSA (GPS DOP and active satellites)
+    NMEA_GPVTG   = _BV(4),    // Bit 4: GPVTG (track made good and ground speed)
+    NMEA_PQXFI   = _BV(5),    // Bit 5: PQXFI (Global Positioning System Extended Fix Data)
+    NMEA_GLGSV   = _BV(6),    // Bit 6: GLGSV (GLONASS satellites in view GLONASS fixes only)
+    NMEA_GNGSA   = _BV(7),    // Bit 7: GNGSA (1. GPS/2. Glonass/3. GALILE DOP and Active Satellites)
+    NMEA_GNGNS   = _BV(8),    // Bit 8: GNGNS (fix data for GNSS receivers;output for GPS,GLONASS,GALILEO)
+    // Bit 9: reserve
+    NMEA_GAGSV   = _BV(10),   // Bit 10: GAGSV (GALILEO satellites in view)
+    // Bit 11: reserve
+    // Bit 12: reserve
+    // Bit 13: reserve
+    // Bit 14: reserve
+    // Bit 15: reserve
+    NMEA_BDGSA_PQGSA = _BV(16),  // Bit 16: BDGSA/PQGSA (BEIDOU/QZSS DOP and active satellites)
+    NMEA_BDGSV_PQGSV = _BV(17)   // Bit 17: BDGSV/PQGSV (BEIDOUQZSS satellites in view)
+};
+
 class TinyGsmSim7000SSL : public TinyGsmSim70xx<TinyGsmSim7000SSL,QUALCOMM_SIM7000G>,
                           public TinyGsmTCP<TinyGsmSim7000SSL, TINY_GSM_MUX_COUNT> {
   friend class TinyGsmSim70xx<TinyGsmSim7000SSL,QUALCOMM_SIM7000G>;

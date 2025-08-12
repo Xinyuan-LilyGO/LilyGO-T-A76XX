@@ -19,6 +19,22 @@
 #include "TinyGsmTCP.tpp"
 #include "TinyGsmSSL.tpp"
 
+enum NMEA_Sentences {
+  NMEA_GPGSV   = _BV(0),    // Bit 0: GPGSV (GPS satellites in view)
+  NMEA_GLGSV   = _BV(1),    // Bit 1: GLGSV (GLONASS satellites in view GLONASS fixes only)
+  NMEA_GAGSV   = _BV(2),    // Bit 2: GAGSV (GALILEO satellites in view)
+  NMEA_BDGSV_QZGSV   = _BV(3),    // Bit 3: BEIDOU/QZSS satellites in view
+  NMEA_GPGSA_GLGSA_GAGSA_BDGSA_QZGSA = _BV(4), // Bit 4: 1. GPS/2. GLONASS/3. GALILE/4. BEIDOU/5. QZSS
+  NMEA_GNVTG_GPVTG   = _BV(5),    // Bit 5: track made good and ground speed
+  NMEA_GNRMC_GPRMC   = _BV(6),    // Bit 6: recommended minimum specific GPS/TRANSIT data
+  NMEA_GNGGA_GPGGA   = _BV(7),    // Bit 7: global positioning system fix data
+};
+
+// Redefine to support parameters of the same type
+#define NMEA_GPGGA NMEA_GNGGA_GPGGA
+#define NMEA_GPGSA NMEA_GPGSA_GLGSA_GAGSA_BDGSA_QZGSA
+#define NMEA_GPRMC NMEA_GNRMC_GPRMC
+
 class TinyGsmSim7080 : public TinyGsmSim70xx<TinyGsmSim7080,QUALCOMM_SIM7080G>,
                        public TinyGsmTCP<TinyGsmSim7080, TINY_GSM_MUX_COUNT>,
                        public TinyGsmSSL<TinyGsmSim7080> {

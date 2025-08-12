@@ -62,11 +62,17 @@ enum NetworkPreferred {
 };
 
 enum GPSWorkMode {
-  GNSS_USE_GLONASS  = _BV(0),
-  GNSS_USE_BEIDOU   = _BV(1),
-  GNSS_USE_GALILEAN = _BV(2),
+  GNSS_MODE_GLONASS  = _BV(0),
+  GNSS_MODE_BDS   = _BV(1),
+  GNSS_MODE_GALILEAN = _BV(2),
+  GNSS_MODE_ALL = 0xF
 };
 
+enum GNSS_OutputPort{
+  NMEA_OUTPUT_DISABLE = 0,
+  NMEA_TO_USB_NMEA_PORT = 1,
+  NMEA_TO_UART3_PORT = 2,
+};
 
 template <class modemType,ModemPlatform model>
 class TinyGsmSim70xx : public TinyGsmModem<TinyGsmSim70xx<modemType,model>>,
@@ -539,20 +545,31 @@ public:
   }
 
   bool setGPSBaudImpl(uint32_t baud) {
-    DBG("SIM70XX does not support set GPS baudrate.");
-    return false;
+    thisModem().sendAT("+CGNSUTIPR=",baud);
+    return thisModem().waitResponse(1000UL) == 1;
   }
 
   bool setGPSModeImpl(uint8_t mode) {
-    thisModem().sendAT("+CGNSMOD=1,", (mode & GNSS_USE_GLONASS) ? "1" : "0", ',',
-                       (mode & GNSS_USE_BEIDOU) ? "1" : "0", ',',
-                       (mode & GNSS_USE_GALILEAN) ? "1" : "0");
+    thisModem().sendAT("+CGNSMOD=1,", 
+                        (mode & GNSS_MODE_GLONASS)  ? "1" : "0", ',',
+                        (mode & GNSS_MODE_BDS)   ? "1" : "0", ',',
+                        (mode & GNSS_MODE_GALILEAN) ? "1" : "0");
     return waitResponse(1000L) == 1;
   }
 
   bool setGPSOutputRateImpl(uint8_t rate_hz) {
-    DBG("Modem does not support set GPS output rate.");
-    return false;
+    if (rate_hz <= 0) {
+        return false; 
+    }
+    double periodMs = 1000.0 / rate_hz;
+    int roundedMs = (int)round(periodMs);
+    if (roundedMs < 50) {
+        periodMs = 50;
+    } else if (roundedMs > 1000) {
+        periodMs = 1000;
+    } 
+    thisModem().sendAT("+CGNSRTMS=",periodMs);
+    return thisModem().waitResponse(1000UL) == 1;
   }
 
   bool enableNMEAImpl(bool outputAtPort) {
@@ -580,8 +597,13 @@ public:
     return thisModem().waitResponse(1000L) == 1;
   }
 
-  bool configNMEASentenceImpl(bool CGA,bool GLL,bool GSA,bool GSV,bool RMC,bool VTG,bool ZDA,bool ANT){
-    return false;
+  bool configNMEASentenceImpl(uint32_t nmea_mask){
+    if(model == QUALCOMM_SIM7080G){
+      thisModem().sendAT("+SGNSCFG=\"NMEATYPE\",",nmea_mask);
+    }else{
+      thisModem().sendAT("+CGNSNMEA=",nmea_mask);
+    }
+    return thisModem().waitResponse(1000L) == 1;
   }
 
   // get the RAW GPS output
@@ -753,7 +775,23 @@ public:
     thisModem().waitResponse();
     return false;
   }
+public:
 
+  bool configGNSS_OutputPort(GNSS_OutputPort port) {
+    thisModem().sendAT("+CGNSPWR=1");
+    if(thisModem().waitResponse() != 1){
+      return false;
+    }
+    if(model == QUALCOMM_SIM7080G){
+      thisModem().sendAT("+SGNSCFG=\"NMEAOUTPORT\",",port);
+    }else{
+      thisModem().sendAT("+CGNSCFG=",port);
+    }
+    if (thisModem().waitResponse() != 1) {
+       return false; 
+    }
+    return true;
+  }
   /*
    * Time functions
    */
