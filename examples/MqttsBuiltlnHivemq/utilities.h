@@ -110,6 +110,8 @@
     #define SIMSHIELD_SCL                       (22)
     #define SerialRS485                         Serial2
 
+    #define PRODUCT_MODEL_NAME                  "LilyGo-A7670 ESP32 Version"
+
 #elif defined(LILYGO_T_CALL_A7670_V1_0)
     #define MODEM_BAUDRATE                      (115200)
     #define MODEM_DTR_PIN                       (14)
@@ -133,6 +135,8 @@
         #define TINY_GSM_MODEM_A7670
     #endif
 
+    #define PRODUCT_MODEL_NAME                  "LilyGo-T-Call A7670 V1.0"
+
 #elif defined(LILYGO_T_CALL_A7670_V1_1)
 
     #define MODEM_BAUDRATE                      (115200)
@@ -155,6 +159,8 @@
     #ifndef TINY_GSM_MODEM_A7670
         #define TINY_GSM_MODEM_A7670
     #endif
+
+    #define PRODUCT_MODEL_NAME                  "LilyGo-T-Call A7670 V1.1"
 
 #elif defined(LILYGO_T_SIM7670G_S3)
     #define MODEM_BAUDRATE                      (115200)
@@ -200,6 +206,8 @@
     #define SIMSHIELD_SDA                       (2)
     #define SIMSHIELD_SCL                       (1)
     #define SerialRS485                         Serial2
+
+    #define PRODUCT_MODEL_NAME                  "LilyGo-SIM7670G-S3"
 
 #elif defined(LILYGO_T_A7608X)
 
@@ -251,6 +259,8 @@
     #define SIMSHIELD_SCL                       (22)
     #define SerialRS485                         Serial2
 
+    #define PRODUCT_MODEL_NAME                  "LilyGo-A7608X ESP32 Version"
+
 #elif defined(LILYGO_T_A7608X_S3)
 
     #define MODEM_BAUDRATE                      (115200)
@@ -297,6 +307,8 @@
     #define SIMSHIELD_SCL                       (1)
     #define SerialRS485                         Serial2
 
+    #define PRODUCT_MODEL_NAME                  "LilyGo-A7608X-S3"
+
 #elif defined(LILYGO_T_A7608X_DC_S3)
 
     #define MODEM_DTR_PIN                       (5)
@@ -320,6 +332,7 @@
     #define MODEM_GPS_ENABLE_GPIO               (127)
     #define MODEM_GPS_ENABLE_LEVEL              (1)
 
+    #define PRODUCT_MODEL_NAME                  "LilyGo-A7608X-DC-S3"
 
 #elif defined(LILYGO_SIM7000G)
 
@@ -365,6 +378,8 @@
     #define SIMSHIELD_SDA                       (21)
     #define SIMSHIELD_SCL                       (22)
     #define SerialRS485                         Serial2
+
+    #define PRODUCT_MODEL_NAME                  "LilyGo-SIM7000G ESP32 Version"
 
 #elif defined(LILYGO_SIM7600X)
 
@@ -418,6 +433,8 @@
     #define SIMSHIELD_SDA                       (21)
     #define SIMSHIELD_SCL                       (22)
     #define SerialRS485                         Serial2
+
+    #define PRODUCT_MODEL_NAME                  "LilyGo-SIM7600X ESP32 Version"
 
 #elif defined(LILYGO_SIM7000G_S3_STAN) || defined(LILYGO_SIM7080G_S3_STAN) \
     || defined(LILYGO_SIM7670G_S3_STAN) || defined(LILYGO_A7670X_S3_STAN)   \
@@ -492,6 +509,8 @@
         // GPS antenna power control GPIO, this GPIO is the modem GPIO
         #define MODEM_GPS_ENABLE_GPIO               (48)
         #define MODEM_GPS_ENABLE_LEVEL              (1)
+
+        #define PRODUCT_MODEL_NAME                  "LilyGo-SIM7000G-S3-Standard"
     #endif
 
     #ifdef LILYGO_SIM7080G_S3_STAN
@@ -500,6 +519,8 @@
         // GPS antenna power control GPIO, this GPIO is the modem GPIO
         #define MODEM_GPS_ENABLE_GPIO               (5)
         #define MODEM_GPS_ENABLE_LEVEL              (1)
+
+        #define PRODUCT_MODEL_NAME                  "LilyGo-SIM7080G-S3-Standard"
     #endif
 
     #ifdef LILYGO_SIM7670G_S3_STAN
@@ -508,6 +529,7 @@
         // GPS antenna power control GPIO, this GPIO is the modem GPIO
         #define MODEM_GPS_ENABLE_GPIO               (1)
         #define MODEM_GPS_ENABLE_LEVEL              (1)
+        #define PRODUCT_MODEL_NAME                  "LilyGo-SIM7670G-S3-Standard"
     #endif
 
     #ifdef LILYGO_A7670X_S3_STAN
@@ -518,6 +540,7 @@
         #define MODEM_GPS_ENABLE_LEVEL              (1)
         #define MODEM_AUDIO_PA_ENABLE_GPIO          (3)
         #define MODEM_AUDIO_PA_ENABLE_LEVEL         (1)
+        #define PRODUCT_MODEL_NAME                  "LilyGo-A7670X-S3-Standard"
     #endif
 
     #ifdef LILYGO_SIM7600X_S3_STAN
@@ -528,6 +551,7 @@
         #define MODEM_GPS_ENABLE_LEVEL              (1)
         #define MODEM_AUDIO_PA_ENABLE_GPIO          (77)
         #define MODEM_AUDIO_PA_ENABLE_LEVEL         (1)
+        #define PRODUCT_MODEL_NAME                  "LilyGo-SIM7600X-S3-Standard"
     #endif
 
 #elif defined(LILYGO_SIM7080G_S3)
@@ -591,6 +615,8 @@
     #define SIMSHIELD_SCL                       (43)
     #define SerialRS485                         Serial2
 
+    #define PRODUCT_MODEL_NAME                  "LilyGo-T-SIM7080G-S3-PMU"
+
 #elif defined(LILYGO_T_RELAY_S3_SIMSHIELD)
 
     #ifndef TINY_GSM_MODEM_A7670
@@ -604,7 +630,8 @@
     #define MODEM_RING_PIN                      13
 
     #define SerialAT                            Serial1
-    
+    #define PRODUCT_MODEL_NAME                  "LilyGo-T-RelayShield"
+
 #elif defined(LILYGO_T_PCIE_A767X)
 
     #define MODEM_DTR_PIN                       (32)
@@ -628,6 +655,7 @@
     // 127 is defined in GSM as the AUXVDD index
     #define MODEM_GPS_ENABLE_GPIO               (4)
     #define MODEM_GPS_ENABLE_LEVEL              (0)
+    #define PRODUCT_MODEL_NAME                  "LilyGo-T-PCIE-A7670X"
 
 #elif defined(LILYGO_T_PCIE_SIM7000G)
 
@@ -641,6 +669,8 @@
     #define MODEM_GPS_ENABLE_GPIO               (48)
     #define MODEM_GPS_ENABLE_LEVEL              (1)
     
+    #define PRODUCT_MODEL_NAME                  "LilyGo-T-PCIE-SIM7000G"
+
 #elif defined(LILYGO_T_PCIE_SIM7080G)
 
     #define LILYGO_T_PCIE
@@ -649,6 +679,8 @@
         #define TINY_GSM_MODEM_SIM7080
     #endif
 
+    #define PRODUCT_MODEL_NAME                  "LilyGo-T-PCIE-SIM7080G"
+
 #elif defined(LILYGO_T_PCIE_SIM7600X)
 
     #define LILYGO_T_PCIE
@@ -656,6 +688,8 @@
     #ifndef TINY_GSM_MODEM_SIM7600
         #define TINY_GSM_MODEM_SIM7600
     #endif
+
+    #define PRODUCT_MODEL_NAME                  "LilyGo-T-PCIE-SIM7600X"
 
 #elif defined(LILYGO_T_ETH_ELITE_A7670X)
 
@@ -666,6 +700,7 @@
     #endif
 
 
+    #define PRODUCT_MODEL_NAME                  "LilyGo-T-ETH-Elite-A7670X"
 
 #else
     #error "Use ArduinoIDE, please open the macro definition corresponding to the board above <utilities.h>"
