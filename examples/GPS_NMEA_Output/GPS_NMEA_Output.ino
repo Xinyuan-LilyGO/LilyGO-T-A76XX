@@ -84,7 +84,7 @@ void setup()
             digitalWrite(BOARD_PWRKEY_PIN, LOW);
             delay(100);
             digitalWrite(BOARD_PWRKEY_PIN, HIGH);
-            delay(MODEM_POWERON_PULSE_WIDTH_MS); 
+            delay(MODEM_POWERON_PULSE_WIDTH_MS);
             digitalWrite(BOARD_PWRKEY_PIN, LOW);
             retry = 0;
         }
@@ -140,9 +140,11 @@ void setup()
     modem.setGPSMode(GNSS_MODE_GPS_GLONASS_BDS);
 #elif defined(TINY_GSM_MODEM_SIM7600)
     modem.setGPSMode(GNSS_MODE_ALL);
+#elif defined(TINY_GSM_MODEM_SIM7000SSL) || defined(TINY_GSM_MODEM_SIM7000)
+    modem.setGPSMode(GNSS_MODE_ALL);
 #endif
 
-    modem.configNMEASentence(1, 1, 1, 1, 1, 1);
+    modem.configNMEASentence(NMEA_GPGGA | NMEA_GPGSA | NMEA_GPGSV | NMEA_GPRMC);
 
     modem.setGPSOutputRate(1);
 
@@ -180,9 +182,9 @@ AT+SIMCOMATI
 Manufacturer: SIMCOM INCORPORATED
 Model: SIMCOM_SIM7600G-H
 Revision: LE20B04SIM7600G22
-QCN: 
+QCN:
 IMEI: xxxxxxxxxxxx
-MEID: 
+MEID:
 +GCAP: +CGSM
 DeviceInfo: 173,170
 */

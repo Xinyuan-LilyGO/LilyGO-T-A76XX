@@ -12,9 +12,6 @@
  */
 #include "utilities.h"
 
-#if !defined(LILYGO_SIM7670G_S3_STAN) && !defined(LILYGO_A7670X_S3_STAN)
-#error "This sketch is only applicable to the T-A7670X-S3-Standard,T-SIM7670G-S3-Standard"
-#endif
 
 #define TINY_GSM_RX_BUFFER 1024 // Set RX buffer to 1Kb
 #define SerialAT Serial1
@@ -190,7 +187,7 @@ void setup()
         digitalWrite(BOARD_PWRKEY_PIN, LOW);
         delay(100);
         digitalWrite(BOARD_PWRKEY_PIN, HIGH);
-        delay(MODEM_POWERON_PULSE_WIDTH_MS); 
+        delay(MODEM_POWERON_PULSE_WIDTH_MS);
         digitalWrite(BOARD_PWRKEY_PIN, LOW);
     }
     Serial.println();
@@ -246,6 +243,23 @@ void setup()
         // If you have a GPS backup battery connected, you can try a hot start.
         modem.gpsHotStart();
 
+#if defined(TINY_GSM_MODEM_A7670) || defined(TINY_GSM_MODEM_A7608)
+        modem.setGPSMode(GNSS_MODE_GPS_BDS_GALILEO_SBAS_QZSS);
+#elif defined(TINY_GSM_MODEM_SIM7670G)
+        modem.setGPSMode(GNSS_MODE_GPS_GLONASS_BDS);
+#elif defined(TINY_GSM_MODEM_SIM7600)
+        modem.setGPSMode(GNSS_MODE_ALL);
+#elif defined(TINY_GSM_MODEM_SIM7000SSL) || defined(TINY_GSM_MODEM_SIM7000)
+        modem.setGPSMode(GNSS_MODE_ALL);
+#endif
+
+#if defined(TINY_GSM_MODEM_SIM7000SSL) || defined(TINY_GSM_MODEM_SIM7000)
+        // Redirect SIM70XX modem GPS NMEA to UART for ESP processing
+        modem.configGNSS_OutputPort(NMEA_TO_UART3_PORT);
+#endif
+
+        modem.configNMEASentence(NMEA_GPGGA | NMEA_GPGSA | NMEA_GPGSV | NMEA_GPRMC);
+
         // Modem gps baudrate is 115200
         SerialGPS.begin(115200, SERIAL_8N1, MODEM_GPS_TX_PIN, MODEM_GPS_RX_PIN);
     } else {
@@ -264,6 +278,7 @@ void setup()
 
     Serial.println("Next you should see NMEA sentences in the serial monitor");
 
+    // PPS is only for SIM7670G/A7670X series. SIM7000G/SIM7080G/SIM7600X does not have PPS.
     // Register the PPS pin as an interrupt and test the PPS signal
     pinMode(MODEM_GPS_PPS_PIN, INPUT);
     attachInterrupt(MODEM_GPS_PPS_PIN, []() {
