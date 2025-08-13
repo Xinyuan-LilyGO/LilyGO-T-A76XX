@@ -147,6 +147,9 @@
 | Over-Discharge Current  | 4.6A     |
 | Short-Circuit Current   | 2 × 4.6A |
 
+> \[!IMPORTANT]
+> When you first connect the battery, the toggle switch will not start the device. You need to connect the USB to activate the BMS. This operation only needs to be done once as long as the battery is not disconnected. If the BMS is in over-voltage/over-current/over-discharge, or if you toggle the switch or reconnect the battery, you need to reconnect the USB-C (ESP-USB) to activate the BMS.
+
 ### Connector
 
 | Button                     | Function                      | Location |
