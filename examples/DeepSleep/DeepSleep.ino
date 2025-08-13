@@ -9,6 +9,7 @@
  * !The following test parameters are all obtained by testing at a voltage of 4.2V using a battery holder. Instrument: VICTOR 8246A
  *
  * T-A7608-S3 DeepSleep ~ 368 uA
+ * T-SIM7670G-S3 DeepSleep ~ 497 uA
  * T-A7608-ESP32  DeepSleep ~ 240 uA
  * T-A7670-ESP32  DeepSleep ~ 157 uA
  * T-SIM7600-ESP32 DeepSleep ~ 200 uA
@@ -18,7 +19,7 @@
  * T-SIM7670G-S3-Standard DeepSleep Current dynamic changes Min:64uA , Max201uA ,Avg:147uA
  * T-A7670X-S3-Standard DeepSleep Current dynamic changes Min:63uA , Max288uA ,Avg:181uA
  * T-A7670G-S3-Standard + L76K GPS Module DeepSleep Current dynamic changes Min:282uA , Max334uA ,Avg:314uA
- * 
+ *
  */
 
 #include "utilities.h"
