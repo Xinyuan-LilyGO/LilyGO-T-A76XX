@@ -46,6 +46,9 @@
 // Products Link: https://lilygo.cc/products/a-t-pcie?variant=42335921995957
 // #define LILYGO_T_PCIE_SIM7080G
 
+// Products Link: ......
+// #define LILYGO_T_PCIE_SIM7670G
+
 // Products Link: https://lilygo.cc/products/t-eth-elite-1?variant=44498205049013
 // #define LILYGO_T_ETH_ELITE_A7670X
 
@@ -61,6 +64,7 @@
 // #define LILYGO_SIM7080G_S3_STAN
 // #define LILYGO_SIM7670G_S3_STAN
 // #define LILYGO_A7670X_S3_STAN
+
 
 
 #if defined(LILYGO_T_A7670)
@@ -634,25 +638,13 @@
 
 #elif defined(LILYGO_T_PCIE_A767X)
 
-    #define MODEM_DTR_PIN                       (32)
-    #define MODEM_RX_PIN                        (26)
-    #define MODEM_TX_PIN                        (27)
-    // The modem power switch must be set to HIGH for the modem to supply power.
-    #define BOARD_POWERON_PIN                   (25)
-    // The modem boot pin needs to follow the startup sequence.
-    #define BOARD_PWRKEY_PIN                    (4)
-    #define MODEM_RING_PIN                      (33)
-    #define BOARD_LED_PIN                       (12)
-    #define LED_ON                              HIGH
-    #define PMU_IRQ                             (35)
-
-    #define SerialAT                            Serial1
+    #define LILYGO_T_PCIE
 
     #ifndef TINY_GSM_MODEM_A7670
         #define TINY_GSM_MODEM_A7670
     #endif
 
-    // 127 is defined in GSM as the AUXVDD index
+    // Modem GPIO 4 control gps enable
     #define MODEM_GPS_ENABLE_GPIO               (4)
     #define MODEM_GPS_ENABLE_LEVEL              (0)
     #define PRODUCT_MODEL_NAME                  "LilyGo-T-PCIE-A7670X"
@@ -665,7 +657,7 @@
         #define TINY_GSM_MODEM_SIM7000SSL
     #endif
 
-    // 127 is defined in GSM as the AUXVDD index
+    // Modem Physical pins 48 control gps enable
     #define MODEM_GPS_ENABLE_GPIO               (48)
     #define MODEM_GPS_ENABLE_LEVEL              (1)
     
@@ -691,6 +683,19 @@
 
     #define PRODUCT_MODEL_NAME                  "LilyGo-T-PCIE-SIM7600X"
 
+#elif defined(LILYGO_T_PCIE_SIM7670G)
+
+    #define LILYGO_T_PCIE
+
+    #ifndef TINY_GSM_MODEM_SIM7670G
+        #define TINY_GSM_MODEM_SIM7670G
+    #endif
+    // Modem GPIO 4 control gps enable
+    #define MODEM_GPS_ENABLE_GPIO               (4)
+    #define MODEM_GPS_ENABLE_LEVEL              (1)
+    #define PRODUCT_MODEL_NAME                  "LilyGo-T-PCIE-SIM7670G"
+
+
 #elif defined(LILYGO_T_ETH_ELITE_A7670X)
 
     #define LILYGO_T_ETH_ELITE
@@ -700,6 +705,9 @@
     #endif
 
 
+    // Modem GPIO 4 control gps enable
+    #define MODEM_GPS_ENABLE_GPIO               (4)
+    #define MODEM_GPS_ENABLE_LEVEL              (0)
     #define PRODUCT_MODEL_NAME                  "LilyGo-T-ETH-Elite-A7670X"
 
 #else
@@ -723,6 +731,14 @@
     #define LED_ON                  (LOW)
 
     #define SerialAT                Serial1
+
+    #ifndef MODEM_GPS_ENABLE_GPIO
+        #define MODEM_GPS_ENABLE_GPIO               (-1)
+    #endif
+    #ifndef MODEM_GPS_ENABLE_LEVEL
+        #define MODEM_GPS_ENABLE_LEVEL              (-1)
+    #endif
+    
 #endif
 
 #ifdef LILYGO_T_ETH_ELITE
@@ -760,6 +776,15 @@
     #define BOARD_LED_PIN             (38)
     #define LED_ON                    (HIGH)
 
+    #define SerialAT                Serial1
+
+    #ifndef MODEM_GPS_ENABLE_GPIO
+        #define MODEM_GPS_ENABLE_GPIO               (-1)
+    #endif
+    #ifndef MODEM_GPS_ENABLE_LEVEL
+        #define MODEM_GPS_ENABLE_LEVEL              (-1)
+    #endif
+    
 #endif
 
 
