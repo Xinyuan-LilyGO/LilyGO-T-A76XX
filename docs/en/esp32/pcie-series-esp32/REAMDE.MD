@@ -208,3 +208,6 @@
   1. VBUS Pin and USB-C are on the same line. Only when USB-C is connected, VBUS has voltage
   2. When only the battery is connected, VBUS has no voltage output
   3. If you want to connect an external power supply without connecting USB-C, VBUS Pin is the only voltage input pin. Please note that the maximum input of VBUS Pin is 5V, do not exceed 5V
+
+* *Unable to put the modem into sleep mode**
+  1. PCIE-Series must remove the VBUS inductor/resistor to put the modem into sleep mode
