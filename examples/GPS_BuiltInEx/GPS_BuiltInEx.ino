@@ -98,6 +98,7 @@ void setup()
             delay(1000);
         } else if (modemName.startsWith("A7670E-FASE") || modemName.startsWith("A7670SA-FASE")) {
             Serial.println("Modem support built-in GPS function, keep running");
+            break;
         } else if (modemName.startsWith("A7670E-LNXY-UBL")
                    || modemName.startsWith("A7670SA-LASE")
                    || modemName.startsWith("A7670SA-LASC")
