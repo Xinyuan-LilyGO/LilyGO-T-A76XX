@@ -211,3 +211,5 @@
 
 * *Unable to put the modem into sleep mode**
   1. PCIE-Series must remove the VBUS inductor/resistor to put the modem into sleep mode
+
+  <img  height="480" width="480" src=./images/pcie.png>
