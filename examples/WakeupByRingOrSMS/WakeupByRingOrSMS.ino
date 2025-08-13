@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2025  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2025-04-29
  * @note      Only applicable to A7670X, A7608X series,SIM7600 series modules,
- *            SIM7670G - `SIM7670G-MNGV 2374B04` version supports SMS function,
+ *            SIM7670G - `SIM7670G-MNGV 2374B04` version supports SMS function,but not support voice function
  *            SIM7000G - RI pin not connected to esp ,this examples can't run
  *            but it requires the operator base station to support SMS Over SGS service to send,
  *            otherwise it will be invalid

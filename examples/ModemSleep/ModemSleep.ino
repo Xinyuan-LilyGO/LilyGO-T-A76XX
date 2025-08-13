@@ -7,6 +7,8 @@
  * @record    https://youtu.be/2cjNsYcU6TU
  * @note      T-A7608 & T-A7608-S3 & T-A7670x VBUS of the modem is connected to VBUS.
  *            When using USB power supply, the modem cannot be set to sleep mode. Please see README for details.
+ * 
+ *            PCIE-Series must remove the VBUS inductor/resistor to put the modem into sleep mode 
  */
 #include "utilities.h"
 #include <driver/gpio.h>
@@ -134,6 +136,7 @@ void setup()
 
     // If it doesn't sleep, please see README to remove the resistor, which is only needed when USB-C is used for power supply.
     // https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/tree/main/examples/ModemSleep
+    // PCIE-Series must remove the VBUS inductor/resistor to put the modem into sleep mode 
     Serial.println("Check modem response .");
     while (modem.testAT()) {
         Serial.print("."); delay(500);
