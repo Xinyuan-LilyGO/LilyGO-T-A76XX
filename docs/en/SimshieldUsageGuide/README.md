@@ -1,5 +1,5 @@
 <div align="center" markdown="1">
-  <img src="../../.github/LilyGo_logo.png" alt="LilyGo logo" width="100"/>
+  <img src="../../../.github/LilyGo_logo.png" alt="LilyGo logo" width="100"/>
 </div>
 
 <h1 align = "center">🌟Sim Shield Usage Guide🌟</h1>

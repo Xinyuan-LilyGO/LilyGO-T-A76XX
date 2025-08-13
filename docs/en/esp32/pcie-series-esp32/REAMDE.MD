@@ -2,23 +2,21 @@
   <img src="../../../../.github/LilyGo_logo.png" alt="LilyGo logo" width="100"/>
 </div>
 
-<h1 align = "center">🌟LilyGo SIM7600X ESP32 Version🌟</h1>
+<h1 align = "center">🌟LilyGo PCI-E Series ESP32 Version🌟</h1>
 
 ## Overview
 
-* This page introduces the hardware parameters related to `LilyGo SIM7600X ESP32 Version`
+* This page introduces the hardware parameters related to `LilyGo PCI-E Series ESP32 Version`
 
 ### Product
 
-| Product               | SOC            | Flash         | PSRAM         |
-| --------------------- | -------------- | ------------- | ------------- |
-| [T-SIM7600X ESP32][1] | ESP32-WROVER-E | 4MB(Quad-SPI) | 8MB(Quad-SPI) |
+| Product                             | SOC            | Flash          | PSRAM         |
+| ----------------------------------- | -------------- | -------------- | ------------- |
+| [T-PCIE Main board 4MB Version][1]  | ESP32-WROVER-E | 4MB(Quad-SPI)  | 8MB(Quad-SPI) |
+| [T-PCIE Main board 16MB Version][2] | ESP32-WROVER-E | 16MB(Quad-SPI) | 8MB(Quad-SPI) |
 
-[1]: https://lilygo.cc/products/t-SIM7600
-
-> \[!IMPORTANT]
-> How to check the specific model version of the modem? Sending AT+SIMCOMATI can return the firmware version and hardware version used.
->
+[1]: https://lilygo.cc/products/a-t-pcie?variant=43043718725813
+[2]: https://lilygo.cc/products/a-t-pcie?variant=42335921832117
 
 ### PlatformIO Quick Start
 
@@ -31,7 +29,7 @@
 5. After restarting `Visual Studio Code`, select `File` in the upper left corner of `Visual Studio Code` -> `Open Folder` -> select the `LilyGo-Modem-Series` directory
 6. Wait for the installation of third-party dependent libraries to complete
 7. Click on the `platformio.ini` file, and in the `platformio` column
-8. Cancel the `;` symbol in front of the line `default_envs = T-SIM7600X` and use `T-SIM7600X` as the default environment
+8. Cancel the `;` symbol in front of the line `default_envs = T-PCIE-XXXX` and use `T-PCIE-XXXX` as the default environment, Name **XXXX** Please select according to the actual version
 9. Uncomment one of the lines `src_dir = xxxx` to ensure that only one line is valid. For example, to enable `src_dir = examples/ATdebug`, remove the leading `;` symbol and save the file. The ATDebug example will now be compiled.
 10. Click the (✔) symbol in the lower left corner to compile
 11. Connect the board to the computer USB-C
@@ -76,7 +74,7 @@
 
      * `Partition Scheme` Please select according to the actual application. For example, select **Huge APP (3MB No OTA/1MB SPIFFS)** , For more partitioning schemes, please see [here](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-guides/partition-tables.html)
 
-7. In the open sketch, select the `utilities.h` file and uncomment the line `// #define LILYGO_T_SIM7600X`. Delete the `//` and save the file to use this board as the default configuration.
+7. In the open sketch, select the `utilities.h` file and uncomment the line `// #define LILYGO_T_PCIE_XXXX`. Delete the `//` and save the file to use this board as the default configuration. Name **XXXX** Please select according to the actual version
 
    ![board_select](../../../static/board_select.jpg)
 
@@ -88,92 +86,60 @@
 > 2. When opening the Arduino IDE, you will be prompted that there are new libraries that can be updated. Please do not click update. There is no guarantee that it can be compiled, run, etc. after the update. Make sure that the board is running normally before deciding whether to update. You have to Know that problems may occur after updating due to library differences, or the default configuration (such as TinyGSM) will be overwritten.
 > 3. If it runs abnormally after the update, please follow Article 4 of the Arduino Quick Start to delete the directory in libraries, and drag the folder in lib into the libraries directory again.
 
-#### ESP programming mode
-
-![ESP programming mode](./images/TTL.png)
-
-#### USB Modem mode
-
-![USB Modem mode](./images/USB.png)
-
-* USB Modem mode is used to connect the modem to a PC to update the firmware or use dial-up Internet access.
-
 ### 📍 Pins Map
 
-| Name            | GPIO NUM     | Free |
-| --------------- | ------------ | ---- |
-| Modem TX        | 27           | ❌    |
-| Modem RX        | 26           | ❌    |
-| Modem PWRKEY    | 4            | ❌    |
-| Modem RING      | 33           | ❌    |
-| Modem DTR       | 32           | ❌    |
-| Modem Flight    | 25           | ❌    |
-| Modem Status    | 34           | ❌    |
-| Board LED       | 12           | ❌    |
-| SD SCK          | 14           | ❌    |
-| SD MISO         | 2            | ❌    |
-| SD MOSI         | 15           | ❌    |
-| SD CS           | 13           | ❌    |
-| Battery ADC Pin | 35           | ❌    |
-| Solar ADC Pin   | 36           | ❌    |
-| GPS Enabled     | Modem AUXVDD | ❌    |
-| Default SDA     | 21           | ✅️    |
-| Default SCL     | 22           | ✅️    |
+| Name                    | GPIO NUM | Free |
+| ----------------------- | -------- | ---- |
+| Modem DC booster enable | 25       | ❌    |
+| Modem TX                | 27       | ❌    |
+| Modem RX                | 26       | ❌    |
+| Modem PWRKEY            | 4        | ❌    |
+| Modem DTR               | 32       | ❌    |
+| Modem RING              | 33       | ❌    |
+| Board LED               | 12       | ❌    |
+| PMIC IRQ                | 35       | ❌    |
+| PMIC SDA                | 21       | ✅️    |
+| PMIC SCL                | 22       | ✅️    |
 
-* The Modem Flight pin must be set to high when connecting to the network, otherwise it will be in offline mode and unable to connect to the cellular network.
-* Peripheral power control pin. When using SD or modem, this GPIO must be set to high level, otherwise these functions cannot be used.
 * ESP32 models GPIO33 and above can only be set as input, not output
-
-> \[!IMPORTANT]
-> ESP32 version Since the SD card uses IO2 as CS, you cannot upload software in the Arduino IDE when you insert the SD card, so you must remove the SD card when uploading new code
->
+* I2C pins are fixed and cannot be changed. They are already connected to the PMIC.
 
 ### ⚡ Electrical parameters
 
-| Features                        | Details |
-| ------------------------------- | ------- |
-| 🔗USB-C Input Voltage            | 5V      |
-| ⚡Solar Input Voltage            | 5~6V    |
-| ⚡USB-C/Solar Charge Max Current | 500mA   |
-| 🔋Battery Voltage                | 3.7V    |
+| Features                  | Details |
+| ------------------------- | ------- |
+| 🔗USB-C Input Voltage      | 5V      |
+| ⚡USB-C Charge Max Current | 1000mA  |
+| 🔋Battery Voltage          | 3.7V    |
 
-> \[!TIP]
->
-> 1. The onboard JST2.0 interface is only used to connect the solar panel to charge the battery, and cannot provide power to the board from this interface
-> 2. It is recommended to use a solar panel with an output voltage of 6V or 5V and a power of about 5-10W. Solar energy can only charge the battery. Without the battery, the panel cannot supply power.
-> Please note that this is only a suggestion. It is not necessary to use a 5-10W solar panel. 1W is also acceptable.
-> The size of the solar panel determines the current and speed of solar charging. Please note that depending on the environment,
-> the sunshine time may not exceed one hour per day. At this time, if the solar panel is too small and the light is not sufficient, it cannot be charged.
+* The charging current can be adjusted by PMIC, up to 1A
 
 ### Button Description
 
-| Button              | Function                                                                             |
-| ------------------- | ------------------------------------------------------------------------------------ |
-| RST(Close to modem) | Reset devices button                                                                 |
-| PWR(Close to modem) | When the battery is first connected, press PWR to activate the battery power supply. |
+| Button              | Function                                                                                               |
+| ------------------- | ------------------------------------------------------------------------------------------------------ |
+| EN (Close to USB-C) | Reset devices button                                                                                   |
+| PWR                 | Press and hold for 6 seconds to turn off the device, press and hold for 1 second to turn on the device |
 
 * The above naming method is subject to the board silk screen printing
 
 ### Antenna Description
 
-|      | Function                     |
-| ---- | ---------------------------- |
-| MAIN | LTE Main antenna interface   |
-| AUX  | LTE Tiered antenna interface |
-| GPS  | GPS active antenna interface |
+|          | Function                     |
+| -------- | ---------------------------- |
+| SIM/MAIN | LTE Main antenna interface   |
+| GPS/GNSS | GPS active antenna interface |
 
-* When using, you only need to connect the LTE antenna you wear to the MAIN IPEX first generation interface. The AUX antenna does not need to be connected.
 * The above naming method is subject to the board silk screen printing
 
 ### LED Description
 
-| FUNCTION            | COLOR                            |
-| ------------------- | -------------------------------- |
-| MODEM STATUS        | RED   (Near the modem)           |
-| MODEM NETWORK STATE | RED   (Near the modem)           |
-| CHARGE LED          | RED  (Near the battery switch)   |
-| CHARGE DONE LED     | Green  (Near the battery switch) |
-| ON BOARD LED        | BLUE  (Near the esp module)      |
+| FUNCTION            | COLOR                         |
+| ------------------- | ----------------------------- |
+| MODEM STATUS        | RED   (On the modem)          |
+| MODEM NETWORK STATE | RED   (On the modem)          |
+| CHARGE LED          | BLUE  (Near the ON BOARD LED) |
+| ON BOARD LED        | GREEN  (Near the esp module)  |
 
 * Modem Status light and network status led cannot be turned off
 
@@ -181,11 +147,32 @@
 
 * [GPS Antenna](../../../../datasheet/GPS%20Antenna%20Specifications.pdf)
 * [LTE Antenna](../../../../datasheet/LTE%20Antenna%20Specifications.pdf)
-* [T-SIM7600X Schematic](../../../../schematic/esp32/T-SIM7600X-V1.3.pdf)
+
+#### SIM7000X Series
+
+* [T-SIM7000G Schematic](../../../../schematic/esp32/T-SIM7000G-200415.pdf)
+* [SIMCOM official SIM7000G All Datasheet](https://cn.simcom.com/product/SIM7000X.html)
+* [For SIM7000 series documentation, please visit the datasheet directory.](../../../../datasheet/SIM7000/)
+
+#### A7608X Series
+
+* [SIMCOM official A7608X All Datasheet](https://cn.simcom.com/product/A7608X-H-E_SA.html)
+* [For A7608 series documentation, please visit the datasheet directory.](../../../../datasheet/A76XX/)
+
+#### SIM7670G Series
+
+* [SIMCOM official A7670X All Datasheet](https://cn.simcom.com/product/A7670X.html)
+* [For A7670X series documentation, please visit the datasheet directory.](../../../../datasheet/A76XX/)
+
+#### SIM7600X Series
+
 * [SIMCOM official SIM7600X All Datasheet](https://cn.simcom.com/product/SIM7600X.html)
 * [For SIM7600 series documentation, please visit the datasheet directory.](../../../../datasheet/SIM7600X/)
-* [Board dimensions](../../../../dimensions/esp32/T-SIM7600-ESP32.dxf)
-* [Case](../../../../dimensions/esp32/T-SIM7600-ESP32-Case.zip)
+
+#### SIM7080G Series
+
+* [SIMCOM official SIM7080G-S3 All Datasheet](https://cn.simcom.com/product/SIM7080G.html)
+* [For SIM7080G-S3 series documentation, please visit the datasheet directory.](../../../../datasheet/SIM7080/)
 
 ### FAQ
 
@@ -195,8 +182,12 @@
   3. Press the RST button on the board to restart
   4. If you can see the startup information, it means that the USB2TTL communication is normal. If nothing is displayed in the serial monitor, it may be that the USB2TTL bridge is damaged
 
-* **Upgrade modem firmware**
-  1. [T-SIM7600X Upgrade docs](./upgrade/sim7000_upgrade.md)
+* **Upgrade modem firmware** Please refer here
+  1. [T-SIM7000G Upgrade docs](../sim7000-esp32/upgrade/sim7000_upgrade.md)
+  2. [T-SIM7670G Upgrade docs](./upgrade/sim7000_upgrade.md)
+  3. [T-A7670X   Upgrade docs](../../../update_fw.md)
+  4. [T-SIM7600X Upgrade docs](../sim7600-esp32/upgrade/sim7600_upgrade.md)
+  5. [T-SIM7080G Upgrade docs](../../esp32s3/sim7080-s3-standard/upgrade/README.MD)
 
 * **Unable to detect SIMCard?**
    1. Need to insert the SIMCard into the board first and then power on to detect the SIM card. If the order is reversed, it will report that the SIMCard cannot be detected.

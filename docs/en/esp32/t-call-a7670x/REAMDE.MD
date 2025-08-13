@@ -90,6 +90,8 @@
     | Upload Speed                         | 921600                               |
     | Programmer                           | **Esptool**                          |
 
+     * `Partition Scheme` Please select according to the actual application. For example, select **Huge APP (3MB No OTA/1MB SPIFFS)** , For more partitioning schemes, please see [here](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-guides/partition-tables.html)
+
 7. In the open sketch, select the `utilities.h` file and uncomment the line `// #define LILYGO_T_CALL_A7670_V1_0`. Delete the `//` and save the file to use this board as the default configuration, If you are using V1.1, then select `#define LILYGO_T_CALL_A7670_V1_1`
 
    ![board_select](../../../static/board_select.jpg)

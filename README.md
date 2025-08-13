@@ -4,7 +4,7 @@
 
 <h1 align = "center">🌟LilyGo-Modem-Series🌟</h1>
 
-[![PlatformIO CI](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/actions/workflows/platformio.yml/badge.svg)](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/actions/workflows/platformio.yml)
+[![PlatformIO CI](https://github.com/Xinyuan-LilyGO/LilyGo-Modem-Series/actions/workflows/platformio.yml/badge.svg)](https://github.com/Xinyuan-LilyGO/LilyGo-Modem-Series/actions/workflows/platformio.yml)
 
 # News
 
@@ -25,6 +25,7 @@
 - 🔧 **[T-SIM7000 Quick Start](./docs/en/esp32/sim7000-esp32/REAMDE.MD)**
 - 🔧 **[T-SIM7600 Quick Start](./docs/en/esp32/sim7600-esp32/REAMDE.MD)**
 - 🔧 **[T-Call-A7670X Quick Start](./docs/en/esp32/t-call-a7670x/REAMDE.MD)**
+- 🔧 **[T-PCIE-Series Quick Start](./docs/en/esp32/pcie-series-esp32/REAMDE.MD)**
 
 ## ESP32S3 Version Get Started
 
