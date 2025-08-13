@@ -7,7 +7,7 @@
  * @note      SIM7670G does not support SMS and voice functions
  *            `A7670E-LNXY-UBL` this version does not support voice and SMS functions.
  * ! Only read data, not decode data. For detailed SMS operation, please refer to A76XX_Series_AT_Command_Manual
- * 
+ *
  */
 
 #include "utilities.h"
@@ -100,17 +100,9 @@ void setup()
         if (modemName == "UNKNOWN") {
             Serial.println("Unable to obtain module information normally, try again");
             delay(1000);
-        } else if (modemName.startsWith("A7670E-FASE") || modemName.startsWith("A7670SA-FASE")) {
-            Serial.println("Modem support built-in GPS function, keep running");
-            break;
-        } else if (modemName.startsWith("A7670E-LNXY-UBL")
-                   || modemName.startsWith("A7670SA-LASE")
-                   || modemName.startsWith("A7670SA-LASC")
-                   ||  modemName.startsWith("A7670G-LLSE")
-                   ||  modemName.startsWith("A7670G-LABE")
-                   ||  modemName.startsWith("A7670E-LASE ")) {
+        } else if (modemName.startsWith("SIM7670")) {
             while (1) {
-                Serial.println("The modem does not have built-in GPS function.");
+                Serial.println("SIM7670 does not support SMS Function");
                 delay(1000);
             }
         } else {
