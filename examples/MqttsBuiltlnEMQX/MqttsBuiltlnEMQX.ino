@@ -339,4 +339,12 @@ QCN:SIM7080G_P1.03_20210823
 
 -------------------------------
 
+A7670G  # 20250815:OK!
+https://github.com/Xinyuan-LilyGO/LilyGo-Modem-Series/issues/343
+
+Manufacturer: SIMCOM INCORPORATED
+Model: A7670G-LLSE
+Revision: A124B01A7670M7
+A7670M7_B01V01_240722
+
 */
