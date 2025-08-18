@@ -217,3 +217,9 @@
   1. VBUS Pin and USB-C are on the same line. Only when USB-C is connected, VBUS has voltage
   2. When only the battery is connected, VBUS has no voltage output
   3. If you want to connect an external power supply without connecting USB-C, VBUS Pin is the only voltage input pin. Please note that the maximum input of VBUS Pin is 5V, do not exceed 5V
+
+* **How to distinguish whether it has voice function?**
+  1. If you need to make a voice call, you need to buy a SIM7600G with an audio decoder. You can check the red box in the figure below. If there is no chip here, there is no decoder version and the voice call function cannot be used.
+  2. The figure below shows a version without a decoder. If there is a chip here, you can solder the microphone to the MIC+ and MIC- pads and the speaker to the SPK pad.
+
+    ![decoder](./images/decoder.jpg)
