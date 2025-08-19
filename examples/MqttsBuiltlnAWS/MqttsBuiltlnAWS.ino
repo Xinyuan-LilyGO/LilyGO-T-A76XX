@@ -332,6 +332,17 @@ MEID:
 +GCAP: +CGSM,+FCLASS,+DS
 DeviceInfo:
 
+20250819: //https://github.com/Xinyuan-LilyGO/LilyGo-Modem-Series/issues/338#issuecomment-3197621525
+Manufacturer: INCORPORATED
+Model: A7670SA-FASE
+Revision: A011B07A7670M7_F
+A7670M7_B07V01_240927
+QCN:
+IMEI: xxxxxxxxxxx
+MEID:
++GCAP: +CGSM,+FCLASS,+DS
+DeviceInfo:
+
 -------------------------------
 
 20240821:
