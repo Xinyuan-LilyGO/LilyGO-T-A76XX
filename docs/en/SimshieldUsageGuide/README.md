@@ -131,3 +131,17 @@
 
 * If the jumper of current detection channel 2 is selected as the battery detection channel, the external wiring terminal is unavailable.
 * Channel 3 and channel 1 are free to use. The **IN+** of the terminal is the direction of current inflow, **G** is the **GND** of the load, and **IN-** is the direction of current outflow from the load.
+
+## Interface Description
+
+| Name          | Details                                         |
+| ------------- | ----------------------------------------------- |
+| INPUT:7~36V   | DC input, range 7 ~ 36 V                        |
+| OUTPUT:5V     | Only when DC is input will 5V voltage be output |
+| VBAT:+4.2V-   | Battery input interface, maximum 4.2V           |
+| IN+ G IN- CH2 | Current detection channel 2                     |
+| IN+ G IN- CH3 | Current detection channel 3                     |
+| IN+ G IN- CH1 | Current detection channel 1                     |
+
+* **The battery input interface is connected in parallel with the onboard 18650. If an external battery is connected, do not install the battery on the 18650 socket.**
+* **Current detection channel 1 (this channel is unavailable if a battery is connected via a jumper cap)**
