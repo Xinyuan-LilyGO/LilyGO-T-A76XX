@@ -4,6 +4,8 @@
 
 <h1 align = "center">🌟Sim Shield Usage Guide🌟</h1>
 
+* The SimShield is an expansion board for the Sim series that includes three-way current detection, LoRa transceiver, and wide-range DC input. It supports the full range of LilyGo T-Sim expansion boards.
+
 
 > \[!IMPORTANT]
 >
@@ -95,7 +97,6 @@
 
 1. [SIM7080G-ESP32S3 Version](https://lilygo.cc/products/t-sim7080-s3?_pos=1&_sid=7d3cc194f&_ss=r)
 
-
 ## Monitor battery charging and discharging jumper settings
 
 * The vertical jumper cap in the figure below routes the battery current to INA3221 channel 2, and the battery charging and discharging current can be monitored by reading the INA3221 sensor. **At this time, do not connect anything to the crimp terminal interface.**
@@ -123,3 +124,10 @@
 ## SPI interface
 
 * SPI interface exposes the SPI bus interface of SD card/Radio
+
+## Current detection
+
+![intervface](./images/intervface.png)
+
+* If the jumper of current detection channel 2 is selected as the battery detection channel, the external wiring terminal is unavailable.
+* Channel 3 and channel 1 are free to use. The **IN+** of the terminal is the direction of current inflow, **G** is the **GND** of the load, and **IN-** is the direction of current outflow from the load.
