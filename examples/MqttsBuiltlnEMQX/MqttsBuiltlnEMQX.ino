@@ -253,9 +253,12 @@ void setup()
     modem.sendAT("+SIMCOMATI");
     modem.waitResponse(10000UL, res);
     Serial.println(res);
-    
+
     // Initialize MQTT, use SSL, skip authentication server
-    modem.mqtt_begin(true);
+    // If it is a private EMQX, you may need to set sni to true, please see this issue
+    // https://github.com/Xinyuan-LilyGO/LilyGo-Modem-Series/issues/343#issuecomment-3200877377
+    bool sni = false;
+    modem.mqtt_begin(true, sni);
 
 
     if (!mqtt_connect()) {
