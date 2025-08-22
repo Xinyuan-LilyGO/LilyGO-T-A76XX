@@ -224,3 +224,6 @@
   1. VBUS Pin and USB-C are on the same line. Only when USB-C is connected, VBUS has voltage
   2. When only the battery is connected, VBUS has no voltage output
   3. If you want to connect an external power supply without connecting USB-C, VBUS Pin is the only voltage input pin. Please note that the maximum input of VBUS Pin is 5V, do not exceed 5V
+
+* **How to use voice call example?**
+  1. Voice calls require external welding of the condenser microphone and speaker. Generally, the board silk screen is marked SPK. The speaker needs to be welded, and the MIC silk screen position needs to weld the condenser microphone. , **T-A7670** the microphone and speaker connections are located [issue/130](https://github.com/Xinyuan-LilyGO/LilyGO-T-A76XX/issues/130)
