@@ -216,8 +216,7 @@
 
 * **关于 VBUS 引脚**
   1. VBUS 引脚和 USB-C 在同一条线上。只有连接 USB-C 时，VBUS 才有电压
-  2. 仅连接电池时，VBUS 没有电压输出
-  3. 如果想连接外部电源而不连接 USB-C，VBUS 引脚是唯一的电压输入引脚。请注意，VBUS 引脚的最大输入为 5V，不要超过 5V
+  2. 如果想连接外部电源而不连接 USB-C，VBUS 引脚是唯一的电压输入引脚。请注意，VBUS 引脚的最大输入为 5V，不要超过 5V
 
 * 可以使用其他 GPS 天线吗？
   1. 外部 GPS 天线必须是 3.3V 供电的有源 GPS 天线。 For example, the [MK-76](https://www.rfmw.com/datasheets/sanav/mk-76.pdf) 支持 2.5-5.5V，兼容。大多数有源 GPS 天线支持 2.5-5.5V 供电。详情请参考 GPS 天线数据手册。
